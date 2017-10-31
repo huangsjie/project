@@ -49,11 +49,11 @@ public class LoginController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "/login",method=RequestMethod.GET)
     public String login(HttpServletRequest request, Map<String, Object> map)throws Exception{
         Subject currentUser = SecurityUtils.getSubject();
         if (currentUser.isAuthenticated()) {
-            return "redirect:/admin/index";
+            return "redirect:/system/main";
         }
         return "system/login";
     }

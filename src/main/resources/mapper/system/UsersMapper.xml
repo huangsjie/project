@@ -197,7 +197,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
-  <select id="selectManagerAccount" resultType="com.panda.model.system.Users" parameterType="map">
+  <select id="selectManagerAccount" resultType="com.panda.model.system.Users" parameterType="java.lang.String">
     SELECT
     <include refid="Base_Column_List" />
     FROM

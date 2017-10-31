@@ -44,6 +44,9 @@ public class ShiroConfig {
     @Value("${spring.redis.timeout}")
     private int timeout;
 
+    @Value("${spring.redis.password}")
+    private String passowrd;
+
     @Bean
     public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
@@ -93,14 +96,14 @@ public class ShiroConfig {
         //<!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
         //自定义加载权限资源关系
-        List<Menu> menuListList = menuService.selectByPrimaryKey("!");
+        List<Menu> menuListList = menuService.selectAll();
          for(Menu menu:menuListList){
             if (StringUtil.isNotEmpty(menu.getUrl())) {
                 String permission = "perms[" + menu.getUrl()+ "]";
                 filterChainDefinitionMap.put(menu.getUrl(),permission);
             }
         }
-        filterChainDefinitionMap.put("/system/**", "authc");
+        filterChainDefinitionMap.put("/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
@@ -165,7 +168,7 @@ public class ShiroConfig {
         redisManager.setPort(port);
         redisManager.setExpire(1800);// 配置缓存过期时间
         redisManager.setTimeout(timeout);
-        // redisManager.setPassword(password);
+        redisManager.setPassword(passowrd);
         return redisManager;
     }
 

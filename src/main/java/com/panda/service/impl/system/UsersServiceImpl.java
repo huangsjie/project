@@ -35,6 +35,6 @@ public class UsersServiceImpl extends AbstractServiceImpl<Users> implements User
 
     @Override
     public Users selectManagerAccount(String account) {
-        return null;
+        return usersMapper.selectManagerAccount(account);
     }
 }

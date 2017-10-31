@@ -172,4 +172,11 @@
       description = #{description,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectAll" resultType="com.panda.model.system.Menu">
+    select
+      <include refid="Base_Column_List" />
+    from s_menu
+    where 1 = 1;
+  </select>
 </mapper>

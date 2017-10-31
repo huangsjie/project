@@ -23,9 +23,10 @@ public class PasswordHelper {
     public static void main(String[] args) {
         PasswordHelper passwordHelper = new PasswordHelper();
         Users user = new Users();
+        user.setId("0f1443aa-eade-410d-b8bf-74ebfa914ca4");
         user.setAccount("morgan");
         user.setPassword("123456");
         passwordHelper.encryptPassword(user);
-        System.out.println(user);
+        System.out.println(user.getPassword());
     }
 }

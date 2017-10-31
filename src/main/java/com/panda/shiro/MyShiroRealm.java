@@ -54,13 +54,13 @@ public class MyShiroRealm extends AuthorizingRealm {
             throw new UnknownAccountException();
         }
         if (0==user.getStatus()) {
-            throw new LockedAccountException(); // 帐号锁定
+            throw new LockedAccountException();
         }
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                user, //用户
-                user.getPassword(), //密码
-                ByteSource.Util.bytes(user.getCredentialsSalt()),
-                getName()  //realm name
+                user,
+                user.getPassword(),
+                ByteSource.Util.bytes(user.getAccount()+user.getId()),
+                getName()
         );
         // 当验证都通过后，把用户信息放在session里
         Session session = SecurityUtils.getSubject().getSession();

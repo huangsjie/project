@@ -16,7 +16,7 @@ public interface AbstractService<T> {
 
     int deleteByPrimaryKey(String id);
 
-    int insert(T record);
+    int insert(T entity);
 
     int insertSelective(T entity);
 
