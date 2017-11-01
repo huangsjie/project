@@ -88,7 +88,7 @@ var SnippetLogin = function() {
                 url: '/system/ajaxLogin',
                 success: function(response, status, xhr, $form) {
                     if(response.flag && status == 'success'){
-                        window.location.href("/system/main");
+                        location.reload();
                     }else{
                         btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
                         showErrorMsg(form, 'danger', response.msg);

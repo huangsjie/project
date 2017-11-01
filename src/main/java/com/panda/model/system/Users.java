@@ -2,8 +2,10 @@ package com.panda.model.system;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Users implements Serializable {
+
     private String id;
 
     private String account;
@@ -32,12 +34,14 @@ public class Users implements Serializable {
 
     private String modifyId;
 
+    private List<Roles> roleList;
+
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = id == null ? null : id.trim();
     }
 
     public String getAccount() {
@@ -45,7 +49,7 @@ public class Users implements Serializable {
     }
 
     public void setAccount(String account) {
-        this.account = account;
+        this.account = account == null ? null : account.trim();
     }
 
     public String getPassword() {
@@ -53,7 +57,7 @@ public class Users implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password == null ? null : password.trim();
     }
 
     public String getChineseName() {
@@ -61,7 +65,7 @@ public class Users implements Serializable {
     }
 
     public void setChineseName(String chineseName) {
-        this.chineseName = chineseName;
+        this.chineseName = chineseName == null ? null : chineseName.trim();
     }
 
     public String getEmail() {
@@ -69,7 +73,7 @@ public class Users implements Serializable {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email == null ? null : email.trim();
     }
 
     public String getMobile() {
@@ -77,7 +81,7 @@ public class Users implements Serializable {
     }
 
     public void setMobile(String mobile) {
-        this.mobile = mobile;
+        this.mobile = mobile == null ? null : mobile.trim();
     }
 
     public Integer getUserType() {
@@ -117,7 +121,7 @@ public class Users implements Serializable {
     }
 
     public void setRoleId(String roleId) {
-        this.roleId = roleId;
+        this.roleId = roleId == null ? null : roleId.trim();
     }
 
     public Date getRegisterTime() {
@@ -141,7 +145,15 @@ public class Users implements Serializable {
     }
 
     public void setModifyId(String modifyId) {
-        this.modifyId = modifyId;
+        this.modifyId = modifyId == null ? null : modifyId.trim();
+    }
+
+    public List<Roles> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Roles> roleList) {
+        this.roleList = roleList;
     }
 
     public String getCredentialsSalt() {

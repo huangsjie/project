@@ -1,16 +1,24 @@
 package com.panda.controller.system;
 
+import com.panda.model.system.Menu;
 import com.panda.model.system.Users;
+import com.panda.service.system.MenuService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.panda.service.system.UsersService;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IDEA.
@@ -22,15 +30,29 @@ import javax.annotation.Resource;
 @RequestMapping(value = "/system")
 public class IndexController {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
-    @Resource
+    @Autowired
     private UsersService usersService;
 
+    @Autowired
+    private MenuService menuService;
+
     @RequestMapping(value = "/main")
-    @RequiresPermissions("userInfo:add")//权限管理;
     public String main(){
         return "system/index/main";
+    }
+
+
+    @RequestMapping(value = "/menu",method= RequestMethod.GET)
+    @ResponseBody
+    public List<Menu> getMenu(){
+        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+        Map<String,String> map = new HashMap<String,String>(2);
+        map.put("userId",user.getId());
+        map.put("parentId","10000000-0000-0000-0000-000000000000");
+        List<Menu> menuList = menuService.selectManagerRoleMenuList(map);
+        return menuList;
     }
 
 

@@ -1,6 +1,6 @@
 package com.panda.config;
 
-import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+//import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.github.pagehelper.util.StringUtil;
 import com.panda.model.system.Menu;
 import com.panda.model.system.RoleMenu;
@@ -53,13 +53,13 @@ public class ShiroConfig {
     }
 
     /**
-     * ShiroDialect，为了在thymeleaf里使用shiro的标签的bean
+     * ShiroDialect，为了在thymeleaf 2.0 里使用shiro的标签的bean
      * @return
      */
-    @Bean
-    public ShiroDialect shiroDialect() {
-        return new ShiroDialect();
-    }
+//    @Bean
+//    public ShiroDialect shiroDialect() {
+//        return new ShiroDialect();
+//    }
     /**
      * ShiroFilterFactoryBean 处理拦截资源文件问题。
      * 注意：单独一个ShiroFilterFactoryBean配置是或报错的，因为在
@@ -92,6 +92,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/druid/**", "anon");
         filterChainDefinitionMap.put("/assets/**","anon");
         filterChainDefinitionMap.put("/home/**","anon");
+        filterChainDefinitionMap.put("/error/**","anon");
         filterChainDefinitionMap.put("/system/ajaxLogin","anon");
         //<!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
@@ -103,7 +104,7 @@ public class ShiroConfig {
                 filterChainDefinitionMap.put(menu.getUrl(),permission);
             }
         }
-        filterChainDefinitionMap.put("/**", "authc");
+        filterChainDefinitionMap.put("/system/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
