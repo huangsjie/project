@@ -16361,7 +16361,7 @@ body.m-page--boxed {
     margin-right: auto; } }
 
 .m-body .m-content {
-  padding: 30px 30px; }
+  padding: 15px 15px; }
 
 .m-content--skin-light .m-body {
   background-color: #ffffff; }
@@ -19238,8 +19238,8 @@ body.m-content--skin-light2 {
       .m-aside-menu .m-menu__nav > .m-menu__item .m-menu__submenu .m-menu__separator .m-menu__separator--marginles {
         margin: 0; }
   .m-aside-menu .m-menu__nav > .m-menu__section {
-    margin: 20px 0 0 0;
-    height: 40px; }
+    margin: 1px 0 0 0;
+    height: 0px; }
     .m-aside-menu .m-menu__nav > .m-menu__section .m-menu__section-text {
       font-size: 0.83rem;
       font-weight: 500;
@@ -20410,7 +20410,7 @@ body.m-content--skin-light2 {
           color: #777c9d; } }
 
 .m-subheader {
-  padding: 30px 30px 0 30px; }
+  padding: 15px 15px 0 15px; }
   .m-subheader .m-subheader__title {
     display: inline-block;
     padding: 7px 25px 7px 0;

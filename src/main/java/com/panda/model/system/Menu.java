@@ -2,6 +2,7 @@ package com.panda.model.system;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Menu implements Serializable {
     private String id;
@@ -27,6 +28,8 @@ public class Menu implements Serializable {
     private Date modifyTime;
 
     private String description;
+
+    private List<Menu> childMenuList;
 
     public String getId() {
         return id;
@@ -122,5 +125,12 @@ public class Menu implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Menu> getChildMenuList(){
+        return childMenuList;
+    }
+    public void setChildMenuList(List<Menu> childMenuList){
+        this.childMenuList = childMenuList;
     }
 }

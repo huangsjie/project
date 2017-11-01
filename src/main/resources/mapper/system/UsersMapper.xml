@@ -18,11 +18,11 @@
     <result column="modify_id" property="modifyId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, account, password, chinese_name, email, mobile, user_type, last_date, status, 
+    id, account, password, chinese_name, email, mobile, user_type, last_date, status,
     login_type, role_id, register_time, modify_time, modify_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from s_users
     where id = #{id,jdbcType=VARCHAR}
@@ -32,16 +32,16 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.panda.model.system.Users" >
-    insert into s_users (id, account, password, 
-      chinese_name, email, mobile, 
-      user_type, last_date, status, 
-      login_type, role_id, register_time, 
-      modify_time, modify_id)
-    values (#{id,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{chineseName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
-      #{userType,jdbcType=INTEGER}, #{lastDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
-      #{loginType,jdbcType=INTEGER}, #{roleId,jdbcType=VARCHAR}, #{registerTime,jdbcType=TIMESTAMP}, 
-      #{modifyTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR})
+    insert into s_users (id, account, password,
+    chinese_name, email, mobile,
+    user_type, last_date, status,
+    login_type, role_id, register_time,
+    modify_time, modify_id)
+    values (#{id,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+    #{chineseName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR},
+    #{userType,jdbcType=INTEGER}, #{lastDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},
+    #{loginType,jdbcType=INTEGER}, #{roleId,jdbcType=VARCHAR}, #{registerTime,jdbcType=TIMESTAMP},
+    #{modifyTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.panda.model.system.Users" >
     insert into s_users
@@ -182,22 +182,21 @@
   <update id="updateByPrimaryKey" parameterType="com.panda.model.system.Users" >
     update s_users
     set account = #{account,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      chinese_name = #{chineseName,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      mobile = #{mobile,jdbcType=VARCHAR},
-      user_type = #{userType,jdbcType=INTEGER},
-      last_date = #{lastDate,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=INTEGER},
-      login_type = #{loginType,jdbcType=INTEGER},
-      role_id = #{roleId,jdbcType=VARCHAR},
-      register_time = #{registerTime,jdbcType=TIMESTAMP},
-      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
-      modify_id = #{modifyId,jdbcType=VARCHAR}
+    password = #{password,jdbcType=VARCHAR},
+    chinese_name = #{chineseName,jdbcType=VARCHAR},
+    email = #{email,jdbcType=VARCHAR},
+    mobile = #{mobile,jdbcType=VARCHAR},
+    user_type = #{userType,jdbcType=INTEGER},
+    last_date = #{lastDate,jdbcType=TIMESTAMP},
+    status = #{status,jdbcType=INTEGER},
+    login_type = #{loginType,jdbcType=INTEGER},
+    role_id = #{roleId,jdbcType=VARCHAR},
+    register_time = #{registerTime,jdbcType=TIMESTAMP},
+    modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+    modify_id = #{modifyId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-
-  <select id="selectManagerAccount" resultType="com.panda.model.system.Users" parameterType="java.lang.String">
+  <select id="selectManagerAccount" resultType="com.panda.model.system.Users" parameterType="map">
     SELECT
     <include refid="Base_Column_List" />
     FROM

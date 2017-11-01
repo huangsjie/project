@@ -32,11 +32,11 @@ public class MyShiroRealm extends AuthorizingRealm {
     //授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        Users user= (Users) SecurityUtils.getSubject().getPrincipal();//User{id=1, username='admin', password='3ef7164d1f6167cb9f2658c07d3c2f0a', enable=1}
+        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("userid",user.getId());
+
         List<Menu> menuList = menuService.selectAll();
-        // 权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         for(Menu menu: menuList){
             info.addStringPermission(menu.getUrl());
