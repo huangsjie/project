@@ -5,6 +5,7 @@ import com.panda.model.system.Users;
 import com.panda.service.system.MenuService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.ui.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,15 @@ public class IndexController {
     @Autowired
     private MenuService menuService;
 
-    @RequestMapping(value = "/main")
-    public String main(){
+    @RequestMapping(value = "/main",method= RequestMethod.GET)
+    public String main(Model model){
+        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+        Map<String,String> map = new HashMap<String,String>(2);
+        map.put("userId",user.getId());
+        map.put("parentId","10000000-0000-0000-0000-000000000000");
+        List<Menu> menuList = menuService.selectManagerRoleMenuList(map);
+        model.addAttribute("menuList",menuList);
+        model.addAttribute("user",user);
         return "system/index/main";
     }
 
