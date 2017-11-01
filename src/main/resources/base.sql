@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-11-01 10:55:38
+Date: 2017-11-01 18:55:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -67,6 +67,7 @@ INSERT INTO `s_menu` VALUES ('3631e59e-1175-11e5-a9de-000c29d7a3a0', '5', '10000
 INSERT INTO `s_menu` VALUES ('4bcab523-1174-11e5-a9de-000c29d7a3a0', '2', '10000000-0000-0000-0000-000000000000', '商品管理', '/system/commodity/index', '1', 'icobackup', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '电商平台管理');
 INSERT INTO `s_menu` VALUES ('97ea6edb-1178-11e5-a9de-000c29d7a3a0', '6', '10000000-0000-0000-0000-000000000000', '财务管理', '/system/demand/index', '1', 'icoColor', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '财务结算中心');
 INSERT INTO `s_menu` VALUES ('c3538d54-8e09-11e6-b311-005056812bf6', '3', '10000000-0000-0000-0000-000000000000', '物流管理', '/system/operation/index', '1', 'icoColor', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '跨境物流管理');
+INSERT INTO `s_menu` VALUES ('caf65c04-beed-11e7-959c-38d547b81379', '1', '0B6D1F77-BAEC-4CFA-8D19-E1C4ECE995B9', '菜单管理', '/system/menu', '1', 'iconUser', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '菜单管理');
 INSERT INTO `s_menu` VALUES ('d07687ef-2798-11e5-965c-000c29d7a3a0', '4', '10000000-0000-0000-0000-000000000000', '商户管理', '/system/designer/index', '1', 'icoColor', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '个人中心、会员中心');
 INSERT INTO `s_menu` VALUES ('fb69a533-1178-11e5-a9de-000c29d7a3a0', '7', '10000000-0000-0000-0000-000000000000', '数据管理', '/system/data/index', '1', 'icoClcont', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '销售数据分销');
 
@@ -132,6 +133,12 @@ CREATE TABLE `s_role_menu` (
 -- Records of s_role_menu
 -- ----------------------------
 INSERT INTO `s_role_menu` VALUES ('1b84ca00-b643-11e7-9591-24fd52935962', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '0B6D1F77-BAEC-4CFA-8D19-E1C4ECE995B9', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:35:21');
+INSERT INTO `s_role_menu` VALUES ('db1b6778-bee9-11e7-959c-38d547b81379', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '3631e59e-1175-11e5-a9de-000c29d7a3a0', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:35:21');
+INSERT INTO `s_role_menu` VALUES ('dfe27920-bee9-11e7-959c-38d547b81379', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '4bcab523-1174-11e5-a9de-000c29d7a3a0', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:35:21');
+INSERT INTO `s_role_menu` VALUES ('e57b7509-bee9-11e7-959c-38d547b81379', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '97ea6edb-1178-11e5-a9de-000c29d7a3a0', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:35:21');
+INSERT INTO `s_role_menu` VALUES ('ebb4a998-bee9-11e7-959c-38d547b81379', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c3538d54-8e09-11e6-b311-005056812bf6', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:35:21');
+INSERT INTO `s_role_menu` VALUES ('f10427ee-bee9-11e7-959c-38d547b81379', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'd07687ef-2798-11e5-965c-000c29d7a3a0', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:35:21');
+INSERT INTO `s_role_menu` VALUES ('f5d2a3c9-bee9-11e7-959c-38d547b81379', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'fb69a533-1178-11e5-a9de-000c29d7a3a0', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:35:21');
 
 -- ----------------------------
 -- Table structure for s_users
@@ -160,6 +167,7 @@ CREATE TABLE `s_users` (
 -- Records of s_users
 -- ----------------------------
 INSERT INTO `s_users` VALUES ('0f1443aa-eade-410d-b8bf-74ebfa914ca4', 'morgan', '6a3fd4ce78066de7876e189ab9db43a9', '波波', 'jionlandry@gmail.com', '13713666160', '0', '2017-10-18 13:30:04', '1', '1', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '2017-10-18 13:30:10', '2017-10-18 13:30:12', '0f1443aa-eade-410d-b8bf-74ebfa914ca4');
+INSERT INTO `s_users` VALUES ('d56ad1f8-86a5-4e0f-a4bd-4fde333f9910', 'Alan', null, '哗哗', '2755527207@qq.com', '13713666160', '2', '2017-11-01 08:54:47', '0', '1', null, null, '2017-11-01 08:54:47', null);
 
 -- ----------------------------
 -- Table structure for s_user_info
