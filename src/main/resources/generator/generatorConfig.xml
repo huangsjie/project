@@ -28,22 +28,25 @@
         </jdbcConnection>
         <!-- 数据库链接 -->
         <!-- 存放位置 -->
-        <javaModelGenerator targetPackage="com.panda.model.system" targetProject="src/main/java"/>
-        <sqlMapGenerator targetPackage="mapper.system" targetProject="src/main/resources"/>
-        <javaClientGenerator targetPackage="com.panda.mapper.system" targetProject="src/main/java" type="XMLMAPPER"/>
+        <javaModelGenerator targetPackage="com.panda.model.wechat" targetProject="src/main/java"/>
+        <sqlMapGenerator targetPackage="mapper.wechat" targetProject="src/main/resources"/>
+        <javaClientGenerator targetPackage="com.panda.mapper.wechat" targetProject="src/main/java" type="XMLMAPPER"/>
         <!-- 存放位置 -->
         <!-- 数据表 -->
-        <!--<table tableName="s_dictionary" domainObjectName="Dictionary" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
-        <!--<table tableName="s_menu" domainObjectName="Menu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
-        <!--<table tableName="s_page_role" domainObjectName="PageRole" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
-        <!--<table tableName="s_role_menu" domainObjectName="RoleMenu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
-        <!--<table tableName="s_roles" domainObjectName="Roles" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
-        <!--<table tableName="s_user_info" domainObjectName="UserInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
-        <!--<table tableName="s_users" domainObjectName="Users" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
+        <table tableName="t_wechat" domainObjectName="Wechat" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="t_wechat_custom_message" domainObjectName="WechatCustomMessage" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="t_wechat_log" domainObjectName="WechatLog" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="t_wechat_mass_history" domainObjectName="WechatMassHistory" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="t_wechat_media" domainObjectName="WechatMedia" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="t_wechat_menu" domainObjectName="WechatMenu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="t_wechat_qrcode" domainObjectName="WechatQrcode" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="t_wechat_reply" domainObjectName="WechatReply" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="t_wechat_rule_keywords" domainObjectName="WechatRuleKeywords" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="t_wechat_template" domainObjectName="WechatTemplate" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
 
         <!-- 数据表 -->
     </context>
-    <!--
+    <!-- 系统
     <table tableName="s_dictionary" domainObjectName="Dictionary" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
     <table tableName="s_menu" domainObjectName="Menu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
     <table tableName="s_page_role" domainObjectName="PageRole" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
@@ -51,5 +54,18 @@
     <table tableName="s_roles" domainObjectName="Roles" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
     <table tableName="s_user_info" domainObjectName="UserInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
     <table tableName="s_users" domainObjectName="Users" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+
+          微信
+    <table tableName="t_wechat" domainObjectName="Wechat" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+    <table tableName="t_wechat_custom_message" domainObjectName="WechatCustomMessage" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+    <table tableName="t_wechat_log" domainObjectName="WechatLog" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+    <table tableName="t_wechat_mass_history" domainObjectName="WechatMassHistory" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+    <table tableName="t_wechat_media" domainObjectName="WechatMedia" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+    <table tableName="t_wechat_menu" domainObjectName="WechatMenu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+    <table tableName="t_wechat_qrcode" domainObjectName="WechatQrcode" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+    <table tableName="t_wechat_reply" domainObjectName="WechatReply" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+    <table tableName="t_wechat_rule_keywords" domainObjectName="WechatRuleKeywords" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+    <table tableName="t_wechat_template" domainObjectName="WechatTemplate" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+
     -->
 </generatorConfiguration>
