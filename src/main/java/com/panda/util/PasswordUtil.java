@@ -5,7 +5,7 @@ import com.panda.model.system.Users;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 
-public class PasswordHelper {
+public class PasswordUtil {
 
     private String algorithmName = "md5";
 
@@ -21,7 +21,7 @@ public class PasswordHelper {
      * @param args
      */
     public static void main(String[] args) {
-        PasswordHelper passwordHelper = new PasswordHelper();
+        PasswordUtil passwordHelper = new PasswordUtil();
         Users user = new Users();
         user.setId("0f1443aa-eade-410d-b8bf-74ebfa914ca4");
         user.setAccount("morgan");
