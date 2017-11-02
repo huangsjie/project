@@ -14,6 +14,8 @@ import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -47,6 +49,11 @@ public class ShiroConfig {
     @Value("${spring.redis.password}")
     private String passowrd;
 
+    @Value("${panda.cache.second}")
+    private int second;
+
+    private static final Logger logger = LoggerFactory.getLogger(DruidConfig.class);
+
     @Bean
     public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
@@ -65,9 +72,7 @@ public class ShiroConfig {
      */
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager){
-        System.out.println("ShiroConfiguration.shirFilter()");
         ShiroFilterFactoryBean shiroFilterFactoryBean  = new ShiroFilterFactoryBean();
-
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
@@ -89,8 +94,9 @@ public class ShiroConfig {
         //<!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
         //自定义加载权限资源关系
-        List<Menu> menuListList = menuService.selectAll();
-         for(Menu menu:menuListList){
+        List<Menu> menuList = menuService.selectAll();
+        logger.info("--------------->ShiroConfiguration.shirFilter()--------------------->>自定义加载权限资源关系");
+         for(Menu menu:menuList){
             if (StringUtil.isNotEmpty(menu.getUrl())) {
                 String permission = "perms[" + menu.getUrl()+ "]";
                 filterChainDefinitionMap.put(menu.getUrl(),permission);
@@ -159,7 +165,7 @@ public class ShiroConfig {
         RedisManager redisManager = new RedisManager();
         redisManager.setHost(host);
         redisManager.setPort(port);
-        redisManager.setExpire(1800);// 配置缓存过期时间
+        redisManager.setExpire(second);// 配置缓存过期时间
         redisManager.setTimeout(timeout);
         redisManager.setPassword(passowrd);
         return redisManager;

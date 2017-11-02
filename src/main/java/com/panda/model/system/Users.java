@@ -34,7 +34,7 @@ public class Users implements Serializable {
 
     private String modifyId;
 
-    private List<Roles> roleList;
+    private List<Menu> menuList;
 
     public String getId() {
         return id;
@@ -148,12 +148,12 @@ public class Users implements Serializable {
         this.modifyId = modifyId == null ? null : modifyId.trim();
     }
 
-    public List<Roles> getRoleList() {
-        return roleList;
+    public List<Menu> getMenuList() {
+        return menuList;
     }
 
-    public void setRoleList(List<Roles> roleList) {
-        this.roleList = roleList;
+    public void setMenuList(List<Menu> menuList) {
+        this.menuList = menuList;
     }
 
     public String getCredentialsSalt() {

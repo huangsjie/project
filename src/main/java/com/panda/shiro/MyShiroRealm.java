@@ -1,5 +1,6 @@
 package com.panda.shiro;
 
+import com.panda.controller.system.index.LoginController;
 import com.panda.model.system.Menu;
 import com.panda.model.system.Users;
 import com.panda.service.system.MenuService;
@@ -12,6 +13,8 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -29,14 +32,15 @@ public class MyShiroRealm extends AuthorizingRealm {
     @Resource
     private MenuService menuService;
 
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     //授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("userid",user.getId());
-
-        List<Menu> menuList = menuService.selectAll();
+        logger.info("---------->----------->URL授权------> doGetAuthorizationInfo !");
+        List<Menu> menuList = user.getMenuList();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         for(Menu menu: menuList){
             info.addStringPermission(menu.getUrl());

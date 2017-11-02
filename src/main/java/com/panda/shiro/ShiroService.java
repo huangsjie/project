@@ -1,6 +1,7 @@
 package com.panda.shiro;
 
 import com.github.pagehelper.util.StringUtil;
+import com.panda.config.DruidConfig;
 import com.panda.model.system.Menu;
 import com.panda.service.system.MenuService;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -8,6 +9,8 @@ import org.apache.shiro.web.filter.mgt.DefaultFilterChainManager;
 import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.crazycake.shiro.RedisSessionDAO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +19,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by yangqj on 2017/4/30.
+ * Created with IDEA.
+ *
+ * @AUTH: Alan
+ * Date: 2017/10/21
+ * Time: 18:27
  */
 @Service
 public class ShiroService {
@@ -26,6 +33,8 @@ public class ShiroService {
     private MenuService menuService;
     @Autowired
     private RedisSessionDAO redisSessionDAO;
+
+    private static final Logger logger = LoggerFactory.getLogger(DruidConfig.class);
     /**
      * 初始化权限
      */
@@ -35,6 +44,8 @@ public class ShiroService {
         filterChainDefinitionMap.put("/logout", "logout");
         filterChainDefinitionMap.put("/static/**","anon");
         List<Menu> menuList = menuService.selectAll();
+
+        logger.info("--------------->loadFilterChainDefinitions--------------------->>初始化权限");
         for(Menu menu:menuList){
             if (StringUtil.isNotEmpty(menu.getUrl())) {
                 String permission = "perms[" + menu.getUrl()+ "]";

@@ -36,11 +36,6 @@ public abstract class AbstractServiceImpl<T> implements AbstractService<T> {
     }
 
     @Override
-    public List<T> selectAll(){
-        return getAbstractMapper().selectAll();
-    }
-
-    @Override
     public int updateByPrimaryKey(T entity){
         return getAbstractMapper().updateByPrimaryKey(entity);
     }

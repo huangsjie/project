@@ -22,8 +22,6 @@ public interface AbstractService<T> {
 
     T selectByPrimaryKey(String id);
 
-    List<T> selectAll();
-
     int updateByPrimaryKey(T entity);
 
     int updateByPrimaryKeySelective(T entity);

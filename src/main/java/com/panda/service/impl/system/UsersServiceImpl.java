@@ -1,5 +1,6 @@
 package com.panda.service.impl.system;
 
+import com.panda.service.system.MenuService;
 import com.panda.util.abs.AbstractMapper;
 import com.panda.util.abs.AbstractServiceImpl;
 import com.panda.mapper.system.UsersMapper;
@@ -23,10 +24,7 @@ public class UsersServiceImpl extends AbstractServiceImpl<Users> implements User
     private UsersMapper usersMapper;
 
     @Resource
-    private RoleMenuService roleMenuService;
-
-    @Resource
-    private RolesService rolesService;
+    private MenuService menuService;
 
     @Override
     protected AbstractMapper<Users> getAbstractMapper() {
@@ -35,6 +33,14 @@ public class UsersServiceImpl extends AbstractServiceImpl<Users> implements User
 
     @Override
     public Users selectManagerAccount(String account) {
-        return usersMapper.selectManagerAccount(account);
+        Users user = usersMapper.selectManagerAccount(account);
+        try {
+            if(user != null){
+                user.setMenuList(menuService.selectManagerAuthMenu(user.getRoleId()));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return user;
     }
 }

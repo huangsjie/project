@@ -16,6 +16,19 @@ import java.util.Map;
 public interface MenuService extends AbstractService<Menu>{
 
     /**
+     * 获取所有菜单
+     * @return
+     */
+    List<Menu> selectAll();
+
+    /**
+     * 获取当前角色授权菜单
+     * @param roleId
+     * @return
+     */
+    List<Menu>selectManagerAuthMenu(String roleId);
+
+    /**
      * 获取当前管理员所拥有的菜单列表
      * @param map
      * @return
