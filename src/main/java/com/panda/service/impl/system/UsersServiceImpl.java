@@ -35,7 +35,7 @@ public class UsersServiceImpl extends AbstractServiceImpl<Users> implements User
     public Users selectManagerAccount(String account) {
         Users user = usersMapper.selectManagerAccount(account);
         try {
-            if(user != null){
+            if(user != null && user.getRoleId() != null){
                 user.setMenuList(menuService.selectManagerAuthMenu(user.getRoleId()));
             }
         }catch (Exception e){

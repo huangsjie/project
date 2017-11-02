@@ -196,7 +196,7 @@
     modify_id = #{modifyId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <select id="selectManagerAccount" resultType="com.panda.model.system.Users" parameterType="map">
+  <select id="selectManagerAccount" resultMap="BaseResultMap" parameterType="map">
     SELECT
     <include refid="Base_Column_List" />
     FROM

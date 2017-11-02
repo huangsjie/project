@@ -41,6 +41,9 @@ public class MyShiroRealm extends AuthorizingRealm {
         map.put("userid",user.getId());
         logger.info("---------->----------->URL授权------> doGetAuthorizationInfo !");
         List<Menu> menuList = user.getMenuList();
+        if(menuList == null){
+            menuList = menuService.selectManagerAuthMenu(user.getRoleId());
+        }
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         for(Menu menu: menuList){
             info.addStringPermission(menu.getUrl());

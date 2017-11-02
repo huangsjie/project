@@ -209,14 +209,7 @@
           s_role_menu rm, s_menu m
         WHERE
           1 = 1
-        <if test="roleId != null and roleId != ''">
-            AND rm.role_id = #{roleId}
-        </if>
+        AND rm.role_id = #{roleId}
         AND rm.menu_id = m.id
-        <if test="parentId != null and parentId != ''">
-            AND m.parent_id = #{parentId}
-        </if>
-        GROUP BY rm.menu_id
     </select>
-
 </mapper>

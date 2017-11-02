@@ -37,7 +37,7 @@ public class IndexController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/main",method= RequestMethod.GET)
+    @RequestMapping(value = "/main")
     public String main(Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         Map<String,String> map = new HashMap<String,String>(2);
