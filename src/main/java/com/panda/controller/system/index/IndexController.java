@@ -1,10 +1,9 @@
-package com.panda.controller.system;
+package com.panda.controller.system.index;
 
 import com.panda.model.system.Menu;
 import com.panda.model.system.Users;
 import com.panda.service.system.MenuService;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.ui.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import com.panda.service.system.UsersService;
 
 import javax.annotation.Resource;
@@ -28,15 +26,15 @@ import java.util.Map;
  * Time: 15:25
  */
 @Controller
-@RequestMapping(value = "/system")
+@RequestMapping(value = "/system/index")
 public class IndexController {
 
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
-    @Autowired
+    @Resource
     private UsersService usersService;
 
-    @Autowired
+    @Resource
     private MenuService menuService;
 
     @RequestMapping(value = "/main",method= RequestMethod.GET)

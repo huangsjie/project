@@ -8,7 +8,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Created by yangqj on 2017/4/19.
+ * Created with IDEA.
+ * User: Alan
+ * Date: 2017/11/2
+ * Time: 10:19
  */
 @Configuration
 public class DruidConfig {

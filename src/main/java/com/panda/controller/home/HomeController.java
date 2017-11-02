@@ -21,7 +21,8 @@ import java.util.UUID;
  */
 @Controller
 public class HomeController {
-    @Autowired
+
+    @Resource
     private UsersService usersService;
 
     @RequestMapping({"/","/thy"})

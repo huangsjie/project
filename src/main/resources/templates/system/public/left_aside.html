@@ -37,7 +37,7 @@
                 <a href="#" class="m-menu__link m-menu__toggle">
                     <i class="m-menu__link-icon " th:classappend="${menu.iconClass}"></i>
                     <span class="m-menu__link-text" th:text="${menu.name}"></span>
-                    <i class="m-menu__ver-arrow la la-angle-right"></i>
+                    <i class="m-menu__ver-arrow la la-angle-right" th:if="${menu.childMenuList != null}"></i>
                 </a>
                 <!-- child -->
                 <div class="m-menu__submenu">
@@ -50,12 +50,12 @@
                         </li>
                         <li class="m-menu__item  m-menu__item--submenu" th:each="child : ${menu.childMenuList}" aria-haspopup="true"
                             data-menu-submenu-toggle="hover">
-                            <a href="#" class="m-menu__link m-menu__toggle">
+                            <a th:href="${child.url}" class="m-menu__link m-menu__toggle">
                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                     <span></span>
                                 </i>
                                 <span class="m-menu__link-text" th:text="${child.name}"></span>
-                                <i class="m-menu__ver-arrow la la-angle-right"></i>
+                                <i class="m-menu__ver-arrow la la-angle-right" th:if="${child.childMenuList != null}"></i>
                             </a>
                         </li>
                     </ul>

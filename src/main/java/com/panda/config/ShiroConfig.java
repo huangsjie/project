@@ -1,6 +1,5 @@
 package com.panda.config;
 
-//import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.github.pagehelper.util.StringUtil;
 import com.panda.model.system.Menu;
 import com.panda.model.system.RoleMenu;
@@ -27,7 +26,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by yangqj on 2017/4/23.
+ * Created with IDEA.
+ * User: Alan
+ * Date: 2017/11/2
+ * Time: 10:19
  */
 @Configuration
 public class ShiroConfig {
@@ -53,14 +55,6 @@ public class ShiroConfig {
     }
 
     /**
-     * ShiroDialect，为了在thymeleaf 2.0 里使用shiro的标签的bean
-     * @return
-     */
-//    @Bean
-//    public ShiroDialect shiroDialect() {
-//        return new ShiroDialect();
-//    }
-    /**
      * ShiroFilterFactoryBean 处理拦截资源文件问题。
      * 注意：单独一个ShiroFilterFactoryBean配置是或报错的，因为在
      * 初始化ShiroFilterFactoryBean的时候需要注入：SecurityManager
@@ -81,7 +75,7 @@ public class ShiroConfig {
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
         shiroFilterFactoryBean.setLoginUrl("/system/login");
         // 登录成功后要跳转的链接
-        shiroFilterFactoryBean.setSuccessUrl("/system/main");
+        shiroFilterFactoryBean.setSuccessUrl("/system/index/main");
         //未授权界面;
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         //拦截器.

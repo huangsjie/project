@@ -11,14 +11,16 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 /**
- * Created by yangqj on 2017/4/30.
+ * Created with IDEA.
+ * User: Alan
+ * Date: 2017/11/2
+ * Time: 10:19
  */
 @Configuration
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
 
     private Logger logger = LoggerFactory.getLogger(DruidConfig.class);
-
 
     @Value("${spring.redis.host}")
     private String host;
@@ -37,13 +39,12 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean
     public JedisPool redisPoolFactory() {
-        logger.info("JedisPool注入成功！！");
-        logger.info("redis地址：" + host + ":" + port);
+        logger.info("------------->JedisPool注入成功！！");
+        logger.info("------------->redis地址：" + host + ":" + port);
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxIdle(maxIdle);
         jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
         JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout);
         return jedisPool;
     }
-
 }

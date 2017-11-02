@@ -1,4 +1,4 @@
-package com.panda.controller.system;
+package com.panda.controller.system.index;
 
 import com.panda.model.system.Users;
 import com.panda.service.system.UsersService;
@@ -53,7 +53,7 @@ public class LoginController {
     public String login(HttpServletRequest request, Map<String, Object> map)throws Exception{
         Subject currentUser = SecurityUtils.getSubject();
         if (currentUser.isAuthenticated()) {
-            return "redirect:/system/main";
+            return "redirect:/system/index/main";
         }
         return "system/login";
     }
@@ -106,7 +106,7 @@ public class LoginController {
     public String logout(RedirectAttributes redirectAttributes ){
         SecurityUtils.getSubject().logout();
         redirectAttributes.addFlashAttribute("message", "您已安全退出");
-        return "redirect:/admin/login";
+        return "redirect:/system/login";
     }
 
     /**
