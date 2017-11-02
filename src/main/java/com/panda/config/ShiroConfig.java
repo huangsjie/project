@@ -2,8 +2,6 @@ package com.panda.config;
 
 import com.github.pagehelper.util.StringUtil;
 import com.panda.model.system.Menu;
-import com.panda.model.system.RoleMenu;
-import com.panda.service.system.RoleMenuService;
 import com.panda.service.system.MenuService;
 import com.panda.shiro.MyShiroRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;

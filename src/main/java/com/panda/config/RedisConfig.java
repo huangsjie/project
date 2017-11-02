@@ -22,6 +22,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     private Logger logger = LoggerFactory.getLogger(DruidConfig.class);
 
+
     @Value("${spring.redis.host}")
     private String host;
 
@@ -47,4 +48,5 @@ public class RedisConfig extends CachingConfigurerSupport {
         JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout);
         return jedisPool;
     }
+
 }
