@@ -37,7 +37,7 @@ public class IndexController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/main")
+    @RequestMapping(value = "/main",method= RequestMethod.GET)
     public String main(Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         Map<String,String> map = new HashMap<String,String>(2);
@@ -50,6 +50,10 @@ public class IndexController {
     }
 
 
+    /**
+     * 测试
+     * @return
+     */
     @RequestMapping(value = "/menu",method= RequestMethod.GET)
     @ResponseBody
     public List<Menu> getMenu(){

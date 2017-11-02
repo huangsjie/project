@@ -66,24 +66,7 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
      */
     @Override
     public List<Menu>selectManagerAuthMenu(String roleId){
-        Jedis jedis = jedisPool.getResource();
-        List<Menu> menuList = null;
-        try {
-            String cacheMenuList = "role_auth_menu_list:"+roleId;
-            byte[] byteMenuList = jedis.get(cacheMenuList.getBytes());
-            if(byteMenuList != null){
-                //缓存有效
-                logger.info("------->"+cacheMenuList+" 获取缓存中的 menuList !");
-                menuList = (ArrayList) SerializeUtil.unserialize(byteMenuList);
-            }else {
-                menuList = menuMapper.selectManagerAuthMenu(roleId);
-                logger.info("------->"+cacheMenuList+" 创建 menuList 缓存数据 !");
-                jedis.setex(cacheMenuList.getBytes(), second ,SerializeUtil.serialize(menuList));
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return menuList;
+        return menuMapper.selectManagerAuthMenu(roleId);
     }
 
     /**
@@ -93,16 +76,16 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
      */
     @Override
     public List<Menu> selectManagerRoleMenuList(Map<String,String> map){
-        Jedis jedis = jedisPool.getResource();
+       // Jedis jedis = jedisPool.getResource();
         List<Menu> menuList = null;
         try {
-            String cacheMenuList = "manager_menu_list:"+map.get("userId");
-            byte[] byteMenuList = jedis.get(cacheMenuList.getBytes());
-            if(byteMenuList != null){
+//            String cacheMenuList = "manager_menu_list:"+map.get("userId");
+//            byte[] byteMenuList = jedis.get(cacheMenuList.getBytes());
+//            if(byteMenuList != null){
                 //缓存有效
-                logger.info("------->"+cacheMenuList+" 获取缓存中的 menuList !");
-                menuList = (ArrayList) SerializeUtil.unserialize(byteMenuList);
-            }else{
+//                logger.info("------->"+cacheMenuList+" 获取缓存中的 menuList !");
+//                menuList = (ArrayList) SerializeUtil.unserialize(byteMenuList);
+//            }else{
                 //缓存无效
                 menuList = menuMapper.selectManagerRoleMenuList(map);
                 if(menuList != null && menuList.size() > 0){
@@ -115,10 +98,10 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
                             menu.setChildMenuList(chilList);
                         }
                     }
-                    logger.info("------->"+cacheMenuList+" 创建 menuList 缓存数据 !");
-                    jedis.setex(cacheMenuList.getBytes(), second ,SerializeUtil.serialize(menuList));
+                   // logger.info("------->"+cacheMenuList+" 创建 menuList 缓存数据 !");
+                   // jedis.setex(cacheMenuList.getBytes(), second ,SerializeUtil.serialize(menuList));
                 }
-            }
+           // }
         }catch (Exception e){
             e.printStackTrace();
             logger.info("------->selectManagerRoleMenuList"+e.getMessage());
