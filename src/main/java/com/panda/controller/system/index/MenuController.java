@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -37,13 +38,20 @@ public class MenuController {
     @RequestMapping(value = "/list",method= RequestMethod.GET)
     public String getMenuList(Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        Map<String,String> map = new HashMap<String,String>(2);
-        map.put("userId",user.getId());
-        map.put("parentId","10000000-0000-0000-0000-000000000000");
-        List<Menu> menuList = menuService.selectManagerRoleMenuList(map);
-        model.addAttribute("menuList",menuList);
+        model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
         return "system/index/getMenuList";
+    }
+
+    /**
+     * 获取菜单数据列表
+     * @return
+     */
+    @RequestMapping(value = "/getMenuListData",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getMenuListData(){
+        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+        return user.getMenuList();
     }
 
     /**

@@ -40,11 +40,7 @@ public class IndexController {
     @RequestMapping(value = "/main",method= RequestMethod.GET)
     public String main(Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        Map<String,String> map = new HashMap<String,String>(2);
-        map.put("userId",user.getId());
-        map.put("parentId","10000000-0000-0000-0000-000000000000");
-        List<Menu> menuList = menuService.selectManagerRoleMenuList(map);
-        model.addAttribute("menuList",menuList);
+        model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
         return "system/index/main";
     }
