@@ -38,7 +38,8 @@ public class MenuController {
     @RequestMapping(value = "/list",method= RequestMethod.GET)
     public String getMenuList(Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        model.addAttribute("menuList",user.getMenuList());
+        List<Menu> menuList = user.getMenuList();
+        model.addAttribute("menuList",menuList);
         model.addAttribute("user",user);
         return "system/index/getMenuList";
     }

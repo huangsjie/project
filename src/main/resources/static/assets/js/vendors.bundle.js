@@ -56758,7 +56758,7 @@ $.validator.addMethod( "creditcard", function( value, element ) {
 	}
 
 	return ( nCheck % 10 ) === 0;
-}, "Please enter a valid credit card number." );
+}, "请输入有效的信用卡号." );
 
 /* NOTICE: Modified version of Castle.Components.Validator.CreditCardValidator
  * Redistributed under the the Apache License 2.0 at http://www.apache.org/licenses/LICENSE-2.0
@@ -57242,7 +57242,7 @@ $.validator.addMethod( "pattern", function( value, element, param ) {
  */
 $.validator.addMethod( "phoneNL", function( value, element ) {
 	return this.optional( element ) || /^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)[1-9]((\s|\s?\-\s?)?[0-9]){8}$/.test( value );
-}, "Please specify a valid phone number." );
+}, "请输入一个有效的电话号码." );
 
 /* For UK phone functions, do the following server side processing:
  * Compare original input with this RegEx pattern:
@@ -57258,7 +57258,7 @@ $.validator.addMethod( "phonesUK", function( phone_number, element ) {
 	phone_number = phone_number.replace( /\(|\)|\s+|-/g, "" );
 	return this.optional( element ) || phone_number.length > 9 &&
 		phone_number.match( /^(?:(?:(?:00\s?|\+)44\s?|0)(?:1\d{8,9}|[23]\d{9}|7(?:[1345789]\d{8}|624\d{6})))$/ );
-}, "Please specify a valid uk phone number" );
+}, "请输入一个有效的英国电话号码." );
 
 /* For UK phone functions, do the following server side processing:
  * Compare original input with this RegEx pattern:
@@ -57272,7 +57272,7 @@ $.validator.addMethod( "phoneUK", function( phone_number, element ) {
 	phone_number = phone_number.replace( /\(|\)|\s+|-/g, "" );
 	return this.optional( element ) || phone_number.length > 9 &&
 		phone_number.match( /^(?:(?:(?:00\s?|\+)44\s?)|(?:\(?0))(?:\d{2}\)?\s?\d{4}\s?\d{4}|\d{3}\)?\s?\d{3}\s?\d{3,4}|\d{4}\)?\s?(?:\d{5}|\d{3}\s?\d{3})|\d{5}\)?\s?\d{4,5})$/ );
-}, "Please specify a valid phone number" );
+}, "请输入一个有效的电话号码" );
 
 /**
  * Matches US phone number format
@@ -57294,7 +57294,7 @@ $.validator.addMethod( "phoneUS", function( phone_number, element ) {
 	phone_number = phone_number.replace( /\s+/g, "" );
 	return this.optional( element ) || phone_number.length > 9 &&
 		phone_number.match( /^(\+?1-?)?(\([2-9]([02-9]\d|1[02-9])\)|[2-9]([02-9]\d|1[02-9]))-?[2-9]([02-9]\d|1[02-9])-?\d{4}$/ );
-}, "Please specify a valid phone number" );
+}, "请输入一个有效的电话号码" );
 
 /*
 * Valida CEPs do brasileiros:

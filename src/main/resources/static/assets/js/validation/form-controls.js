@@ -1,8 +1,6 @@
 //== Class definition
 
 var FormControls = function () {
-    //== Private functions
-    
     var demo1 = function () {
         $( "#m_form_1" ).validate({
             // define validation rules

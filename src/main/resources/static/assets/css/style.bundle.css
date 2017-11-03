@@ -7528,8 +7528,7 @@ code {
           display: table-cell;
           vertical-align: middle;
           font-size: 1.3rem;
-          font-weight: 500;
-          font-family: "Roboto"; }
+          font-weight: 500;}
           .m-portlet .m-portlet__head .m-portlet__head-caption .m-portlet__head-title .m-portlet__head-text small {
             display: inline-block;
             padding-left: 5px;
@@ -7785,8 +7784,7 @@ code {
       color: #716aca; }
   .m-portlet .m-portlet__body {
     color: #575962; }
-  .m-portlet .m-portlet__foot:not(.m-portlet__no-border) {
-    border-top: 1px solid #ebedf2; }
+ 
     .m-portlet .m-portlet__foot:not(.m-portlet__no-border).m-portlet__foot--top {
       border-top: 0;
       border-bottom: 1px solid #ebedf2; }
@@ -13382,8 +13380,7 @@ code {
 
 .m-form .m-form__group {
   margin-bottom: 0;
-  padding-top: 15px;
-  padding-bottom: 15px; }
+  }
   .m-form .m-form__group label {
     font-weight: 400; }
     .m-form .m-form__group label.col-form-label {
@@ -14035,7 +14032,7 @@ code {
 
 .jstree-default .jstree-clicked {
   border: 0;
-  background: #ebedf2;
+  background: #dddee0;
   box-shadow: none; }
 
 .jstree-default .jstree-hovered {

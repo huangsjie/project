@@ -15,7 +15,6 @@
         <div th:replace="~{system/public/left_aside :: left_aside}"></div>
         <!-- END: Left Aside -->
         <div class="m-grid__item m-grid__item--fluid m-wrapper">
-
             <!--BEGIN: Main Portlet-->
             <div class="m-content">
                 <div class="row">
@@ -26,13 +25,34 @@
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
                                         <h3 class="m-portlet__head-text">
-                                            Contextual Menu
+                                            菜单
                                         </h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="m-portlet__body">
-                                <div id="m_tree_4" class="tree-demo"></div>
+                                <div id="menu_tree" class="tree-demo">
+                                    <ul style="display: none;">
+                                        <li>
+                                            Root
+                                            <ul>
+                                                <li data-jstree='{"selected":true,"disabled" : true}'>
+                                                    <a href="javascript:;">Dashboard</a>
+                                                </li>
+                                                <li th:each="menu : ${menuList}" data-jstree='{"opened":true,"icon":"fa fa-folder m--font-danger"}'>
+                                                    <a class="tree_a" href="javascript:;" th:text="${menu.name}" th:attr="menu=${menu.id}"></a>
+                                                    <!-- child -->
+                                                    <ul th:if="${menu.childMenuList != null}">
+                                                        <li th:each="child : ${menu.childMenuList}" data-jstree='{ "opened":true,"icon":"fa fa-folder m--font-success"}'>
+                                                            <a class="tree_a" href="javascript:;" th:text="${child.name}" th:attr="menu=${child.id}"></a>
+                                                        </li>
+                                                    </ul>
+                                                    <!-- child -->
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <!--end::Portlet-->
@@ -44,7 +64,7 @@
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
                                         <h3 class="m-portlet__head-text">
-                                            Inputs Highlighted Validation State
+                                            菜单编辑与新增
                                         </h3>
                                     </div>
                                 </div>
@@ -52,95 +72,119 @@
                             <!--begin::Form-->
                             <form class="m-form m-form--state m-form--fit m-form--label-align-right" id="m_form_2" novalidate="novalidate">
                                 <div class="m-portlet__body">
-                                    <div class="form-group m-form__group row has-danger">
+                                    <div class="form-group m-form__group row">
                                         <label class="col-form-label col-lg-3 col-sm-12">
-                                            Email *
+                                            名称 *
                                         </label>
                                         <div class="col-lg-4 col-md-9 col-sm-12">
-                                            <input type="text" class="form-control m-input" name="email" placeholder="Enter your email" aria-describedby="email-error">
-                                            <div id="email-error" class="form-control-feedback">This field is required.</div><span class="m-form__help">
-												We'll never share your email with anyone else.
+                                            <input type="text" class="form-control m-input" name="name" placeholder="菜单名称">
+                                            <span class="m-form__help">
 											</span>
                                         </div>
                                     </div>
-                                    <div class="form-group m-form__group row has-danger">
+                                    <div class="form-group m-form__group row">
                                         <label class="col-form-label col-lg-3 col-sm-12">
                                             URL *
                                         </label>
                                         <div class="col-lg-4 col-md-9 col-sm-12">
                                             <div class="input-group">
-                                                <input type="text" class="form-control m-input" name="url" placeholder="Enter your url" aria-describedby="url-error">
                                                 <span class="input-group-addon">
-													.via.com
+													/system/
 												</span>
+                                                <input type="text" class="form-control m-input" name="url" placeholder="菜单 url">
                                             </div>
-                                            <div id="url-error" class="form-control-feedback">This field is required.</div><span class="m-form__help">
-												Please enter your website URL.
+                                            <span class="m-form__help">
 											</span>
                                         </div>
                                     </div>
-                                    <div class="form-group m-form__group row has-danger">
+                                    <div class="form-group m-form__group row">
                                         <label class="col-form-label col-lg-3 col-sm-12">
-                                            Digits
+                                            排序 *
                                         </label>
                                         <div class="col-lg-4 col-md-9 col-sm-12">
                                             <div class="m-input-icon m-input-icon--left">
-                                                <input type="text" class="form-control m-input" name="digits" placeholder="Enter digits" aria-describedby="digits-error">
+                                                <input type="text" class="form-control m-input" name="sortId" placeholder="菜单排序">
                                                 <span class="m-input-icon__icon m-input-icon__icon--left">
 													<span>
 														<i class="la la-calculator"></i>
 													</span>
 												</span>
                                             </div>
-                                            <div id="digits-error" class="form-control-feedback">This field is required.</div><span class="m-form__help">
-												Please enter only digits
+                                            <span class="m-form__help">
 											</span>
                                         </div>
                                     </div>
-                                    <div class="form-group m-form__group row has-danger">
+                                    <div class="form-group m-form__group row">
                                         <label class="col-form-label col-lg-3 col-sm-12">
-                                            Credit Card
+                                            上级 *
                                         </label>
                                         <div class="col-lg-4 col-md-9 col-sm-12">
                                             <div class="input-group">
-                                                <input type="text" class="form-control m-input" name="creditcard" placeholder="Enter card number" aria-describedby="creditcard-error">
+                                                <input type="text" class="form-control m-input" name="parentId" placeholder="上级菜单">
                                                 <span class="input-group-addon">
 													<i class="la la-credit-card"></i>
 												</span>
                                             </div>
-                                            <div id="creditcard-error" class="form-control-feedback">This field is required.</div><span class="m-form__help">
-												Please enter your credit card number
+                                            <span class="m-form__help">
 											</span>
                                         </div>
                                     </div>
-                                    <div class="form-group m-form__group row has-danger">
+                                    <div class="form-group m-form__group row">
                                         <label class="col-form-label col-lg-3 col-sm-12">
-                                            US Phone
+                                            Icon *
                                         </label>
                                         <div class="col-lg-4 col-md-9 col-sm-12">
                                             <div class="input-group">
-                                                <input type="text" class="form-control m-input" name="phone" placeholder="Enter phone" aria-describedby="phone-error">
-                                                <span class="input-group-btn">
-													<a href="#" class="btn btn-brand">
-														<i class="la la-phone"></i>
-													</a>
+                                                <span class="input-group-addon">
+													flaticon-
 												</span>
+                                                <input type="text" class="form-control m-input" name="iconClass" placeholder="菜单 Icon Class">
                                             </div>
-                                            <div id="phone-error" class="form-control-feedback">This field is required.</div><span class="m-form__help">
-												Please enter your US phone number
+                                            <span class="m-form__help">
 											</span>
                                         </div>
                                     </div>
+                                    <div class="form-group m-form__group row">
+                                        <label class="col-form-label col-lg-3 col-sm-12">
+                                            类型 *
+                                        </label>
+                                        <div class="col-lg-4 col-md-9 col-sm-12">
+                                            <select class="form-control m-input" name="type">
+                                                <option value="">
+                                                    Select
+                                                </option>
+                                                <option>
+                                                    后台
+                                                </option>
+                                                <option>
+                                                    前台
+                                                </option>
+                                            </select>
+                                            <span class="m-form__help">
+											</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label class="col-form-label col-lg-3 col-sm-12">
+                                            备注 *
+                                        </label>
+                                        <div class="col-lg-4 col-md-9 col-sm-12">
+                                            <textarea class="form-control m-input" name="description" placeholder="介绍用途等"></textarea>
+                                            <span class="m-form__help">
+											</span>
+                                        </div>
+                                    </div>
+                                    <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space"></div>
                                 </div>
                                 <div class="m-portlet__foot m-portlet__foot--fit">
                                     <div class="m-form__actions m-form__actions">
                                         <div class="row">
                                             <div class="col-lg-9 ml-lg-auto">
                                                 <button type="submit" class="btn btn-accent">
-                                                    Validate
+                                                    确定
                                                 </button>
                                                 <button type="reset" class="btn btn-secondary">
-                                                    Cancel
+                                                    返回
                                                 </button>
                                             </div>
                                         </div>
@@ -162,7 +206,6 @@
     <!-- end::Footer -->
 </div>
 <!-- end:: Page -->
-
 <!-- begin::Scroll Top -->
 <div class="m-scroll-top m-scroll-top--skin-top" data-toggle="m-scroll-top" data-scroll-offset="500"
      data-scroll-speed="300">
@@ -173,5 +216,6 @@
 <script th:src="@{/assets/js/scripts.bundle.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/base/treeview.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/validation/form-controls.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/system/menu.js}" type="text/javascript"></script>
 </body>
 </html>
