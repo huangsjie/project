@@ -57,6 +57,21 @@
                                 <span class="m-menu__link-text" th:text="${child.name}"></span>
                                 <i class="m-menu__ver-arrow la la-angle-right" th:if="${child.childMenuList != null}"></i>
                             </a>
+                            <!-- lastChild -->
+                            <div class="m-menu__submenu" style="display: block;" th:if="${child.childMenuList != null}">
+                                <span class="m-menu__arrow"></span>
+                                <ul class="m-menu__subnav" th:each="lastChild : ${child.childMenuList}">
+                                    <li class="m-menu__item " aria-haspopup="true">
+                                        <a th:href="${lastChild.url}" class="m-menu__link ">
+                                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="m-menu__link-text" th:text="${lastChild.name}"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- lastChild -->
                         </li>
                     </ul>
                 </div>

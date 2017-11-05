@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <!-- begin: head -->
 <div th:replace="system/public/head :: head"></div>
 <!-- end: head -->
@@ -25,7 +25,7 @@
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
                                         <h3 class="m-portlet__head-text">
-                                            菜单
+                                            菜单 Tree
                                         </h3>
                                     </div>
                                 </div>
@@ -33,7 +33,7 @@
                             <div class="m-portlet__body">
                                 <div id="menu_tree" class="tree-demo">
                                     <ul style="display: none;">
-                                        <li>
+                                        <li data-jstree='{"disabled" : true}'>
                                             Root
                                             <ul>
                                                 <li data-jstree='{"selected":true,"disabled" : true}'>
@@ -45,6 +45,16 @@
                                                     <ul th:if="${menu.childMenuList != null}">
                                                         <li th:each="child : ${menu.childMenuList}" data-jstree='{ "opened":true,"icon":"fa fa-folder m--font-success"}'>
                                                             <a class="tree_a" href="javascript:;" th:text="${child.name}" th:attr="menu=${child.id}"></a>
+                                                            <!-- lastChild -->
+                                                            <ul th:if="${child.childMenuList != null}">
+                                                                <li th:each="lastChild : ${child.childMenuList}"
+                                                                    data-jstree='{ "opened":true,"icon":"fa fa-file  m--font-warning"}'>
+                                                                    <a class="tree_a" href="javascript:;"
+                                                                       th:text="${lastChild.name}"
+                                                                       th:attr="menu=${lastChild.id}"></a>
+                                                                </li>
+                                                            </ul>
+                                                            <!-- lastChild -->
                                                         </li>
                                                     </ul>
                                                     <!-- child -->
@@ -52,6 +62,9 @@
                                             </ul>
                                         </li>
                                     </ul>
+                                </div>
+                                <div class="alert alert-success m--margin-top-10">
+                                    注意:菜单最大层级为三层<br>选中菜单进行编辑.
                                 </div>
                             </div>
                         </div>
@@ -64,19 +77,25 @@
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
                                         <h3 class="m-portlet__head-text">
-                                            菜单编辑与新增
+                                            菜单信息
                                         </h3>
                                     </div>
                                 </div>
                             </div>
                             <!--begin::Form-->
-                            <form class="m-form m-form--state m-form--fit m-form--label-align-right" id="m_form_2" novalidate="novalidate">
+                            <form class="m-form m-form--state m-form--fit m-form--label-align-right" id="menu_edit_form"
+                                  novalidate="novalidate">
+                                <input type="hidden" name="id" value="">
+                                <input type="hidden" name="save" value="add">
                                 <div class="m-portlet__body">
+                                    <!-- BEGIN: alert_msg -->
+                                    <div th:replace="~{system/public/alert_msg :: alert_msg}"></div>
+                                    <!-- END: alert_msg -->
                                     <div class="form-group m-form__group row">
                                         <label class="col-form-label col-lg-3 col-sm-12">
                                             名称 *
                                         </label>
-                                        <div class="col-lg-4 col-md-9 col-sm-12">
+                                        <div class="col-lg-6 col-md-9 col-sm-12">
                                             <input type="text" class="form-control m-input" name="name" placeholder="菜单名称">
                                             <span class="m-form__help">
 											</span>
@@ -86,10 +105,10 @@
                                         <label class="col-form-label col-lg-3 col-sm-12">
                                             URL *
                                         </label>
-                                        <div class="col-lg-4 col-md-9 col-sm-12">
+                                        <div class="col-lg-6 col-md-9 col-sm-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-													/system/
+													如：/system/x/x
 												</span>
                                                 <input type="text" class="form-control m-input" name="url" placeholder="菜单 url">
                                             </div>
@@ -101,7 +120,7 @@
                                         <label class="col-form-label col-lg-3 col-sm-12">
                                             排序 *
                                         </label>
-                                        <div class="col-lg-4 col-md-9 col-sm-12">
+                                        <div class="col-lg-6 col-md-9 col-sm-12">
                                             <div class="m-input-icon m-input-icon--left">
                                                 <input type="text" class="form-control m-input" name="sortId" placeholder="菜单排序">
                                                 <span class="m-input-icon__icon m-input-icon__icon--left">
@@ -118,14 +137,13 @@
                                         <label class="col-form-label col-lg-3 col-sm-12">
                                             上级 *
                                         </label>
-                                        <div class="col-lg-4 col-md-9 col-sm-12">
-                                            <div class="input-group">
-                                                <input type="text" class="form-control m-input" name="parentId" placeholder="上级菜单">
-                                                <span class="input-group-addon">
-													<i class="la la-credit-card"></i>
-												</span>
-                                            </div>
+                                        <div class="col-lg-6 col-md-9 col-sm-12">
+                                            <select class="form-control m-input" name="parentId">
+                                                <option value="">请选择</option>
+                                                <option th:each="menu : ${authMenu}" th:text="${menu.name}" th:value="${menu.id}"></option>
+                                            </select>
                                             <span class="m-form__help">
+                                                <i class="jstree-icon jstree-ocl" role="presentation"></i>
 											</span>
                                         </div>
                                     </div>
@@ -133,10 +151,10 @@
                                         <label class="col-form-label col-lg-3 col-sm-12">
                                             Icon *
                                         </label>
-                                        <div class="col-lg-4 col-md-9 col-sm-12">
+                                        <div class="col-lg-6 col-md-9 col-sm-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-													flaticon-
+													如：flaticon-xxx
 												</span>
                                                 <input type="text" class="form-control m-input" name="iconClass" placeholder="菜单 Icon Class">
                                             </div>
@@ -148,15 +166,15 @@
                                         <label class="col-form-label col-lg-3 col-sm-12">
                                             类型 *
                                         </label>
-                                        <div class="col-lg-4 col-md-9 col-sm-12">
+                                        <div class="col-lg-6 col-md-9 col-sm-12">
                                             <select class="form-control m-input" name="type">
                                                 <option value="">
                                                     Select
                                                 </option>
-                                                <option>
+                                                <option value="1">
                                                     后台
                                                 </option>
-                                                <option>
+                                                <option value="2">
                                                     前台
                                                 </option>
                                             </select>
@@ -168,7 +186,7 @@
                                         <label class="col-form-label col-lg-3 col-sm-12">
                                             备注 *
                                         </label>
-                                        <div class="col-lg-4 col-md-9 col-sm-12">
+                                        <div class="col-lg-6 col-md-9 col-sm-12">
                                             <textarea class="form-control m-input" name="description" placeholder="介绍用途等"></textarea>
                                             <span class="m-form__help">
 											</span>
@@ -180,7 +198,7 @@
                                     <div class="m-form__actions m-form__actions">
                                         <div class="row">
                                             <div class="col-lg-9 ml-lg-auto">
-                                                <button type="submit" class="btn btn-accent">
+                                                <button type="submit" class="btn btn-accent menu_save">
                                                     确定
                                                 </button>
                                                 <button type="reset" class="btn btn-secondary">
@@ -214,8 +232,7 @@
 <!-- end::Scroll Top -->
 <script th:src="@{/assets/js/vendors.bundle.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/scripts.bundle.js}" type="text/javascript"></script>
-<script th:src="@{/assets/js/base/treeview.js}" type="text/javascript"></script>
-<script th:src="@{/assets/js/validation/form-controls.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/system/base.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/system/menu.js}" type="text/javascript"></script>
 </body>
 </html>

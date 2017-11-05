@@ -55155,16 +55155,20 @@ $.extend( $.validator, {
 	},
 
 	messages: {
-		required: "请输入内容.",
-		remote: "请解决这个问题.",
+		required: "此字段必填.",
 		email: "请输入邮箱地址.",
 		account: "请输入一个有效的账号.",
+		nameCheck: "请输入中文 或 字母.",
+		iconCheck: "正确的icon-class 格式为 'flaticon-xxx'. ",
+		urlCheck: "类型:(/system/**后台) (/home/**前台) (/wecaht/** 微信)",
+		remote: "请解决这个问题.",
 		url: "请输入一个有效的URL.",
 		date: "请输入一个有效的日期.",
 		dateISO: "请输入一个有效的日期(ISO).",
 		number: "请输入有效的数字.",
 		digits: "请只输入数字.",
 		equalTo: "请再次输入相同的值.",
+		description: "请输入备注信息.",
 		maxlength: $.validator.format( "请输入{0}字符." ),
 		minlength: $.validator.format( "请输入 {0} 字符." ),
 		rangelength: $.validator.format( "请输入一个值 {0} 和 {1} 字符." ),
@@ -56180,11 +56184,21 @@ $.extend( $.validator, {
 			return this.optional( element ) || /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test( value );
 		},
 		
+		//账号验证
 		account: function( value, element ) {
-
-			return this.optional( element ) || /^[a-zA-Z0-9_]*$/.test( value );
+			return this.optional( element ) || /^[a-zA-Z0-9_]+$/.test( value );
 		},
-
+		//名称验证
+		nameCheck: function( value, element) {
+			return this.optional( element ) || /^[\u4e00-\u9fa5]|[a-zA-Z]+$/.test( value);
+		},
+		// iconCheck
+		iconCheck: function(value, element){
+			return this.optional( element ) || /^[flaticon-]+[a-zA-Z0-9-]+$/.test( value);
+		},
+		urlCheck: function(value, element){
+			return this.optional( element ) || /^[/system]+[/a-zA-Z]+$/.test( value) || /^[/home]+[/a-zA-Z]+$/.test( value) || /^[/wechat]+[/a-zA-Z]+$/.test( value);
+		},
 		// https://jqueryvalidation.org/url-method/
 		url: function( value, element ) {
 

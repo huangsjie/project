@@ -92,10 +92,19 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
                     for (Menu menu: menuList) {
                         map.remove("parentId");
                         map.put("parentId",menu.getId());
-                        List<Menu> chilList = menuMapper.selectManagerRoleMenuList(map);
-                        if(chilList != null && chilList.size() > 0){
+                        List<Menu> childList = menuMapper.selectManagerRoleMenuList(map);
+                        if(childList != null && childList.size() > 0){
+                            for(Menu child: childList){
+                                map.remove("parentId");
+                                map.put("parentId",child.getId());
+                                List<Menu> lastChild = menuMapper.selectManagerRoleMenuList(map);
+                                if(lastChild != null && lastChild.size() > 0){
+                                    child.setUrl(null);
+                                    child.setChildMenuList(lastChild);
+                                }
+                            }
                             menu.setUrl(null);
-                            menu.setChildMenuList(chilList);
+                            menu.setChildMenuList(childList);
                         }
                     }
                    // logger.info("------->"+cacheMenuList+" 创建 menuList 缓存数据 !");
