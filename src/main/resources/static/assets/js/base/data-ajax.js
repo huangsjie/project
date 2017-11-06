@@ -1,13 +1,6 @@
-//== Class definition
-
 var DatatableRemoteAjaxDemo = function () {
-	//== Private functions
-
-	// basic demo
 	var demo = function () {
-
 		var datatable = $('.m_datatable').mDatatable({
-			// datasource definition
 			data: {
 				type: 'remote',
 				source: {
@@ -24,28 +17,19 @@ var DatatableRemoteAjaxDemo = function () {
 				serverFiltering: true,
 				serverSorting: true
 			},
-
-			// layout definition
 			layout: {
 				theme: 'default', // datatable theme
 				class: '', // custom wrapper class
 				scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
 				footer: false // display/hide footer
 			},
-
-			// column sorting
 			sortable: true,
-
-			// column based filtering
 			filterable: false,
-
 			pagination: true,
-
-			// columns definition
 			columns: [{
 				field: "RecordID",
 				title: "#",
-				sortable: false, // disable sort for this column
+				sortable: false,
 				width: 40,
 				selector: false,
 				textAlign: 'center',
@@ -66,19 +50,9 @@ var DatatableRemoteAjaxDemo = function () {
 					return row.ShipCountry + ' - ' + row.ShipCity;
 				}
 			}, {
-				field: "ShipCity",
-				title: "Ship City"
-			}, {
-				field: "Currency",
-				title: "Currency",
-				width: 100
-			}, {
 				field: "ShipDate",
 				title: "Ship Date",
 				sortable: 'asc'
-			}, {
-				field: "Latitude",
-				title: "Latitude"
 			}, {
 				field: "Status",
 				title: "Status",
@@ -172,7 +146,6 @@ var DatatableRemoteAjaxDemo = function () {
 	};
 
 	return {
-		// public functions
 		init: function () {
 			demo();
 		}

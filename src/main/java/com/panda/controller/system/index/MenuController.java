@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.UUID;
 
@@ -38,8 +39,9 @@ public class MenuController {
      * @return
      */
     @RequestMapping(value = "/list",method= RequestMethod.GET)
-    public String getMenuList(Model model){
+    public String getMenuList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("baseUrl",request.getRequestURI());
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("authMenu",user.getAuthMenuList());
         model.addAttribute("user",user);
@@ -105,5 +107,15 @@ public class MenuController {
             }
         }
         return ResultMsgUtil.getResultMsg(message,data);
+    }
+
+    @RequestMapping("/edit")
+    public String edit(HttpServletRequest request, Model model){
+        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("baseUrl",request.getRequestURI());
+        model.addAttribute("menuList",user.getMenuList());
+        model.addAttribute("authMenu",user.getAuthMenuList());
+        model.addAttribute("user",user);
+        return "system/index/menuEdit";
     }
 }
