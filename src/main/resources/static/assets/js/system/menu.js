@@ -106,6 +106,7 @@ jQuery(document).ready(function() {
                     $("[name='save']").val('edit')
                     $("[name='id']").val(result.data.id)
                     $(".menu_save").text("更新")
+                    $(".reset-btn").removeClass("m--hide");
                 }else{
                     var alert = $('.m-form #danger_msg');
                     alert.find("#danger_content").text("编辑菜单请选中左侧 菜单Tree 要编辑的菜单.")
@@ -114,6 +115,13 @@ jQuery(document).ready(function() {
                 }
             }
         )
+    })
+    //重置 编辑区域
+    $(".reset-btn").on("click",function(){
+        $(".menu_save").text("确定")
+        $("[name='save']").val('add')
+        $("[name='id']").val("")
+        $(this).addClass("m--hide")
     })
     MenuPage.init();
 });
