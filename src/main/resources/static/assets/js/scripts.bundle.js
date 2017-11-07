@@ -3336,7 +3336,7 @@ jQuery.fn.extend({
 							input: 'Page number',
 							select: 'Select page size'
 						},
-						info: 'Displaying {{start}} - {{end}} of {{total}} records'
+                        info: '当前 {{start}} - {{end}} 条 / 共 {{total}} 条'
 					}
 				}
 			}

@@ -23,6 +23,7 @@ public interface AbstractMapper<T> {
 
     T selectByPrimaryKey(String id);
 
+    List<T> selectAll();
 
     int updateByPrimaryKey(T entity);
 

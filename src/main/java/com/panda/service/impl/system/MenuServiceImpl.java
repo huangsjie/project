@@ -50,16 +50,6 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
     }
 
     /**
-     * 获取所有菜单
-     * @return
-     */
-    @Override
-    public List<Menu> selectAll(){
-        logger.info("---------->----------->获取所有菜单 selectAll !");
-        return menuMapper.selectAll();
-    }
-
-    /**
      * 获取当前角色授权菜单 存到 Redis 中
      * @param roleId
      * @return

@@ -1,5 +1,6 @@
 package com.panda.controller.system.index;
 
+import com.panda.model.system.Roles;
 import com.panda.model.system.Users;
 import com.panda.service.system.RolesService;
 import com.panda.util.ResultMsgUtil;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created with IDEA.
@@ -52,7 +54,15 @@ public class RolesController {
     public Object getRolesDataList(HttpServletRequest request){
         boolean message = false;
         Object  data    = null;
-
+        try {
+            List<Roles> rolesList = rolesService.selectAll();
+            if(rolesList.size() > 0){
+                message = true;
+                data = rolesList;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return ResultMsgUtil.getResultMsg(message,data);
     }
 }
