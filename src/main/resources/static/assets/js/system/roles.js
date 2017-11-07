@@ -28,7 +28,6 @@ var DatatableRemoteAjaxDemo = function () {
                 width: 40,
                 template: function (row) {
                     if(row.id != ''){
-                        console.log(row)
                         return row.type;
                     }
                 }
@@ -71,7 +70,7 @@ var DatatableRemoteAjaxDemo = function () {
                 template: function (row) {
                     var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
                     return '\
-						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="编辑">\
+						<a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="编辑" data-toggle="modal" data-target=".rolesEdit">\
 							<i class="la la-edit"></i>\
 						</a>\
 						<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="删除">\

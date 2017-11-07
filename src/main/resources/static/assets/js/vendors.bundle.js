@@ -12631,6 +12631,7 @@ var Util = function ($) {
     },
     getSelectorFromElement: function getSelectorFromElement(element) {
       var selector = element.getAttribute('data-target');
+	  console.log("vendors.data-target---------1")
       if (!selector || selector === '#') {
         selector = element.getAttribute('href') || '';
       }
@@ -12750,7 +12751,7 @@ var Alert = function ($) {
     Alert.prototype._getRootElement = function _getRootElement(element) {
       var selector = Util.getSelectorFromElement(element);
       var parent = false;
-
+console.log("vendors.data-target---------2")
       if (selector) {
         parent = $(selector)[0];
       }
@@ -13454,7 +13455,7 @@ var Carousel = function ($) {
 
     Carousel._dataApiClickHandler = function _dataApiClickHandler(event) {
       var selector = Util.getSelectorFromElement(this);
-
+console.log("vendors.data-target---------3")
       if (!selector) {
         return;
       }
@@ -13603,6 +13604,7 @@ var Collapse = function ($) {
       for (var i = 0; i < tabToggles.length; i++) {
         var elem = tabToggles[i];
         var selector = Util.getSelectorFromElement(elem);
+		console.log("vendors.data-target---------4")
         if (selector !== null && $(selector).filter(element).length > 0) {
           this._triggerArray.push(elem);
         }
@@ -13728,6 +13730,7 @@ var Collapse = function ($) {
         for (var i = 0; i < this._triggerArray.length; i++) {
           var trigger = this._triggerArray[i];
           var selector = Util.getSelectorFromElement(trigger);
+		  console.log("vendors.data-target---------5")
           if (selector !== null) {
             var $elem = $(selector);
             if (!$elem.hasClass(ClassName.SHOW)) {
@@ -13809,6 +13812,7 @@ var Collapse = function ($) {
 
     Collapse._getTargetFromElement = function _getTargetFromElement(element) {
       var selector = Util.getSelectorFromElement(element);
+	  console.log("vendors.data-target---------6")
       return selector ? $(selector)[0] : null;
     };
 
@@ -13864,6 +13868,7 @@ var Collapse = function ($) {
 
     var $trigger = $(this);
     var selector = Util.getSelectorFromElement(this);
+	console.log("vendors.data-target---------7")
     $(selector).each(function () {
       var $target = $(this);
       var data = $target.data(DATA_KEY);
@@ -14003,7 +14008,7 @@ var Dropdown = function ($) {
 
       var parent = Dropdown._getParentFromElement(this._element);
       var isActive = $(this._menu).hasClass(ClassName.SHOW);
-
+console.log("-------------Dropdown._getParentFromElement(this)-------->2")
       Dropdown._clearMenus();
 
       if (isActive) {
@@ -14091,6 +14096,7 @@ var Dropdown = function ($) {
     Dropdown.prototype._getMenuElement = function _getMenuElement() {
       if (!this._menu) {
         var parent = Dropdown._getParentFromElement(this._element);
+		console.log("-------------Dropdown._getParentFromElement(this)-------->3")
         this._menu = $(parent).find(Selector.MENU)[0];
       }
       return this._menu;
@@ -14166,6 +14172,7 @@ var Dropdown = function ($) {
       var toggles = $.makeArray($(Selector.DATA_TOGGLE));
       for (var i = 0; i < toggles.length; i++) {
         var parent = Dropdown._getParentFromElement(toggles[i]);
+		console.log("-------------Dropdown._getParentFromElement(this)-------->4")
         var context = $(toggles[i]).data(DATA_KEY);
         var relatedTarget = {
           relatedTarget: toggles[i]
@@ -14206,7 +14213,7 @@ var Dropdown = function ($) {
     Dropdown._getParentFromElement = function _getParentFromElement(element) {
       var parent = void 0;
       var selector = Util.getSelectorFromElement(element);
-
+console.log("vendors.data-target---------8")
       if (selector) {
         parent = $(selector)[0];
       }
@@ -14228,7 +14235,7 @@ var Dropdown = function ($) {
 
       var parent = Dropdown._getParentFromElement(this);
       var isActive = $(parent).hasClass(ClassName.SHOW);
-
+		console.log("-------------Dropdown._getParentFromElement(this)-------->1")
       if (!isActive && (event.which !== ESCAPE_KEYCODE || event.which !== SPACE_KEYCODE) || isActive && (event.which === ESCAPE_KEYCODE || event.which === SPACE_KEYCODE)) {
 
         if (event.which === ESCAPE_KEYCODE) {
@@ -14843,7 +14850,7 @@ var Modal = function ($) {
 
     var target = void 0;
     var selector = Util.getSelectorFromElement(this);
-
+console.log("vendors.data-target---------9")
     if (selector) {
       target = $(selector)[0];
     }
@@ -15000,7 +15007,7 @@ var ScrollSpy = function ($) {
       targets.map(function (element) {
         var target = void 0;
         var targetSelector = Util.getSelectorFromElement(element);
-
+console.log("vendors.data-target---------10")
         if (targetSelector) {
           target = $(targetSelector)[0];
         }
@@ -15276,7 +15283,7 @@ var Tab = function ($) {
       var previous = void 0;
       var listElement = $(this._element).closest(Selector.NAV_LIST_GROUP)[0];
       var selector = Util.getSelectorFromElement(this._element);
-
+console.log("vendors.data-target---------11")
       if (listElement) {
         previous = $.makeArray($(listElement).find(Selector.ACTIVE));
         previous = previous[previous.length - 1];
