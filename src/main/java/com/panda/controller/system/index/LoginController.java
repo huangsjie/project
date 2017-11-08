@@ -68,7 +68,7 @@ public class LoginController {
         boolean flag = true;
         String msg = "";
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        UsernamePasswordToken token = new UsernamePasswordToken( user.getAccount(), user.getPassword());
+        UsernamePasswordToken token = new UsernamePasswordToken( user.getAccount(), user.getPassword(),false);
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(token); // 完成登录

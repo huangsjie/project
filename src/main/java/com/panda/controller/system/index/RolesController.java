@@ -84,6 +84,8 @@ public class RolesController {
                 if(role != null){
                     message = true;
                     data = role;
+                }else{
+                    data = ResultStateUtil.ERROR_QUERY;
                 }
             }catch (Exception e){
                 e.printStackTrace();

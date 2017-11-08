@@ -27,9 +27,7 @@ var Roles = function () {
                 title: "#",
                 width: 40,
                 template: function (row) {
-                    if(row.id != ''){
-                        return row.type;
-                    }
+                    return row.rowIndex+1;
                 }
             }, {
                 field: "name",
@@ -68,7 +66,7 @@ var Roles = function () {
                 sortable: false,
                 overflow: 'visible',
                 template: function (row) {
-                    var dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
+                    var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
                     return '\
 						<a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editRoleItem" title="编辑" item="'+row.id+'" data-toggle="modal" data-target=".rolesEdit">\
 							<i class="la la-edit"></i>\
