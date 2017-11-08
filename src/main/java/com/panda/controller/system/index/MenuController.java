@@ -108,14 +108,4 @@ public class MenuController {
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
-
-    @RequestMapping("/edit")
-    public String edit(HttpServletRequest request, Model model){
-        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        model.addAttribute("baseUrl",request.getRequestURI());
-        model.addAttribute("menuList",user.getMenuList());
-        model.addAttribute("authMenu",user.getAuthMenuList());
-        model.addAttribute("user",user);
-        return "system/index/menuEdit";
-    }
 }
