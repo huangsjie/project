@@ -51,10 +51,7 @@ var MenuPage = function () {
                 }
             },
             invalidHandler: function(event, validator) {
-                var alert = $('.m-form #danger_msg');
-                alert.find("#danger_content").text(" 编辑菜单请选中左侧 菜单Tree 要编辑的菜单. 新增请直接填写.")
-                alert.removeClass('m--hide').show();
-                mApp.scrollTo(alert, -200);
+                alertMsgShow('.m-form #danger_msg', 'danger', ' 编辑菜单请选中左侧 菜单Tree 要编辑的菜单. 新增请直接填写.');
             },
 
             submitHandler: function (form){
@@ -64,15 +61,9 @@ var MenuPage = function () {
                     $("#menu_edit_form").serialize(),
                     function(result){
                         if(result.message){
-                            var alert = $('.m-form #success_msg');
-                            alert.find("#success_content").text(result.data)
-                            alert.removeClass('m--hide').show();
-                            mApp.scrollTo(alert, -200);
+                            alertMsgShow('.m-form #success_msg', 'success', result.data);
                         }else{
-                            var alert = $('.m-form #warning_msg');
-                            alert.find("#warning_content").text(result.data)
-                            alert.removeClass('m--hide').show();
-                            mApp.scrollTo(alert, -200);
+                            alertMsgShow('.m-form #warning_msg', 'warning', result.data);
                         }
                     }
                 )

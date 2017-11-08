@@ -48,7 +48,50 @@ function GetUrlRelativePath()
 }
 
 /**
- * left_aside css toggle
+ * BlockUi 加载消息提示框
+ * @param elem
+ * @param type
+ * @param state
+ * @param msg
+ */
+function blockUiOpen(elem, msg, color, type, state){
+    mApp.block(elem, {
+        overlayColor: color ? color : '#000000',
+        type: type ? type :'loader',
+        state: state ? state : 'primary',
+        message: msg ? msg : '请稍后...'
+    });
+}
+
+/**
+ * 关闭 BlockUi 消息提示框
+ * @param elem
+ */
+function blockUiClose(elem,closeParent,parentElem,time){
+    setTimeout(function() {
+        mApp.unblock(elem);
+        if(closeParent == 1){
+            $(parentElem).click();
+        }
+    }, time);
+}
+
+/**
+ * alert 打开消息提示框
+ * @param elem
+ * @param type
+ * @param msg
+ */
+function alertMsgShow(elem, type, msg){
+    console.log("type--->"+type);
+    var alert = $(elem);
+    alert.find("#"+type+"_content").text(msg)
+    alert.removeClass('m--hide').show();
+    mApp.scrollTo(alert, -200);
+}
+
+/**
+ * 管理后台左侧菜单样式切换
  *
  */
 var LeftAside = function (url) {
@@ -65,7 +108,6 @@ var LeftAside = function (url) {
         })
     }
 }
-
 
 jQuery(document).ready(function() {
     var url = GetUrlRelativePath();

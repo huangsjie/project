@@ -35,7 +35,7 @@ public class ResultStateUtil {
      */
     public static final String SUCCESS_UPDATE = "修改了一些东西, 并保存成功 !";//200
     public static final String SUCCESS_ABNORMAL = "操作成功";//204
-    public static final String SUCCESS_DELETE = "删除成功";//201
+    public static final String SUCCESS_DELETE = "成功删除了一条记录 ！";//201
     public static final String SUCCESS_QUERY = "查询成功";//202
     public static final String SUCCESS_ADD = "新增了一条记录, 并保存成功 !";//203
     public static final String SUCCESS_UPLOAD = "上传成功";//205
