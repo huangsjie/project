@@ -1,7 +1,9 @@
 package com.panda.controller.system.index;
 
+import com.panda.model.system.Menu;
 import com.panda.model.system.Roles;
 import com.panda.model.system.Users;
+import com.panda.service.system.MenuService;
 import com.panda.service.system.RoleMenuService;
 import com.panda.service.system.RolesService;
 import com.panda.util.ResultMsgUtil;
@@ -30,7 +32,11 @@ public class RoleMenuController {
 
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
     @Resource
+    private MenuService menuService;
+
+    @Resource
     private RoleMenuService roleMenuService;
+
     @Resource
     private RolesService rolesService;
     private static boolean message = false;
@@ -47,22 +53,22 @@ public class RoleMenuController {
     }
 
     /**
-     * Ajax 获取角色列表
+     * Ajax 获取菜单列表
      * @param request
      * @return
      */
-    @RequestMapping(value = "/getRolesDataList",method = RequestMethod.POST)
+    @RequestMapping(value = "/getRoleMenuDataList",method = RequestMethod.GET)
     @ResponseBody
-    public Object getRolesDataList(HttpServletRequest request){
+    public Object getRoleMenuDataList(HttpServletRequest request){
         try {
-            List<Roles> rolesList = rolesService.selectAll();
-            if(rolesList.size() > 0){
+            List<Menu> menuList = menuService.selectAll();
+            if(menuList.size() > 0){
                 message = true;
-                data = rolesList;
+                data = menuList;
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        return ResultMsgUtil.getResultMsg(message,data);
+        return data;
     }
 }
