@@ -10,6 +10,10 @@ public class Roles implements Serializable {
 
     private String description;
 
+    private Integer type;
+
+    private Integer status;
+
     private Date createTime;
 
     private String createId;
@@ -17,8 +21,6 @@ public class Roles implements Serializable {
     private Date modifyTime;
 
     private String modifyId;
-
-    private Integer type;
 
     public String getId() {
         return id;
@@ -42,6 +44,22 @@ public class Roles implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Date getCreateTime() {
@@ -74,13 +92,5 @@ public class Roles implements Serializable {
 
     public void setModifyId(String modifyId) {
         this.modifyId = modifyId;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
     }
 }

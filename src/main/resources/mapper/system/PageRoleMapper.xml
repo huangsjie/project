@@ -6,16 +6,17 @@
     <result column="menu_id" property="menuId" jdbcType="VARCHAR" />
     <result column="role_id" property="roleId" jdbcType="VARCHAR" />
     <result column="dict_id" property="dictId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="create_id" property="createId" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="modify_id" property="modifyId" jdbcType="VARCHAR" />
     <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, menu_id, role_id, dict_id, create_id, create_time, modify_id, modify_time
+    id, menu_id, role_id, dict_id, status, create_id, create_time, modify_id, modify_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from s_page_role
     where id = #{id,jdbcType=VARCHAR}
@@ -25,12 +26,14 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.panda.model.system.PageRole" >
-    insert into s_page_role (id, menu_id, role_id, 
-      dict_id, create_id, create_time, 
-      modify_id, modify_time)
-    values (#{id,jdbcType=VARCHAR}, #{menuId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, 
-      #{dictId,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{modifyId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP})
+    insert into s_page_role (id, menu_id, role_id,
+    dict_id, status, create_id,
+    create_time, modify_id, modify_time
+    )
+    values (#{id,jdbcType=VARCHAR}, #{menuId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR},
+    #{dictId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR},
+    #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}
+    )
   </insert>
   <insert id="insertSelective" parameterType="com.panda.model.system.PageRole" >
     insert into s_page_role
@@ -46,6 +49,9 @@
       </if>
       <if test="dictId != null" >
         dict_id,
+      </if>
+      <if test="status != null" >
+        status,
       </if>
       <if test="createId != null" >
         create_id,
@@ -73,6 +79,9 @@
       <if test="dictId != null" >
         #{dictId,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
       <if test="createId != null" >
         #{createId,jdbcType=VARCHAR},
       </if>
@@ -99,6 +108,9 @@
       <if test="dictId != null" >
         dict_id = #{dictId,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
       <if test="createId != null" >
         create_id = #{createId,jdbcType=VARCHAR},
       </if>
@@ -119,6 +131,7 @@
     set menu_id = #{menuId,jdbcType=VARCHAR},
       role_id = #{roleId,jdbcType=VARCHAR},
       dict_id = #{dictId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
       create_id = #{createId,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       modify_id = #{modifyId,jdbcType=VARCHAR},

@@ -12,6 +12,8 @@ public class PageRole implements Serializable {
 
     private String dictId;
 
+    private Integer status;
+
     private String createId;
 
     private Date createTime;
@@ -50,6 +52,14 @@ public class PageRole implements Serializable {
 
     public void setDictId(String dictId) {
         this.dictId = dictId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getCreateId() {

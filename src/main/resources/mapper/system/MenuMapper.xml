@@ -1,177 +1,190 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.panda.mapper.system.MenuMapper">
-    <resultMap id="BaseResultMap" type="com.panda.model.system.Menu">
-        <id column="id" property="id" jdbcType="VARCHAR"/>
-        <result column="sort_id" property="sortId" jdbcType="INTEGER"/>
-        <result column="parent_id" property="parentId" jdbcType="VARCHAR"/>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="url" property="url" jdbcType="VARCHAR"/>
-        <result column="type" property="type" jdbcType="INTEGER"/>
-        <result column="icon_class" property="iconClass" jdbcType="VARCHAR"/>
-        <result column="create_id" property="createId" jdbcType="VARCHAR"/>
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
-        <result column="modify_id" property="modifyId" jdbcType="VARCHAR"/>
-        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
-        <result column="description" property="description" jdbcType="VARCHAR"/>
+<mapper namespace="com.panda.mapper.system.MenuMapper" >
+    <resultMap id="BaseResultMap" type="com.panda.model.system.Menu" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="sort_id" property="sortId" jdbcType="INTEGER" />
+        <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="icon_class" property="iconClass" jdbcType="VARCHAR" />
+        <result column="create_id" property="createId" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="modify_id" property="modifyId" jdbcType="VARCHAR" />
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
     </resultMap>
-    <sql id="Base_Column_List">
-    id, sort_id, parent_id, name, url, type, icon_class, create_id, create_time, modify_id, 
-    modify_time, description
-  </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <sql id="Base_Column_List" >
+        id, sort_id, parent_id, name, url, type, status, icon_class, create_id, create_time,
+        modify_id, modify_time, description
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List" />
         from s_menu
         where id = #{id,jdbcType=VARCHAR}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from s_menu
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-    <insert id="insert" parameterType="com.panda.model.system.Menu">
-    insert into s_menu (id, sort_id, parent_id, 
-      name, url, type, icon_class, 
-      create_id, create_time, modify_id, 
-      modify_time, description)
-    values (#{id,jdbcType=VARCHAR}, #{sortId,jdbcType=INTEGER}, #{parentId,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{iconClass,jdbcType=VARCHAR}, 
-      #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR}, 
-      #{modifyTime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR})
-  </insert>
-    <insert id="insertSelective" parameterType="com.panda.model.system.Menu">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from s_menu
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.panda.model.system.Menu" >
+        insert into s_menu (id, sort_id, parent_id,
+        name, url, type, status,
+        icon_class, create_id, create_time,
+        modify_id, modify_time, description
+        )
+        values (#{id,jdbcType=VARCHAR}, #{sortId,jdbcType=INTEGER}, #{parentId,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
+        #{iconClass,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+        #{modifyId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.panda.model.system.Menu" >
         insert into s_menu
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
                 id,
             </if>
-            <if test="sortId != null">
+            <if test="sortId != null" >
                 sort_id,
             </if>
-            <if test="parentId != null">
+            <if test="parentId != null" >
                 parent_id,
             </if>
-            <if test="name != null">
+            <if test="name != null" >
                 name,
             </if>
-            <if test="url != null">
+            <if test="url != null" >
                 url,
             </if>
-            <if test="type != null">
+            <if test="type != null" >
                 type,
             </if>
-            <if test="iconClass != null">
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="iconClass != null" >
                 icon_class,
             </if>
-            <if test="createId != null">
+            <if test="createId != null" >
                 create_id,
             </if>
-            <if test="createTime != null">
+            <if test="createTime != null" >
                 create_time,
             </if>
-            <if test="modifyId != null">
+            <if test="modifyId != null" >
                 modify_id,
             </if>
-            <if test="modifyTime != null">
+            <if test="modifyTime != null" >
                 modify_time,
             </if>
-            <if test="description != null">
+            <if test="description != null" >
                 description,
             </if>
         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
                 #{id,jdbcType=VARCHAR},
             </if>
-            <if test="sortId != null">
+            <if test="sortId != null" >
                 #{sortId,jdbcType=INTEGER},
             </if>
-            <if test="parentId != null">
+            <if test="parentId != null" >
                 #{parentId,jdbcType=VARCHAR},
             </if>
-            <if test="name != null">
+            <if test="name != null" >
                 #{name,jdbcType=VARCHAR},
             </if>
-            <if test="url != null">
+            <if test="url != null" >
                 #{url,jdbcType=VARCHAR},
             </if>
-            <if test="type != null">
+            <if test="type != null" >
                 #{type,jdbcType=INTEGER},
             </if>
-            <if test="iconClass != null">
+            <if test="status != null" >
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="iconClass != null" >
                 #{iconClass,jdbcType=VARCHAR},
             </if>
-            <if test="createId != null">
+            <if test="createId != null" >
                 #{createId,jdbcType=VARCHAR},
             </if>
-            <if test="createTime != null">
+            <if test="createTime != null" >
                 #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="modifyId != null">
+            <if test="modifyId != null" >
                 #{modifyId,jdbcType=VARCHAR},
             </if>
-            <if test="modifyTime != null">
+            <if test="modifyTime != null" >
                 #{modifyTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="description != null">
+            <if test="description != null" >
                 #{description,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.panda.model.system.Menu">
+    <update id="updateByPrimaryKeySelective" parameterType="com.panda.model.system.Menu" >
         update s_menu
-        <set>
-            <if test="sortId != null">
+        <set >
+            <if test="sortId != null" >
                 sort_id = #{sortId,jdbcType=INTEGER},
             </if>
-            <if test="parentId != null">
+            <if test="parentId != null" >
                 parent_id = #{parentId,jdbcType=VARCHAR},
             </if>
-            <if test="name != null">
+            <if test="name != null" >
                 name = #{name,jdbcType=VARCHAR},
             </if>
-            <if test="url != null">
+            <if test="url != null" >
                 url = #{url,jdbcType=VARCHAR},
             </if>
-            <if test="type != null">
+            <if test="type != null" >
                 type = #{type,jdbcType=INTEGER},
             </if>
-            <if test="iconClass != null">
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="iconClass != null" >
                 icon_class = #{iconClass,jdbcType=VARCHAR},
             </if>
-            <if test="createId != null">
+            <if test="createId != null" >
                 create_id = #{createId,jdbcType=VARCHAR},
             </if>
-            <if test="createTime != null">
+            <if test="createTime != null" >
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="modifyId != null">
+            <if test="modifyId != null" >
                 modify_id = #{modifyId,jdbcType=VARCHAR},
             </if>
-            <if test="modifyTime != null">
+            <if test="modifyTime != null" >
                 modify_time = #{modifyTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="description != null">
+            <if test="description != null" >
                 description = #{description,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.panda.model.system.Menu">
-    update s_menu
-    set sort_id = #{sortId,jdbcType=INTEGER},
-      parent_id = #{parentId,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      url = #{url,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER},
-      icon_class = #{iconClass,jdbcType=VARCHAR},
-      create_id = #{createId,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      modify_id = #{modifyId,jdbcType=VARCHAR},
-      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
-      description = #{description,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+    <update id="updateByPrimaryKey" parameterType="com.panda.model.system.Menu" >
+        update s_menu
+        set sort_id = #{sortId,jdbcType=INTEGER},
+        parent_id = #{parentId,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
+        url = #{url,jdbcType=VARCHAR},
+        type = #{type,jdbcType=INTEGER},
+        status = #{status,jdbcType=INTEGER},
+        icon_class = #{iconClass,jdbcType=VARCHAR},
+        create_id = #{createId,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        modify_id = #{modifyId,jdbcType=VARCHAR},
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+        description = #{description,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
 
     <select id="selectAll" resultMap="BaseResultMap">
         select

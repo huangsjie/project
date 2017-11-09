@@ -10,6 +10,8 @@ public class RoleMenu implements Serializable {
 
     private String menuId;
 
+    private Integer status;
+
     private String createId;
 
     private Date createTime;
@@ -36,6 +38,14 @@ public class RoleMenu implements Serializable {
 
     public void setMenuId(String menuId) {
         this.menuId = menuId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getCreateId() {
