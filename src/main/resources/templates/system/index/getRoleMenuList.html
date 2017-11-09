@@ -65,43 +65,55 @@
                             </div>
                             <!--begin::Form-->
                             <!--begin::Portlet-->
-                            <div class="m-portlet__body">
-                                <div id="menu_tree" class="tree-demo">
-                                    <ul style="display: none;">
-                                        <li data-jstree='{"disabled" : true}'>
-                                            Root
-                                            <ul>
-                                                <li data-jstree='{"selected":true,"disabled" : true}'>
-                                                    <a href="javascript:;">Dashboard</a>
-                                                </li>
-                                                <li th:each="menu : ${menuList}" data-jstree='{"opened":true,"icon":"fa fa-folder m--font-danger"}'>
-                                                    <a class="tree_a" href="javascript:;" th:text="${menu.name}" th:attr="menu=${menu.id}"></a>
-                                                    <!-- child -->
-                                                    <ul th:if="${menu.childMenuList != null}">
-                                                        <li th:each="child : ${menu.childMenuList}" data-jstree='{ "opened":true,"icon":"fa fa-folder m--font-success"}'>
-                                                            <a class="tree_a" href="javascript:;" th:text="${child.name}" th:attr="menu=${child.id}"></a>
-                                                            <!-- lastChild -->
-                                                            <ul th:if="${child.childMenuList != null}">
-                                                                <li th:each="lastChild : ${child.childMenuList}"
-                                                                    data-jstree='{ "opened":true,"icon":"fa fa-file  m--font-warning"}'>
-                                                                    <a class="tree_a" href="javascript:;"
-                                                                       th:text="${lastChild.name}"
-                                                                       th:attr="menu=${lastChild.id}"></a>
-                                                                </li>
-                                                            </ul>
-                                                            <!-- lastChild -->
-                                                        </li>
-                                                    </ul>
-                                                    <!-- child -->
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
+                            <form class="m-form m-form--state m-form--fit m-form--label-align-right">
+                                <div class="m-portlet__body">
+                                    <div id="menu_tree" class="tree-demo">
+                                        <ul style="display: none;">
+                                            <li data-jstree='{"disabled" : true}'>
+                                                Root
+                                                <ul>
+                                                    <li data-jstree='{"selected":true,"disabled" : true}'>
+                                                        <a href="javascript:;">Dashboard</a>
+                                                    </li>
+                                                    <li th:each="menu : ${menuList}" data-jstree='{"opened":true,"icon":"fa fa-folder m--font-danger"}'>
+                                                        <a class="tree_a" href="javascript:;" th:text="${menu.name}" th:attr="menu=${menu.id}"></a>
+                                                        <!-- child -->
+                                                        <ul th:if="${menu.childMenuList != null}">
+                                                            <li th:each="child : ${menu.childMenuList}" data-jstree='{ "opened":true,"icon":"fa fa-folder m--font-success"}'>
+                                                                <a class="tree_a" href="javascript:;" th:text="${child.name}" th:attr="menu=${child.id}"></a>
+                                                                <!-- lastChild -->
+                                                                <ul th:if="${child.childMenuList != null}">
+                                                                    <li th:each="lastChild : ${child.childMenuList}"
+                                                                        data-jstree='{ "opened":true,"icon":"fa fa-file  m--font-warning"}'>
+                                                                        <a class="tree_a" href="javascript:;"
+                                                                           th:text="${lastChild.name}"
+                                                                           th:attr="menu=${lastChild.id}"></a>
+                                                                    </li>
+                                                                </ul>
+                                                                <!-- lastChild -->
+                                                            </li>
+                                                        </ul>
+                                                        <!-- child -->
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="alert alert-success m--margin-top-10">
-                                    注意:菜单最大层级为三层<br>选中菜单进行编辑.
+                                <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space"></div>
+                                <div class="m-form__actions m-form__actions">
+                                    <div class="row">
+                                        <div class="col-lg-9 ml-lg-auto">
+                                            <button type="submit" class="btn btn-accent menu_save">
+                                                确定
+                                            </button>
+                                            <button type="reset" class="btn btn-secondary">
+                                                重置
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                             <!--end::Portlet-->
                             <!--begin::Form-->
                         </div>
