@@ -53,22 +53,23 @@ public class RoleMenuController {
     }
 
     /**
-     * Ajax 获取菜单列表
+     * Ajax 获取角色菜单
      * @param request
+     * @param id
      * @return
      */
     @RequestMapping(value = "/getRoleMenuDataList",method = RequestMethod.GET)
     @ResponseBody
-    public Object getRoleMenuDataList(HttpServletRequest request){
+    public Object getRoleMenuDataList(HttpServletRequest request, String id){
         try {
-            List<Menu> menuList = menuService.selectAll();
-            if(menuList.size() > 0){
+            if(!id.isEmpty()){
+                List<Menu> menuList = menuService.selectManagerAuthMenu(id);
                 message = true;
                 data = menuList;
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        return data;
+        return ResultMsgUtil.getResultMsg(message,data);
     }
 }

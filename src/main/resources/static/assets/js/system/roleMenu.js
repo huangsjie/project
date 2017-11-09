@@ -18,7 +18,9 @@ var Treeview = function () {
             "plugins": ["checkbox","types"]
         });
     }
-
+    var checked_menu = function (roleMenu) {
+        console.log(roleMenu)
+    }
     return {
         init: function () {
             menu_tree();
@@ -27,5 +29,19 @@ var Treeview = function () {
 }();
 
 jQuery(document).ready(function() {
+    //
+    $(".m-widget4__item").on('click','[type=\'radio\']',function(){
+        var id = $(this).val();
+        request(
+            'getRoleMenuDataList',
+            'get',
+            {id:id},
+            function (result) {
+            if(result.message){
+                console.log(result.data)
+            }
+        })
+        console.log($(this).val())
+    })
     Treeview.init();
 });
