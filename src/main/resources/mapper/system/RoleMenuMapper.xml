@@ -103,4 +103,15 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectRoleMenuList" resultType="map" parameterType="java.lang.String">
+        SELECT
+          rm.id roleMenuId, rm.status roleMenuStatus, m.*
+        FROM
+          s_role_menu rm, s_menu m
+        WHERE
+          1 = 1
+        AND rm.role_id = #{roleId}
+        AND rm.menu_id = m.id
+  </select>
 </mapper>

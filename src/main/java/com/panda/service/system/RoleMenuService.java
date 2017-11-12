@@ -3,6 +3,9 @@ package com.panda.service.system;
 import com.panda.util.abs.AbstractService;
 import com.panda.model.system.RoleMenu;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created with IDEA.
  *
@@ -11,4 +14,11 @@ import com.panda.model.system.RoleMenu;
  * Time: 18:30
  */
 public interface RoleMenuService extends AbstractService<RoleMenu> {
+
+    /**
+     * 编辑 角色菜单 获取当前选中角色的 可用menu
+     * @param roleId
+     * @return
+     */
+    List<Map> selectRoleMenuList(String roleId);
 }

@@ -8,6 +8,8 @@ import com.panda.service.system.RoleMenuService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IDEA.
@@ -25,5 +27,15 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenu> implement
     @Override
     protected AbstractMapper<RoleMenu> getAbstractMapper() {
         return roleMenuMapper;
+    }
+
+    /**
+     * 编辑 角色菜单 获取当前选中角色的 可用menu
+     * @param roleId
+     * @return
+     */
+    @Override
+    public List<Map> selectRoleMenuList(String roleId) {
+        return roleMenuMapper.selectRoleMenuList(roleId);
     }
 }

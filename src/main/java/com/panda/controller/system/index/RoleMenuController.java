@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IDEA.
@@ -53,7 +54,7 @@ public class RoleMenuController {
     }
 
     /**
-     * Ajax 获取角色菜单
+     * Ajax 获取当前选中角色 可用的 角色菜单
      * @param request
      * @param id
      * @return
@@ -63,7 +64,7 @@ public class RoleMenuController {
     public Object getRoleMenuDataList(HttpServletRequest request, String id){
         try {
             if(!id.isEmpty()){
-                List<Menu> menuList = menuService.selectManagerAuthMenu(id);
+                List<Map> menuList = roleMenuService.selectRoleMenuList(id);
                 message = true;
                 data = menuList;
             }
