@@ -4,6 +4,7 @@ var Treeview = function () {
      * 取消全部选中-刷新树
      */
     var remove_menu_tree = function(){
+        MenuTree.jstree("uncheck_all"); //取消全部选中
         MenuTree.find("a").removeAttr("role_menu_id")
         MenuTree.find("a").removeAttr("status")
     }
@@ -28,7 +29,32 @@ var Treeview = function () {
             "plugins": ["checkbox","types"]
         });
         MenuTree.on("changed.jstree", function (e, data) {
-            console.log(data.selected);
+            if((typeof data.event !== 'undefined' && data.event.type == 'click') && (data.action == 'select_node' || data.action == 'deselect_node')){
+                if(data.action == 'select_node' && data.selected.length >= 1){
+                    $.each(data.selected, function (i, n) {
+                        if(n != '' && n.indexOf('j1_') < 0){
+                            var node = MenuTree.jstree("get_node", n);
+                            var menuId = node.a_attr.id,aclass = $("#"+menuId).attr("class");
+                            if(aclass.indexOf("is_default") >= 0){
+                                $("#"+menuId).removeClass("is_default").addClass("is_change");
+                            }
+                        }
+                    });
+                } else if (data.action == 'deselect_node' && data.selected.length == 1) {
+                    $.each(data.node.children, function (i, n) {
+                        var node = MenuTree.jstree("get_node", n);
+                        var menuId = node.a_attr.id,aclass = $("#"+menuId).attr("class");
+                        console.log(aclass)
+                        if(aclass.indexOf("is_change") >= 0){
+                            $("#"+menuId).removeClass("is_change").addClass("is_default");
+                        }
+                    });
+                    var menuId = data.node.a_attr.id,aclass = $("#"+menuId).attr("class");
+                    if(aclass.indexOf("is_change") >= 0){
+                        $("#"+menuId).removeClass("is_change").addClass("is_default");
+                    }
+                }
+            }
         });
     }
 
@@ -48,8 +74,6 @@ var Treeview = function () {
                     MenuTree.jstree().select_node(node);
                 }
             });
-        }else{
-            MenuTree.jstree("uncheck_all"); //取消全部选中
         }
     }
 
@@ -75,15 +99,30 @@ var Treeview = function () {
      * @returns {string}
      */
     var get_menu_id = function () {
-        var idArr = [];
+        var paramArr = new Array();
         var nodes = MenuTree.jstree("get_checked");
         $.each(nodes, function (i, n) {
-            var id = $("#"+n).find('a').attr("menu");
-            if(typeof id !== "undefined"){
-                idArr.push(id);
+            var itemArr = [];
+            var node = MenuTree.jstree("get_node", n);
+            if(node.id.indexOf("j1_") < 0 || node.parent.indexOf("j1_") < 0){
+                var id = node.id,
+                    parent = node.parent,
+                    a_id   = node.a_attr.id,
+                    self = $("#"+a_id),
+                    status = self.attr("status"),
+                    aclass = self.attr("class"),
+                    role_menu_id = self.attr("role_menu_id");
+                if(node.text !== 'Dashboard' && aclass.indexOf("is_change") >= 0 && typeof id !== "undefined"){
+                    itemArr['menu_id'] = id;
+                    itemArr['role_id'] = $(".radio_role input[type='radio']:checked").val();
+                    itemArr['status'] = status;
+                    itemArr['parent_id'] = parent;
+                    itemArr['role_menu_id'] = role_menu_id;
+                    paramArr.push(itemArr);
+                }
             }
         });
-        return idArr.join(',');
+        return paramArr;
     }
 
     /**
@@ -91,14 +130,16 @@ var Treeview = function () {
      */
     var save_menu_role_change = function () {
         $(".role_menu_save").on('click',function(){
-            console.log(get_menu_id())
+            var param = get_menu_id();
+            if(param.length <= 0){
+                alertMsgShow('.m-form #danger_msg', 'danger', ' 请选择 要赋予该角色的菜单.');
+            }
         })
     }
 
     return {
         init: function () {
             menu_tree();
-            checked_menu_tree();
             get_checked_role_menu();
             save_menu_role_change();
         }

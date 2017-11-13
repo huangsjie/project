@@ -31,7 +31,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="m-portlet__body">
+                            <div class="m-portlet__body radio_role">
                                 <!--begin::widget 12-->
                                 <div class="m-widget4">
                                     <div class="m-widget4__item col-lg-12" th:each="role,roleStat:${rolesList}">
@@ -67,7 +67,10 @@
                             <!--begin::Portlet-->
                             <form class="m-form m-form--state m-form--fit m-form--label-align-right">
                                 <div class="m-portlet__body">
-                                    <div id="menu_tree" class="tree-demo">
+                                    <!-- BEGIN: alert_msg -->
+                                    <div th:replace="~{system/public/alert_msg :: alert_msg}"></div>
+                                    <!-- END: alert_msg -->
+                                    <div id="menu_tree" class="menu_tree">
                                         <ul style="display: none;">
                                             <li data-jstree='{"disabled" : true}'>
                                                 Root
