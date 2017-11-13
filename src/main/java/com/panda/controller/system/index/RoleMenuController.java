@@ -1,5 +1,7 @@
 package com.panda.controller.system.index;
 
+import com.alibaba.citrus.util.StringEscapeUtil;
+import com.alibaba.fastjson.JSON;
 import com.panda.model.system.Menu;
 import com.panda.model.system.Roles;
 import com.panda.model.system.Users;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +70,29 @@ public class RoleMenuController {
                 List<Map> menuList = roleMenuService.selectRoleMenuList(id);
                 message = true;
                 data = menuList;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ResultMsgUtil.getResultMsg(message,data);
+    }
+
+    /**
+     * 保存角色菜单设置
+     * @param request
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "/saveRoleMenu", method = RequestMethod.POST)
+    @ResponseBody
+    public Object saveRoleMenu(HttpServletRequest request, String param){
+        try {
+            if(!param.isEmpty()){
+                String jsonStr = StringEscapeUtil.unescapeHtml(param);
+                List<Map> listMap = JSON.parseObject(jsonStr,List.class);
+                for (Map item : listMap ){
+                    System.out.println(item);
+                }
             }
         }catch (Exception e){
             e.printStackTrace();

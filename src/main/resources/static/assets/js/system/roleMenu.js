@@ -5,8 +5,7 @@ var Treeview = function () {
      */
     var remove_menu_tree = function(){
         MenuTree.jstree("uncheck_all"); //取消全部选中
-        MenuTree.find("a").removeAttr("role_menu_id")
-        MenuTree.find("a").removeAttr("status")
+        MenuTree.find("a").removeAttr("role_menu_id").removeAttr("status").removeClass("is_change").addClass("is_default")
     }
     /**
      * 菜单树初始化
@@ -99,26 +98,29 @@ var Treeview = function () {
      * @returns {string}
      */
     var get_menu_id = function () {
-        var paramArr = new Array();
+        var paramArr = [];
         var nodes = MenuTree.jstree("get_checked");
         $.each(nodes, function (i, n) {
-            var itemArr = [];
             var node = MenuTree.jstree("get_node", n);
-            if(node.id.indexOf("j1_") < 0 || node.parent.indexOf("j1_") < 0){
+            if(node.id.indexOf("j1_") < 0){
                 var id = node.id,
-                    parent = node.parent,
+                    parent = node.parent.indexOf("j1_") >=0 ? "" : node.parent,
                     a_id   = node.a_attr.id,
                     self = $("#"+a_id),
                     status = self.attr("status"),
                     aclass = self.attr("class"),
                     role_menu_id = self.attr("role_menu_id");
                 if(node.text !== 'Dashboard' && aclass.indexOf("is_change") >= 0 && typeof id !== "undefined"){
-                    itemArr['menu_id'] = id;
-                    itemArr['role_id'] = $(".radio_role input[type='radio']:checked").val();
-                    itemArr['status'] = status;
-                    itemArr['parent_id'] = parent;
-                    itemArr['role_menu_id'] = role_menu_id;
+
+                    var itemArr = {'menu_id':id,'role_id':$(".radio_role input[type='radio']:checked").val(),
+                        'status':status,'parent_id':parent,'role_menu_id':role_menu_id};
+                    // itemArr['menu_id'] = id;
+                    // itemArr['role_id'] = $(".radio_role input[type='radio']:checked").val();
+                    // itemArr['status'] = status;
+                    // itemArr['parent_id'] = parent;
+                    // itemArr['role_menu_id'] = role_menu_id;
                     paramArr.push(itemArr);
+                    //paramArr = itemArr;
                 }
             }
         });
@@ -131,9 +133,14 @@ var Treeview = function () {
     var save_menu_role_change = function () {
         $(".role_menu_save").on('click',function(){
             var param = get_menu_id();
-            if(param.length <= 0){
-                alertMsgShow('.m-form #danger_msg', 'danger', ' 请选择 要赋予该角色的菜单.');
-            }
+            //if(param.length > 0){
+                console.log(param)
+                request('saveRoleMenu','post',{param:JSON.stringify(param)},function (result) {
+                    console.log(result);
+                })
+           // }else{
+            //    alertMsgShow('.m-form #danger_msg', 'danger', '  请选择 要赋予该角色的菜单,或者未修改过该项.');
+            //}
         })
     }
 
