@@ -8649,8 +8649,8 @@ code {
 
 .m-widget4 .m-widget4__item {
   display: table;
-  padding-top: 1.15rem;
-  padding-bottom: 1.25rem; }
+  padding-top: 1.05rem;
+  padding-bottom: 1.10rem; }
   .m-widget4 .m-widget4__item .m-widget4__img {
     display: table-cell;
     vertical-align: middle; }
@@ -13445,7 +13445,7 @@ code {
   margin: 0; }
 
 .m-form .m-form__actions {
-  padding: 30px; }
+  padding: 1px; }
   .m-form .m-form__actions:before, .m-form .m-form__actions:after {
     content: " ";
     display: table; }

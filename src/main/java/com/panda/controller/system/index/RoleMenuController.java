@@ -88,7 +88,7 @@ public class RoleMenuController {
     @ResponseBody
     public Object saveRoleMenu(HttpServletRequest request, String param){
         try {
-            if(param != null && !param.isEmpty()){
+            if(param != null && !param.isEmpty() && param != "[]"){
                 String jsonStr = StringEscapeUtil.unescapeHtml(param);
                 List<Map> listMap = JSON.parseObject(jsonStr,List.class);
                 Integer status = roleMenuService.saveOrUpdateRoleMenu(listMap);

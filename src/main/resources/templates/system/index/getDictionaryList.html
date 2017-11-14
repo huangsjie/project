@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <!-- begin: head -->
 <div th:replace="system/public/head :: head"></div>
 <!-- end: head -->
@@ -26,7 +26,7 @@
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
                                         <h3 class="m-portlet__head-text">
-                                            角色列表
+                                            字典列表
                                         </h3>
                                     </div>
                                 </div>
@@ -34,12 +34,12 @@
                             <div class="m-portlet__body radio_role">
                                 <!--begin::widget 12 th:attr="checked=${roleStat.first}" 默认选中改用 js click 事件 触发 右侧菜单选中-->
                                 <div class="m-widget4">
-                                    <div class="m-widget4__item col-lg-12" th:each="role,roleStat:${rolesList}">
+                                    <div class="m-widget4__item col-lg-12" th:each="dictionary,dictionaryStat:${dictionaryList}">
                                         <label class="m-radio m-radio--solid m-radio--success col-lg-12" style="margin-bottom: 0">
-                                            <input type="radio" name="id" th:value="${role.id}" th:class="${roleStat.first} ? 'first-radio' : ''">
+                                            <input type="radio" name="id" th:value="${dictionary.id}" th:class="${dictionaryStat.first} ? 'first-radio' : ''">
                                             <span></span>
                                             <div class="m-widget4__info">
-                                                <span class="m-widget4__text" th:text="${role.name}">
+                                                <span class="m-widget4__text" th:text="${dictionary.name}">
                                                 </span>
                                             </div>
                                         </label>
@@ -103,20 +103,20 @@
                                             </li>
                                         </ul>
                                     </div>
-                                <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space"></div>
-                                <div class="m-form__actions m-form__actions">
-                                    <div class="row">
-                                        <div class="col-lg-9 ml-lg-auto">
-                                            <button type="button" class="btn btn-accent role_menu_save">
-                                                确定
-                                            </button>
-                                            <button type="reset" class="btn btn-secondary">
-                                                重置
-                                            </button>
+                                    <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space"></div>
+                                    <div class="m-form__actions m-form__actions">
+                                        <div class="row">
+                                            <div class="col-lg-9 ml-lg-auto">
+                                                <button type="button" class="btn btn-accent role_menu_save">
+                                                    确定
+                                                </button>
+                                                <button type="reset" class="btn btn-secondary">
+                                                    重置
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
                             </div>
                             <!--end::Portlet-->
                             <!--begin::Form-->
@@ -142,6 +142,6 @@
 <script th:src="@{/assets/js/vendors.bundle.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/scripts.bundle.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/system/base.js}" type="text/javascript"></script>
-<script th:src="@{/assets/js/system/roleMenu.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/system/menu.js}" type="text/javascript"></script>
 </body>
 </html>

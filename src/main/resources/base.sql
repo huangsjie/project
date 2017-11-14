@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-11-12 23:32:01
+Date: 2017-11-14 18:33:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,7 +37,22 @@ CREATE TABLE `s_dictionary` (
 -- ----------------------------
 -- Records of s_dictionary
 -- ----------------------------
-INSERT INTO `s_dictionary` VALUES ('8aafb62a-b9f3-11e7-b0f1-38d547b81379', '1', '10000000-0000-0000-0000-000000000000', '新增', 'role:add', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-26 10:16:20', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-26 10:16:25', '1', '新增权限');
+INSERT INTO `s_dictionary` VALUES ('02e71242-9fea-11e5-a07b-000c29d29d54', '12', '10000000-0000-0000-0000-000000000000', '设备类型', 'customerType', '0', '2017-11-11 17:16:00', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-11 17:16:00', '1', '设备类型');
+INSERT INTO `s_dictionary` VALUES ('072b643a-9a30-11e5-a07b-000c29d29d54', '11', '10000000-0000-0000-0000-000000000000', '成品品阶', 'checkType', '0', '2017-11-08 14:49:23', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:49:23', '1', '成品品阶');
+INSERT INTO `s_dictionary` VALUES ('0b9ed538-29d6-11e5-965c-000c29d7a3a0', '7', '10000000-0000-0000-0000-000000000000', '加工类型', 'papersType', '0', '2017-11-08 14:48:21', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:48:21', '1', '加工类型');
+INSERT INTO `s_dictionary` VALUES ('10000001-0000-0000-0000-000000000000', '1', '10000000-0000-0000-0000-000000000000', '用户类型', 'roleButton', '0', '2017-11-08 14:47:33', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:47:33', '1', '用户类型');
+INSERT INTO `s_dictionary` VALUES ('155a1b9b-5fbb-11e7-8697-38d547b81379', '13', '10000000-0000-0000-0000-000000000000', '用户类型', 'userType', '0', '2017-11-08 14:46:27', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:46:27', '1', '用户类型');
+INSERT INTO `s_dictionary` VALUES ('1e12732d-246e-11e5-965c-000c29d7a3a0', '5', '10000000-0000-0000-0000-000000000000', '加工工序', 'storeType', '0', '2017-11-08 14:48:28', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:48:28', '1', '加工工序');
+INSERT INTO `s_dictionary` VALUES ('5aed1f0d-7b13-11e7-81da-000c29b92c50', '15', '10000000-0000-0000-0000-000000000000', '其他类型', '1', '0', '2017-11-07 09:55:49', '53c797f6-c434-4921-95d5-25c66e820c1e', '2017-11-07 09:55:49', '1', '其他类型');
+INSERT INTO `s_dictionary` VALUES ('68d6888f-2b91-11e5-965c-000c29d7a3a0', '8', '10000000-0000-0000-0000-000000000000', '质检类型', 'attestation', '0', '2017-11-08 14:52:05', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:52:05', '1', '质检类型');
+INSERT INTO `s_dictionary` VALUES ('75b11562-9a2b-11e5-a07b-000c29d29d54', '10', '10000000-0000-0000-0000-000000000000', '包装规格', 'operation', '0', '2017-11-08 14:52:57', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:52:57', '1', '包装规格');
+INSERT INTO `s_dictionary` VALUES ('8aafb62a-b9f3-11e7-b0f1-38d547b81379', '16', '10000000-0000-0000-0000-000000000000', '新增', 'role:add', '0', '2017-11-26 10:16:25', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-26 10:16:25', '1', '新增');
+INSERT INTO `s_dictionary` VALUES ('92253cc8-2128-11e5-965c-000c29d7a3a0', '3', '10000000-0000-0000-0000-000000000000', '茶园状态', '1', '0', '2017-11-10 13:16:08', 'fd8b9374-2134-4eb2-b7c7-0019d65d94b2', '2017-11-10 13:16:08', '1', '茶园状态');
+INSERT INTO `s_dictionary` VALUES ('b6315b3a-1587-11e5-a9de-000c29d7a3a0', '2', '10000000-0000-0000-0000-000000000000', '按钮权限', '-1', '0', '2017-11-10 13:16:18', 'fd8b9374-2134-4eb2-b7c7-0019d65d94b2', '2017-11-10 13:16:18', '1', '按钮权限');
+INSERT INTO `s_dictionary` VALUES ('be0ba01c-23ad-11e5-965c-000c29d7a3a0', '4', '10000000-0000-0000-0000-000000000000', '茶园类型', 'jumpType', '0', '2017-11-08 14:51:24', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:51:24', '1', '茶园类型');
+INSERT INTO `s_dictionary` VALUES ('c0de59f4-63a7-11e7-b264-000c29b92c50', '14', '10000000-0000-0000-0000-000000000000', '营销类型', 'marketingType', '0', '2017-11-08 14:44:46', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:44:46', '1', '营销类型');
+INSERT INTO `s_dictionary` VALUES ('efec119e-31ee-11e5-993d-000c29d7a3a0', '9', '10000000-0000-0000-0000-000000000000', '包材类型', 'rank', '0', '2017-11-08 14:52:40', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:52:40', '1', '包材类型');
+INSERT INTO `s_dictionary` VALUES ('f63fe4f8-27ab-11e5-965c-000c29d7a3a0', '6', '10000000-0000-0000-0000-000000000000', '加工时长', 'creditGrade', '0', '2017-11-08 14:50:43', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:50:43', '1', '加工时长');
 
 -- ----------------------------
 -- Table structure for s_menu
@@ -63,8 +78,9 @@ CREATE TABLE `s_menu` (
 -- ----------------------------
 -- Records of s_menu
 -- ----------------------------
+INSERT INTO `s_menu` VALUES ('095c96ce-07e5-4c24-aebb-c743adc3562f', '3', '4bcab523-1174-11e5-a9de-000c29d7a3a0', '测试菜单添加时间', '/system/menu/add', '1', 'flaticon-xxx-1', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 11:25:08', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 11:25:08', '测试菜单添加时间');
 INSERT INTO `s_menu` VALUES ('0B6D1F77-BAEC-4CFA-8D19-E1C4ECE995B9', '1', '10000000-0000-0000-0000-000000000000', '系统管理', '/system/index/main', '1', 'flaticon-settings', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '管理');
-INSERT INTO `s_menu` VALUES ('20692517-9187-41df-920b-7c7342a93d37', '2', '4bcab523-1174-11e5-a9de-000c29d7a3a0', '第三层', '/system/menu/edit', '1', 'flaticon-xxx', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-06 16:50:37', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-08 17:48:36', '第三层第三层');
+INSERT INTO `s_menu` VALUES ('20692517-9187-41df-920b-7c7342a93d37', '3', '0B6D1F77-BAEC-4CFA-8D19-E1C4ECE995B9', '字典管理', '/system/dictionary/list', '1', 'flaticon-xxx', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-06 16:50:37', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 17:26:14', '字典编辑管理');
 INSERT INTO `s_menu` VALUES ('3631e59e-1175-11e5-a9de-000c29d7a3a0', '5', '10000000-0000-0000-0000-000000000000', '用户管理', '/system/ucenter/index', '1', 'flaticon-users', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '供应链管理');
 INSERT INTO `s_menu` VALUES ('4bcab523-1174-11e5-a9de-000c29d7a3a0', '2', '10000000-0000-0000-0000-000000000000', '商品管理', '/system/commodity/index', '1', 'flaticon-business', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '电商平台管理');
 INSERT INTO `s_menu` VALUES ('97ea6edb-1178-11e5-a9de-000c29d7a3a0', '6', '10000000-0000-0000-0000-000000000000', '财务管理', '/system/demand/index', '1', 'flaticon-coins', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '财务结算中心');
@@ -139,18 +155,17 @@ CREATE TABLE `s_role_menu` (
 -- ----------------------------
 -- Records of s_role_menu
 -- ----------------------------
-INSERT INTO `s_role_menu` VALUES ('1b84ca00-b643-11e7-9591-24fd52935962', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '0B6D1F77-BAEC-4CFA-8D19-E1C4ECE995B9', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:35:21');
-INSERT INTO `s_role_menu` VALUES ('6ffe5f44-bf14-11e7-a301-24fd52935962', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'caf65c04-beed-11e7-959c-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-01 22:53:35');
-INSERT INTO `s_role_menu` VALUES ('7ad41ef0-c2cf-11e7-8f88-38d547b81379', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '20692517-9187-41df-920b-7c7342a93d37', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-06 16:50:03');
-INSERT INTO `s_role_menu` VALUES ('90cba380-c46a-11e7-b461-38d547b81379', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'd942abc1-b177-452e-8c53-1914ac448c7d', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-08 17:52:44');
-INSERT INTO `s_role_menu` VALUES ('db1b6778-bee9-11e7-959c-38d547b81379', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '3631e59e-1175-11e5-a9de-000c29d7a3a0', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:35:21');
-INSERT INTO `s_role_menu` VALUES ('dfe27920-bee9-11e7-959c-38d547b81379', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '4bcab523-1174-11e5-a9de-000c29d7a3a0', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:35:21');
-INSERT INTO `s_role_menu` VALUES ('e57b7509-bee9-11e7-959c-38d547b81379', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '97ea6edb-1178-11e5-a9de-000c29d7a3a0', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:35:21');
-INSERT INTO `s_role_menu` VALUES ('e9fbb816-c76f-11e7-8320-24fd52935962', '257ae84e-d86a-11e6-ba64-d8490bd28593', 'e38ab74b-bf14-11e7-a301-24fd52935962', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-12 22:57:20');
-INSERT INTO `s_role_menu` VALUES ('ebb4a998-bee9-11e7-959c-38d547b81379', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c3538d54-8e09-11e6-b311-005056812bf6', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:35:21');
-INSERT INTO `s_role_menu` VALUES ('f10427ee-bee9-11e7-959c-38d547b81379', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'd07687ef-2798-11e5-965c-000c29d7a3a0', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:35:21');
-INSERT INTO `s_role_menu` VALUES ('f5d2a3c9-bee9-11e7-959c-38d547b81379', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'fb69a533-1178-11e5-a9de-000c29d7a3a0', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:35:21');
-INSERT INTO `s_role_menu` VALUES ('f5f9e4be-bf14-11e7-a301-24fd52935962', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'e38ab74b-bf14-11e7-a301-24fd52935962', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-01 22:57:20');
+INSERT INTO `s_role_menu` VALUES ('05c5cf15-9fd9-47f2-b03a-3607de630666', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'caf65c04-beed-11e7-959c-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 17:12:13');
+INSERT INTO `s_role_menu` VALUES ('0f376505-c36f-42e8-81e6-21ab406ca3db', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '3631e59e-1175-11e5-a9de-000c29d7a3a0', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 17:13:46');
+INSERT INTO `s_role_menu` VALUES ('12de943e-d491-46ec-a046-8bc63ea70620', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c3538d54-8e09-11e6-b311-005056812bf6', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 17:13:46');
+INSERT INTO `s_role_menu` VALUES ('29805307-37f1-407f-82e9-aa989369c2a5', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '20692517-9187-41df-920b-7c7342a93d37', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 17:13:46');
+INSERT INTO `s_role_menu` VALUES ('6e179d0b-1999-4cd2-8d65-c74aeac86138', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '4bcab523-1174-11e5-a9de-000c29d7a3a0', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 17:13:46');
+INSERT INTO `s_role_menu` VALUES ('b8b84474-02e6-4210-a5e5-e94390685099', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'e38ab74b-bf14-11e7-a301-24fd52935962', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 17:12:13');
+INSERT INTO `s_role_menu` VALUES ('bd70ed16-8fc5-4f21-a2fa-4fc5f82faa80', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'd942abc1-b177-452e-8c53-1914ac448c7d', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 17:12:13');
+INSERT INTO `s_role_menu` VALUES ('bdf1927a-e0b7-4c5e-921b-758ff46f3f19', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '97ea6edb-1178-11e5-a9de-000c29d7a3a0', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 17:13:46');
+INSERT INTO `s_role_menu` VALUES ('be32b052-2ed3-47f4-a373-53fc004739da', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'd07687ef-2798-11e5-965c-000c29d7a3a0', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 17:13:46');
+INSERT INTO `s_role_menu` VALUES ('c56e414b-f510-4334-b1a4-794ead9cac01', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'fb69a533-1178-11e5-a9de-000c29d7a3a0', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 17:13:46');
+INSERT INTO `s_role_menu` VALUES ('dfe63cdc-5706-4e4d-97a9-3958c7d70750', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '0B6D1F77-BAEC-4CFA-8D19-E1C4ECE995B9', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 17:12:13');
 
 -- ----------------------------
 -- Table structure for s_users

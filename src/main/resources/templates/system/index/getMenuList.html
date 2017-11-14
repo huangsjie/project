@@ -39,12 +39,16 @@
                                                 <li data-jstree='{"selected":true,"disabled" : true}'>
                                                     <a href="javascript:;">Dashboard</a>
                                                 </li>
-                                                <li th:each="menu : ${menuList}" data-jstree='{"opened":true,"icon":"fa fa-folder m--font-danger"}'>
-                                                    <a class="tree_a" href="javascript:;" th:text="${menu.name}" th:attr="menu=${menu.id}"></a>
+                                                <li th:each="menu : ${menuList}"
+                                                    data-jstree='{"opened":true,"icon":"fa fa-folder m--font-danger"}'>
+                                                    <a class="tree_a" href="javascript:;" th:text="${menu.name}"
+                                                       th:attr="menu=${menu.id}"></a>
                                                     <!-- child -->
                                                     <ul th:if="${menu.childMenuList != null}">
-                                                        <li th:each="child : ${menu.childMenuList}" data-jstree='{ "opened":true,"icon":"fa fa-folder m--font-success"}'>
-                                                            <a class="tree_a" href="javascript:;" th:text="${child.name}" th:attr="menu=${child.id}"></a>
+                                                        <li th:each="child : ${menu.childMenuList}"
+                                                            data-jstree='{ "opened":true,"icon":"fa fa-folder m--font-success"}'>
+                                                            <a class="tree_a" href="javascript:;"
+                                                               th:text="${child.name}" th:attr="menu=${child.id}"></a>
                                                             <!-- lastChild -->
                                                             <ul th:if="${child.childMenuList != null}">
                                                                 <li th:each="lastChild : ${child.childMenuList}"
@@ -83,11 +87,13 @@
                                 </div>
                             </div>
                             <!--begin::Form-->
-                            <form class="m-form m-form--state m-form--fit m-form--label-align-right" id="menu_edit_form"
-                                  novalidate="novalidate">
-                                <input type="hidden" name="id" value="">
-                                <input type="hidden" name="save" value="add">
-                                <div class="m-portlet__body">
+                            <div class="m-portlet__body">
+                                <form class="m-form m-form--state m-form--fit m-form--label-align-right"
+                                      id="menu_edit_form"
+                                      novalidate="novalidate">
+                                    <input type="hidden" name="id" value="">
+                                    <input type="hidden" name="save" value="add">
+
                                     <!-- BEGIN: alert_msg -->
                                     <div th:replace="~{system/public/alert_msg :: alert_msg}"></div>
                                     <!-- END: alert_msg -->
@@ -96,7 +102,8 @@
                                             名称 *
                                         </label>
                                         <div class="col-lg-6 col-md-9 col-sm-12">
-                                            <input type="text" class="form-control m-input" name="name" placeholder="菜单名称">
+                                            <input type="text" class="form-control m-input" name="name"
+                                                   placeholder="菜单名称">
                                             <span class="m-form__help">
 											</span>
                                         </div>
@@ -110,7 +117,8 @@
                                                 <span class="input-group-addon">
 													如：/system/x/x
 												</span>
-                                                <input type="text" class="form-control m-input" name="url" placeholder="菜单 url">
+                                                <input type="text" class="form-control m-input" name="url"
+                                                       placeholder="菜单 url">
                                             </div>
                                             <span class="m-form__help">
 											</span>
@@ -122,7 +130,8 @@
                                         </label>
                                         <div class="col-lg-6 col-md-9 col-sm-12">
                                             <div class="m-input-icon m-input-icon--left">
-                                                <input type="text" class="form-control m-input" name="sortId" placeholder="菜单排序">
+                                                <input type="text" class="form-control m-input" name="sortId"
+                                                       placeholder="菜单排序">
                                                 <span class="m-input-icon__icon m-input-icon__icon--left">
 													<span>
 														<i class="la la-calculator"></i>
@@ -140,7 +149,8 @@
                                         <div class="col-lg-6 col-md-9 col-sm-12">
                                             <select class="form-control m-input" name="parentId">
                                                 <option value="">请选择</option>
-                                                <option th:each="menu : ${authMenu}" th:text="${menu.name}" th:value="${menu.id}"></option>
+                                                <option th:each="menu : ${authMenu}" th:text="${menu.name}"
+                                                        th:value="${menu.id}"></option>
                                             </select>
                                             <span class="m-form__help">
                                                 <i class="jstree-icon jstree-ocl" role="presentation"></i>
@@ -156,7 +166,8 @@
                                                 <span class="input-group-addon">
 													如：flaticon-xxx
 												</span>
-                                                <input type="text" class="form-control m-input" name="iconClass" placeholder="菜单 Icon Class">
+                                                <input type="text" class="form-control m-input" name="iconClass"
+                                                       placeholder="菜单 Icon Class">
                                             </div>
                                             <span class="m-form__help">
 											</span>
@@ -187,28 +198,29 @@
                                             备注 *
                                         </label>
                                         <div class="col-lg-6 col-md-9 col-sm-12">
-                                            <textarea class="form-control m-input" name="description" placeholder="介绍用途等"></textarea>
+                                            <textarea class="form-control m-input" name="description"
+                                                      placeholder="介绍用途等"></textarea>
                                             <span class="m-form__help">
 											</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space"></div>
-                                <div class="m-portlet__foot m-portlet__foot--fit">
-                                    <div class="m-form__actions m-form__actions">
-                                        <div class="row">
-                                            <div class="col-lg-9 ml-lg-auto">
-                                                <button type="submit" class="btn btn-accent menu_save">
-                                                    确定
-                                                </button>
-                                                <button type="reset" class="btn btn-secondary m--hide reset-btn">
-                                                    重置
-                                                </button>
+                                    <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space"></div>
+                                    <div class="m-portlet__foot m-portlet__foot--fit">
+                                        <div class="m-form__actions m-form__actions">
+                                            <div class="row">
+                                                <div class="col-lg-9 ml-lg-auto">
+                                                    <button type="submit" class="btn btn-accent menu_save">
+                                                        确定
+                                                    </button>
+                                                    <button type="reset" class="btn btn-secondary m--hide reset-btn">
+                                                        重置
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                             <!--end::Form-->
                         </div>
                         <!--end::Portlet-->

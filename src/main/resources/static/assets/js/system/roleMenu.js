@@ -150,7 +150,7 @@ var Treeview = function () {
     var save_menu_role_change = function () {
         $(".role_menu_save").on('click',function(){
             var param = get_menu_id();
-            if(param != ''){
+            if(typeof param !== 'undefined' && param != '[]'){
                 request('saveRoleMenu','post',{param:param},function (result) {
                     if(result.message){
                         alertMsgShow('.m-form #success_msg', 'success', result.data);
