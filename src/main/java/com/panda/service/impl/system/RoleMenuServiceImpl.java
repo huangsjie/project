@@ -118,7 +118,7 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenu> implement
             }
         } catch (Exception e) {
             /**
-             * spring 默认情况下aop只捕获 RuntimeException 的异常时才进行回滚，
+             * spring 默认情况下aop只有捕获到 RuntimeException 的异常时才进行回滚，
              * try catch 时需要手动添加回滚
              */
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
