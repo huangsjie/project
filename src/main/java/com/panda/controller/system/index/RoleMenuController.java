@@ -9,6 +9,7 @@ import com.panda.service.system.MenuService;
 import com.panda.service.system.RoleMenuService;
 import com.panda.service.system.RolesService;
 import com.panda.util.ResultMsgUtil;
+import com.panda.util.ResultStateUtil;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,8 +91,15 @@ public class RoleMenuController {
             if(!param.isEmpty()){
                 String jsonStr = StringEscapeUtil.unescapeHtml(param);
                 List<Map> listMap = JSON.parseObject(jsonStr,List.class);
-                for (Map item : listMap ){
-                    System.out.println(item);
+                Integer status = roleMenuService.saveOrUpdateRoleMenu(listMap);
+                switch (status){
+                    case 101:
+                        data    = ResultStateUtil.FAIL_ABNORMAL;
+                        break;
+                    default :
+                        message = true;
+                        data    = ResultStateUtil.SUCCESS_ABNORMAL;
+                        break;
                 }
             }
         }catch (Exception e){

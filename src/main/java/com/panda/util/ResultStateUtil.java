@@ -19,7 +19,7 @@ public class ResultStateUtil {
      * 常用失败
      */
     public static final String FAIL_UPDATE = "由于未知原因, 导致修改失败 !";//100
-    public static final String FAIL_ABNORMAL = "操作失败";//101
+    public static final String FAIL_ABNORMAL = "数据操作异常,导致操作失败";//101
     public static final String FAIL_DELETE = "删除失败";//102
     public static final String FAIL_QUERY = "查询失败";//103
     public static final String FAIL_UPLOAD = "上传失败";//104
@@ -34,7 +34,7 @@ public class ResultStateUtil {
      * 常用成功
      */
     public static final String SUCCESS_UPDATE = "修改了一些东西, 并保存成功 !";//200
-    public static final String SUCCESS_ABNORMAL = "操作成功";//204
+    public static final String SUCCESS_ABNORMAL = "操作了一些数据, 并保存成功 !";//204
     public static final String SUCCESS_DELETE = "成功删除了一条记录 ！";//201
     public static final String SUCCESS_QUERY = "查询成功";//202
     public static final String SUCCESS_ADD = "新增了一条记录, 并保存成功 !";//203

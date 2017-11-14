@@ -2,6 +2,8 @@ package com.panda.config;
 
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +17,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class DruidConfig {
+
+    private static final Logger logger = LoggerFactory.getLogger(DruidConfig.class);
 
     @Bean
     public ServletRegistrationBean druidServlet() {

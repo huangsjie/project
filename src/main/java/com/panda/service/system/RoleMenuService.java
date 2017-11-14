@@ -21,4 +21,18 @@ public interface RoleMenuService extends AbstractService<RoleMenu> {
      * @return
      */
     List<Map> selectRoleMenuList(String roleId);
+
+    /**
+     * 更新 和 保存角色菜单设置
+     * @param roleMenuList
+     * @return
+     */
+    Integer saveOrUpdateRoleMenu(List<Map> roleMenuList);
+
+    /**
+     * 验证角色菜单父级菜单是否有权限
+     * @param map
+     * @return
+     */
+    boolean checkRoleMenuParentMenu(Map<String,Object> map);
 }

@@ -15,4 +15,10 @@ public interface RoleMenuMapper extends AbstractMapper<RoleMenu> {
      */
     List<Map> selectRoleMenuList(String roleId);
 
+    /**
+     * 验证角色菜单父级菜单是否有权限
+     * @param map
+     * @return
+     */
+    boolean checkRoleMenuParentMenu(Map<String,Object> map);
 }

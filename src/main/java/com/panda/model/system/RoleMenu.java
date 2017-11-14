@@ -56,7 +56,7 @@ public class RoleMenu implements Serializable {
         this.createId = createId;
     }
 
-    public Date getCreateTime() {
+    public Date getCreateTime(Date date) {
         return createTime;
     }
 

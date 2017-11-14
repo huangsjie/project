@@ -105,13 +105,29 @@
   </update>
 
   <select id="selectRoleMenuList" resultType="map" parameterType="java.lang.String">
-        SELECT
-          rm.id roleMenuId, rm.status roleMenuStatus, m.*
-        FROM
-          s_role_menu rm, s_menu m
-        WHERE
-          1 = 1
-        AND rm.role_id = #{roleId}
+    SELECT
+      rm.id roleMenuId, rm.status roleMenuStatus, m.*
+    FROM
+      s_role_menu rm, s_menu m
+    WHERE
+      1 = 1
+    AND rm.role_id = #{roleId}
         AND rm.menu_id = m.id
+  </select>
+  <!-- parameterType="map" resultType="java.lang.Boolean" parameterType="java.lang.Boolean" 测试事物回滚 -->
+  <select id="checkRoleMenuParentMenu" parameterType="map" resultType="java.lang.Boolean">
+    SELECT
+        COUNT(rm.id)
+    FROM
+        s_role_menu rm
+    WHERE
+        1 = 1
+    <if test="roleId != null and roleId != ''">
+      AND rm.role_id = #{roleId}
+    </if>
+    <if test="roleId != null and roleId != ''">
+      AND rm.menu_id = #{menuId}
+    </if>
+    AND rm.`status` = 1
   </select>
 </mapper>

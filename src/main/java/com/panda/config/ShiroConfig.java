@@ -52,7 +52,7 @@ public class ShiroConfig {
     @Value("${panda.cache.second}")
     private int second;
 
-    private static final Logger logger = LoggerFactory.getLogger(DruidConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(ShiroConfig.class);
 
     @Bean
     public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {

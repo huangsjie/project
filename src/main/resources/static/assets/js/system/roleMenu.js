@@ -111,12 +111,16 @@ var Treeview = function () {
                     aclass = self.attr("class"),
                     role_menu_id = self.attr("role_menu_id");
                 if(node.text !== 'Dashboard' && aclass.indexOf("is_change") >= 0 && typeof id !== "undefined"){
+                    /**
+                     * 参数为 undefined 时 补齐参数，防止报错
+                     * @type {{menu_id, role_id: (*|jQuery), status: *, parent_id: *, role_menu_id: *}}
+                     */
                     var itemArr = {
                         'menu_id':id,
                         'role_id':$(".radio_role input[type='radio']:checked").val(),
-                        'status':status,
-                        'parent_id':parent,
-                        'role_menu_id':role_menu_id};
+                        'status': typeof status !== "undefined" ? status : 0,
+                        'parent_id': parent !== "" ? parent : 0,
+                        'role_menu_id': typeof role_menu_id !== "undefined" ? role_menu_id : 0};
                     paramArr.push(itemArr);
                 }
             }
