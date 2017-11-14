@@ -125,9 +125,11 @@
     <if test="roleId != null and roleId != ''">
       AND rm.role_id = #{roleId}
     </if>
-    <if test="roleId != null and roleId != ''">
+    <if test="menuId != null and menuId != ''">
       AND rm.menu_id = #{menuId}
     </if>
-    AND rm.`status` = 1
+    <if test="status != null and status != ''">
+      AND rm.`status` = 1
+    </if>
   </select>
 </mapper>

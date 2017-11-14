@@ -88,12 +88,13 @@ public class RoleMenuController {
     @ResponseBody
     public Object saveRoleMenu(HttpServletRequest request, String param){
         try {
-            if(!param.isEmpty()){
+            if(param != null && !param.isEmpty()){
                 String jsonStr = StringEscapeUtil.unescapeHtml(param);
                 List<Map> listMap = JSON.parseObject(jsonStr,List.class);
                 Integer status = roleMenuService.saveOrUpdateRoleMenu(listMap);
                 switch (status){
                     case 101:
+                        message = false;
                         data    = ResultStateUtil.FAIL_ABNORMAL;
                         break;
                     default :
@@ -101,6 +102,9 @@ public class RoleMenuController {
                         data    = ResultStateUtil.SUCCESS_ABNORMAL;
                         break;
                 }
+            }else{
+                message = false;
+                data    = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
             }
         }catch (Exception e){
             e.printStackTrace();

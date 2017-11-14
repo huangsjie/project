@@ -6,7 +6,7 @@ public class ResultStateUtil {
     /**
      * 常用异常
      */
-    public static final String ERROR_PARAMETER_IS_EMPTY = "参数不能为空";//000
+    public static final String ERROR_PARAMETER_IS_EMPTY = "传递的内容为空, 操作存在异常 ！";//000
     public static final String ERROR_PARAMETER_NO_TCOMPATIBLE = "参数不匹配";//001
     public static final String ERROR_DATABASE_OPERATION = "sql执行错误";//002
     public static final String ERROR_OPERATION = "操作异常";//003

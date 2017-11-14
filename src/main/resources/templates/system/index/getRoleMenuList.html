@@ -32,11 +32,11 @@
                                 </div>
                             </div>
                             <div class="m-portlet__body radio_role">
-                                <!--begin::widget 12-->
+                                <!--begin::widget 12 th:attr="checked=${roleStat.first}" 默认选中改用 js click 事件 触发 右侧菜单选中-->
                                 <div class="m-widget4">
                                     <div class="m-widget4__item col-lg-12" th:each="role,roleStat:${rolesList}">
                                         <label class="m-radio m-radio--solid m-radio--success col-lg-12" style="margin-bottom: 0">
-                                            <input type="radio" name="id" th:value="${role.id}" th:attr="checked=${roleStat.first}">
+                                            <input type="radio" name="id" th:value="${role.id}" th:class="${roleStat.first} ? 'first-radio' : ''">
                                             <span></span>
                                             <div class="m-widget4__info">
                                                 <span class="m-widget4__text" th:text="${role.name}">

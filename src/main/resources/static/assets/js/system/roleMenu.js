@@ -33,24 +33,37 @@ var Treeview = function () {
                     $.each(data.selected, function (i, n) {
                         if(n != '' && n.indexOf('j1_') < 0){
                             var node = MenuTree.jstree("get_node", n);
-                            var menuId = node.a_attr.id,aclass = $("#"+menuId).attr("class");
+                            var menuId = node.a_attr.id,aclass = $("#"+menuId).attr("class"),status = $("#"+menuId).attr("status");
+                            if(status == 2){
+                                $("#"+menuId).attr("status",1)
+                            }
                             if(aclass.indexOf("is_default") >= 0){
                                 $("#"+menuId).removeClass("is_default").addClass("is_change");
                             }
                         }
                     });
-                } else if (data.action == 'deselect_node' && data.selected.length == 1) {
+
+                } else if (data.action == 'deselect_node' && data.selected.length >= 0) {
                     $.each(data.node.children, function (i, n) {
                         var node = MenuTree.jstree("get_node", n);
-                        var menuId = node.a_attr.id,aclass = $("#"+menuId).attr("class");
-                        console.log(aclass)
+                        var menuId = node.a_attr.id,aclass = $("#"+menuId).attr("class"),status = $("#"+menuId).attr("status");
+                        if(status == 1){
+                            $("#"+menuId).attr("status",2)
+                        }
                         if(aclass.indexOf("is_change") >= 0){
                             $("#"+menuId).removeClass("is_change").addClass("is_default");
+                        }else if(aclass.indexOf("is_default") >= 0){
+                            $("#"+menuId).removeClass("is_default").addClass("is_change");
                         }
                     });
-                    var menuId = data.node.a_attr.id,aclass = $("#"+menuId).attr("class");
+                    var menuId = data.node.a_attr.id,aclass = $("#"+menuId).attr("class"),status = $("#"+menuId).attr("status");
+                    if(status == 1){
+                        $("#"+menuId).attr("status",2)
+                    }
                     if(aclass.indexOf("is_change") >= 0){
                         $("#"+menuId).removeClass("is_change").addClass("is_default");
+                    }else if(aclass.indexOf("is_default") >= 0){
+                        $("#"+menuId).removeClass("is_default").addClass("is_change");
                     }
                 }
             }
@@ -59,6 +72,7 @@ var Treeview = function () {
 
     /**
      * 选中角色对应的菜单树 checkbox
+     * 菜单为启用状态时 选中 如果当前节点为父节点，默认不管
      * @param roleMenu
      * @returns {number}
      */
@@ -70,7 +84,9 @@ var Treeview = function () {
                     var node = MenuTree.jstree("get_node", n.id);
                     $("#"+node.a_attr.id).attr("status",n.roleMenuStatus)
                     $("#"+node.a_attr.id).attr("role_menu_id",n.roleMenuId)
-                    MenuTree.jstree().select_node(node);
+                    if(node.children.length == 0 && n.roleMenuStatus == 1){
+                        MenuTree.jstree().select_node(node);
+                    }
                 }
             });
         }
@@ -99,9 +115,9 @@ var Treeview = function () {
      */
     var get_menu_id = function () {
         var paramArr = [];
-        var nodes = MenuTree.jstree("get_checked");
+        var nodes = $('#menu_tree .is_change');
         $.each(nodes, function (i, n) {
-            var node = MenuTree.jstree("get_node", n);
+            var node = MenuTree.jstree("get_node", nodes.eq(i).attr('id'));
             if(node.id.indexOf("j1_") < 0){
                 var id = node.id,
                     parent = node.parent.indexOf("j1_") >=0 ? "" : node.parent,
@@ -124,7 +140,7 @@ var Treeview = function () {
                     paramArr.push(itemArr);
                 }
             }
-        });
+         });
         return JSON.stringify(paramArr);
     }
 
@@ -134,10 +150,13 @@ var Treeview = function () {
     var save_menu_role_change = function () {
         $(".role_menu_save").on('click',function(){
             var param = get_menu_id();
-            if(param !== ''){
-                console.log(param)
+            if(param != ''){
                 request('saveRoleMenu','post',{param:param},function (result) {
-                    console.log(result);
+                    if(result.message){
+                        alertMsgShow('.m-form #success_msg', 'success', result.data);
+                    }else{
+                        alertMsgShow('.m-form #warning_msg', 'warning', result.data);
+                    }
                 })
             }else{
                 alertMsgShow('.m-form #danger_msg', 'danger', '  请选择 要赋予该角色的菜单,或者未修改过该项.');
@@ -156,4 +175,8 @@ var Treeview = function () {
 
 jQuery(document).ready(function() {
     Treeview.init();
+    /**
+     * 选中第一个 radio
+     */
+    $(".first-radio").click()
 });
