@@ -33,7 +33,8 @@ public class MenuController {
     private MenuService menuService;
     @Resource
     private RoleMenuService roleMenuService;
-
+    private static boolean message = false;
+    private static Object  data    = null;
     /**
      * 获取菜单 Tree 当前菜单为用户 信息一起存储到 Redis 内
      * @return
@@ -55,8 +56,8 @@ public class MenuController {
     @RequestMapping(value = "/getMenuData",method = RequestMethod.GET)
     @ResponseBody
     public Object getMenuListData(String id){
-        boolean message = false;
-        Object  data    = null;
+        message = false;
+        data    = null;
         if(!id.isEmpty()){
             Menu menu= menuService.selectByPrimaryKey(id);
             if(menu != null){
@@ -81,8 +82,8 @@ public class MenuController {
     @ResponseBody
     public Object saveMenu(Menu menu, String save){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        boolean message = false;
-        Object  data    = null;
+        message = false;
+        data    = null;
         if(save.equals("edit") && menu.getId() != null){
             menu.setModifyTime(new Date());
             int i = menuService.updateByPrimaryKeySelective(menu);

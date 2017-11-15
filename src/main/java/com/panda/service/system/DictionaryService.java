@@ -3,6 +3,8 @@ package com.panda.service.system;
 import com.panda.util.abs.AbstractService;
 import com.panda.model.system.Dictionary;
 
+import java.util.List;
+
 /**
  * Created with IDEA.
  * @AUTH: Alan
@@ -10,4 +12,10 @@ import com.panda.model.system.Dictionary;
  * Time: 18:23
  */
 public interface DictionaryService extends AbstractService<Dictionary>{
+
+    /**
+     * 获取当前字典的属性
+     * @return
+     */
+    List<Dictionary> selectDictionaryValueList(String parentId);
 }

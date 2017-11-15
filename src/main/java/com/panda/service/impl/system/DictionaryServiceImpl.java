@@ -8,6 +8,7 @@ import com.panda.service.system.DictionaryService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created with IDEA.
@@ -25,6 +26,15 @@ public class DictionaryServiceImpl extends AbstractServiceImpl<Dictionary> imple
     @Override
     protected AbstractMapper<Dictionary> getAbstractMapper() {
         return dictionaryMapper;
+    }
+
+    /**
+     * 获取当前字典的属性
+     * @return
+     */
+    @Override
+    public List<Dictionary> selectDictionaryValueList(String parentId){
+        return dictionaryMapper.selectDictionaryValueList(parentId);
     }
 
 }

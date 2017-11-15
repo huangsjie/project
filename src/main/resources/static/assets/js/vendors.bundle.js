@@ -55150,6 +55150,7 @@ $.extend( $.validator, {
 		required: "此字段必填.",
 		email: "请输入邮箱地址.",
 		account: "请输入一个有效的账号.",
+		alphanumerical: "请输入字母或数字."
 		nameCheck: "请输入中文 或 字母.",
 		iconCheck: "正确的icon-class 格式为 'flaticon-xxx'. ",
 		urlCheck: "类型:(/system/**后台) (/home/**前台) (/wecaht/** 微信)",
@@ -56179,6 +56180,10 @@ $.extend( $.validator, {
 		//账号验证
 		account: function( value, element ) {
 			return this.optional( element ) || /^[a-zA-Z0-9_]+$/.test( value );
+		},
+		//字母-数字
+		alphanumerical: function(value, element) {
+			return this.optional( element ) || /^[:a-zA-Z0-9]+$/.test( value );
 		},
 		//名称验证
 		nameCheck: function( value, element) {

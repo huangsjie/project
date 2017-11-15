@@ -167,6 +167,18 @@
     <include refid="Base_Column_List"/>
     from s_dictionary
     where 1 = 1
+    AND parent_id = '10000000-0000-0000-0000-000000000000'
     ORDER BY sort_id ASC
+  </select>
+  
+  <select id="selectDictionaryValueList" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from
+        s_dictionary d
+    where
+        d.parent_id = #{parentId}
+    order by
+        d.sort_id asc;
   </select>
 </mapper>

@@ -7,12 +7,16 @@ import com.panda.service.system.MenuService;
 import com.panda.service.system.RoleMenuService;
 import com.panda.service.system.DictionaryService;
 import com.panda.service.system.RolesService;
+import com.panda.util.ResultMsgUtil;
+import com.panda.util.ResultStateUtil;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +31,8 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/system/dictionary")
 public class DictionaryController {
-
+    private static boolean message = false;
+    private static Object  data    = null;
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
     @Resource
     private MenuService menuService;
@@ -35,6 +40,12 @@ public class DictionaryController {
     @Resource
     private DictionaryService dictionaryService;
 
+    /**
+     * 显示页面
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/list")
     public String list(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
@@ -43,5 +54,36 @@ public class DictionaryController {
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("dictionaryList",dictionaryList);
         return "system/index/getDictionaryList";
+    }
+
+    /**
+     * 获取字典属性列表
+     * @param request
+     * @param parentId
+     * @return
+     */
+    @RequestMapping(value = "/getDictionaryValueList",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getDictionaryValueList(HttpServletRequest request,String parentId){
+        message = false;
+        data    = null;
+        try {
+            if (parentId != null && !parentId.isEmpty()){
+                Dictionary parent = dictionaryService.selectByPrimaryKey(parentId);
+                if(parent != null){
+                    List<Dictionary> dictionaryList = dictionaryService.selectDictionaryValueList(parentId);
+                    dictionaryList.add(parent);
+                    message = true;
+                    data    = dictionaryList;
+                }else{
+                    data = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
+                }
+            }else{
+                data = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ResultMsgUtil.getResultMsg(message,data);
     }
 }

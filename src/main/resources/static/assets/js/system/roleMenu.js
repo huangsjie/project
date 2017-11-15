@@ -105,6 +105,8 @@ var Treeview = function () {
                 function (result) {
                     if (result.message) {
                         checked_menu_tree(result.data)
+                    }else{
+                        alertMsgShow('.m-form #warning_msg', 'warning', result.data);
                     }
                 })
         })
