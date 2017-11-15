@@ -1,4 +1,3 @@
-//== Class Definition
 var SnippetLogin = function() {
     var login = $('#m_login');
 
