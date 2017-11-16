@@ -133,12 +133,15 @@ var Roles = function () {
                     function(result){
                         if(result.message){
                             removeValue('add');
-                            blockUiOpen('.rolesEdit .modal-content',result.data);
-                            blockUiClose('.rolesEdit .modal-content',1,".close-parent",2000);
+                            blockUiClose('.rolesEdit .modal-content',1,".close-parent",0);
+                            ToastrMsg(result.data,"success","topRight");
+                            //blockUiOpen('.rolesEdit .modal-content',result.data);
+                            //blockUiClose('.rolesEdit .modal-content',1,".close-parent",2000);
                         }else{
                             // 失败不关闭窗口
-                            blockUiOpen('.rolesEdit .modal-content',result.data);
-                            blockUiClose('.rolesEdit .modal-content','','',2000);
+                            //blockUiOpen('.rolesEdit .modal-content',result.data);
+                            //blockUiClose('.rolesEdit .modal-content','','',2000);
+                            ToastrMsg(result.data,"error","topRight");
                         }
                     }
                 )
@@ -209,13 +212,11 @@ jQuery(document).ready(function () {
                 'get',
                 {id:id},
                 function (result) {
-                    if(result.message){
-                        blockUiOpen('#roles_list',result.data);
+                    if(!result.message){
                         self.parents("tr").remove();
-                        blockUiClose('#roles_list','','',2000);
+                        ToastrMsg(result.data,"success","topRight",'#roles_list');
                     }else{
-                        blockUiOpen('#roles_list',result.data);
-                        blockUiClose('#roles_list','','',2000);
+                        ToastrMsg(result.data,"error","topRight",'#roles_list');
                     }
                 })
             }

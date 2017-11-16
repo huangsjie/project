@@ -51,7 +51,8 @@ var MenuPage = function () {
                 }
             },
             invalidHandler: function(event, validator) {
-                alertMsgShow('.m-form #danger_msg', 'danger', ' 编辑菜单请选中左侧 菜单Tree 要编辑的菜单. 新增请直接填写.');
+                //alertMsgShow('.m-form #danger_msg', 'danger', ' 编辑菜单请选中左侧 菜单Tree 要编辑的菜单. 新增请直接填写.');
+                ToastrMsg(' 编辑菜单请选中左侧 菜单Tree 要编辑的菜单. 新增请直接填写.',"warning","topRight");
             },
 
             submitHandler: function (form){
@@ -61,9 +62,11 @@ var MenuPage = function () {
                     $("#menu_edit_form").serialize(),
                     function(result){
                         if(result.message){
-                            alertMsgShow('.m-form #success_msg', 'success', result.data);
+                            //alertMsgShow('.m-form #success_msg', 'success', result.data);
+                            ToastrMsg(result.data,"success","topRight");
                         }else{
-                            alertMsgShow('.m-form #warning_msg', 'warning', result.data);
+                            //alertMsgShow('.m-form #warning_msg', 'warning', result.data);
+                            ToastrMsg(result.data,"error","topRight");
                         }
                     }
                 )

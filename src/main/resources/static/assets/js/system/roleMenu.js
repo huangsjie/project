@@ -106,7 +106,8 @@ var Treeview = function () {
                     if (result.message) {
                         checked_menu_tree(result.data)
                     }else{
-                        alertMsgShow('.m-form #warning_msg', 'warning', result.data);
+                        //alertMsgShow('.m-form #warning_msg', 'warning', result.data);
+                        ToastrMsg(result.data,"warning","topRight");
                     }
                 })
         })
@@ -155,13 +156,16 @@ var Treeview = function () {
             if(typeof param !== 'undefined' && param != '[]'){
                 request('saveRoleMenu','post',{param:param},function (result) {
                     if(result.message){
-                        alertMsgShow('.m-form #success_msg', 'success', result.data);
+                        //alertMsgShow('.m-form #success_msg', 'success', result.data);
+                        ToastrMsg(result.data,"success","topRight");
                     }else{
-                        alertMsgShow('.m-form #warning_msg', 'warning', result.data);
+                        //alertMsgShow('.m-form #warning_msg', 'warning', result.data);
+                        ToastrMsg(result.data,"warning","topRight");
                     }
                 })
             }else{
-                alertMsgShow('.m-form #danger_msg', 'danger', '  请选择 要赋予该角色的菜单,或者未修改过该项.');
+                //alertMsgShow('.m-form #danger_msg', 'danger', '  请选择 要赋予该角色的菜单,或者未修改过该项.');
+                ToastrMsg('  请选择 要赋予该角色的菜单,或者未修改过该项.',"error","topRight");
             }
         })
     }

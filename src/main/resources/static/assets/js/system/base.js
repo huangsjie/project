@@ -48,7 +48,7 @@ var ToastrMsg = function(toastrMsg, toastrType, positionType, unblock, toastrTit
         onclick: null,
         showDuration: showDuration ? showDuration : 300,
         hideDuration: hideDuration ? hideDuration : 1000,
-        timeOut: timeOut ? timeOut : 1000,
+        timeOut: timeOut ? timeOut : 3000,
         extendedTimeOut: extendedTimeOut ? extendedTimeOut : 1000,
         showEasing: $showEasing,
         hideEasing: $hideEasing,
