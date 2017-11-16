@@ -117,6 +117,7 @@ public class DictionaryController {
                 dictionary.setId(UUID.randomUUID().toString());
                 dictionary.setCreateId(user.getId());
                 dictionary.setCreateTime(new Date());
+                dictionary.setParentId(dictionary.getParentId().isEmpty()?"10000000-0000-0000-0000-000000000000":dictionary.getParentId());//
                 dictionary.setModifyId(user.getId());
                 dictionary.setModifyTime(new Date());
                 int i =dictionaryService.insertSelective(dictionary);
@@ -129,7 +130,7 @@ public class DictionaryController {
             }
         }catch (Exception e){
             e.printStackTrace();
-            data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
+            data    = "名称或属性重复, "+ResultStateUtil.ERROR_DATABASE_OPERATION;
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }

@@ -33,7 +33,8 @@ var Dictionary = function () {
                     digits: true
                 },
                 value: {
-                    required: true
+                    required: true,
+                    alphanumerical:true
                 },
                 description: {
                     required: true,
