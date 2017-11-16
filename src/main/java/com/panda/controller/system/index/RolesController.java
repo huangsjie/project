@@ -65,6 +65,7 @@ public class RolesController {
             }
         }catch (Exception e){
             e.printStackTrace();
+            data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
@@ -89,6 +90,7 @@ public class RolesController {
                 }
             }catch (Exception e){
                 e.printStackTrace();
+                data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
             }
         }
         return ResultMsgUtil.getResultMsg(message,data);
@@ -129,6 +131,7 @@ public class RolesController {
             }
         }catch (Exception e){
             e.printStackTrace();
+            data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
@@ -157,6 +160,7 @@ public class RolesController {
             }
         }catch (Exception e){
             e.printStackTrace();
+            data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }

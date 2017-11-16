@@ -4,7 +4,7 @@ var Dictionary = function () {
         9: {'title': 'Delivered', 'class': ' m-badge--metal'},
         9: {'title': 'Canceled', 'class': ' m-badge--primary'},
         1: {'title': '启用', 'class': ' m-badge--success'},
-        9: {'title': 'Info', 'class': ' m-badge--info'},
+        0: {'title': '未知', 'class': ' m-badge--info'},
         2: {'title': '禁用', 'class': ' m-badge--danger'},
         9: {'title': 'Warning', 'class': ' m-badge--warning'}
     };
@@ -41,12 +41,7 @@ var Dictionary = function () {
                     maxlength: 100
                 }
             },
-            // invalidHandler: function(event, validator) {
-            //
-            //     alertMsgShow(formAttrIbuteID +' #warning_msg', 'warning', ' 字典信息检测未通过 , 请根据提示完成操作.');
-            // },
             submitHandler: function (form){
-                console.log($(formAttrIbuteID).serialize())
                 request(
                     "saveDictionaryOrUpdate",
                     "post",
@@ -55,6 +50,7 @@ var Dictionary = function () {
                         if(result.message){
                             blockUiClose('.dictionaryEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
+                            reloadDataList()
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }
@@ -77,7 +73,7 @@ var Dictionary = function () {
                     if (result.message) {
                         showDictionaryList(id,result.data)
                     }else{
-                        alertMsgShow('.m-form #warning_msg', 'warning', result.data);
+                        ToastrMsg(result.data,"warning","topRight");
                     }
                 })
         })
@@ -88,9 +84,9 @@ var Dictionary = function () {
      */
     var getDictionaryChildItem = function(){
         $(".dictionary_list ").on("click", ".editDictionaryItem", function () {
-            removeValue('.dictionaryEdit','edit','属性编辑')
+            removeValue('.dictionaryEdit','edit','属性编辑',null)
             var id = $(this).attr("item");
-            if(id != ""){
+            if(typeof id !== 'undefined' && id != ""){
                 request(
                     "getDictionaryItem",
                     'get',
@@ -109,9 +105,11 @@ var Dictionary = function () {
                                 $('#dictionary_child_form .status_switch').bootstrapSwitch('state',false);
                             }
                         }else{
-                            alertMsgShow('.m-form #warning_msg', 'warning', result.data);
+                            ToastrMsg(result.data,"warning","topRight");
                         }
                     })
+            }else{
+                ToastrMsg("抱歉! 未获取到你需要的信息.","error","topRight");
             }
         })
     }
@@ -151,8 +149,6 @@ var Dictionary = function () {
         if(_html == ""){
             _html = "<tr><th colspan='5' scope=\"row\" style='text-align:center'> 未找到相关属性信息！</th>";
         }
-
-
         $(".dictionary_list").html(_html);
     }
 
@@ -161,7 +157,7 @@ var Dictionary = function () {
      */
     var delDictionaryItem = function(){
         $(".dictionary_list ").on("click", ".delDictionaryItem", function () {
-            blockUiOpen('#roles_list');
+            blockUiOpen('.dictionary_data_list');
             var self = $(this);
             var id = self.attr("item");
             if(id != ""){
@@ -171,20 +167,63 @@ var Dictionary = function () {
                     {id:id},
                     function (result) {
                         if(result.message){
-                            blockUiOpen('.dictionary_data_list',result.data);
                             self.parents("tr").remove();
-                            blockUiClose('.dictionary_data_list','','',2000);
+                            ToastrMsg(result.data,"success","topRight",".dictionary_data_list");
                         }else{
-                            blockUiOpen('.dictionary_data_list',result.data);
-                            blockUiClose('.dictionary_data_list','','',2000);
+                            ToastrMsg(result.data,"warning","topRight");
                         }
                     })
             }
         })
     }
+    /**
+     * 模拟点击加载 AJAX 数据
+     */
+    var reloadDataList = function(){
+        $(".radio_role input[type='radio']:checked").click();
+    }
+    /**
+     * 重置 modal 表单
+     */
+    var removeValue = function(formAttrIbute, type, modalTitle,parentId){
+        if(type == 'edit'){
+            $(formAttrIbute + " .modal-title").text(modalTitle);
+            $(formAttrIbute + " [name='save']").val('edit');
+        }else{
+            $(formAttrIbute + " .modal-title").text(modalTitle);
+            $(formAttrIbute + " [name='save']").val('add');
+        }
+        $(formAttrIbute + " [name='id']").val('')
+        $(formAttrIbute + " [name='name']").val('')
+        $(formAttrIbute + " [name='value']").val('')
+        $(formAttrIbute + " [name='sortId']").val('')
+        $(formAttrIbute + " [name='status']").val('')
+        $(formAttrIbute + " [name='parentId']").val(parentId)
+        $(formAttrIbute + " [name='description']").val('');
+        $(formAttrIbute + " .form-control-feedback").remove();
+        $(formAttrIbute + " div").removeClass("has-danger");
+        $(formAttrIbute + " div").removeClass("has-success");
+        $(formAttrIbute + " .m-alert").addClass("m--hide");
+    }
 
+    /**
+     * 新增字典和属性
+     */
+    var addDictionary = function(){
+        $(".editDictionaryItem").on("click",function(){
+            var type = $(this).attr("data-type");
+            if(type == "add_dictionary_child"){
+                var parentId = $(".radio_role input[type='radio']:checked").val();
+                removeValue('.dictionaryEdit','add','新增属性',parentId)
+            }else{
+                removeValue('.dictionaryEdit','add','新增字典')
+            }
+
+        })
+    }
     return {
         init: function () {
+            addDictionary()
             dictionaryForm();
             delDictionaryItem();
             dictionaryChildForm();
@@ -193,25 +232,7 @@ var Dictionary = function () {
         }
     };
 }();
-/**
- * 重置 modal 表单
- */
-function removeValue(formAttrIbute, type, modalTitle){
-    if(type == 'edit'){
-        $(formAttrIbute + " .modal-title").text(modalTitle);
-        $(formAttrIbute + " [name='save']").val('edit');
-    }else{
-        $(formAttrIbute + " .modal-title").text(modalTitle);
-        $(formAttrIbute + " [name='save']").val('add');
-    }
-    $(formAttrIbute + " [name='id']").val('')
-    $(formAttrIbute + " [name='name']").val('')
-    $(formAttrIbute + " [name='description']").val('');
-    $(formAttrIbute + " .form-control-feedback").remove();
-    $(formAttrIbute + " div").removeClass("has-danger");
-    $(formAttrIbute + " div").removeClass("has-success");
-    $(formAttrIbute + " .m-alert").addClass("m--hide");
-}
+
 
 jQuery(document).ready(function() {
     Dictionary.init();

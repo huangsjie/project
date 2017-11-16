@@ -85,6 +85,7 @@ public class DictionaryController {
             }
         }catch (Exception e){
             e.printStackTrace();
+            data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
@@ -104,6 +105,7 @@ public class DictionaryController {
             Users user= (Users) SecurityUtils.getSubject().getPrincipal();
             if(save.equals("edit") && dictionary.getId() != null){
                 dictionary.setModifyTime(new Date());
+                dictionary.setParentId(null);
                 int i = dictionaryService.updateByPrimaryKeySelective(dictionary);
                 if(i > 0){
                     message = true;
@@ -127,6 +129,7 @@ public class DictionaryController {
             }
         }catch (Exception e){
             e.printStackTrace();
+            data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
@@ -156,6 +159,7 @@ public class DictionaryController {
             }
         }catch (Exception e){
             e.printStackTrace();
+            data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
@@ -183,6 +187,7 @@ public class DictionaryController {
             }
         }catch (Exception e){
             e.printStackTrace();
+            data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }

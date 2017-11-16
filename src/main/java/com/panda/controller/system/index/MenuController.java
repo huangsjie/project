@@ -72,6 +72,7 @@ public class MenuController {
             }
         }catch (Exception e){
             e.printStackTrace();
+            data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
@@ -114,6 +115,7 @@ public class MenuController {
             }
         }catch (Exception e){
             e.printStackTrace();
+            data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
