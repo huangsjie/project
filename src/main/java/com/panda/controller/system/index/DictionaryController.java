@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created with IDEA.
@@ -76,7 +78,105 @@ public class DictionaryController {
                     message = true;
                     data    = dictionaryList;
                 }else{
-                    data = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
+                    data = ResultStateUtil.ERROR_PARAMETER_NO_TCOMPATIBLE;
+                }
+            }else{
+                data = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ResultMsgUtil.getResultMsg(message,data);
+    }
+
+    /**
+     * 保存和更新 字典信息
+     * @param request
+     * @param dictionary
+     * @return
+     */
+    @RequestMapping(value = "/saveDictionaryOrUpdate", method = RequestMethod.POST)
+    @ResponseBody
+    public Object saveDictionaryOrUpdate(HttpServletRequest request, Dictionary dictionary, String save){
+        message = false;
+        data    = null;
+        try {
+            Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+            if(save.equals("edit") && dictionary.getId() != null){
+                dictionary.setModifyTime(new Date());
+                int i = dictionaryService.updateByPrimaryKeySelective(dictionary);
+                if(i > 0){
+                    message = true;
+                    data    = ResultStateUtil.SUCCESS_UPDATE;
+                }else{
+                    data    = ResultStateUtil.FAIL_UPDATE;
+                }
+            }else if(save.equals("add")) {
+                dictionary.setId(UUID.randomUUID().toString());
+                dictionary.setCreateId(user.getId());
+                dictionary.setCreateTime(new Date());
+                dictionary.setModifyId(user.getId());
+                dictionary.setModifyTime(new Date());
+                int i =dictionaryService.insertSelective(dictionary);
+                if(i > 0){
+                    message = true;
+                    data    = ResultStateUtil.SUCCESS_ADD;
+                }else{
+                    data    = ResultStateUtil.FAIL_ADD;
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ResultMsgUtil.getResultMsg(message,data);
+    }
+
+    /**
+     * 获取字典子级属性信息
+     * @param request
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/getDictionaryItem", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getDictionaryItem(HttpServletRequest request, String id){
+        message = false;
+        data    = null;
+        try {
+            if (id != null && !id.isEmpty()){
+                Dictionary dictionary = dictionaryService.selectByPrimaryKey(id);
+                if (dictionary != null){
+                    message = true;
+                    data    = dictionary;
+                }else{
+                    data = ResultStateUtil.ERROR_PARAMETER_NO_TCOMPATIBLE;
+                }
+            }else{
+                data = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ResultMsgUtil.getResultMsg(message,data);
+    }
+
+    /**
+     * Ajax 删除字典信息 包含子级时，将全部删除
+     * @param request
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/delDictionaryItem",method = RequestMethod.GET)
+    @ResponseBody
+    public Object delDictionaryItem(HttpServletRequest request, String id){
+        try {
+            if (!id.isEmpty()){
+                int i= dictionaryService.deleteByPrimaryKey(id);
+                if(i > 0){
+                    message = true;
+                    data = ResultStateUtil.SUCCESS_DELETE;
+                }else{
+                    data = ResultStateUtil.ERROR_PARAMETER_NO_TCOMPATIBLE;
                 }
             }else{
                 data = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;

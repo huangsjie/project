@@ -58,16 +58,20 @@ public class MenuController {
     public Object getMenuListData(String id){
         message = false;
         data    = null;
-        if(!id.isEmpty()){
-            Menu menu= menuService.selectByPrimaryKey(id);
-            if(menu != null){
-                message = true;
-                data = menu;
+        try {
+            if(!id.isEmpty()){
+                Menu menu= menuService.selectByPrimaryKey(id);
+                if(menu != null){
+                    message = true;
+                    data = menu;
+                }else{
+                    data = ResultStateUtil.ERROR_QUERY;
+                }
             }else{
-                data = ResultStateUtil.ERROR_QUERY;
+                data = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
             }
-        }else{
-            data = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
@@ -81,31 +85,35 @@ public class MenuController {
     @RequestMapping(value = "/saveMenu",method = RequestMethod.POST)
     @ResponseBody
     public Object saveMenu(Menu menu, String save){
-        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         message = false;
         data    = null;
-        if(save.equals("edit") && menu.getId() != null){
-            menu.setModifyTime(new Date());
-            int i = menuService.updateByPrimaryKeySelective(menu);
-            if(i > 0){
-                message = true;
-                data    = ResultStateUtil.SUCCESS_UPDATE;
-            }else{
-                data    = ResultStateUtil.FAIL_UPDATE;
+        try {
+            Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+            if(save.equals("edit") && menu.getId() != null){
+                menu.setModifyTime(new Date());
+                int i = menuService.updateByPrimaryKeySelective(menu);
+                if(i > 0){
+                    message = true;
+                    data    = ResultStateUtil.SUCCESS_UPDATE;
+                }else{
+                    data    = ResultStateUtil.FAIL_UPDATE;
+                }
+            }else if(save.equals("add")) {
+                menu.setId(UUID.randomUUID().toString());
+                menu.setCreateId(user.getId());
+                menu.setCreateTime(new Date());
+                menu.setModifyId(user.getId());
+                menu.setModifyTime(new Date());
+                int i =menuService.insertSelective(menu);
+                if(i > 0){
+                    message = true;
+                    data    = ResultStateUtil.SUCCESS_ADD;
+                }else{
+                    data    = ResultStateUtil.FAIL_ADD;
+                }
             }
-        }else if(save.equals("add")) {
-            menu.setId(UUID.randomUUID().toString());
-            menu.setCreateId(user.getId());
-            menu.setCreateTime(new Date());
-            menu.setModifyId(user.getId());
-            menu.setModifyTime(new Date());
-            int i =menuService.insertSelective(menu);
-            if(i > 0){
-                message = true;
-                data    = ResultStateUtil.SUCCESS_ADD;
-            }else{
-                data    = ResultStateUtil.FAIL_ADD;
-            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }

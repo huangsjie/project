@@ -1,3 +1,72 @@
+var $toastlast;
+
+var toastOptionData = {
+    'toastrType': {'success': 'success', 'info': 'info', 'warning': 'warning', 'error': 'error'},
+    'position'  : { 'topRight' :'toast-top-right',
+                    'topLeft'  :'toast-top-left',
+                    'topCenter':'toast-top-center',
+                    'topFull'  :'toast-top-full-width',
+                    'botRight' :'toast-bottom-right',
+                    'botLeft'  :'toast-bottom-left',
+                    'botCenter':'toast-bottom-center',
+                    'botFull'  :'toast-bottom-full-width'},
+                    'showEasing': { 'swing': 'swing', 'linear': 'linear'}, //显示和隐藏都是这一组
+                    'showMethod': { 'show': 'show', 'fadeIn': 'fadeIn', 'slideDown': 'slideDown'}, //显示方法
+                    'hideMethod': { 'hide': 'hide', 'fadeOut': 'fadeOut', 'slideUp': 'slideUp'}   //隐藏方法
+
+};
+/**
+ * 消息提示构造方法 根据需要 传递参数 toastOptionData 为基础参数，默认可以不传参数 调用方法 ToastrMsg() 即可
+ * @param toastrMsg
+ * @param toastrTitle
+ * @param toastrType
+ * @param positionType
+ * @param showDuration
+ * @param hideDuration
+ * @param timeOut
+ * @param extendedTimeOut
+ * @constructor
+ */
+var ToastrMsg = function(toastrMsg, toastrType, positionType, toastrTitle, showEas ,hideEas, showMet, hideMet, showDuration, hideDuration, timeOut, extendedTimeOut) {
+        var $shortCutFunction = toastrType ? toastOptionData.toastrType[toastrType] : toastOptionData.toastrType.info;
+        var $showEasing = showEas ? toastOptionData.showEasing[showEas] : toastOptionData.showEasing.swing;
+        var $hideEasing = hideEas ? toastOptionData.showEasing[hideEas] : toastOptionData.showEasing.linear;
+        var $showMethod = showMet ? toastOptionData.showMethod[showMet] : toastOptionData.showMethod.fadeIn;
+        var $hideMethod = hideMet ? toastOptionData.hideMethod[hideMet] : toastOptionData.hideMethod.fadeOut;
+        toastr.options = {
+            closeButton: true,
+            debug: false,
+            newestOnTop: true,
+            progressBar: true,
+            positionClass: positionType ? toastOptionData.position[positionType] : toastOptionData.position.topRight,
+            preventDuplicates: true,
+            onclick: null,
+            showDuration: showDuration ? showDuration : 300,
+            hideDuration: hideDuration ? hideDuration : 1000,
+            timeOut: timeOut ? timeOut : 1000,
+            extendedTimeOut: extendedTimeOut ? extendedTimeOut : 1000,
+            showEasing: $showEasing,
+            hideEasing: $hideEasing,
+            showMethod: $showMethod,
+            hideMethod: $hideMethod,
+            tapToDismiss: false,
+        };
+        var $toast = toastr[$shortCutFunction](toastrMsg ? toastrMsg : "一条消息 !", toastrTitle ? toastrTitle : '');
+        $toastlast = $toast;
+
+        if(typeof $toast === 'undefined'){
+            return;
+        }
+}
+
+var getLastToast = function (){
+    return $toastlast;
+}
+
+var clearToastr = function(){
+    toastr.clear(getLastToast());
+}
+
 /**
  * 请求构造器
  * @param url
@@ -64,7 +133,7 @@ function blockUiOpen(elem, msg, color, type, state){
 }
 
 /**
- * 关闭 BlockUi 消息提示框
+ * 关闭 BlockUi 消息提示框 可以关联关闭 modal 不需要延时 time = 0
  * @param elem
  */
 function blockUiClose(elem,closeParent,parentElem,time){
