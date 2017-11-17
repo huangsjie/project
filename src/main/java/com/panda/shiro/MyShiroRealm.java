@@ -36,7 +36,10 @@ public class MyShiroRealm extends AuthorizingRealm {
     //授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+        System.out.println("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        Users user= (Users)principalCollection.getPrimaryPrincipal();
+        //Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("userid",user.getId());
         logger.info("---------->----------->URL授权------> doGetAuthorizationInfo !");
@@ -44,9 +47,11 @@ public class MyShiroRealm extends AuthorizingRealm {
         if(menuList == null){
             menuList = menuService.selectManagerAuthMenu(user.getRoleId());
         }
-        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+
+        info.addRole(user.getRoleId());
         for(Menu menu: menuList){
             info.addStringPermission(menu.getUrl());
+            //info.addObjectPermission();
         }
         return info;
     }

@@ -1,5 +1,6 @@
 package com.panda.config;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.github.pagehelper.util.StringUtil;
 import com.panda.model.system.Menu;
 import com.panda.service.system.MenuService;
@@ -93,12 +94,12 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/system/ajaxLogin","anon");
         //<!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
-        //自定义加载权限资源关系
         List<Menu> menuList = menuService.selectAll();
         logger.info("--------------->ShiroConfiguration.shirFilter()--------------------->>自定义加载权限资源关系");
          for(Menu menu:menuList){
             if (StringUtil.isNotEmpty(menu.getUrl())) {
                 String permission = "perms[" + menu.getUrl()+ "]";
+                //String permission = "perms[system:add]";
                 filterChainDefinitionMap.put(menu.getUrl(),permission);
             }
         }
@@ -125,6 +126,14 @@ public class ShiroConfig {
         MyShiroRealm myShiroRealm = new MyShiroRealm();
         myShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return myShiroRealm;
+    }
+    /**
+     * ShiroDialect，为了在thymeleaf里使用shiro的标签的bean
+     * @return
+     */
+    @Bean
+    public ShiroDialect shiroDialect() {
+        return new ShiroDialect();
     }
 
     /**
