@@ -49,7 +49,7 @@ public class ResultStateUtil {
     /**
      * 常用温馨提示
      */
-    public static final String NO_MORE_DATA = "没有更多数据";//400
+    public static final String NO_MORE_DATA = "当前操作为获取到有效数据 !";//400
     public static final String CODE_OUT_TIME = "验证码超时";//401
     public static final String FALSE_ADD_ADDRESS = "请先添加收货地址";//402
     public static final String FREQUENTLY_MOBILE = "请勿频繁发送验证码";//403

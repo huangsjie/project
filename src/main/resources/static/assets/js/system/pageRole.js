@@ -53,8 +53,23 @@ var PageRole = function () {
 
             "plugins" : ["types","stats" ]
         });
+        getPageRoleList();
+        // 加载完成后 800 毫秒点击第一个菜单
+        setTimeout(function() {
+            $("#menu_tree .first-item a").click()
+        }, 800);
 
     }
+    /**
+     * 监听 JsTree 点击事件 获取权限数据
+     * 此方法必须在 JsTree 加载完成后执行，否则点击事件监听不到
+     */
+    var getPageRoleList = function(){
+        $("#menu_tree").on("click","a",function () {
+            console.log($(this).parent("li").attr("id"))
+        })
+    }
+
     /**
      * 保存 改变后的结果 带上 role id
      */

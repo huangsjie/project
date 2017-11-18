@@ -146,30 +146,47 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenu> implement
      * @return
      */
     @Override
-    public List<Map> selectRoleMenuForListAjaxJsTree(Map<String, Object> map){
+    public List<Map> selectRoleMenuListForAjaxJsTree(Map<String, Object> map){
         List<Map> menuList = null;
         try {
+            /**
+             * JsTree 参数说明
+             * state:{opened:true,selected:true}
+             * liAttr:{class:you-class,data-type:you-type}
+             * aAttr:{xxx:xxx}
+             */
             Map<String,Object> state = new HashMap<>();
+            Map<String,Object> liAttr = new HashMap<>();
+            liAttr.put("class","first-item");
             state.put("opened",true);
-            menuList = roleMenuMapper.selectRoleMenuForListAjaxJsTree(map);
-            menuList.get(0).put("state",state);
+            state.put("selected",true);
+            menuList = roleMenuMapper.selectRoleMenuListForAjaxJsTree(map);
             if(menuList != null && menuList.size() > 0){
                 for (Map menu: menuList) {
                     menu.put("icon","fa fa-folder m--font-danger");
                     map.put("parentId",menu.get("id"));
-                    List<Map> childList = roleMenuMapper.selectRoleMenuForListAjaxJsTree(map);
+                    List<Map> childList = roleMenuMapper.selectRoleMenuListForAjaxJsTree(map);
                     if(childList != null && childList.size() > 0){
                         for(Map child: childList){
                             child.put("icon","fa fa-folder m--font-success");
                             map.put("parentId",child.get("id"));
-                            List<Map> lastChild = roleMenuMapper.selectRoleMenuForListAjaxJsTree(map);
+                            List<Map> lastChild = roleMenuMapper.selectRoleMenuListForAjaxJsTree(map);
                             if(lastChild != null && lastChild.size() > 0){
+                                lastChild.get(0).put("li_attr",liAttr);
+                                lastChild.get(0).put("state",state);
                                 child.put("children",lastChild);
+                            }else{
+                                childList.get(0).put("li_attr",liAttr);
+                                childList.get(0).put("state",state);
                             }
+
                         }
                         menu.put("children",childList);
                     }
                 }
+            }else{
+                menuList.get(0).put("li_attr",liAttr);
+                menuList.get(0).put("state",state);
             }
         }catch (Exception e){
             e.printStackTrace();

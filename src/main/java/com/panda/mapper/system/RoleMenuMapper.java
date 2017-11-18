@@ -27,5 +27,5 @@ public interface RoleMenuMapper extends AbstractMapper<RoleMenu> {
      * @param map
      * @return
      */
-    List<Map> selectRoleMenuForListAjaxJsTree(Map<String, Object> map);
+    List<Map> selectRoleMenuListForAjaxJsTree(Map<String, Object> map);
 }

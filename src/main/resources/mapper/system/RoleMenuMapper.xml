@@ -133,7 +133,7 @@
     </if>
   </select>
 
-  <select id="selectRoleMenuForListAjaxJsTree" parameterType="map" resultType="map">
+  <select id="selectRoleMenuListForAjaxJsTree" parameterType="map" resultType="map">
     SELECT
       a.*
     FROM (
