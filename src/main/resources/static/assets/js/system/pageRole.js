@@ -25,7 +25,7 @@ var Treeview = function () {
                     "icon" : "fa fa-file"
                 }
             },
-            "plugins": ["wholerow","state","checkbox","types"]
+            "plugins": ["wholerow","state","types"]
         });
         MenuTree.on("changed.jstree", function (e, data) {
             if((typeof data.event !== 'undefined' && data.event.type == 'click') && (data.action == 'select_node' || data.action == 'deselect_node')){
@@ -143,7 +143,7 @@ var Treeview = function () {
                     paramArr.push(itemArr);
                 }
             }
-         });
+        });
         return JSON.stringify(paramArr);
     }
 

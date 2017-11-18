@@ -50,7 +50,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 
         info.addRole(user.getRoleId());
         for(Menu menu: menuList){
-            info.addStringPermission(menu.getUrl());
+            info.addStringPermission("index,add");
             //info.addObjectPermission();
         }
         return info;
