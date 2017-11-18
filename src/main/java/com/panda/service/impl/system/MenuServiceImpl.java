@@ -50,17 +50,17 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
     }
 
     /**
-     * 获取当前角色授权菜单 存到 Redis 中
-     * @param roleId
+     * 获取当前角色授权菜单 一维数组-供下拉列表使用
+     * @param map
      * @return
      */
     @Override
-    public List<Menu>selectManagerAuthMenu(String roleId){
-        return menuMapper.selectManagerAuthMenu(roleId);
+    public List<Menu>selectManagerAuthMenu(Map<String,String> map){
+        return menuMapper.selectManagerAuthMenu(map);
     }
 
     /**
-     * 获取当前管理员所拥有的菜单列表
+     * 获取当前管理员所拥有的菜单列表 三维数组 -- 供 left_aside 模板使用
      * @param map
      * @return
      */
@@ -80,12 +80,12 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
                 menuList = menuMapper.selectManagerRoleMenuList(map);
                 if(menuList != null && menuList.size() > 0){
                     for (Menu menu: menuList) {
-                        map.remove("parentId");
+                        //map.remove("parentId");
                         map.put("parentId",menu.getId());
                         List<Menu> childList = menuMapper.selectManagerRoleMenuList(map);
                         if(childList != null && childList.size() > 0){
                             for(Menu child: childList){
-                                map.remove("parentId");
+                                //map.remove("parentId");
                                 map.put("parentId",child.getId());
                                 List<Menu> lastChild = menuMapper.selectManagerRoleMenuList(map);
                                 if(lastChild != null && lastChild.size() > 0){

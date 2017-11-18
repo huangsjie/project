@@ -45,11 +45,12 @@ public class UsersServiceImpl extends AbstractServiceImpl<Users> implements User
         Users user = usersMapper.selectManagerAccount(account);
         try {
             if(user != null && user.getRoleId() != null){
+                Map<String,String> map = new HashMap<String,String>(3);
+                map.put("roleId",user.getRoleId());
+                map.put("status","1");
                 //授权的URL
-                user.setAuthMenuList(menuService.selectManagerAuthMenu(user.getRoleId()));
+                user.setAuthMenuList(menuService.selectManagerAuthMenu(map));
                 //菜单List
-                Map<String,String> map = new HashMap<String,String>(2);
-                map.put("userId",user.getId());
                 map.put("parentId","10000000-0000-0000-0000-000000000000");
                 user.setMenuList(menuService.selectManagerRoleMenuList(map));
             }

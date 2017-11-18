@@ -4,6 +4,8 @@ import com.panda.model.system.Menu;
 import com.panda.model.system.Users;
 import com.panda.service.system.MenuService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.ui.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

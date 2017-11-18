@@ -185,14 +185,16 @@
         description = #{description,jdbcType=VARCHAR}
         where id = #{id,jdbcType=VARCHAR}
     </update>
-
+    <!-- 获取所有菜单 shiro 鉴权使用 -->
     <select id="selectAll" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from s_menu
         where 1 = 1;
     </select>
+    <!-- 获取所有菜单 shiro 鉴权使用 -->
 
+    <!-- 获取当前管理员所拥有的菜单列表 三维数组  供 left_aside 模板使用 -->
     <select id="selectManagerRoleMenuList" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT
         <include refid="Base_Column_List"/>
@@ -210,11 +212,17 @@
         <if test="parentId != null and parentId != ''">
             AND m.parent_id = #{parentId}
         </if>
+        <if test="status != null and status != ''">
+            AND rm.status = #{status}
+        </if>
+        AND m.status = 1
         GROUP BY rm.menu_id
         )a
         ORDER BY a.sort_id
     </select>
+    <!-- 获取当前管理员所拥有的菜单列表 三维数组- 供 left_aside 模板使用 -->
 
+    <!-- 获取当前角色授权菜单 一维数组-供下拉列表使用 -->
     <select id="selectManagerAuthMenu" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT
           m.*
@@ -222,8 +230,13 @@
           s_role_menu rm, s_menu m
         WHERE
           1 = 1
-        AND rm.role_id = #{roleId}
+          <if test="roleId != null and roleId != ''">
+              AND rm.role_id = #{roleId}
+          </if>
+        <if test="status != null and status != ''">
+            AND rm.status = #{status}
+        </if>
         AND rm.menu_id = m.id
     </select>
-
+    <!-- 获取当前角色授权菜单 一维数组-供下拉列表使用 -->
 </mapper>
