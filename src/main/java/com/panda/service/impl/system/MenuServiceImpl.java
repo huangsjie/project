@@ -33,7 +33,7 @@ import java.util.Map;
 @Service
 public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuService {
 
-    private static final Logger logger = LoggerFactory.getLogger(DruidConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(MenuServiceImpl.class);
 
     @Resource
     private MenuMapper menuMapper;

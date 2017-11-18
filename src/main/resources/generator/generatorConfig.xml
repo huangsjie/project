@@ -28,17 +28,20 @@
         </jdbcConnection>
         <!-- 数据库链接 -->
         <!-- 存放位置 -->
-        <javaModelGenerator targetPackage="com.panda.model.wechat" targetProject="src/main/java"/>
-        <sqlMapGenerator targetPackage="mapper.wechat" targetProject="src/main/resources"/>
-        <javaClientGenerator targetPackage="com.panda.mapper.wechat" targetProject="src/main/java" type="XMLMAPPER"/>
+        <javaModelGenerator targetPackage="com.panda.model.origin" targetProject="src/main/java"/>
+        <sqlMapGenerator targetPackage="mapper.origin" targetProject="src/main/resources"/>
+        <javaClientGenerator targetPackage="com.panda.mapper.origin" targetProject="src/main/java" type="XMLMAPPER"/>
         <!-- 存放位置 -->
+
         <!-- 数据表 -->
-        <table tableName="s_menu" domainObjectName="Menu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-        <table tableName="s_page_role" domainObjectName="PageRole" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-        <table tableName="s_role_menu" domainObjectName="RoleMenu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-        <table tableName="s_roles" domainObjectName="Roles" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="e_processing_step_info" domainObjectName="ProcessingStepInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+
         <!-- 数据表 -->
     </context>
+    <!-- tea
+        <table tableName="e_farm_type" domainObjectName="FarmType" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="e_processing_step" domainObjectName="ProcessingStep" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+    -->
     <!-- 系统
     <table tableName="s_dictionary" domainObjectName="Dictionary" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
     <table tableName="s_menu" domainObjectName="Menu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
