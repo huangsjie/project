@@ -63,60 +63,53 @@
                                         </h3>
                                     </div>
                                 </div>
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title" style="float: right;">
+                                        <h3 class="m-portlet__head-text">
+                                            <button type="button" class="btn btn-success" data-skin="dark" data-toggle="m-tooltip" data-placement="top" title="" data-original-title="选中角色,获取菜单数据!">
+                                                <i class="flaticon-info"></i>
+                                            </button>
+                                        </h3>
+                                    </div>
+                                </div>
                             </div>
                             <!--begin::Form-->
                             <!--begin::Portlet-->
                             <div class="m-portlet__body">
                                 <form class="m-form m-form--state m-form--fit m-form--label-align-right">
-
-                                    <!-- BEGIN: alert_msg 弃用 使用新的消息提示窗口 -->
-                                    <!--<div th:replace="~{system/public/alert_msg :: alert_msg}"></div>-->
-                                    <!-- END: alert_msg -->
                                     <div id="menu_tree" class="menu_tree">
-                                        <ul style="display: none;">
-                                            <li data-jstree='{"disabled" : true}'>
-                                                Root
-                                                <ul>
-                                                    <li data-jstree='{"selected":true,"disabled" : true}'>
-                                                        <a href="javascript:;">Dashboard</a>
-                                                    </li>
-                                                    <li th:each="menu : ${menuList}" data-jstree='{"opened":true,"icon":"fa fa-folder m--font-danger"}' th:attr="id=${menu.id}">
-                                                        <a class="is_default tree_a" href="javascript:;" th:text="${menu.name}" th:attr="menu=${menu.id}"></a>
-                                                        <!-- child -->
-                                                        <ul th:if="${menu.childMenuList != null}">
-                                                            <li th:each="child : ${menu.childMenuList}" data-jstree='{ "opened":true,"icon":"fa fa-folder m--font-success"}' th:attr="id=${child.id}">
-                                                                <a class="is_default tree_a" href="javascript:;" th:text="${child.name}" th:attr="menu=${child.id}"></a>
-                                                                <!-- lastChild -->
-                                                                <ul th:if="${child.childMenuList != null}">
-                                                                    <li th:each="lastChild : ${child.childMenuList}"
-                                                                        data-jstree='{ "opened":true,"icon":"fa fa-file  m--font-warning"}' th:attr="id=${lastChild.id}">
-                                                                        <a class="is_default tree_a" href="javascript:;"
-                                                                           th:text="${lastChild.name}"
-                                                                           th:attr="menu=${lastChild.id}"></a>
-                                                                    </li>
-                                                                </ul>
-                                                                <!-- lastChild -->
-                                                            </li>
-                                                        </ul>
-                                                        <!-- child -->
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
+                                        <!--<ul style="display: none;">-->
+                                            <!--<li data-jstree='{"disabled" : true}'>-->
+                                                <!--Root-->
+                                                <!--<ul>-->
+                                                    <!--<li data-jstree='{"selected":true,"disabled" : true}'>-->
+                                                        <!--<a href="javascript:;">Dashboard</a>-->
+                                                    <!--</li>-->
+                                                    <!--<li th:each="menu : ${menuList}" data-jstree='{"opened":true,"icon":"fa fa-folder m&#45;&#45;font-danger"}' th:attr="id=${menu.id}">-->
+                                                        <!--<a class="is_default tree_a" href="javascript:;" th:text="${menu.name}" th:attr="menu=${menu.id}"></a>-->
+                                                        <!--&lt;!&ndash; child &ndash;&gt;-->
+                                                        <!--<ul th:if="${menu.childMenuList != null}">-->
+                                                            <!--<li th:each="child : ${menu.childMenuList}" data-jstree='{ "opened":true,"icon":"fa fa-folder m&#45;&#45;font-success"}' th:attr="id=${child.id}">-->
+                                                                <!--<a class="is_default tree_a" href="javascript:;" th:text="${child.name}" th:attr="menu=${child.id}"></a>-->
+                                                                <!--&lt;!&ndash; lastChild &ndash;&gt;-->
+                                                                <!--<ul th:if="${child.childMenuList != null}">-->
+                                                                    <!--<li th:each="lastChild : ${child.childMenuList}"-->
+                                                                        <!--data-jstree='{ "opened":true,"icon":"fa fa-file  m&#45;&#45;font-warning"}' th:attr="id=${lastChild.id}">-->
+                                                                        <!--<a class="is_default tree_a" href="javascript:;"-->
+                                                                           <!--th:text="${lastChild.name}"-->
+                                                                           <!--th:attr="menu=${lastChild.id}"></a>-->
+                                                                    <!--</li>-->
+                                                                <!--</ul>-->
+                                                                <!--&lt;!&ndash; lastChild &ndash;&gt;-->
+                                                            <!--</li>-->
+                                                        <!--</ul>-->
+                                                        <!--&lt;!&ndash; child &ndash;&gt;-->
+                                                    <!--</li>-->
+                                                <!--</ul>-->
+                                            <!--</li>-->
+                                        <!--</ul>-->
                                     </div>
                                 <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space"></div>
-                                <div class="m-form__actions m-form__actions">
-                                    <div class="row">
-                                        <div class="col-lg-9 ml-lg-auto">
-                                            <button type="button" class="btn btn-accent role_menu_save">
-                                                确定
-                                            </button>
-                                            <button type="reset" class="btn btn-secondary">
-                                                重置
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
                             </form>
                             </div>
                             <!--end::Portlet-->
@@ -140,7 +133,19 @@
                             <!--begin::Form-->
                             <!--begin::Portlet-->
                             <div class="m-portlet__body">
-
+                                <table class="table m-table m-table--head-bg-success ">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>名称</th>
+                                        <th>属性</th>
+                                        <th>状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="dictionary_list">
+                                    </tbody>
+                                </table>
                             </div>
                             <!--end::Portlet-->
                             <!--begin::Form-->

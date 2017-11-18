@@ -194,7 +194,7 @@
     </select>
     <!-- 获取所有菜单 shiro 鉴权使用 -->
 
-    <!-- 获取当前管理员所拥有的菜单列表 三维数组  供 left_aside 模板使用 -->
+    <!-- 获取当前管理员所拥有的菜单列表  数组  供 left_aside 模板使用 -->
     <select id="selectManagerRoleMenuList" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT
         <include refid="Base_Column_List"/>

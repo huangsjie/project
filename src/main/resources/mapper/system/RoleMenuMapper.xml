@@ -132,4 +132,30 @@
       AND rm.`status` = 1
     </if>
   </select>
+
+  <select id="selectRoleMenuForListAjaxJsTree" parameterType="map" resultType="map">
+    SELECT
+      a.*
+    FROM (
+      SELECT
+      m.id, m.name AS text, m.sort_id
+      FROM
+        s_role_menu rm, s_menu m
+        WHERE
+        1 = 1
+        <if test="roleId != null and roleId != ''">
+          AND rm.role_id = #{roleId}
+        </if>
+        <if test="parentId != null and parentId != ''">
+          AND m.parent_id = #{parentId}
+        </if>
+        <if test="status != null and status != ''">
+          AND rm.status = #{status}
+        </if>
+        AND rm.menu_id = m.id
+        AND m.status = 1
+        GROUP BY rm.menu_id
+    )a
+    ORDER BY a.sort_id
+  </select>
 </mapper>

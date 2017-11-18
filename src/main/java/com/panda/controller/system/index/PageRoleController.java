@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,6 +64,38 @@ public class PageRoleController {
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("rolesList",rolesList);
         return "system/index/getPageRoleList";
+    }
+
+    /**
+     * Ajax 获取当前选中角色 可用的 角色菜单
+     * @param request
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/getRoleMenuDataList",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getRoleMenuDataList(HttpServletRequest request, String id){
+        message = false;
+        data    = null;
+        try {
+            if(!id.isEmpty()){
+                Map<String,Object> map = new HashMap<>();
+                map.put("roleId",id);
+                map.put("status","1");
+                map.put("parentId","10000000-0000-0000-0000-000000000000");
+                List<Map> menuList = roleMenuService.selectRoleMenuForListAjaxJsTree(map);
+                if(menuList.size() > 0){
+                    message = true;
+                    data = menuList;
+                }else{
+                    data = ResultStateUtil.NO_MORE_DATA;
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
+        }
+        return ResultMsgUtil.getResultMsg(message,data);
     }
 
 }

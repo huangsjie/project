@@ -21,4 +21,11 @@ public interface RoleMenuMapper extends AbstractMapper<RoleMenu> {
      * @return
      */
     boolean checkRoleMenuParentMenu(Map<String,Object> map);
+
+    /**
+     * 角色权限设置，获取 JSTree 需要的 JSON 数据
+     * @param map
+     * @return
+     */
+    List<Map> selectRoleMenuForListAjaxJsTree(Map<String, Object> map);
 }

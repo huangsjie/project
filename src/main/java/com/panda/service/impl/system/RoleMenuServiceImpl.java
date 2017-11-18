@@ -1,6 +1,7 @@
 package com.panda.service.impl.system;
 
 import com.panda.config.DruidConfig;
+import com.panda.model.system.Menu;
 import com.panda.model.system.Users;
 import com.panda.util.ResultStateUtil;
 import com.panda.util.abs.AbstractMapper;
@@ -54,7 +55,6 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenu> implement
      * 更新 和 保存角色菜单设置 使用 spring boot 事物
      * 将父级 parent_id 放到新数组 去重 原因是
      * 事物 不会直接将数据写入数据库，而是等所有数据执行完在放到数据库
-     *
      * @param listMap
      * @return
      */
@@ -138,5 +138,42 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenu> implement
     @Override
     public boolean checkRoleMenuParentMenu(Map<String, Object> map) {
         return roleMenuMapper.checkRoleMenuParentMenu(map);
+    }
+
+    /**
+     * 角色权限设置，获取 JSTree 需要的 JSON 数据
+     * @param map
+     * @return
+     */
+    @Override
+    public List<Map> selectRoleMenuForListAjaxJsTree(Map<String, Object> map){
+        List<Map> menuList = null;
+        try {
+            Map<String,Object> state = new HashMap<>();
+            state.put("opened",true);
+            menuList = roleMenuMapper.selectRoleMenuForListAjaxJsTree(map);
+            menuList.get(0).put("state",state);
+            if(menuList != null && menuList.size() > 0){
+                for (Map menu: menuList) {
+                    menu.put("icon","fa fa-folder m--font-danger");
+                    map.put("parentId",menu.get("id"));
+                    List<Map> childList = roleMenuMapper.selectRoleMenuForListAjaxJsTree(map);
+                    if(childList != null && childList.size() > 0){
+                        for(Map child: childList){
+                            child.put("icon","fa fa-folder m--font-success");
+                            map.put("parentId",child.get("id"));
+                            List<Map> lastChild = roleMenuMapper.selectRoleMenuForListAjaxJsTree(map);
+                            if(lastChild != null && lastChild.size() > 0){
+                                child.put("children",lastChild);
+                            }
+                        }
+                        menu.put("children",childList);
+                    }
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return menuList;
     }
 }
