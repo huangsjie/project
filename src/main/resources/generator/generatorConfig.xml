@@ -34,13 +34,19 @@
         <!-- 存放位置 -->
 
         <!-- 数据表 -->
-        <table tableName="e_processing_step_info" domainObjectName="ProcessingStepInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="e_tea_garden_manage_list" domainObjectName="TeaGardenManageList" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="e_warehouse" domainObjectName="Warehouse" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="e_stock_list" domainObjectName="StockList" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="e_sampling_list" domainObjectName="SamplingList" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="e_quality_control_list" domainObjectName="QualityControlList" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
 
         <!-- 数据表 -->
     </context>
     <!-- tea
+    <table tableName="e_tea_garden_info" domainObjectName="TeaGardenInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
         <table tableName="e_farm_type" domainObjectName="FarmType" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
         <table tableName="e_processing_step" domainObjectName="ProcessingStep" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="e_processing_step_info" domainObjectName="ProcessingStepInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
     -->
     <!-- 系统
     <table tableName="s_dictionary" domainObjectName="Dictionary" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>

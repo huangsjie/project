@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
+
 @RequestMapping(value="/system/farmType")
 public class FarmTypeController {
 
