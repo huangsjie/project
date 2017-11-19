@@ -1,14 +1,12 @@
 package com.panda.controller.system.index;
 
-
-import com.alibaba.citrus.util.StringEscapeUtil;
-import com.alibaba.fastjson.JSON;
-import com.panda.model.system.Menu;
+import com.panda.model.system.Dictionary;
 import com.panda.model.system.Roles;
 import com.panda.model.system.Users;
-import com.panda.service.system.MenuService;
+import com.panda.service.system.PageRoleService;
 import com.panda.service.system.RoleMenuService;
 import com.panda.service.system.RolesService;
+import com.panda.service.system.DictionaryService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
 import org.apache.shiro.SecurityUtils;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,14 +35,19 @@ import java.util.Map;
 public class PageRoleController {
 
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
+
     @Resource
-    private MenuService menuService;
+    private RolesService rolesService;
 
     @Resource
     private RoleMenuService roleMenuService;
 
     @Resource
-    private RolesService rolesService;
+    private PageRoleService pageRoleService;
+
+    @Resource
+    private DictionaryService dictionaryService;
+
     private static boolean message = false;
     private static Object  data    = null;
 
@@ -98,4 +100,50 @@ public class PageRoleController {
         return ResultMsgUtil.getResultMsg(message,data);
     }
 
+    /**
+     * Ajax 获取角色对应的菜单 操作权限
+     * @param request
+     * @param menuId
+     * @param roleId
+     * @param status
+     * @return
+     */
+    @RequestMapping(value = "/getPageRoleDataList",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getPageRoleDataList(HttpServletRequest request, String menuId, String roleId, Integer status){
+        message = false;
+        data    = null;
+        try {
+            if(!menuId.isEmpty() && !roleId.isEmpty() && status == 1){
+                Map<String,Object> map = new HashMap<>();
+                map.put("status",status);
+                map.put("parentId","b6315b3a-1587-11e5-a9de-000c29d7a3a0");
+                List<Map<String,Object>> dictionaryList = dictionaryService.selectDictionaryListMap(map);
+                if(dictionaryList.size() > 0){
+                    map.put("parentId",null);
+                    map.put("menuId",menuId);
+                    map.put("roleId",roleId);
+                    for (Map<String,Object> item : dictionaryList){
+                        map.put("dictId",item.get("id"));
+                        Map<String,Object> pageRole = pageRoleService.selectPageRoleListByDictionary(map);
+                        if(pageRole != null){
+                            item.putAll(pageRole);
+                        }else{
+                            item.put("pageRoleStatus","3");
+                        }
+                    }
+                    message = true;
+                    data = dictionaryList;
+                }else{
+                    data = ResultStateUtil.NO_MORE_DATA;
+                }
+            }else{
+                data    = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
+        }
+        return ResultMsgUtil.getResultMsg(message,data);
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IDEA.
@@ -35,6 +36,16 @@ public class DictionaryServiceImpl extends AbstractServiceImpl<Dictionary> imple
     @Override
     public List<Dictionary> selectDictionaryValueList(String parentId){
         return dictionaryMapper.selectDictionaryValueList(parentId);
+    }
+
+    /**
+     * 查询字典信息列表
+     * @param map
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> selectDictionaryListMap(Map<String, Object> map) {
+        return dictionaryMapper.selectDictionaryListMap(map);
     }
 
 }

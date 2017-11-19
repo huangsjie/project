@@ -66,10 +66,50 @@ var PageRole = function () {
      */
     var getPageRoleList = function(){
         $("#menu_tree").on("click","a",function () {
-            console.log($(this).parent("li").attr("id"))
+            var menuId = $(this).parent("li").attr("id");
+            var roleId = $(".radio_role input[type='radio']:checked").val();
+            if(menuId != "" && roleId != ""){
+                request(
+                    'getPageRoleDataList',
+                    'get',
+                    {'menuId':menuId,'roleId':roleId,'status': 1},
+                    function (result) {
+                    if(result.message){
+                        showPageRoleList(result.data)
+                        //ToastrMsg(result.data,"success","topRight");
+                    }else{
+                        ToastrMsg(result.data,"warning","topRight");
+                    }
+                })
+            }
+
+            console.log()
         })
     }
-
+    /**
+     * 显示属性列表
+     * @param dictionaryList
+     */
+    var showPageRoleList = function(pageRoleList){
+        var _html = '';
+        if(pageRoleList.length > 0){
+            $.each(pageRoleList, function (i, n) {
+                _html += "<tr><th scope=\"row\">"+n.sortId+"</th>";
+                _html += "<td>"+n.name+"</td>";
+                _html += "<td>"+n.value+"</td>";
+                _html += '<td><span class="m-badge ' + status[n.status].class + ' m-badge--wide">' + status[n.status].title + '</span></td>';
+                _html += '<td><a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editDictionaryItem" title="编辑" item="'+n.id+'" data-toggle="modal" data-target=".dictionaryEdit">\
+                            <i class="la la-edit"></i></a>\
+                            <a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delDictionaryItem" title="删除" item="'+n.id+'" >\
+                            <i class="la la-trash"></i></a></td>';
+                _html += "</tr>";
+            });
+        }
+        if(_html == ""){
+            _html = "<tr><th colspan='5' scope=\"row\" style='text-align:center'> 未找到相关属性信息！</th>";
+        }
+        $(".page_role_list").html(_html);
+    }
     /**
      * 保存 改变后的结果 带上 role id
      */

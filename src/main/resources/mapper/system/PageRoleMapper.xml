@@ -138,4 +138,30 @@
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <!-- 获取角色对应的菜单 操作权限 -->
+  <select id="selectPageRoleListByDictionary" resultType="map" parameterType="map">
+    SELECT
+        pr.status AS pageRoleStatus,pr.id AS pageRoleId,pr.dict_id AS pageRoleDictId
+    FROM
+        s_page_role pr,s_dictionary d
+    WHERE
+        1 = 1
+    <if test="menuId != null and menuId != ''">
+      AND pr.menu_id = #{menuId}
+    </if>
+    <if test="roleId != null and roleId != ''">
+      AND pr.role_id = #{roleId}
+    </if>
+    <if test="dictId != null and dictId != ''">
+      AND pr.dict_id = #{dictId}
+    </if>
+    <!--<if test="status != null and status != ''">-->
+      <!--AND pr.status = #{status}-->
+    <!--</if>-->
+      AND pr.dict_id = d.id
+      AND  d.status = 1
+    LIMIT 1
+  </select>
+  <!-- 获取角色对应的菜单 操作权限 -->
 </mapper>

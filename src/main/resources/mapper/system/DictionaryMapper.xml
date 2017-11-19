@@ -181,4 +181,29 @@
     order by
         d.sort_id asc;
   </select>
+
+  <!-- 角色权限管理数据获取 返回 listMap 便于添加属性 -->
+  <select id="selectDictionaryListMap" parameterType="map" resultType="map">
+    select
+    <include refid="Base_Column_List"/>
+    from
+        s_dictionary d
+    where
+      1 = 1
+      <if test="parentId != null and parentId != ''">
+        and d.parent_id = #{parentId}
+      </if>
+      <if test="id != null and id != ''">
+        and d.id = #{id}
+      </if>
+      <if test="value != null and value != ''">
+        and d.id = #{value}
+      </if>
+      <if test="status != null and status != ''">
+        and d.status = #{status}
+      </if>
+    order by
+        d.sort_id asc;
+  </select>
+  <!-- 返回 listMap 便于添加属性 -->
 </mapper>
