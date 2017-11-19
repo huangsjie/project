@@ -1,17 +1,8 @@
 package com.panda.mapper.origin;
 
 import com.panda.model.origin.QualityControlList;
+import com.panda.util.abs.AbstractMapper;
 
-public interface QualityControlListMapper {
-    int deleteByPrimaryKey(String id);
+public interface QualityControlListMapper  extends AbstractMapper<QualityControlList>{
 
-    int insert(QualityControlList record);
-
-    int insertSelective(QualityControlList record);
-
-    QualityControlList selectByPrimaryKey(String id);
-
-    int updateByPrimaryKeySelective(QualityControlList record);
-
-    int updateByPrimaryKey(QualityControlList record);
 }

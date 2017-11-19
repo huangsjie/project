@@ -1,8 +1,9 @@
 package com.panda.model.origin;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TeaGardenManageList {
+public class TeaGardenManageList implements Serializable {
     private String id;
 
     private String teaGardenId;

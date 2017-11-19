@@ -1,17 +1,8 @@
 package com.panda.mapper.origin;
 
 import com.panda.model.origin.SamplingList;
+import com.panda.util.abs.AbstractMapper;
 
-public interface SamplingListMapper {
-    int deleteByPrimaryKey(String id);
+public interface SamplingListMapper extends AbstractMapper<SamplingList> {
 
-    int insert(SamplingList record);
-
-    int insertSelective(SamplingList record);
-
-    SamplingList selectByPrimaryKey(String id);
-
-    int updateByPrimaryKeySelective(SamplingList record);
-
-    int updateByPrimaryKey(SamplingList record);
 }

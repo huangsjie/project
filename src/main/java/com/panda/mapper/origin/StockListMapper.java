@@ -1,17 +1,8 @@
 package com.panda.mapper.origin;
 
 import com.panda.model.origin.StockList;
+import com.panda.util.abs.AbstractMapper;
 
-public interface StockListMapper {
-    int deleteByPrimaryKey(String id);
+public interface StockListMapper extends AbstractMapper<StockList>{
 
-    int insert(StockList record);
-
-    int insertSelective(StockList record);
-
-    StockList selectByPrimaryKey(String id);
-
-    int updateByPrimaryKeySelective(StockList record);
-
-    int updateByPrimaryKey(StockList record);
 }

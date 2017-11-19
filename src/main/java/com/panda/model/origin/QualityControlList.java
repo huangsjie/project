@@ -1,8 +1,9 @@
 package com.panda.model.origin;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class QualityControlList {
+public class QualityControlList implements Serializable {
     private String id;
 
     private String samplingId;

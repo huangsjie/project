@@ -1,8 +1,9 @@
 package com.panda.model.origin;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class SamplingList {
+public class SamplingList implements Serializable {
     private String id;
 
     private String orderNo;
