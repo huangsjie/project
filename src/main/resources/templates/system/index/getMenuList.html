@@ -149,6 +149,7 @@
                                         <div class="col-lg-6 col-md-9 col-sm-12">
                                             <select class="form-control m-input" name="parentId">
                                                 <option value="">请选择</option>
+                                                <option value="10000000-0000-0000-0000-000000000000">Root</option>
                                                 <option th:each="menu : ${authMenu}" th:text="${menu.name}"
                                                         th:value="${menu.id}"></option>
                                             </select>

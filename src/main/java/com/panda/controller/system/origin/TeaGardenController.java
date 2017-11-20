@@ -48,7 +48,7 @@ public class TeaGardenController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/getTeaGardenDataList",method = RequestMethod.GET)
+    @RequestMapping(value = "/getTeaGardenDataList",method = RequestMethod.POST)
     @ResponseBody
     public Object getTeaGardenDataList(HttpServletRequest request){
         try {
