@@ -1,5 +1,5 @@
-var Roles = function () {
-    var rolesListShow = function () {
+var TeaGardenInfo = function () {
+    var teaGardenInfoShow = function () {
         var datatable = $('.tea_garden_info_ajax').mDatatable({
             data: {
                 type: 'remote',
@@ -32,6 +32,10 @@ var Roles = function () {
             }, {
                 field: "name",
                 title: "名称",
+                width: 100
+            }, {
+                field: "area",
+                title: "区域",
                 width: 100
             }, {
                 field: "description",
@@ -69,7 +73,7 @@ var Roles = function () {
                     console.log(row)
                     var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
                     return '\
-						<a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editRoleItem" title="编辑" item="'+row.id+'" data-toggle="modal" data-target=".rolesEdit">\
+						<a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editRoleItem" title="编辑" item="'+row.id+'" data-toggle="modal" data-target=".teaGardenInfoEdit">\
 							<i class="la la-edit"></i>\
 						</a>\
 						<a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delRoleItem" title="删除" item="'+row.id+'" >\
@@ -106,12 +110,13 @@ var Roles = function () {
         $('#m_form_status, #m_form_type').selectpicker();
     };
 
+
     /**
      * RoleEdit 表单验证
      * 新增与编辑
      */
-    var rolesForm = function () {
-        $( "#role_edit_form" ).validate({
+    var teaGardenInfoForm = function () {
+        $( "#tea_garden_edit_form" ).validate({
             rules: {
                 name: {
                     required: true,
@@ -126,15 +131,15 @@ var Roles = function () {
             },
 
             submitHandler: function (form){
-                blockUiOpen('.rolesEdit .modal-content');
+                blockUiOpen('.teaGardenInfoEdit .modal-content');
                 request(
-                    "saveRole",
+                    "saveTeaGardenInfo",
                     "post",
-                    $("#role_edit_form").serialize(),
+                    $("#tea_garden_edit_form").serialize(),
                     function(result){
                         if(result.message){
                             removeValue('add');
-                            blockUiClose('.rolesEdit .modal-content',1,".close-parent",0);
+                            blockUiClose('.teaGardenInfoEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
                             //blockUiOpen('.rolesEdit .modal-content',result.data);
                             //blockUiClose('.rolesEdit .modal-content',1,".close-parent",2000);
@@ -152,8 +157,8 @@ var Roles = function () {
 
     return {
         init: function () {
-            rolesListShow();
-            rolesForm();
+            teaGardenInfoShow();
+            teaGardenInfoForm();
         }
     };
 }();
@@ -163,25 +168,25 @@ var Roles = function () {
  */
 function removeValue(type){
     if(type == 'edit'){
-        $(".rolesEdit .modal-title").text("角色编辑")
-        $(".rolesEdit [name='save']").val('edit')
+        $(".teaGardenInfoEdit .modal-title").text("茶园编辑")
+        $(".teaGardenInfoEdit [name='save']").val('edit')
     }else{
-        $(".rolesEdit .modal-title").text("角色新增")
-        $(".rolesEdit [name='save']").val('add');
+        $(".teaGardenInfoEdit .modal-title").text("茶园新增")
+        $(".teaGardenInfoEdit [name='save']").val('add');
     }
-    $(".rolesEdit [name='id']").val('')
-    $(".rolesEdit [name='name']").val('')
-    $(".rolesEdit [name='description']").val('');
-    $(".rolesEdit .form-control-feedback").remove()
-    $(".rolesEdit div").removeClass("has-danger")
-    $(".rolesEdit div").removeClass("has-success")
+    $(".teaGardenInfoEdit [name='id']").val('')
+    $(".teaGardenInfoEdit [name='name']").val('')
+    $(".teaGardenInfoEdit [name='description']").val('');
+    $(".teaGardenInfoEdit .form-control-feedback").remove()
+    $(".teaGardenInfoEdit div").removeClass("has-danger")
+    $(".teaGardenInfoEdit div").removeClass("has-success")
 }
 
 jQuery(document).ready(function () {
     /**
      * 获取角色信息,并移除上一轮错误信息
      */
-    $("#roles_list ").on("click", ".editRoleItem", function () {
+    $("#tea_garden_list ").on("click", ".editRoleItem", function () {
         removeValue('edit')
         var id = $(this).attr("item");
         if(id != ""){
@@ -203,8 +208,8 @@ jQuery(document).ready(function () {
     /**
      * 删除角色
      */
-    $("#roles_list ").on("click", ".delRoleItem", function () {
-        blockUiOpen('#roles_list');
+    $("#tea_garden_list ").on("click", ".delRoleItem", function () {
+        blockUiOpen('#tea_garden_list');
         var self = $(this);
         var id = self.attr("item");
         if(id != ""){
@@ -215,9 +220,9 @@ jQuery(document).ready(function () {
                 function (result) {
                     if(!result.message){
                         self.parents("tr").remove();
-                        ToastrMsg(result.data,"success","topRight",'#roles_list');
+                        ToastrMsg(result.data,"success","topRight",'#tea_garden_list');
                     }else{
-                        ToastrMsg(result.data,"error","topRight",'#roles_list');
+                        ToastrMsg(result.data,"error","topRight",'#tea_garden_list');
                     }
                 })
             }
@@ -229,5 +234,5 @@ jQuery(document).ready(function () {
     $(".close-parent").on('click',function(){
         removeValue('add')
     })
-    Roles.init();
+    TeaGardenInfo.init();
 });

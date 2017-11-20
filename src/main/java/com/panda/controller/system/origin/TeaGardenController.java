@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/system/origin")
@@ -48,7 +50,7 @@ public class TeaGardenController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/getTeaGardenDataList",method = RequestMethod.GET)
+    @RequestMapping(value = "/getTeaGardenDataList",method = RequestMethod.POST)
     @ResponseBody
     public Object getTeaGardenDataList(HttpServletRequest request){
         try {
@@ -62,6 +64,45 @@ public class TeaGardenController {
             data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
         }
         return ResultMsgUtil.getResultMsg(message,data);
+    }
+
+
+    @RequestMapping(value = "/saveTeaGardenInfo",method = RequestMethod.POST)
+    @ResponseBody
+    public Object SaveTeaGardenInfo(HttpServletRequest request, TeaGardenInfo teaGardenInfo ,String save){
+        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+        try{
+            if(!teaGardenInfo.getId().isEmpty() && save.equals("edit")){
+                int i = teaGardenInfoService.updateByPrimaryKeySelective(teaGardenInfo);
+                if(i > 0){
+                    message = true;
+                    data    = ResultStateUtil.SUCCESS_UPDATE;
+                }else{
+                    data    = ResultStateUtil.FAIL_UPDATE;
+                }
+            }else if(save.equals("add")) {
+                teaGardenInfo.setId(UUID.randomUUID().toString());
+                teaGardenInfo.setCreateId(user.getId());
+                teaGardenInfo.setCreateTime(new Date());
+                teaGardenInfo.setModifyId(user.getId());
+                teaGardenInfo.setModifyTime(new Date());
+                teaGardenInfo.setCultivarId(UUID.randomUUID().toString());
+                teaGardenInfo.setStatus(1);
+                int insert =teaGardenInfoService.insertSelective(teaGardenInfo);
+                if(insert > 0){
+                    message = true;
+                    data    = ResultStateUtil.SUCCESS_ADD;
+                }else{
+                    data    = ResultStateUtil.FAIL_ADD;
+                }
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            data  = ResultStateUtil.ERROR_DATABASE_OPERATION;
+        }
+        return ResultMsgUtil.getResultMsg(message,data);
+
     }
 
 }
