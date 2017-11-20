@@ -206,4 +206,14 @@
         d.sort_id asc;
   </select>
   <!-- 返回 listMap 便于添加属性 -->
+  <select id="selectDictionaryGroupCountValueByParent" resultType="java.lang.String" parameterType="java.lang.String">
+    SELECT
+        GROUP_CONCAT(d. VALUE)
+    FROM
+        s_dictionary d
+    WHERE
+        d.parent_id = #{parentId}
+    ORDER BY
+        sort_id ASC
+  </select>
 </mapper>

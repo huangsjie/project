@@ -26,4 +26,11 @@ public interface DictionaryService extends AbstractService<Dictionary>{
      * @return
      */
     List<Map<String ,Object>> selectDictionaryListMap(Map<String,Object> map);
+
+    /**
+     * Group Count 字典的值
+     * @param parentId
+     * @return
+     */
+    String selectDictionaryGroupCountValueByParent(String parentId);
 }

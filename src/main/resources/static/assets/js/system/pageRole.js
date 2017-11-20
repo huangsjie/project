@@ -69,7 +69,6 @@ var PageRole = function () {
      */
     var getPageRoleList = function(){
         $("#menu_tree").on("click","a",function () {
-            console.log($(this).parent("li").attr("id"))
             var menuId = $(this).parent("li").attr("id");
             var roleId = $(".radio_role input[type='radio']:checked").val();
             if(menuId != "" && roleId != ""){
@@ -151,7 +150,7 @@ var PageRole = function () {
                         }
                 })
             }else{
-                ToastrMsg('  请选择 要赋予该角色的菜单,或者未修改过该项.',"error","topRight");
+                ToastrMsg('  请选择要赋予该角色的菜单,或者未修改过该项.',"error","topRight");
             }
         })
     }

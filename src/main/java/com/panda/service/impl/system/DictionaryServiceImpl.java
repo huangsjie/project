@@ -48,4 +48,14 @@ public class DictionaryServiceImpl extends AbstractServiceImpl<Dictionary> imple
         return dictionaryMapper.selectDictionaryListMap(map);
     }
 
+    /**
+     * Group Count 字典的值
+     * @param parentId
+     * @return
+     */
+    @Override
+    public String selectDictionaryGroupCountValueByParent(String parentId){
+        return dictionaryMapper.selectDictionaryGroupCountValueByParent(parentId);
+    }
+
 }

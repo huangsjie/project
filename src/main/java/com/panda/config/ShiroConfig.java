@@ -3,6 +3,7 @@ package com.panda.config;
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.github.pagehelper.util.StringUtil;
 import com.panda.model.system.Menu;
+import com.panda.service.system.DictionaryService;
 import com.panda.service.system.MenuService;
 import com.panda.shiro.MyShiroRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -37,6 +38,9 @@ public class ShiroConfig {
 
     @Autowired(required = false)
     private MenuService menuService;
+
+    @Autowired(required = false)
+    private DictionaryService dictionaryService;
 
     @Value("${spring.redis.host}")
     private String host;
@@ -95,11 +99,12 @@ public class ShiroConfig {
         //<!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
         List<Menu> menuList = menuService.selectAll();
+        String dictionary = dictionaryService.selectDictionaryGroupCountValueByParent("b6315b3a-1587-11e5-a9de-000c29d7a3a0");
         logger.info("--------------->ShiroConfiguration.shirFilter()--------------------->>自定义加载权限资源关系");
          for(Menu menu:menuList){
             if (StringUtil.isNotEmpty(menu.getUrl())) {
                 //String permission = "perms[" + menu.getUrl()+ "]";
-                String permission = "perms[index,add]";
+                String permission = "perms["+dictionary+"]";
                 //String permission = "perms[system:add]";
                 filterChainDefinitionMap.put(menu.getUrl(),permission);
             }
