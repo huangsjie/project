@@ -98,8 +98,8 @@ public class ShiroConfig {
         logger.info("--------------->ShiroConfiguration.shirFilter()--------------------->>自定义加载权限资源关系");
          for(Menu menu:menuList){
             if (StringUtil.isNotEmpty(menu.getUrl())) {
-
-                String permission = "perms[index,add]";
+                String permission = "perms[" + menu.getUrl()+ "]";
+                //String permission = "perms[index,add]";
                 //String permission = "perms[system:add]";
                 filterChainDefinitionMap.put(menu.getUrl(),permission);
             }
