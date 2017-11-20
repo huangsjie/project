@@ -1,6 +1,6 @@
 package com.panda.controller.system.index;
 
-import com.panda.model.system.Dictionary;
+import com.panda.model.system.PageRole;
 import com.panda.model.system.Roles;
 import com.panda.model.system.Users;
 import com.panda.service.system.PageRoleService;
@@ -130,6 +130,8 @@ public class PageRoleController {
                             item.putAll(pageRole);
                         }else{
                             item.put("pageRoleStatus","3");
+                            item.put("pageRoleId",0);
+                            item.put("pageRoleDictId",0);
                         }
                     }
                     message = true;
@@ -143,6 +145,48 @@ public class PageRoleController {
         }catch (Exception e){
             e.printStackTrace();
             data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
+        }
+        return ResultMsgUtil.getResultMsg(message,data);
+    }
+
+    /**
+     * Ajax 获取角色对应的菜单 操作权限
+     * @param request
+     * @param pageRole
+     * @return
+     */
+    @RequestMapping(value = "/saveOrUpdatePageRole",method = RequestMethod.POST)
+    @ResponseBody
+    public Object saveOrUpdatePageRole(HttpServletRequest request, PageRole pageRole){
+        message = false;
+        data    = null;
+        try {
+            if (!pageRole.getRoleId().isEmpty() && !pageRole.getDictId().isEmpty() && !pageRole.getMenuId().isEmpty()){
+                Integer result = pageRoleService.saveOrUpdatePageRole(pageRole);
+                switch (result){
+                    case 200:
+                        message = true;
+                        data    = ResultStateUtil.SUCCESS_UPDATE;
+                        break;
+                    case 100:
+                        data    = ResultStateUtil.FAIL_UPDATE;
+                        break;
+                    case 203:
+                        message = true;
+                        data    = ResultStateUtil.SUCCESS_ADD;
+                        break;
+                    case 105:
+                        data    = ResultStateUtil.FAIL_ADD;
+                        break;
+                    default:
+                        data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
+                        break;
+                }
+            }else{
+                data    = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }

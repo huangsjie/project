@@ -24,7 +24,7 @@ public class ResultStateUtil {
     public static final String FAIL_QUERY       = "查询失败";//103
     public static final String FAIL_UPLOAD      = "上传失败";//104
     public static final String FAIL_IMAGES_SIZE = "附件上传失败,大小不能超过300KB";//106
-    public static final String FAIL_ADD         = "由于未知原因, 导致添加失败";//105
+    public static final String FAIL_ADD         = "由于未知原因, 导致新增失败";//105
     public static final String FAIL_BUSINESS    = "主营业务格式化失败";//107
     public static final String FALL_LONGITUDE   = "经纬度匹配城市失败,请重新获取正确的经纬度！";//108
     public static final String FAIL_BINDING     = "绑定失败";//109

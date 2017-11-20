@@ -30,7 +30,7 @@ import java.util.*;
 @Service
 public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenu> implements RoleMenuService {
 
-    private static final Logger logger = LoggerFactory.getLogger(DruidConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(RoleMenuServiceImpl.class);
 
     @Resource
     private RoleMenuMapper roleMenuMapper;

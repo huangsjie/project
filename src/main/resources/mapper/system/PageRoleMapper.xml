@@ -33,7 +33,7 @@
     values (#{id,jdbcType=VARCHAR}, #{menuId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR},
     #{dictId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR},
     #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}
-    )
+    ) ON DUPLICATE KEY UPDATE id=UUID()
   </insert>
   <insert id="insertSelective" parameterType="com.panda.model.system.PageRole" >
     insert into s_page_role
@@ -95,6 +95,7 @@
         #{modifyTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
+    ON DUPLICATE KEY UPDATE id=UUID()
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.panda.model.system.PageRole" >
     update s_page_role

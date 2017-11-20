@@ -151,6 +151,14 @@ var blockUiClose = function(elem,closeParent,parentElem,time){
 }
 
 /**
+ * 关闭 BlockUi
+ * @param elem
+ */
+var blockUiCloseParent = function(elem){
+    mApp.unblock(elem);
+}
+
+/**
  * alert 打开消息提示框
  * @param elem
  * @param type

@@ -22,4 +22,11 @@ public interface PageRoleService extends AbstractService<PageRole> {
      * @return
      */
     Map<String,Object> selectPageRoleListByDictionary(Map<String,Object> map);
+
+    /**
+     * 新增和编辑角色权限设置
+     * @param pageRole
+     * @return
+     */
+    Integer saveOrUpdatePageRole(PageRole pageRole);
 }

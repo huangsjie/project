@@ -15,5 +15,4 @@ public interface PageRoleMapper extends AbstractMapper<PageRole> {
      * @return
      */
     Map<String,Object> selectPageRoleListByDictionary(Map<String,Object> map);
-
 }
