@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -42,13 +44,39 @@ public class MenuController {
     @RequestMapping(value = "/list",method= RequestMethod.GET)
     public String getMenuList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        model.addAttribute("baseUrl",request.getRequestURI());
+
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("authMenu",user.getAuthMenuList());
         model.addAttribute("user",user);
         return "system/index/getMenuList";
     }
 
+    /**
+     * 获取菜单树
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/getMenuList",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getMenuList(HttpServletRequest request){
+        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+        message = false;
+        data    = null;
+        try {
+            Map<String,Object> map = new HashMap<>();
+            map.put("roleId",user.getRoleId());
+            map.put("status","1");
+            map.put("parentId","10000000-0000-0000-0000-000000000000");
+            data = roleMenuService.selectRoleMenuListForAjaxJsTree(map,true,false);
+            if (data != null){
+                message = true;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            data = ResultStateUtil.ERROR_QUERY;
+        }
+        return ResultMsgUtil.getResultMsg(message,data);
+    }
     /**
      * 获取菜单信息
      * @return

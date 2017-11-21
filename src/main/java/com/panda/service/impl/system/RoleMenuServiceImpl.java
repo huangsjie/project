@@ -146,7 +146,7 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenu> implement
      * @return
      */
     @Override
-    public List<Map> selectRoleMenuListForAjaxJsTree(Map<String, Object> map, boolean selected,boolean threeDisabled, boolean showRoot){
+    public List<Map> selectRoleMenuListForAjaxJsTree(Map<String, Object> map, boolean selected,boolean threeDisabled){
         List<Map> menuList = null;
         boolean first = false;
         try {
@@ -159,12 +159,6 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenu> implement
 
             Map<String,Object> state = new HashMap<>();
             Map<String,Object> liAttr = new HashMap<>();
-            liAttr.put("class","first-item");
-            state.put("opened",true);
-            if (selected){
-                state.put("selected",true);
-            }
-
             menuList = roleMenuMapper.selectRoleMenuListForAjaxJsTree(map);
             if(menuList != null && menuList.size() > 0){
                 for (Map menu: menuList) {
@@ -178,16 +172,19 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenu> implement
                             List<Map> lastChild = roleMenuMapper.selectRoleMenuListForAjaxJsTree(map);
                             if(lastChild != null && lastChild.size() > 0){
                                 if (!first){
+                                    liAttr.put("class","first-item");
                                     lastChild.get(0).put("li_attr",liAttr);
                                     first = true;
+                                    if (selected){
+                                        state.put("selected",true);
+                                        lastChild.get(0).put("state",state);
+                                    }
                                 }
                                 if (threeDisabled){
                                     state.put("disabled",true);
                                     for (Map lastItem: lastChild){
                                         lastItem.put("state",state);
                                     }
-                                }else{
-                                    lastChild.get(0).put("state",state);
                                 }
                                 child.put("children",lastChild);
                             }else{
@@ -195,19 +192,11 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenu> implement
                                     childList.get(0).put("li_attr",liAttr);
                                     first = true;
                                 }
-                                //state.put("disabled",false);
-                                //childList.get(0).put("state",state);
                             }
                         }
                         menu.put("children",childList);
                     }
                 }
-            }else{
-                if (!first){
-                    menuList.get(0).put("li_attr",liAttr);
-                    first = true;
-                }
-                menuList.get(0).put("state",state);
             }
         }catch (Exception e){
             e.printStackTrace();

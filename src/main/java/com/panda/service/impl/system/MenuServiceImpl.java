@@ -107,4 +107,15 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
         }
         return menuList;
     }
+
+
+    /**
+     * 根据菜单 ID 获取 当前菜单和子菜单 shiro config init
+     * @param menuId
+     * @return
+     */
+    @Override
+    public List<Menu> selectMenuAndChildMenu(String menuId){
+        return menuMapper.selectMenuAndChildMenu(menuId);
+    }
 }

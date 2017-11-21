@@ -28,4 +28,11 @@ public interface MenuService extends AbstractService<Menu>{
      * @return
      */
     List<Menu> selectManagerRoleMenuList(Map<String,String> map);
+
+    /**
+     * 根据菜单 ID 获取 当前菜单和子菜单 shiro config init
+     * @param menuId
+     * @return
+     */
+    List<Menu> selectMenuAndChildMenu(String menuId);
 }

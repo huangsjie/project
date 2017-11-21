@@ -49,9 +49,9 @@ public class UsersServiceImpl extends AbstractServiceImpl<Users> implements User
                 map.put("roleId",user.getRoleId());
                 map.put("status","1");
                 //授权的URL
-                user.setAuthMenuList(menuService.selectManagerAuthMenu(map));
+                //user.setAuthMenuList(menuService.selectManagerAuthMenu(map));
                 //菜单List
-                map.put("parentId","10000000-0000-0000-0000-000000000000");
+                map.put("parentId","10000000-0000-0000-0000-100000000000");
                 user.setMenuList(menuService.selectManagerRoleMenuList(map));
             }
         }catch (Exception e){

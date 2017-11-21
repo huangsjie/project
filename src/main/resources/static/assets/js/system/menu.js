@@ -1,21 +1,26 @@
 var MenuPage = function () {
+    var MenuTree = $('#menu_tree');
     // 菜单树初始化
-    var menu_tree = function () {
-        $('#menu_tree').jstree({
+    var createTree = function (roleMenu) {
+        MenuTree.jstree({
             "core" : {
+                "multiple": false,
                 "themes" : {
                     "responsive": false
-                }
-            },
-            "types" : {
-                "default" : {
-                    "icon" : "fa fa-folder"
                 },
-                "file" : {
-                    "icon" : "fa fa-file"
-                }
+                "check_callback" : true,
+                'data' : roleMenu
             },
-            "plugins": ["state","types"]
+            "plugins" : ["types","stats"]
+        });
+
+        // 展开节点
+        MenuTree.on("loaded.jstree", function (event, data) {
+            // 展开所有节点
+            MenuTree.jstree('open_all');
+            // 展开指定节点
+            //data.instance.open_node(1);     // 单个节点 （1 是顶层的id）
+            //data.instance.open_node([1, 10]); // 多个节点 (展开多个几点只有在一次性装载后所有节点后才可行）
         });
     }
     //表单验证初始化
@@ -73,49 +78,73 @@ var MenuPage = function () {
             }
         });
     }
+    var getMenuData = function () {
+        //获取选中菜单的数据
+        $("#menu_tree").on("click","a",function(){
+            request(
+                "getMenuData",
+                "get",
+                {"id":$(this).attr("menu")},
+                function(result){
+                    if(result.message){
+                        $("[name='name']").val(result.data.name)
+                        $("[name='url']").val(result.data.url)
+                        $("[name='sortId']").val(result.data.sortId)
+                        $("[name='iconClass']").val(result.data.iconClass)
+                        $("[name='type']").find("option[value="+result.data.type+"]").attr("selected",true);
+                        $("[name='parentId']").find("option[value="+result.data.parentId+"]").attr("selected",true);
+                        $("[name='description']").val(result.data.description)
+                        $("[name='save']").val('edit')
+                        $("[name='id']").val(result.data.id)
+                        $(".menu_save").text("更新")
+                        $(".reset-btn").removeClass("m--hide");
+                    }else{
+                        var alert = $('.m-form #danger_msg');
+                        alert.find("#danger_content").text("编辑菜单请选中左侧 菜单Tree 要编辑的菜单.")
+                        alert.removeClass('m--hide').show();
+                        mApp.scrollTo(alert, -200);
+                    }
+                }
+            )
+        })
+    }
+    /**
+     * 获取菜单树
+     */
+    var getMenuList = function () {
+        request(
+            "getMenuList",
+            "get",
+            "",
+            function(result){
+                if(result.message){
+                    createTree(result.data)
+                }else{
+                    console.log(result.data)
+                }
+            }
+        )
+    }
+
+    //重置 编辑区域
+    var resetForm = function () {
+        $(".reset-btn").on("click",function(){
+            $(".menu_save").text("确定")
+            $("[name='save']").val('add')
+            $("[name='id']").val("")
+            $(this).addClass("m--hide")
+        })
+    }
     return {
         init: function() {
+            getMenuList();
+            resetForm();
             menuForm();
-            menu_tree();
+            getMenuData();
         }
     };
 }();
 
 jQuery(document).ready(function() {
-    //获取选中菜单的数据
-    $("#menu_tree").on("click","a",function(){
-        request(
-            "getMenuData",
-            "get",
-            {"id":$(this).attr("menu")},
-            function(result){
-                if(result.message){
-                    $("[name='name']").val(result.data.name)
-                    $("[name='url']").val(result.data.url)
-                    $("[name='sortId']").val(result.data.sortId)
-                    $("[name='iconClass']").val(result.data.iconClass)
-                    $("[name='type']").find("option[value="+result.data.type+"]").attr("selected",true);
-                    $("[name='parentId']").find("option[value="+result.data.parentId+"]").attr("selected",true);
-                    $("[name='description']").val(result.data.description)
-                    $("[name='save']").val('edit')
-                    $("[name='id']").val(result.data.id)
-                    $(".menu_save").text("更新")
-                    $(".reset-btn").removeClass("m--hide");
-                }else{
-                    var alert = $('.m-form #danger_msg');
-                    alert.find("#danger_content").text("编辑菜单请选中左侧 菜单Tree 要编辑的菜单.")
-                    alert.removeClass('m--hide').show();
-                    mApp.scrollTo(alert, -200);
-                }
-            }
-        )
-    })
-    //重置 编辑区域
-    $(".reset-btn").on("click",function(){
-        $(".menu_save").text("确定")
-        $("[name='save']").val('add')
-        $("[name='id']").val("")
-        $(this).addClass("m--hide")
-    })
     MenuPage.init();
 });

@@ -83,7 +83,7 @@ public class HomeController {
         map.put("roleId","f8692cd2-e801-11e4-8fee-40167e64eefd");
         map.put("status","1");
         map.put("parentId","10000000-0000-0000-0000-000000000000");
-        data = roleMenuService.selectRoleMenuListForAjaxJsTree(map,false,true,true);
+        data = roleMenuService.selectRoleMenuListForAjaxJsTree(map,false,true);
         return ResultMsgUtil.getResultMsg(message,data);
     }
 }
