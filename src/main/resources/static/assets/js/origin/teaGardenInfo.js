@@ -70,13 +70,13 @@ var TeaGardenInfo = function () {
                 sortable: false,
                 overflow: 'visible',
                 template: function (row) {
-                    console.log(row)
+
                     var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
                     return '\
-						<a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editRoleItem" title="编辑" item="'+row.id+'" data-toggle="modal" data-target=".teaGardenInfoEdit">\
+						<a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editTeaGardenItem" title="编辑" item="'+row.id+'" data-toggle="modal" data-target=".teaGardenInfoEdit">\
 							<i class="la la-edit"></i>\
 						</a>\
-						<a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delRoleItem" title="删除" item="'+row.id+'" >\
+						<a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delTeaGardenItem" title="删除" item="'+row.id+'" >\
 							<i class="la la-trash"></i>\
 						</a>\
 					';
@@ -100,14 +100,14 @@ var TeaGardenInfo = function () {
             datatable.load();
         }).val(typeof query.Status !== 'undefined' ? query.Status : '');
 
-        $('#m_form_type').on('change', function () {
+        /*$('#m_form_type').on('change', function () {
             var query = datatable.getDataSourceQuery();
             query.Type = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.Type !== 'undefined' ? query.Type : '');
+        }).val(typeof query.Type !== 'undefined' ? query.Type : '');*/
 
-        $('#m_form_status, #m_form_type').selectpicker();
+        $('#m_form_status').selectpicker();
     };
 
 
@@ -149,6 +149,7 @@ var TeaGardenInfo = function () {
                             //blockUiClose('.rolesEdit .modal-content','','',2000);
                             ToastrMsg(result.data,"error","topRight");
                         }
+
                     }
                 )
             }
@@ -186,20 +187,22 @@ jQuery(document).ready(function () {
     /**
      * 获取角色信息,并移除上一轮错误信息
      */
-    $("#tea_garden_list ").on("click", ".editRoleItem", function () {
+    $("#tea_garden_list").on("click", ".editTeaGardenItem", function () {
         removeValue('edit')
         var id = $(this).attr("item");
         if(id != ""){
             request(
-                "getRoleItem",
+                "getTeaGardenItem",
                 'get',
                 {id:id},
                 function (result) {
                     if(result.message){
-                        $("#role_edit_form [name='id']").val(result.data.id)
-                        $("#role_edit_form [name='name']").val(result.data.name)
-                        $("#role_edit_form [name='description']").val(result.data.description)
+                        $("#tea_garden_edit_form [name='id']").val(result.data.id)
+                        $("#tea_garden_edit_form [name='name']").val(result.data.name)
+                        $("#tea_garden_edit_form [name='area']").val(result.data.area)
+                        $("#tea_garden_edit_form [name='description']").val(result.data.description)
                     }
+
 
             })
         }
@@ -208,13 +211,13 @@ jQuery(document).ready(function () {
     /**
      * 删除角色
      */
-    $("#tea_garden_list ").on("click", ".delRoleItem", function () {
+    $("#tea_garden_list ").on("click", ".delTeaGardenItem", function () {
         blockUiOpen('#tea_garden_list');
         var self = $(this);
         var id = self.attr("item");
         if(id != ""){
             request(
-                "delRoleItem",
+                "delTeaGardenItem",
                 'get',
                 {id:id},
                 function (result) {

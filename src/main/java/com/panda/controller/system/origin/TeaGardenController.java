@@ -66,7 +66,39 @@ public class TeaGardenController {
         return ResultMsgUtil.getResultMsg(message,data);
     }
 
+    /**
+     * Ajax 获取当前编辑项的内容
+     * @param request
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/getTeaGardenItem", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getTeaGardenItem(HttpServletRequest request,String id){
+        if (!id.isEmpty()){
+            try {
+                TeaGardenInfo teaGardenInfo = teaGardenInfoService.selectByPrimaryKey(id);
+                if(teaGardenInfo != null){
+                    message = true;
+                    data = teaGardenInfo;
+                }else{
+                    data = ResultStateUtil.ERROR_QUERY;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+                data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
+            }
+        }
+        return ResultMsgUtil.getResultMsg(message,data);
+    }
 
+    /**
+     * 保存
+     * @param request
+     * @param teaGardenInfo
+     * @param save
+     * @return
+     */
     @RequestMapping(value = "/saveTeaGardenInfo",method = RequestMethod.POST)
     @ResponseBody
     public Object SaveTeaGardenInfo(HttpServletRequest request, TeaGardenInfo teaGardenInfo ,String save){
@@ -88,7 +120,7 @@ public class TeaGardenController {
                 teaGardenInfo.setModifyTime(new Date());
                 teaGardenInfo.setCultivarId(UUID.randomUUID().toString());
                 teaGardenInfo.setStatus(1);
-                int insert =teaGardenInfoService.insertSelective(teaGardenInfo);
+                int insert = teaGardenInfoService.insertSelective(teaGardenInfo);
                 if(insert > 0){
                     message = true;
                     data    = ResultStateUtil.SUCCESS_ADD;
@@ -104,5 +136,37 @@ public class TeaGardenController {
         return ResultMsgUtil.getResultMsg(message,data);
 
     }
+
+
+    /**
+     * 刪除
+     * @param request
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="/delTeaGardenItem",method = RequestMethod.GET)
+    @ResponseBody
+    public Object DelTeaGardenItem(HttpServletRequest request ,String id){
+        try{
+            if (!id.isEmpty()){
+                int i = teaGardenInfoService.deleteByPrimaryKey(id);
+                if(i > 0){
+                    message = true;
+                    data = ResultStateUtil.SUCCESS_DELETE;
+                }else{
+                    data = ResultStateUtil.ERROR_QUERY;
+                }
+
+            }else{
+                data = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            data = ResultStateUtil.ERROR_DATABASE_OPERATION;
+        }
+        return ResultMsgUtil.getResultMsg(message,data);
+    }
+
+
 
 }
