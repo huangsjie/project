@@ -146,7 +146,7 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenu> implement
      * @return
      */
     @Override
-    public List<Map> selectRoleMenuListForAjaxJsTree(Map<String, Object> map, boolean selected,boolean threeDisabled){
+    public List<Map> selectRoleMenuListForAjaxJsTree(Map<String, Object> map, boolean selected,boolean threeDisabled, boolean showRoot){
         List<Map> menuList = null;
         boolean first = false;
         try {
@@ -156,6 +156,7 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenu> implement
              * liAttr:{class:you-class,data-type:you-type}
              * aAttr:{xxx:xxx}
              */
+
             Map<String,Object> state = new HashMap<>();
             Map<String,Object> liAttr = new HashMap<>();
             liAttr.put("class","first-item");
@@ -163,6 +164,7 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenu> implement
             if (selected){
                 state.put("selected",true);
             }
+
             menuList = roleMenuMapper.selectRoleMenuListForAjaxJsTree(map);
             if(menuList != null && menuList.size() > 0){
                 for (Map menu: menuList) {
@@ -181,8 +183,12 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenu> implement
                                 }
                                 if (threeDisabled){
                                     state.put("disabled",true);
+                                    for (Map lastItem: lastChild){
+                                        lastItem.put("state",state);
+                                    }
+                                }else{
+                                    lastChild.get(0).put("state",state);
                                 }
-                                lastChild.get(0).put("state",state);
                                 child.put("children",lastChild);
                             }else{
                                 if (!first){

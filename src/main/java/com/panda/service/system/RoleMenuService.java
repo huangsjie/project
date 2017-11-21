@@ -44,5 +44,5 @@ public interface RoleMenuService extends AbstractService<RoleMenu> {
      * @param threeDisabled 禁用第三层
      * @return
      */
-    List<Map> selectRoleMenuListForAjaxJsTree(Map<String, Object> map, boolean selected,boolean threeDisabled);
+    List<Map> selectRoleMenuListForAjaxJsTree(Map<String, Object> map, boolean selected,boolean threeDisabled, boolean showRoot);
 }

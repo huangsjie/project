@@ -80,7 +80,7 @@ var ApmJstreeUtil = {
 		
 		//隐藏和展示绑定
 		inputDiv.on('click', function() {
-			picker.show();
+			picker.removeClass("m--hide").addClass("m--show");
 		});
 		$('body').click(function(evt) {
 			if ($(evt.target).parents('#' + obj['showField']).length == 0
@@ -88,13 +88,13 @@ var ApmJstreeUtil = {
 					&& evt.target.id != obj['showField']
 					&& evt.target.id != obj['picker']
 					&& evt.target.className.indexOf("jstree") == -1) { //防止点击展开节点前面值为true
-				picker.hide();
+				picker.removeClass("m--show").addClass("m--hide");
 			}
 		});
 		//清空按钮
 		deleteIcon.on('click', function() {
 			ApmJstreeUtil.deselectJstree(obj);
-			deleteIcon.hide();
+			deleteIcon.removeClass("m--show").addClass("m--hide");
 		});
 	},
 	
