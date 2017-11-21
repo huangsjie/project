@@ -15,7 +15,7 @@ var MenuPage = function () {
                     "icon" : "fa fa-file"
                 }
             },
-            "plugins": ["wholerow","state","types"]
+            "plugins": ["state","types"]
         });
     }
     //表单验证初始化

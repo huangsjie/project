@@ -52,7 +52,7 @@ var PageRole = function () {
                 "check_callback" : true,
                 'data' : roleMenu
             },
-            "plugins" : ["types","stats","wholerow" ]
+            "plugins" : ["types","stats"]
         });
 
         // MenuTree.on("changed.jstree", function (e, data) {

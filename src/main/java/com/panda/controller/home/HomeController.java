@@ -79,42 +79,11 @@ public class HomeController {
     public Object jsTreeSelect(){
         message = false;
         data    = null;
-        String menuId = "caf65c04-beed-11e7-959c-38d547b81379";
-        String roleId = "f8692cd2-e801-11e4-8fee-40167e64eefd";
-        Integer status = 1;
-        try {
-            if(!menuId.isEmpty() && !roleId.isEmpty() && status == 1){
-                Map<String,Object> map = new HashMap<>();
-                map.put("status",status);
-                map.put("parentId","b6315b3a-1587-11e5-a9de-000c29d7a3a0");
-                List<Map<String,Object>> dictionaryList = dictionaryService.selectDictionaryListMap(map);
-                if(dictionaryList.size() > 0){
-                    map.put("parentId",null);
-                    map.put("menuId",menuId);
-                    map.put("roleId",roleId);
-                    for (Map<String,Object> item : dictionaryList){
-                        map.put("dictId",item.get("id"));
-                        Map<String,Object> pageRole = pageRoleService.selectPageRoleListByDictionary(map);
-                        if(pageRole != null){
-                            item.putAll(pageRole);
-                        }else{
-                            item.put("pageRoleStatus","3");
-                            item.put("pageRoleId",0);
-                            item.put("pageRoleDictId",0);
-                        }
-                    }
-                    message = true;
-                    data = dictionaryList;
-                }else{
-                    data = ResultStateUtil.NO_MORE_DATA;
-                }
-            }else{
-                data    = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
-        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("roleId","f8692cd2-e801-11e4-8fee-40167e64eefd");
+        map.put("status","1");
+        map.put("parentId","10000000-0000-0000-0000-000000000000");
+        data = roleMenuService.selectRoleMenuListForAjaxJsTree(map);
         return ResultMsgUtil.getResultMsg(message,data);
     }
 }

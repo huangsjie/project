@@ -50,9 +50,7 @@ var ApmJstreeUtil = {
 			} else {
 				deleteIcon.hide();
 				inputShow.val("");
-				
-				
-				                                saveInput.val("");
+				saveInput.val("");
 			}
 		});
 		
@@ -120,47 +118,45 @@ var ApmJstreeUtil = {
 				}
 			}
 		})
-		
 	saveInput.val("");
-	}
+	},
+
+	createTree : function (treeData) {
+        //树主体初始化
+        $('#jstree_div').jstree({
+            "core" : {
+                "multiple" : false, // 允许多选
+                'animation' : false,
+                'data' : treeData,
+            },
+            'plugins' : ['stats']  //如果使用checkbox效率会降低, 'wholerow'会把线隐藏掉
+        });
+        //绑定到自定义的组件上
+        ApmJstreeUtil.bindJstree({
+            render : 'jstree_div',
+            showField : 'department',
+            saveField : 'rdepartment',
+            picker : 'jstree_around',
+            searchField : 'search_input',
+            width : 250,
+            height : 300
+        });
+    }
 };
 
 
 
-	var treeData = null;
-	request(
-		"jsTreeSelect",
-		"get",
-		{id:"1"},
-		function (result) {
-            treeData = result.data;
-        }
-	);
-
 jQuery(document).ready(function () {
-	//树主体初始化
-	$('#jstree_div').jstree({
-		"core" : {
-			"multiple" : false, // 允许多选
-			'animation' : false,
-			'data' : treeData,
-		},
-		'expand_selected_onload' : true, //选中项蓝色底显示
-		'checkbox' : {
-			// 禁用级联选中
-			'three_state' : false,
-			'cascade' : 'undetermined' //有三个选项，up, down, undetermined; 使用前需要先禁用three_state
-		},
-		'plugins' : ['checkbox', 'search']  //如果使用checkbox效率会降低, 'wholerow'会把线隐藏掉
-	});
-	//绑定到自定义的组件上
-	ApmJstreeUtil.bindJstree({
-		render : 'jstree_div',
-		showField : 'department',
-		saveField : 'rdepartment',
-		picker : 'jstree_around',
-		searchField : 'search_input',
-		width : 250,
-		height : 300
-	});
+
+    var treeData = null;
+    request(
+        "jsTreeSelect",
+        "get",
+        {id:"1"},
+        function (result) {
+            treeData = result.data;
+            ApmJstreeUtil.createTree(treeData)
+        }
+    );
+
 })
