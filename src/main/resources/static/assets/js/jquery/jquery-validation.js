@@ -8,9 +8,9 @@
  */
 (function( factory ) {
     if ( typeof define === "function" && define.amd ) {
-        define( ["jquery"], factory );
+        define( ["static/assets/js/jquery/jquery"], factory );
     } else if (typeof module === "object" && module.exports) {
-        module.exports = factory( require( "jquery" ) );
+        module.exports = factory( require( "static/assets/js/jquery/jquery" ) );
     } else {
         factory( jQuery );
     }
@@ -1634,9 +1634,9 @@
  */
 (function( factory ) {
     if ( typeof define === "function" && define.amd ) {
-        define( ["jquery", "./jquery.validate"], factory );
+        define( ["static/assets/js/jquery/jquery", "./jquery.validate"], factory );
     } else if (typeof module === "object" && module.exports) {
-        module.exports = factory( require( "jquery" ) );
+        module.exports = factory( require( "static/assets/js/jquery/jquery" ) );
     } else {
         factory( jQuery );
     }
