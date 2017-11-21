@@ -129,6 +129,12 @@ var ApmJstreeUtil = {
                 'animation' : false,
                 'data' : treeData,
             },
+            'expand_selected_onload' : true, //选中项蓝色底显示
+            'checkbox' : {
+                // 禁用级联选中
+                'three_state' : false,
+                'cascade' : 'undetermined' //有三个选项，up, down, undetermined; 使用前需要先禁用three_state
+            },
             'plugins' : ['stats']  //如果使用checkbox效率会降低, 'wholerow'会把线隐藏掉
         });
         //绑定到自定义的组件上

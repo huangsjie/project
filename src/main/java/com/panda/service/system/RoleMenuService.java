@@ -39,8 +39,10 @@ public interface RoleMenuService extends AbstractService<RoleMenu> {
 
     /**
      * 角色权限设置，获取 JSTree 需要的 JSON 数据
-     * @param map
+     * @param map            ID
+     * @param selected      是否选中
+     * @param threeDisabled 禁用第三层
      * @return
      */
-    List<Map> selectRoleMenuListForAjaxJsTree(Map<String, Object> map);
+    List<Map> selectRoleMenuListForAjaxJsTree(Map<String, Object> map, boolean selected,boolean threeDisabled);
 }

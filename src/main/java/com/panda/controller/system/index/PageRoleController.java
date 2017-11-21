@@ -85,7 +85,7 @@ public class PageRoleController {
                 map.put("roleId",id);
                 map.put("status","1");
                 map.put("parentId","10000000-0000-0000-0000-000000000000");
-                List<Map> menuList = roleMenuService.selectRoleMenuListForAjaxJsTree(map);
+                List<Map> menuList = roleMenuService.selectRoleMenuListForAjaxJsTree(map, true,false);
                 if(menuList.size() > 0){
                     message = true;
                     data = menuList;

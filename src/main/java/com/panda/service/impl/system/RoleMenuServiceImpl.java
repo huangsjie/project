@@ -146,12 +146,13 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenu> implement
      * @return
      */
     @Override
-    public List<Map> selectRoleMenuListForAjaxJsTree(Map<String, Object> map){
+    public List<Map> selectRoleMenuListForAjaxJsTree(Map<String, Object> map, boolean selected,boolean threeDisabled){
         List<Map> menuList = null;
+        boolean first = false;
         try {
             /**
              * JsTree 参数说明
-             * state:{opened:true,selected:true}
+             * state:{opened:true,selected:true,disabled:true}
              * liAttr:{class:you-class,data-type:you-type}
              * aAttr:{xxx:xxx}
              */
@@ -159,7 +160,9 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenu> implement
             Map<String,Object> liAttr = new HashMap<>();
             liAttr.put("class","first-item");
             state.put("opened",true);
-            state.put("selected",true);
+            if (selected){
+                state.put("selected",true);
+            }
             menuList = roleMenuMapper.selectRoleMenuListForAjaxJsTree(map);
             if(menuList != null && menuList.size() > 0){
                 for (Map menu: menuList) {
@@ -172,20 +175,32 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenu> implement
                             map.put("parentId",child.get("id"));
                             List<Map> lastChild = roleMenuMapper.selectRoleMenuListForAjaxJsTree(map);
                             if(lastChild != null && lastChild.size() > 0){
-                                lastChild.get(0).put("li_attr",liAttr);
+                                if (!first){
+                                    lastChild.get(0).put("li_attr",liAttr);
+                                    first = true;
+                                }
+                                if (threeDisabled){
+                                    state.put("disabled",true);
+                                }
                                 lastChild.get(0).put("state",state);
                                 child.put("children",lastChild);
                             }else{
-                                childList.get(0).put("li_attr",liAttr);
-                                childList.get(0).put("state",state);
+                                if (!first){
+                                    childList.get(0).put("li_attr",liAttr);
+                                    first = true;
+                                }
+                                //state.put("disabled",false);
+                                //childList.get(0).put("state",state);
                             }
-
                         }
                         menu.put("children",childList);
                     }
                 }
             }else{
-                menuList.get(0).put("li_attr",liAttr);
+                if (!first){
+                    menuList.get(0).put("li_attr",liAttr);
+                    first = true;
+                }
                 menuList.get(0).put("state",state);
             }
         }catch (Exception e){
