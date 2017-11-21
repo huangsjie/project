@@ -4,7 +4,12 @@ package com.panda.util;
 import com.panda.model.system.Users;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
-
+/**
+ * Created with IDEA.
+ * User: Alan
+ * Date: 2017/11/14
+ * Time: 17:28
+ */
 public class PasswordUtil {
 
     private String algorithmName = "md5";

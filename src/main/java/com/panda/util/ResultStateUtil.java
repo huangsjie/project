@@ -1,6 +1,9 @@
 package com.panda.util;
 /**
- * Created by zhangwei on 2016/3/4.
+ * Created with IDEA Controller 返回的状态码
+ * User: Alan
+ * Date: 2017/11/14
+ * Time: 17:28
  */
 public class ResultStateUtil {
     /**
@@ -49,7 +52,7 @@ public class ResultStateUtil {
     /**
      * 常用温馨提示
      */
-    public static final String NO_MORE_DATA = "当前操作为获取到有效数据 !";//400
+    public static final String NO_MORE_DATA = "当前操作未获取到有效数据 !";//400
     public static final String CODE_OUT_TIME = "验证码超时";//401
     public static final String FALSE_ADD_ADDRESS = "请先添加收货地址";//402
     public static final String FREQUENTLY_MOBILE = "请勿频繁发送验证码";//403

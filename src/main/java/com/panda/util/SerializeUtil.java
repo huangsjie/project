@@ -6,7 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
- * Created with IDEA.
+ * Created with IDEA. Redis 序列化对象
  * User: Alan
  * Date: 2017/11/2
  * Time: 15:11

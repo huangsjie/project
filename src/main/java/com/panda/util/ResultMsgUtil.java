@@ -1,10 +1,11 @@
 package com.panda.util;
 
 import java.io.Serializable;
-
 /**
- * Action 返回的json结果
- * Created by Administrator on 2015/6/8.
+ * Created with IDEA Controller 返回的json结果
+ * User: Alan
+ * Date: 2017/11/14
+ * Time: 17:28
  */
 public class ResultMsgUtil implements Serializable {
     private Object message;
