@@ -84,7 +84,7 @@ var MenuPage = function () {
             request(
                 "getMenuData",
                 "get",
-                {"id":$(this).attr("menu")},
+                {"id":$(this).parents("li").attr("id")},
                 function(result){
                     if(result.message){
                         $("[name='name']").val(result.data.name)
