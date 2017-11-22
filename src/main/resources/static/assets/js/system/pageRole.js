@@ -55,10 +55,14 @@ var PageRole = function () {
             "plugins" : ["types","stats"]
         });
 
-        // MenuTree.on("changed.jstree", function (e, data) {
-        //     if((typeof data.event !== 'undefined' && data.event.type == 'click') && data.action == 'select_node'){
-        //     }
-        // })
+        // 展开节点
+        MenuTree.on("loaded.jstree", function (event, data) {
+            // 展开所有节点
+            MenuTree.jstree('open_all');
+            // 展开指定节点
+            //data.instance.open_node(1);     // 单个节点 （1 是顶层的id）
+            //data.instance.open_node([1, 10]); // 多个节点 (展开多个几点只有在一次性装载后所有节点后才可行）
+        });
         setTimeout(function() {
             $("#menu_tree .first-item a").click()
         }, 800);

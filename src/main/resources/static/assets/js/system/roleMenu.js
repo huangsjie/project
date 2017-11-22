@@ -27,6 +27,11 @@ var Treeview = function () {
             },
             "plugins": ["state","checkbox","types"]
         });
+        // 展开节点
+        MenuTree.on("loaded.jstree", function (event, data) {
+            // 展开所有节点
+            MenuTree.jstree('open_all');
+        });
         MenuTree.on("changed.jstree", function (e, data) {
             if((typeof data.event !== 'undefined' && data.event.type == 'click') && (data.action == 'select_node' || data.action == 'deselect_node')){
                 if(data.action == 'select_node' && data.selected.length >= 1){
@@ -82,6 +87,7 @@ var Treeview = function () {
             $.each(roleMenu, function (i, n) {
                 if(n.id != null){
                     var node = MenuTree.jstree("get_node", n.id);
+                    console.log(node)
                     $("#"+node.a_attr.id).attr("status",n.roleMenuStatus)
                     $("#"+node.a_attr.id).attr("role_menu_id",n.roleMenuId)
                     if(node.children.length == 0 && n.roleMenuStatus == 1){
