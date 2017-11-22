@@ -28,7 +28,7 @@
     )
     values (#{id,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, #{menuId,jdbcType=VARCHAR},
     #{status,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
-    )
+    ) ON DUPLICATE KEY UPDATE id=UUID()
   </insert>
   <insert id="insertSelective" parameterType="com.panda.model.system.RoleMenu" >
     insert into s_role_menu
@@ -72,6 +72,7 @@
         #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
+    ON DUPLICATE KEY UPDATE id=UUID()
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.panda.model.system.RoleMenu" >
     update s_role_menu

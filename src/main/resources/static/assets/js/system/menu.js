@@ -87,15 +87,27 @@ var MenuPage = function () {
                 {"id":$(this).parents("li").attr("id")},
                 function(result){
                     if(result.message){
+
                         $("[name='name']").val(result.data.name)
                         $("[name='url']").val(result.data.url)
                         $("[name='sortId']").val(result.data.sortId)
                         $("[name='iconClass']").val(result.data.iconClass)
                         $("[name='type']").find("option[value="+result.data.type+"]").attr("selected",true);
-                        $("[name='parentId']").find("option[value="+result.data.parentId+"]").attr("selected",true);
                         $("[name='description']").val(result.data.description)
                         $("[name='save']").val('edit')
                         $("[name='id']").val(result.data.id)
+                        if(result.data.status == 1){
+                            $('.status_switch').bootstrapSwitch('state',true);
+                        }else{
+                            $('.status_switch').bootstrapSwitch('state',false);
+                        }
+                        var node = MenuTree.jstree("get_node", result.data.parentId);
+                        if (node){
+                            $("#treeNodeName").val(node.text)
+                        }else{
+                            $("#treeNodeName").val("Root")
+                        }
+
                         $(".menu_save").text("更新")
                         $(".reset-btn").removeClass("m--hide");
                     }else{
@@ -115,12 +127,12 @@ var MenuPage = function () {
         request(
             "getMenuList",
             "get",
-            "",
+            {selected:false,threeDisabled:false},
             function(result){
                 if(result.message){
                     createTree(result.data)
                 }else{
-                    console.log(result.data)
+                    ToastrMsg(result.data,"error","topRight");
                 }
             }
         )
@@ -146,5 +158,16 @@ var MenuPage = function () {
 }();
 
 jQuery(document).ready(function() {
+    $('.status_switch').bootstrapSwitch();
     MenuPage.init();
+    /**
+     * 开关
+     */
+    $('.status_switch').on('switchChange.bootstrapSwitch', function (event,state) {
+        if(state==true){
+            $(this).parents("div").find(".status_switch_parent").find("[name='status']").val(1)
+        }else{
+            $(this).parents("div").find(".status_switch_parent").find("[name='status']").val(2)
+        }
+    });
 });

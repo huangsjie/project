@@ -241,6 +241,7 @@ jQuery(document).ready(function() {
      * 选中第一个 radio
      */
     $(".first-radio").click()
+    $('.status_switch').bootstrapSwitch();
     /**
      * 开关
      */

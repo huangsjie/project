@@ -58,7 +58,7 @@ public class MenuController {
      */
     @RequestMapping(value = "/getMenuList",method = RequestMethod.GET)
     @ResponseBody
-    public Object getMenuList(HttpServletRequest request){
+    public Object getMenuList(HttpServletRequest request,boolean selected, boolean threeDisabled){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         message = false;
         data    = null;
@@ -67,7 +67,7 @@ public class MenuController {
             map.put("roleId",user.getRoleId());
             map.put("status","1");
             map.put("parentId","10000000-0000-0000-0000-000000000000");
-            data = roleMenuService.selectRoleMenuListForAjaxJsTree(map,true,false);
+            data = roleMenuService.selectRoleMenuListForAjaxJsTree(map,selected,threeDisabled);
             if (data != null){
                 message = true;
             }

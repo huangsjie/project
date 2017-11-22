@@ -68,28 +68,6 @@
                             <div class="m-portlet__body">
                                 <form class="m-form m-form--state m-form--fit m-form--label-align-right">
                                     <div id="menu_tree" class="menu_tree">
-                                        <ul>
-                                            <li th:each="menu : ${menuList}" data-jstree='{"opened":true,"icon":"fa fa-folder m--font-danger"}' th:attr="id=${menu.id}">
-                                                <a class="is_default tree_a" href="javascript:;" th:text="${menu.name}" th:attr="menu=${menu.id}"></a>
-                                                <!-- child -->
-                                                <ul th:if="${menu.childMenuList != null}">
-                                                    <li th:each="child : ${menu.childMenuList}" data-jstree='{ "opened":true,"icon":"fa fa-folder m--font-success"}' th:attr="id=${child.id}">
-                                                        <a class="is_default tree_a" href="javascript:;" th:text="${child.name}" th:attr="menu=${child.id}"></a>
-                                                        <!-- lastChild -->
-                                                        <ul th:if="${child.childMenuList != null}">
-                                                            <li th:each="lastChild : ${child.childMenuList}"
-                                                                data-jstree='{ "opened":true,"icon":"fa fa-file  m--font-warning"}' th:attr="id=${lastChild.id}">
-                                                                <a class="is_default tree_a" href="javascript:;"
-                                                                   th:text="${lastChild.name}"
-                                                                   th:attr="menu=${lastChild.id}"></a>
-                                                            </li>
-                                                        </ul>
-                                                        <!-- lastChild -->
-                                                    </li>
-                                                </ul>
-                                                <!-- child -->
-                                            </li>
-                                        </ul>
                                     </div>
                                 <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space"></div>
                                 <div class="m-form__actions m-form__actions">

@@ -10,27 +10,26 @@ var Treeview = function () {
     /**
      * 菜单树初始化
      */
-    var menu_tree = function () {
+    var createTree = function (menuTree) {
         MenuTree.jstree({
             "core" : {
+                "multiple": true,
                 "themes" : {
                     "responsive": false
-                }
-            },
-            "types" : {
-                "default" : {
-                    "icon" : "fa fa-folder"
                 },
-                "file" : {
-                    "icon" : "fa fa-file"
-                }
+                "check_callback" : true,
+                'data' : menuTree
             },
-            "plugins": ["state","checkbox","types"]
+            "plugins" : ["types","stats","checkbox"]
         });
         // 展开节点
         MenuTree.on("loaded.jstree", function (event, data) {
             // 展开所有节点
             MenuTree.jstree('open_all');
+            /**
+             * 选中第一个 radio
+             */
+            $(".first-radio").click()
         });
         MenuTree.on("changed.jstree", function (e, data) {
             if((typeof data.event !== 'undefined' && data.event.type == 'click') && (data.action == 'select_node' || data.action == 'deselect_node')){
@@ -87,17 +86,34 @@ var Treeview = function () {
             $.each(roleMenu, function (i, n) {
                 if(n.id != null){
                     var node = MenuTree.jstree("get_node", n.id);
-                    console.log(node)
-                    $("#"+node.a_attr.id).attr("status",n.roleMenuStatus)
-                    $("#"+node.a_attr.id).attr("role_menu_id",n.roleMenuId)
-                    if(node.children.length == 0 && n.roleMenuStatus == 1){
-                        MenuTree.jstree().select_node(node);
+                    if (node && typeof node.a_attr !== "undefined"){
+                        $("#"+node.a_attr.id).attr("status",n.roleMenuStatus)
+                        $("#"+node.a_attr.id).attr("role_menu_id",n.roleMenuId)
+                        if(node.children.length == 0 && n.roleMenuStatus == 1){
+                            MenuTree.jstree().select_node(node);
+                        }
                     }
                 }
             });
         }
     }
-
+    /**
+     * 获取菜单树
+     */
+    var getMenuList = function () {
+        request(
+            "getMenuList",
+            "get",
+            "",
+            function(result){
+                if(result.message){
+                    createTree(result.data)
+                }else{
+                    ToastrMsg(result.data,"error","topRight");
+                }
+            }
+        )
+    }
     /**
      * 获取当前角色的 可用菜单
      */
@@ -112,7 +128,6 @@ var Treeview = function () {
                     if (result.message) {
                         checked_menu_tree(result.data)
                     }else{
-                        //alertMsgShow('.m-form #warning_msg', 'warning', result.data);
                         ToastrMsg(result.data,"warning","topRight");
                     }
                 })
@@ -144,7 +159,7 @@ var Treeview = function () {
                         'menu_id':id,
                         'role_id':$(".radio_role input[type='radio']:checked").val(),
                         'status': typeof status !== "undefined" ? status : 0,
-                        'parent_id': parent !== "" ? parent : 0,
+                        'parent_id': parent !== "" && parent !== "#" ? parent : 0,
                         'role_menu_id': typeof role_menu_id !== "undefined" ? role_menu_id : 0};
                     paramArr.push(itemArr);
                 }
@@ -178,7 +193,7 @@ var Treeview = function () {
 
     return {
         init: function () {
-            menu_tree();
+            getMenuList();
             get_checked_role_menu();
             save_menu_role_change();
         }
@@ -187,8 +202,4 @@ var Treeview = function () {
 
 jQuery(document).ready(function() {
     Treeview.init();
-    /**
-     * 选中第一个 radio
-     */
-    $(".first-radio").click()
 });

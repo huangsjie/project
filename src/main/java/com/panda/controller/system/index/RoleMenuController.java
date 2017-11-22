@@ -2,7 +2,6 @@ package com.panda.controller.system.index;
 
 import com.alibaba.citrus.util.StringEscapeUtil;
 import com.alibaba.fastjson.JSON;
-import com.panda.model.system.Menu;
 import com.panda.model.system.Roles;
 import com.panda.model.system.Users;
 import com.panda.service.system.MenuService;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,12 +50,37 @@ public class RoleMenuController {
     public String list(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         List<Roles> rolesList = rolesService.selectAll();
-        model.addAttribute("baseUrl",request.getRequestURI());
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("rolesList",rolesList);
         return "system/index/getRoleMenuList";
     }
 
+    /**
+     * 获取菜单树
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/getMenuList",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getMenuList(HttpServletRequest request){
+        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+        message = false;
+        data    = null;
+        try {
+            Map<String,Object> map = new HashMap<>();
+            map.put("roleId",user.getRoleId());
+            map.put("status","1");
+            map.put("parentId","10000000-0000-0000-0000-000000000000");
+            data = roleMenuService.selectRoleMenuListForAjaxJsTree(map,false,false);
+            if (data != null){
+                message = true;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            data = ResultStateUtil.ERROR_QUERY;
+        }
+        return ResultMsgUtil.getResultMsg(message,data);
+    }
     /**
      * Ajax 获取当前选中角色 可用的 角色菜单
      * @param request
