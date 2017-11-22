@@ -1,6 +1,6 @@
 var TeaGardenInfo = function () {
     var teaGardenInfoShow = function () {
-        var datatable = $('#tea_garden_list').mDatatable({
+        var datatable = $('.tea_garden_info_ajax').mDatatable({
             data: {
                 type: 'remote',
                 source: {
@@ -48,18 +48,15 @@ var TeaGardenInfo = function () {
                 width: 150
             }, {
                 field: "status",
-                title: "类型",
+                title: "状态",
                 sortable: 'asc',
                 width: 60,
                 template: function (row) {
                     var status = {
-                        9: {'title': '启用', 'class': 'm-badge--brand'},
-                        9: {'title': '2', 'class': ' m-badge--metal'},
-                        9: {'title': '3', 'class': ' m-badge--primary'},
+
+                        //0: {'title': '未知', 'class': ' m-badge--info'},
                         1: {'title': '启用', 'class': ' m-badge--success'},
-                        0: {'title': '未知', 'class': ' m-badge--info'},
-                        2: {'title': '禁用', 'class': ' m-badge--danger'},
-                        9: {'title': '7', 'class': ' m-badge--warning'}
+                        2: {'title': '禁用', 'class': ' m-badge--danger'}
                     };
                     return '<span class="m-badge ' + status[row.status].class + ' m-badge--wide">' + status[row.status].title + '</span>';
                 }
@@ -93,18 +90,14 @@ var TeaGardenInfo = function () {
         }).val(query.generalSearch);
 
         $('#m_form_status').on('change', function () {
-            var query = datatable.getDataSourceQuery();
-            query.Status = $(this).val().toLowerCase();
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.Status !== 'undefined' ? query.Status : '');
 
-        /*$('#m_form_type').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.Type = $(this).val().toLowerCase();
+            query.status = $(this).val();
+            //console.log(query.status);
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.Type !== 'undefined' ? query.Type : '');*/
+
+        }).val(typeof query.Status !== 'undefined' ? query.Status : '');
 
         $('#m_form_status').selectpicker();
     };
