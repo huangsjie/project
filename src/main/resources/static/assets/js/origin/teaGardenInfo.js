@@ -69,7 +69,7 @@ var TeaGardenInfo = function () {
                 template: function (row) {
                     var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
                     return '\
-						<a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editTeaGardenItem" title="编辑" item="'+row.id+'" data-toggle="modal" data-target=".teaGardenInfoEdit">\
+						<a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editTeaGardenItem"  title="编辑" item="'+row.id+'" data-toggle="modal" data-target=".teaGardenInfoEdit">\
 							<i class="la la-edit"></i>\
 						</a>\
 						<a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delTeaGardenItem" title="删除" item="'+row.id+'" >\

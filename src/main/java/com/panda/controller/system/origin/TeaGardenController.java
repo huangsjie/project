@@ -8,6 +8,7 @@ import com.panda.service.origin.TeaGardenInfoService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,7 @@ public class TeaGardenController {
      * @return
      */
     @RequestMapping(value = "/teaGarden",method= RequestMethod.GET)
+    @RequiresPermissions("origin:view")//权限管理;
     public String getTeaGardenList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         model.addAttribute("baseUrl",request.getRequestURI());
