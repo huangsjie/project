@@ -2,6 +2,7 @@ package com.panda.service.impl.system;
 
 import com.panda.config.DruidConfig;
 import com.panda.model.system.Users;
+import com.panda.service.system.PageRoleService;
 import com.panda.util.SerializeUtil;
 import com.panda.util.abs.AbstractMapper;
 import com.panda.util.abs.AbstractServiceImpl;
@@ -44,6 +45,9 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
     @Value("${panda.cache.second}")
     private int second;
 
+    @Resource
+    private PageRoleService pageRoleService;
+
     @Override
     protected AbstractMapper<Menu> getAbstractMapper() {
         return menuMapper;
@@ -60,7 +64,7 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
     }
 
     /**
-     * 获取当前管理员所拥有的菜单列表 三维数组 -- 供 left_aside 模板使用
+     * 获取当前管理员所拥有的菜单列表 嵌套数组 -- 供 left_aside 模板使用
      * @param map
      * @return
      */
@@ -80,20 +84,27 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
                 menuList = menuMapper.selectManagerRoleMenuList(map);
                 if(menuList != null && menuList.size() > 0){
                     for (Menu menu: menuList) {
-                        //map.remove("parentId");
                         map.put("parentId",menu.getId());
+                        if (menu.getUrl() != null){
+                            userMenuRolePermission(menu,map);
+                        }
                         List<Menu> childList = menuMapper.selectManagerRoleMenuList(map);
                         if(childList != null && childList.size() > 0){
                             for(Menu child: childList){
-                                //map.remove("parentId");
                                 map.put("parentId",child.getId());
+                                if (menu.getUrl() != null){
+                                    userMenuRolePermission(child,map);
+                                }
                                 List<Menu> lastChild = menuMapper.selectManagerRoleMenuList(map);
                                 if(lastChild != null && lastChild.size() > 0){
-                                    child.setUrl(null);
+                                    for (Menu item : lastChild){
+                                        if (item.getUrl() != null){
+                                            userMenuRolePermission(item,map);
+                                        }
+                                    }
                                     child.setChildMenuList(lastChild);
                                 }
                             }
-                            menu.setUrl(null);
                             menu.setChildMenuList(childList);
                         }
                     }
@@ -117,5 +128,27 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
     @Override
     public List<Menu> selectMenuAndChildMenu(String menuId){
         return menuMapper.selectMenuAndChildMenu(menuId);
+    }
+
+    /**
+     * 追加 菜单权限
+     * @param menu
+     * @param map
+     * @return
+     */
+    private Object userMenuRolePermission(Menu menu,Map map){
+        map.put("menuId",menu.getId());
+        String[] urlArr = menu.getUrl().split("/");
+        List<Map> permList = pageRoleService.selectUserMenuRolePermission(map);
+        if (permList != null && permList.size() > 0){
+            ArrayList per = new ArrayList();
+            for (Map item : permList){
+                per.add(urlArr[2]+":"+item.get("value"));
+            }
+            menu.setPermissionList(per);
+        }else{
+            menu.setPermissionList(null);
+        }
+        return menu;
     }
 }

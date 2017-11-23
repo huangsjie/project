@@ -100,15 +100,15 @@ public class ShiroConfig {
         // 登录成功后要跳转的链接
         shiroFilterFactoryBean.setSuccessUrl("/system/index/main");
         //未授权界面;
-        shiroFilterFactoryBean.setUnauthorizedUrl("/system/403");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         //拦截器.
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
         //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
-        filterChainDefinitionMap.put("/system/logout", "logout");
+        filterChainDefinitionMap.put("/logout", "logout");
         filterChainDefinitionMap.put("/druid/**", "anon");
         filterChainDefinitionMap.put("/assets/**","anon");
         filterChainDefinitionMap.put("/home/**","anon");
-        filterChainDefinitionMap.put("/error","anon");
+        filterChainDefinitionMap.put("/error/**","anon");
         filterChainDefinitionMap.put("/system/ajaxLogin","anon");
         //<!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->

@@ -1,8 +1,7 @@
 package com.panda.service.system;
 
-import com.panda.model.system.Dictionary;
-import com.panda.util.abs.AbstractService;
 import com.panda.model.system.PageRole;
+import com.panda.util.abs.AbstractService;
 
 import java.util.List;
 import java.util.Map;
@@ -29,4 +28,11 @@ public interface PageRoleService extends AbstractService<PageRole> {
      * @return
      */
     Integer saveOrUpdatePageRole(PageRole pageRole);
+
+    /**
+     * 获取用户菜单对应的操作权限
+     * @param map
+     * @return
+     */
+    List<Map> selectUserMenuRolePermission(Map map);
 }

@@ -10,6 +10,7 @@ import com.panda.service.system.DictionaryService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -59,6 +60,9 @@ public class PageRoleController {
      * @return
      */
     @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @RequiresPermissions("pageRole:view")//权限管理;
+    //@RequiresAuthentication
+    // @RequiresRoles("teller")
     public String list(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         List<Roles> rolesList = rolesService.selectAll();

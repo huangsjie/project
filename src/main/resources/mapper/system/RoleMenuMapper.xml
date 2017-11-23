@@ -130,7 +130,7 @@
       AND rm.menu_id = #{menuId}
     </if>
     <if test="status != null and status != ''">
-      AND rm.`status` = 1
+      AND rm.status = 1
     </if>
   </select>
 

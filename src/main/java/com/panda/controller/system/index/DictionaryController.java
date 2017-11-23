@@ -1,15 +1,13 @@
 package com.panda.controller.system.index;
 
 import com.panda.model.system.Dictionary;
-import com.panda.model.system.Roles;
 import com.panda.model.system.Users;
-import com.panda.service.system.MenuService;
-import com.panda.service.system.RoleMenuService;
 import com.panda.service.system.DictionaryService;
-import com.panda.service.system.RolesService;
+import com.panda.service.system.MenuService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -49,6 +47,9 @@ public class DictionaryController {
      * @return
      */
     @RequestMapping(value = "/list")
+    @RequiresPermissions("dictionary:view")//权限管理;
+    //@RequiresAuthentication
+    // @RequiresRoles("teller")
     public String list(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         List<Dictionary> dictionaryList = dictionaryService.selectAll();

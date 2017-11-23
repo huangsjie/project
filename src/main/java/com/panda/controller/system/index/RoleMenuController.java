@@ -10,6 +10,7 @@ import com.panda.service.system.RolesService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -47,6 +48,9 @@ public class RoleMenuController {
     private static Object  data    = null;
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @RequiresPermissions("roleMenu:view")//权限管理;
+    //@RequiresAuthentication
+    // @RequiresRoles("teller")
     public String list(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         List<Roles> rolesList = rolesService.selectAll();

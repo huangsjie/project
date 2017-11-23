@@ -44,18 +44,11 @@ public class MenuController {
      * @return
      */
     @RequestMapping(value = "/list",method= RequestMethod.GET)
-    @RequiresPermissions("menu:list:view")//权限管理;
+    @RequiresPermissions("menu:view")//权限管理;
     //@RequiresAuthentication
    // @RequiresRoles("teller")
     public String getMenuList(HttpServletRequest request, Model model){
-//        Subject currentUser = SecurityUtils.getSubject();
-//        if (currentUser.isPermitted("menu:list:view")) {
-//            //show the Print button
-//        } else {
-//            //don't show the button?  Grey it out?
-//        }
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("authMenu",user.getAuthMenuList());
         model.addAttribute("user",user);

@@ -1,6 +1,5 @@
 package com.panda.mapper.system;
 
-import com.panda.model.system.Dictionary;
 import com.panda.model.system.PageRole;
 import com.panda.util.abs.AbstractMapper;
 
@@ -15,4 +14,11 @@ public interface PageRoleMapper extends AbstractMapper<PageRole> {
      * @return
      */
     Map<String,Object> selectPageRoleListByDictionary(Map<String,Object> map);
+
+    /**
+     * 获取用户菜单对应的操作权限
+     * @param map
+     * @return
+     */
+    List<Map> selectUserMenuRolePermission(Map map);
 }

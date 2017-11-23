@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Menu implements Serializable {
+
     private String id;
 
     private Integer sortId;
@@ -32,6 +33,8 @@ public class Menu implements Serializable {
     private String description;
 
     private List<Menu> childMenuList;
+
+    private List<String> permissionList;
 
     public String getId() {
         return id;
@@ -143,5 +146,13 @@ public class Menu implements Serializable {
 
     public void setChildMenuList(List<Menu> childMenuList){
         this.childMenuList = childMenuList;
+    }
+
+    public List<String> getPermissionList(){
+        return permissionList;
+    }
+
+    public void setPermissionList(List<String> permissionList){
+        this.permissionList = permissionList;
     }
 }

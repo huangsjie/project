@@ -243,12 +243,14 @@
     <!-- 获取当前菜单和子集菜单 shiro config system -->
     <select id="selectMenuAndChildMenu" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT m.* FROM s_menu m, (
-            SELECT A.id as A, B.id as B
+            SELECT A.id as A, B.id as B, C.id as C, D.id as D
             FROM s_menu A
-                LEFT JOIN s_menu B ON B.parent_id = A.id
+            LEFT JOIN s_menu B ON B.parent_id = A.id
+            LEFT JOIN s_menu C ON C.parent_id = B.id
+            LEFT JOIN s_menu D ON D.parent_id = C.id
             WHERE A.id = #{menuId}
         ) ID
-        WHERE m.id IN(ID.A,ID.B)
+        WHERE m.id IN(ID.A,ID.B,ID.C,ID.D)
         GROUP BY m.id
         ORDER BY m.create_time,m.sort_id ASC
     </select>

@@ -14,8 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -94,18 +92,6 @@ public class LoginController {
             resultMap.put("msg", msg);
         }
         return resultMap;
-    }
-
-
-    /**
-     * 使用权限管理工具进行用户的退出，跳出登录，给出提示信息
-     * @param redirectAttributes
-     * @return
-     */
-    @RequestMapping("/logout")
-    public String logout(RedirectAttributes redirectAttributes ){
-        SecurityUtils.getSubject().logout();
-        return "redirect:/system/login";
     }
 
     /**

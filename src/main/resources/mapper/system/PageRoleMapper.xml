@@ -165,4 +165,24 @@
     LIMIT 1
   </select>
   <!-- 获取角色对应的菜单 操作权限 -->
+
+  <select id="selectUserMenuRolePermission" parameterType="map" resultType="map">
+    SELECT
+        d.value,d.sort_id
+    FROM
+        s_page_role p,s_dictionary d
+    WHERE
+        1 = 1
+    <if test="menuId != null and menuId != ''">
+      AND p.menu_id = #{menuId}
+    </if>
+    <if test="roleId != null and roleId != ''">
+      AND p.role_id = #{roleId}
+    </if>
+    <if test="status != null and status != ''">
+      AND p.status = #{status}
+    </if>
+    AND p.dict_id = d.id
+    ORDER BY d.sort_id ASC
+  </select>
 </mapper>

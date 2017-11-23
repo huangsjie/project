@@ -1,16 +1,16 @@
 package com.panda.controller.system.index;
 
-import com.panda.model.system.Menu;
 import com.panda.model.system.Roles;
 import com.panda.model.system.Users;
 import com.panda.service.system.RolesService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
-import org.springframework.ui.Model;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,7 +41,10 @@ public class RolesController {
      * @param model
      * @return
      */
-    @RequestMapping("/list")
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequiresPermissions("roles:view")//权限管理;
+    //@RequiresAuthentication
+    // @RequiresRoles("teller")
     public String getRolesList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         model.addAttribute("baseUrl",request.getRequestURI());

@@ -16,6 +16,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -89,5 +90,15 @@ public class PageRoleServiceImpl extends AbstractServiceImpl<PageRole> implement
             resultStatus = 101;
         }
         return resultStatus;
+    }
+
+    /**
+     * 获取用户菜单对应的操作权限
+     * @param map
+     * @return
+     */
+    @Override
+    public List<Map> selectUserMenuRolePermission(Map map){
+        return pageRoleMapper.selectUserMenuRolePermission(map);
     }
 }

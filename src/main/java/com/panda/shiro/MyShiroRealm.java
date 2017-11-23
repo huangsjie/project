@@ -1,9 +1,8 @@
 package com.panda.shiro;
 
-import com.panda.controller.system.index.LoginController;
 import com.panda.model.system.Menu;
 import com.panda.model.system.Users;
-import com.panda.service.system.MenuService;
+import com.panda.service.system.PageRoleService;
 import com.panda.service.system.UsersService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -17,9 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by yangqj on 2017/4/21.
@@ -30,34 +27,42 @@ public class MyShiroRealm extends AuthorizingRealm {
     private UsersService usersService;
 
     @Resource
-    private MenuService menuService;
+    private PageRoleService pageRoleService;
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
-    //授权
+    private static final Logger logger = LoggerFactory.getLogger(MyShiroRealm.class);
+
+    /**
+     * 授权-URL 及页面权限
+     * @param principalCollection
+     * @return
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        System.out.println("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         Users user= (Users)principalCollection.getPrimaryPrincipal();
-        //Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("userid",user.getId());
-        logger.info("---------->----------->URL授权------> doGetAuthorizationInfo !");
-        List<Menu> menuList = user.getMenuList();
-            info.addRole(user.getRoleId());
+        try {
+            List<Menu> menuList = user.getMenuList();
             for(Menu menu: menuList){
-                if(menu.getChildMenuList() != null){
+                if(menu.getChildMenuList() != null && menu.getChildMenuList().size() > 0){
                     for (Menu childMenu : menu.getChildMenuList()){
-                        info.addStringPermission("add");
+                        info.addStringPermissions(childMenu.getPermissionList());
                     }
                 }else{
-            info.addStringPermission("add");
+                    info.addStringPermissions(menu.getPermissionList());
+                }
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return info;
     }
 
-    //认证
+    /**
+     * 用户登录认证
+     * @param token
+     * @return
+     * @throws AuthenticationException
+     */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         //获取用户的输入的账号.
