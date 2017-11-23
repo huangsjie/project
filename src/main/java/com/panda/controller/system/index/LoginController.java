@@ -117,14 +117,4 @@ public class LoginController {
         logger.info("------没有权限 unauthorizedRole-------");
         return "/error/403";
     }
-
-    /**
-     * 找不到页面
-     * @return
-     */
-    @RequestMapping({"/pageMissing"})
-    public String pageMissing(){
-        logger.info("------找不到页面 pageMissing-------");
-        return "/error/404";
-    }
 }
