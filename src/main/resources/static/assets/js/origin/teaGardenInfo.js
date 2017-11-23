@@ -46,31 +46,27 @@ var TeaGardenInfo = function () {
                 title: "创建时间",
                 sortable: 'asc',
                 width: 150
-            }, /*{
-                field: "type",
-                title: "类型",
+            }, {
+                field: "status",
+                title: "状态",
                 sortable: 'asc',
                 width: 60,
                 template: function (row) {
                     var status = {
-                        1: {'title': '1', 'class': 'm-badge--brand'},
-                        2: {'title': '2', 'class': ' m-badge--metal'},
-                        3: {'title': '3', 'class': ' m-badge--primary'},
-                        4: {'title': '4', 'class': ' m-badge--success'},
-                        5: {'title': '5', 'class': ' m-badge--info'},
-                        6: {'title': '6', 'class': ' m-badge--danger'},
-                        7: {'title': '7', 'class': ' m-badge--warning'}
+
+                        //0: {'title': '未知', 'class': ' m-badge--info'},
+                        1: {'title': '启用', 'class': ' m-badge--success'},
+                        2: {'title': '禁用', 'class': ' m-badge--danger'}
                     };
-                    return '<span class="m-badge ' + status[row.type].class + ' m-badge--wide">' + status[row.type].title + '</span>';
+                    return '<span class="m-badge ' + status[row.status].class + ' m-badge--wide">' + status[row.status].title + '</span>';
                 }
-            },*/{
+            },{
                 field: "Actions",
                 width: 100,
                 title: "操作",
                 sortable: false,
                 overflow: 'visible',
                 template: function (row) {
-
                     var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
                     return '\
 						<a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editTeaGardenItem" title="编辑" item="'+row.id+'" data-toggle="modal" data-target=".teaGardenInfoEdit">\
@@ -94,18 +90,14 @@ var TeaGardenInfo = function () {
         }).val(query.generalSearch);
 
         $('#m_form_status').on('change', function () {
-            var query = datatable.getDataSourceQuery();
-            query.Status = $(this).val().toLowerCase();
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.Status !== 'undefined' ? query.Status : '');
 
-        /*$('#m_form_type').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.Type = $(this).val().toLowerCase();
+            query.status = $(this).val();
+            //console.log(query.status);
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.Type !== 'undefined' ? query.Type : '');*/
+
+        }).val(typeof query.Status !== 'undefined' ? query.Status : '');
 
         $('#m_form_status').selectpicker();
     };

@@ -3124,7 +3124,6 @@ jQuery.fn.extend({
 				if (typeof param === 'string') {
 					return dt.getObject(param, datatable.API.params);
 				}
-
 				return datatable.API.params;
 			},
 
@@ -3133,6 +3132,7 @@ jQuery.fn.extend({
 			 * @returns {*}
 			 */
 			getDataSourceQuery: function () {
+
 				return API.getDataSourceParam('query');
 			},
 
