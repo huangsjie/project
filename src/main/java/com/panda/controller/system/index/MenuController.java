@@ -7,6 +7,7 @@ import com.panda.service.system.RoleMenuService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -42,7 +44,16 @@ public class MenuController {
      * @return
      */
     @RequestMapping(value = "/list",method= RequestMethod.GET)
+    @RequiresPermissions("menu:list:view")//权限管理;
+    //@RequiresAuthentication
+   // @RequiresRoles("teller")
     public String getMenuList(HttpServletRequest request, Model model){
+//        Subject currentUser = SecurityUtils.getSubject();
+//        if (currentUser.isPermitted("menu:list:view")) {
+//            //show the Print button
+//        } else {
+//            //don't show the button?  Grey it out?
+//        }
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
 
         model.addAttribute("menuList",user.getMenuList());

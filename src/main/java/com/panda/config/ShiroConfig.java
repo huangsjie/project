@@ -1,8 +1,6 @@
 package com.panda.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
-import com.github.pagehelper.util.StringUtil;
-import com.panda.model.system.Menu;
 import com.panda.service.system.DictionaryService;
 import com.panda.service.system.MenuService;
 import com.panda.shiro.MyShiroRealm;
@@ -18,13 +16,13 @@ import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -69,11 +67,28 @@ public class ShiroConfig {
      * 注意：单独一个ShiroFilterFactoryBean配置是或报错的，因为在
      * 初始化ShiroFilterFactoryBean的时候需要注入：SecurityManager
      *
-     Filter Chain定义说明
-     1、一个URL可以配置多个Filter，使用逗号分隔
-     2、当设置多个过滤器时，全部验证通过，才视为通过
-     3、部分过滤器可指定参数，如perms，roles
+     *   Filter Chain定义说明
+     *  1、一个URL可以配置多个Filter，使用逗号分隔
+     *  2、当设置多个过滤器时，全部验证通过，才视为通过
+     *  3、部分过滤器可指定参数，如perms，roles
      *
+     *  使用通配方式处理URL认证 现在改为-->角色菜单获取-->角色权限认证
+     *  List<Menu> menuList = menuService.selectMenuAndChildMenu("10000000-0000-0000-0000-100000000000");
+     *  String dictionary = dictionaryService.selectDictionaryGroupCountValueByParent("b6315b3a-1587-11e5-a9de-000c29d7a3a0");
+     *  logger.info("--------------->ShiroConfiguration.shirFilter()--------------------->>自定义加载权限资源关系");
+     *  for(Menu menu:menuList){
+     *     if (StringUtil.isNotEmpty(menu.getUrl())) {
+     *          //String permission = "perms[" + menu.getUrl()+ "]";
+     *          String permission = "perms["+dictionary+"]";
+     *          //String permission = "perms[system:add]";
+     *          filterChainDefinitionMap.put(menu.getUrl(),permission);
+     *      }
+     *  }
+     *  需要使用自定义 Filter 时 鉴定权限时 使用如下方式载入 自定义 Filter
+     *  获取filters
+     *  Map<String, Filter> filters = shiroFilterFactoryBean.getFilters();
+     *  将自定义的 Filter 注入 shiroFilter 中
+     *  filters.put("authc", new AnyPermissionsAuthorizationFilter());
      */
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager){
@@ -85,30 +100,18 @@ public class ShiroConfig {
         // 登录成功后要跳转的链接
         shiroFilterFactoryBean.setSuccessUrl("/system/index/main");
         //未授权界面;
-        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/system/403");
         //拦截器.
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
-
         //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
-        filterChainDefinitionMap.put("/logout", "logout");
+        filterChainDefinitionMap.put("/system/logout", "logout");
         filterChainDefinitionMap.put("/druid/**", "anon");
         filterChainDefinitionMap.put("/assets/**","anon");
         filterChainDefinitionMap.put("/home/**","anon");
-        filterChainDefinitionMap.put("/error/**","anon");
+        filterChainDefinitionMap.put("/error","anon");
         filterChainDefinitionMap.put("/system/ajaxLogin","anon");
         //<!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
-        List<Menu> menuList = menuService.selectMenuAndChildMenu("10000000-0000-0000-0000-100000000000");
-        String dictionary = dictionaryService.selectDictionaryGroupCountValueByParent("b6315b3a-1587-11e5-a9de-000c29d7a3a0");
-        logger.info("--------------->ShiroConfiguration.shirFilter()--------------------->>自定义加载权限资源关系");
-         for(Menu menu:menuList){
-            if (StringUtil.isNotEmpty(menu.getUrl())) {
-                //String permission = "perms[" + menu.getUrl()+ "]";
-                String permission = "perms["+dictionary+"]";
-                //String permission = "perms[system:add]";
-                filterChainDefinitionMap.put(menu.getUrl(),permission);
-            }
-        }
         filterChainDefinitionMap.put("/system/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
@@ -157,6 +160,19 @@ public class ShiroConfig {
         return hashedCredentialsMatcher;
     }
 
+    /**
+     * 开启Shiro的注解
+     * (如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,
+     * 并在必要时进行安全逻辑验证 * 配置以下两个bean(DefaultAdvisorAutoProxyCreator(可选)
+     * 和AuthorizationAttributeSourceAdvisor)即可实现此功能 * @return
+     * @DependsOn({"lifecycleBeanPostProcessor"}) 强制初始化其他Bean
+     */
+    @Bean
+    public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+        advisorAutoProxyCreator.setProxyTargetClass(true);
+        return advisorAutoProxyCreator;
+    }
 
     /**
      *  开启shiro aop注解支持.
@@ -218,5 +234,4 @@ public class ShiroConfig {
         sessionManager.setSessionDAO(redisSessionDAO());
         return sessionManager;
     }
-
 }

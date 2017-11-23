@@ -102,10 +102,9 @@ public class LoginController {
      * @param redirectAttributes
      * @return
      */
-    @RequestMapping()
+    @RequestMapping("/logout")
     public String logout(RedirectAttributes redirectAttributes ){
         SecurityUtils.getSubject().logout();
-        redirectAttributes.addFlashAttribute("message", "您已安全退出");
         return "redirect:/system/login";
     }
 
@@ -113,9 +112,19 @@ public class LoginController {
      * 无权限页面
      * @return
      */
-    @RequestMapping("/403")
+    @RequestMapping({"/403"})
     public String unauthorizedRole(){
-        logger.info("------没有权限-------");
-        return "errorPermission";
+        logger.info("------没有权限 unauthorizedRole-------");
+        return "/error/403";
+    }
+
+    /**
+     * 找不到页面
+     * @return
+     */
+    @RequestMapping({"/pageMissing"})
+    public String pageMissing(){
+        logger.info("------找不到页面 pageMissing-------");
+        return "/error/404";
     }
 }

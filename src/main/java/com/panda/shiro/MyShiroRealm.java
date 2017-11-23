@@ -43,11 +43,17 @@ public class MyShiroRealm extends AuthorizingRealm {
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("userid",user.getId());
         logger.info("---------->----------->URL授权------> doGetAuthorizationInfo !");
-        //List<Menu> menuList = user.getAuthMenuList();
-        info.addRole(user.getRoleId());
-        //for(Menu menu: menuList){
-            info.addStringPermission("add,upload,verify,view,delete,edit,export,submit");
-        //}
+        List<Menu> menuList = user.getMenuList();
+            info.addRole(user.getRoleId());
+            for(Menu menu: menuList){
+                if(menu.getChildMenuList() != null){
+                    for (Menu childMenu : menu.getChildMenuList()){
+                        info.addStringPermission("add");
+                    }
+                }else{
+            info.addStringPermission("add");
+            }
+        }
         return info;
     }
 

@@ -65,13 +65,10 @@ public class ShiroService {
 
             AbstractShiroFilter shiroFilter = null;
             try {
-                shiroFilter = (AbstractShiroFilter) shiroFilterFactoryBean
-                        .getObject();
+                shiroFilter = (AbstractShiroFilter) shiroFilterFactoryBean.getObject();
             } catch (Exception e) {
-                throw new RuntimeException(
-                        "get ShiroFilter from shiroFilterFactoryBean error!");
+                throw new RuntimeException("get ShiroFilter from shiroFilterFactoryBean error!");
             }
-
             PathMatchingFilterChainResolver filterChainResolver = (PathMatchingFilterChainResolver) shiroFilter
                     .getFilterChainResolver();
             DefaultFilterChainManager manager = (DefaultFilterChainManager) filterChainResolver
