@@ -1,6 +1,7 @@
 package com.panda.controller.system.index;
 
 import com.panda.model.system.Menu;
+import com.panda.model.system.RoleMenu;
 import com.panda.model.system.Users;
 import com.panda.service.system.MenuService;
 import com.panda.service.system.RoleMenuService;
@@ -139,6 +140,14 @@ public class MenuController {
                 menu.setModifyTime(new Date());
                 int i =menuService.insertSelective(menu);
                 if(i > 0){
+                    RoleMenu rolemenu = new RoleMenu();
+                    rolemenu.setId(UUID.randomUUID().toString());
+                    rolemenu.setStatus(1);
+                    rolemenu.setCreateId(user.getId());
+                    rolemenu.setCreateTime(new Date());
+                    rolemenu.setMenuId(menu.getId());
+                    rolemenu.setRoleId("f8692cd2-e801-11e4-8fee-40167e64eefd");
+                    roleMenuService.insert(rolemenu);
                     message = true;
                     data    = ResultStateUtil.SUCCESS_ADD;
                 }else{

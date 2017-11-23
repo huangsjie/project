@@ -69,6 +69,7 @@ var MenuPage = function () {
                         if(result.message){
                             //alertMsgShow('.m-form #success_msg', 'success', result.data);
                             ToastrMsg(result.data,"success","topRight");
+                            $(".reset-btn").click();
                         }else{
                             //alertMsgShow('.m-form #warning_msg', 'warning', result.data);
                             ToastrMsg(result.data,"error","topRight");
@@ -87,7 +88,6 @@ var MenuPage = function () {
                 {"id":$(this).parents("li").attr("id")},
                 function(result){
                     if(result.message){
-
                         $("[name='name']").val(result.data.name)
                         $("[name='url']").val(result.data.url)
                         $("[name='sortId']").val(result.data.sortId)
@@ -101,6 +101,7 @@ var MenuPage = function () {
                         }else{
                             $('.status_switch').bootstrapSwitch('state',false);
                         }
+                        $("[name='parentId']").val(result.data.parentId)
                         var node = MenuTree.jstree("get_node", result.data.parentId);
                         if (node){
                             $("#treeNodeName").val(node.text)
