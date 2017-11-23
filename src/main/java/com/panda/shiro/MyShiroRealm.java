@@ -42,6 +42,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         Users user= (Users)principalCollection.getPrimaryPrincipal();
         try {
             List<Menu> menuList = user.getMenuList();
+            info.addRole(user.getRoleId());
             for(Menu menu: menuList){
                 if(menu.getChildMenuList() != null && menu.getChildMenuList().size() > 0){
                     for (Menu childMenu : menu.getChildMenuList()){
