@@ -60,6 +60,8 @@ public class RolesController {
     @RequestMapping(value = "/getRolesDataList",method = RequestMethod.POST)
     @ResponseBody
     public Object getRolesDataList(HttpServletRequest request){
+        message = false;
+        data    = null;
         try {
             List<Roles> rolesList = rolesService.selectAll();
             if(rolesList.size() > 0){
@@ -82,6 +84,8 @@ public class RolesController {
     @RequestMapping(value = "/getRoleItem", method = RequestMethod.GET)
     @ResponseBody
     public Object getRoleItem(HttpServletRequest request,String id){
+        message = false;
+        data    = null;
         if (!id.isEmpty()){
             try {
                 Roles role = rolesService.selectByPrimaryKey(id);
@@ -108,6 +112,8 @@ public class RolesController {
     @ResponseBody
     public Object saveRole(HttpServletRequest request, Roles role,String save){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+        message = false;
+        data    = null;
         try {
             if(!role.getId().isEmpty() && save.equals("edit")){
                 int i = rolesService.updateByPrimaryKeySelective(role);
@@ -149,6 +155,8 @@ public class RolesController {
     @RequestMapping(value = "/delRoleItem",method = RequestMethod.GET)
     @ResponseBody
     public Object delRoleItem(HttpServletRequest request, String id){
+        message = false;
+        data    = null;
         try {
             if (!id.isEmpty()){
                 int i= rolesService.deleteByPrimaryKey(id);

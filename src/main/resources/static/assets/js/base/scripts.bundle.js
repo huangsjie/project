@@ -3132,7 +3132,7 @@ jQuery.fn.extend({
 			 * @returns {*}
 			 */
 			getDataSourceQuery: function () {
-
+                console.log("getDataSourceQuery")
 				return API.getDataSourceParam('query');
 			},
 

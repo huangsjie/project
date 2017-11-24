@@ -94,6 +94,8 @@ public class RoleMenuController {
     @RequestMapping(value = "/getRoleMenuDataList",method = RequestMethod.GET)
     @ResponseBody
     public Object getRoleMenuDataList(HttpServletRequest request, String id){
+        message = false;
+        data    = null;
         try {
             if(!id.isEmpty()){
                 List<Map> menuList = roleMenuService.selectRoleMenuList(id);
@@ -116,6 +118,8 @@ public class RoleMenuController {
     @RequestMapping(value = "/saveRoleMenu", method = RequestMethod.POST)
     @ResponseBody
     public Object saveRoleMenu(HttpServletRequest request, String param){
+        message = false;
+        data    = null;
         try {
             if(param != null && !param.isEmpty() && param != "[]"){
                 String jsonStr = StringEscapeUtil.unescapeHtml(param);
