@@ -70,6 +70,9 @@ var MenuPage = function () {
                             //alertMsgShow('.m-form #success_msg', 'success', result.data);
                             ToastrMsg(result.data,"success","topRight");
                             $(".reset-btn").click();
+                            $("#menu_edit_form .form-control-feedback").remove()
+                            $("#menu_edit_form div").removeClass("has-danger")
+                            $("#menu_edit_form div").removeClass("has-success")
                         }else{
                             //alertMsgShow('.m-form #warning_msg', 'warning', result.data);
                             ToastrMsg(result.data,"error","topRight");

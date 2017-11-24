@@ -49,12 +49,12 @@ var Roles = function () {
                 width: 60,
                 template: function (row) {
                     var status = {
-                        1: {'title': '后台', 'class': ' m-badge--primary'},
-                        2: {'title': '用户', 'class': ' m-badge--info'},
-                        3: {'title': '6', 'class': ' m-badge--danger'},
+                        1: {'title': '1', 'class': 'm-badge--brand'},
+                        2: {'title': '2', 'class': ' m-badge--metal'},
+                        3: {'title': '3', 'class': ' m-badge--primary'},
                         4: {'title': '4', 'class': ' m-badge--success'},
-                        5: {'title': '1', 'class': 'm-badge--brand'},
-                        6: {'title': '2', 'class': ' m-badge--metal'},
+                        5: {'title': '5', 'class': ' m-badge--info'},
+                        6: {'title': '6', 'class': ' m-badge--danger'},
                         7: {'title': '7', 'class': ' m-badge--warning'}
                     };
                     return '<span class="m-badge ' + status[row.type].class + ' m-badge--wide">' + status[row.type].title + '</span>';
@@ -81,7 +81,7 @@ var Roles = function () {
 
         var query = datatable.getDataSourceQuery();
 
-        $('#m_form_search').on('keyup', function (e) {
+        $('#m_form_search').on('change', function (e) {
             var query = datatable.getDataSourceQuery();
             query.generalSearch = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
@@ -90,17 +90,17 @@ var Roles = function () {
 
         $('#m_form_status').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.status = $(this).val().toLowerCase();
+            query.Status = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.status !== 'undefined' ? query.status : '');
+        }).val(typeof query.Status !== 'undefined' ? query.Status : '');
 
         $('#m_form_type').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.type = $(this).val().toLowerCase();
+            query.Type = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.type !== 'undefined' ? query.type : '');
+        }).val(typeof query.Type !== 'undefined' ? query.Type : '');
 
         $('#m_form_status, #m_form_type').selectpicker();
     };
@@ -135,7 +135,12 @@ var Roles = function () {
                             removeValue('add');
                             blockUiClose('.rolesEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
+                            //blockUiOpen('.rolesEdit .modal-content',result.data);
+                            //blockUiClose('.rolesEdit .modal-content',1,".close-parent",2000);
                         }else{
+                            // 失败不关闭窗口
+                            //blockUiOpen('.rolesEdit .modal-content',result.data);
+                            //blockUiClose('.rolesEdit .modal-content','','',2000);
                             ToastrMsg(result.data,"error","topRight");
                         }
                     }

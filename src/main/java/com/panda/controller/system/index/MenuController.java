@@ -51,7 +51,6 @@ public class MenuController {
     public String getMenuList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         model.addAttribute("menuList",user.getMenuList());
-        model.addAttribute("authMenu",user.getAuthMenuList());
         model.addAttribute("user",user);
         return "system/index/getMenuList";
     }

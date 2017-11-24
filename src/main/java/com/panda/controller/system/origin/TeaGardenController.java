@@ -55,6 +55,8 @@ public class TeaGardenController {
     @RequestMapping(value = "/getTeaGardenDataList",method = RequestMethod.POST)
     @ResponseBody
     public Object getTeaGardenDataList(HttpServletRequest request){
+        message = false;
+        data    = null;
         try {
             List<TeaGardenInfo> teaGardenInfoList = teaGardenInfoService.selectAll();
             if(teaGardenInfoList.size() > 0){
@@ -77,6 +79,8 @@ public class TeaGardenController {
     @RequestMapping(value = "/getTeaGardenItem", method = RequestMethod.GET)
     @ResponseBody
     public Object getTeaGardenItem(HttpServletRequest request,String id){
+        message = false;
+        data    = null;
         if (!id.isEmpty()){
             try {
                 TeaGardenInfo teaGardenInfo = teaGardenInfoService.selectByPrimaryKey(id);
@@ -105,6 +109,8 @@ public class TeaGardenController {
     @ResponseBody
     public Object SaveTeaGardenInfo(HttpServletRequest request, TeaGardenInfo teaGardenInfo ,String save){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+        message = false;
+        data    = null;
         try{
             if(!teaGardenInfo.getId().isEmpty() && save.equals("edit")){
                 int i = teaGardenInfoService.updateByPrimaryKeySelective(teaGardenInfo);
@@ -149,6 +155,8 @@ public class TeaGardenController {
     @RequestMapping(value="/delTeaGardenItem",method = RequestMethod.GET)
     @ResponseBody
     public Object DelTeaGardenItem(HttpServletRequest request ,String id){
+        message = false;
+        data    = null;
         try{
             if (!id.isEmpty()){
                 int i = teaGardenInfoService.deleteByPrimaryKey(id);
@@ -168,7 +176,4 @@ public class TeaGardenController {
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
-
-
-
 }

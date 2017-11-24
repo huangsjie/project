@@ -175,6 +175,8 @@ public class DictionaryController {
     @RequestMapping(value = "/delDictionaryItem",method = RequestMethod.GET)
     @ResponseBody
     public Object delDictionaryItem(HttpServletRequest request, String id){
+        message = false;
+        data    = null;
         try {
             if (!id.isEmpty()){
                 int i= dictionaryService.deleteByPrimaryKey(id);

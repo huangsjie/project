@@ -85,27 +85,23 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
                 if(menuList != null && menuList.size() > 0){
                     for (Menu menu: menuList) {
                         map.put("parentId",menu.getId());
-                        if (menu.getUrl() != null){
-                            userMenuRolePermission(menu,map);
-                        }
                         List<Menu> childList = menuMapper.selectManagerRoleMenuList(map);
                         if(childList != null && childList.size() > 0){
                             for(Menu child: childList){
                                 map.put("parentId",child.getId());
-                                if (menu.getUrl() != null){
-                                    userMenuRolePermission(child,map);
-                                }
                                 List<Menu> lastChild = menuMapper.selectManagerRoleMenuList(map);
                                 if(lastChild != null && lastChild.size() > 0){
                                     for (Menu item : lastChild){
-                                        if (item.getUrl() != null){
-                                            userMenuRolePermission(item,map);
-                                        }
+                                        userMenuRolePermission(item,map);
                                     }
                                     child.setChildMenuList(lastChild);
+                                }else{
+                                    userMenuRolePermission(child,map);
                                 }
                             }
                             menu.setChildMenuList(childList);
+                        }else{
+                            userMenuRolePermission(menu,map);
                         }
                     }
                    // logger.info("------->"+cacheMenuList+" 创建 menuList 缓存数据 !");
@@ -131,24 +127,25 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
     }
 
     /**
-     * 追加 菜单权限
+     * 追加 菜单权限 菜单URL 为空或者菜单有子级菜单时，不处理
      * @param menu
      * @param map
      * @return
      */
-    private Object userMenuRolePermission(Menu menu,Map map){
-        map.put("menuId",menu.getId());
-        String[] urlArr = menu.getUrl().split("/");
-        List<Map> permList = pageRoleService.selectUserMenuRolePermission(map);
-        if (permList != null && permList.size() > 0){
-            ArrayList per = new ArrayList();
-            for (Map item : permList){
-                per.add(urlArr[2]+":"+item.get("value"));
+    private void userMenuRolePermission(Menu menu,Map map){
+        if (menu.getChildMenuList() == null && menu.getUrl() != null){
+            map.put("menuId",menu.getId());
+            String[] urlArr = menu.getUrl().split("/");
+            List<Map> permList = pageRoleService.selectUserMenuRolePermission(map);
+            if (permList != null && permList.size() > 0){
+                ArrayList per = new ArrayList();
+                for (Map item : permList){
+                    per.add(urlArr[2]+":"+item.get("value"));
+                }
+                menu.setPermissionList(per);
+            }else{
+                menu.setPermissionList(null);
             }
-            menu.setPermissionList(per);
-        }else{
-            menu.setPermissionList(null);
         }
-        return menu;
     }
 }

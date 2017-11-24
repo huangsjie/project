@@ -46,10 +46,22 @@ public class MyShiroRealm extends AuthorizingRealm {
             for(Menu menu: menuList){
                 if(menu.getChildMenuList() != null && menu.getChildMenuList().size() > 0){
                     for (Menu childMenu : menu.getChildMenuList()){
-                        info.addStringPermissions(childMenu.getPermissionList());
+                        if(childMenu.getChildMenuList() != null && childMenu.getChildMenuList().size() > 0){
+                            for (Menu lastChild : childMenu.getChildMenuList()){
+                                if(lastChild.getPermissionList() != null){
+                                    info.addStringPermissions(lastChild.getPermissionList());
+                                }
+                            }
+                        }else{
+                            if(childMenu.getPermissionList() != null){
+                                info.addStringPermissions(childMenu.getPermissionList());
+                            }
+                        }
                     }
                 }else{
-                    info.addStringPermissions(menu.getPermissionList());
+                    if(menu.getPermissionList() != null){
+                        info.addStringPermissions(menu.getPermissionList());
+                    }
                 }
             }
         }catch (Exception e){
