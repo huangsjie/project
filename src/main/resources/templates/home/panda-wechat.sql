@@ -648,7 +648,7 @@ CREATE TABLE `s_user_info` (
   `create_time` datetime NOT NULL,
   `create_id` varchar(36) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of s_user_info
@@ -676,7 +676,7 @@ CREATE TABLE `t_wechat` (
   `status` int(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态',
   `default_wx` int(1) NOT NULL DEFAULT '1' COMMENT '1为默认使用，0为不默认',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_wechat
@@ -694,7 +694,7 @@ CREATE TABLE `t_wechat_custom_message` (
   `iswechat` smallint(1) unsigned DEFAULT NULL,
   `send_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '发送时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_wechat_custom_message
@@ -733,7 +733,7 @@ CREATE TABLE `t_wechat_mass_history` (
   `sentcount` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '发送成功的粉丝数',
   `errorcount` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '发送失败的粉丝数',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_wechat_mass_history
@@ -762,7 +762,7 @@ CREATE TABLE `t_wechat_media` (
   `article_id` varchar(100) DEFAULT NULL,
   `sort` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_wechat_media
@@ -783,7 +783,7 @@ CREATE TABLE `t_wechat_menu` (
   `status` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
   `scope` int(3) NOT NULL DEFAULT '0' COMMENT '验证方式, 0:不验证，1:base',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_wechat_menu
@@ -814,7 +814,7 @@ CREATE TABLE `t_wechat_qrcode` (
   `status` int(1) NOT NULL DEFAULT '1' COMMENT '状态',
   `sort` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_wechat_qrcode
@@ -833,7 +833,7 @@ CREATE TABLE `t_wechat_reply` (
   `add_time` int(11) unsigned NOT NULL DEFAULT '0',
   `reply_type` varchar(10) DEFAULT NULL COMMENT '关键词回复内容的类型',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_wechat_reply
@@ -849,7 +849,7 @@ CREATE TABLE `t_wechat_rule_keywords` (
   `rid` int(11) NOT NULL COMMENT '规则id',
   `rule_keywords` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_wechat_rule_keywords
@@ -870,7 +870,7 @@ CREATE TABLE `t_wechat_template` (
   `add_time` int(11) DEFAULT NULL,
   `switch` tinyint(2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_wechat_template
