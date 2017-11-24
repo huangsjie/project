@@ -21,7 +21,7 @@ var User = function () {
                 footer: false     // 页脚启用,隐藏
             },
             sortable: true,
-            filterable: false,
+            filterable: true,
             pagination: true,
             columns: [{
                 title: "#",
@@ -64,7 +64,6 @@ var User = function () {
             }, {
                 field: "status",
                 title: "状态",
-                sortable: 'asc',
                 width: 60,
                 template: function (row) {
                     var status = {
@@ -99,7 +98,7 @@ var User = function () {
         });
 
         var query = datatable.getDataSourceQuery();
-        $('#m_form_search').on('change', function (e) {
+        $('#m_form_search').on('keyup', function (e) {
             var query = datatable.getDataSourceQuery();
             query.generalSearch = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
@@ -108,19 +107,18 @@ var User = function () {
 
         $('#m_form_status').on('change', function () {
             var query = datatable.getDataSourceQuery();
-
-            query.Status = $(this).val().toLowerCase();
-
+            query.status = $(this).val().toLowerCase();
+            console.log(query)
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.Status !== 'undefined' ? query.Status : '');
+        }).val(typeof query.status !== 'undefined' ? query.status : '');
 
         $('#m_form_type').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.Type = $(this).val().toLowerCase();
+            query.userType = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.Type !== 'undefined' ? query.Type : '');
+        }).val(typeof query.userType !== 'undefined' ? query.userType : '');
 
         $('#m_form_status, #m_form_type').selectpicker();
     };

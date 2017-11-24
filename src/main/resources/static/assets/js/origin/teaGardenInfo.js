@@ -82,7 +82,7 @@ var TeaGardenInfo = function () {
 
         var query = datatable.getDataSourceQuery();
 
-        $('#m_form_search').on('change', function (e) {
+        $('#m_form_search').on('keyup', function (e) {
             var query = datatable.getDataSourceQuery();
             query.generalSearch = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
@@ -90,14 +90,12 @@ var TeaGardenInfo = function () {
         }).val(query.generalSearch);
 
         $('#m_form_status').on('change', function () {
-
             var query = datatable.getDataSourceQuery();
             query.status = $(this).val();
-            //console.log(query.status);
             datatable.setDataSourceQuery(query);
             datatable.load();
 
-        }).val(typeof query.Status !== 'undefined' ? query.Status : '');
+        }).val(typeof query.status !== 'undefined' ? query.status : '');
 
         $('#m_form_status').selectpicker();
     };
