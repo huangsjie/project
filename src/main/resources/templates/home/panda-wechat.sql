@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-11-24 00:46:35
+Date: 2017-11-24 17:57:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -283,7 +283,7 @@ CREATE TABLE `s_menu` (
 -- ----------------------------
 -- Records of s_menu
 -- ----------------------------
-INSERT INTO `s_menu` VALUES ('04c21bbc-f0c1-4981-bbe7-17627cce0664', '2', '3631e59e-1175-11e5-a9de-000c29d7a3a0', '用户管理', '/system/user/list', null, 'flaticon-users', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:30:19', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:30:19', '用户信息管理');
+INSERT INTO `s_menu` VALUES ('04c21bbc-f0c1-4981-bbe7-17627cce0664', '2', '3631e59e-1175-11e5-a9de-000c29d7a3a0', '用户管理', '/system/user/getUserList', null, 'flaticon-users', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:30:19', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 09:48:17', '用户信息管理');
 INSERT INTO `s_menu` VALUES ('095c96ce-07e5-4c24-aebb-c743adc3562f', '3', '4bcab523-1174-11e5-a9de-000c29d7a3a0', '测试菜单添加时间', '/system/menu/add', '1', 'flaticon-xxx-1', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 11:25:08', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 11:25:08', '测试菜单添加时间');
 INSERT INTO `s_menu` VALUES ('0a1e90f6-cc25-11e7-843e-24fd52935962', '5', '0B6D1F77-BAEC-4CFA-8D19-E1C4ECE995B9', '角色权限', '/system/pageRole/list', '1', 'flaticon-menu', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-18 13:55:11', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-18 13:55:11', '角色权限设置');
 INSERT INTO `s_menu` VALUES ('0B6D1F77-BAEC-4CFA-8D19-E1C4ECE995B9', '1', '10000000-0000-0000-0000-100000000000', '系统管理', '/system/index/main', '1', 'flaticon-settings', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '管理');
@@ -311,11 +311,11 @@ INSERT INTO `s_menu` VALUES ('b4a121a8-5e4d-41f8-b4a0-672eebb0a74d', '8', '10000
 INSERT INTO `s_menu` VALUES ('c3538d54-8e09-11e6-b311-005056812bf6', '3', '10000000-0000-0000-0000-100000000000', '物流管理', '/system/operation/index', '1', 'flaticon-truck', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '跨境物流管理');
 INSERT INTO `s_menu` VALUES ('caf65c04-beed-11e7-959c-38d547b81379', '1', '0B6D1F77-BAEC-4CFA-8D19-E1C4ECE995B9', '菜单管理', '/system/menu/list', '1', 'flaticon-app', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '菜单信息管理');
 INSERT INTO `s_menu` VALUES ('ce43305b-a658-4e8c-b864-10b6ee797429', '1', '5d2f2a0d-9326-4026-b338-c03bf6e255db', '包材管理', '/system/packageMaterial/list', null, 'flaticon-mate', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:13:42', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:13:42', '包材材料管理');
-INSERT INTO `s_menu` VALUES ('d07687ef-2798-11e5-965c-000c29d7a3a0', '1', '3631e59e-1175-11e5-a9de-000c29d7a3a0', '门店管理', '/system/store/list', '1', 'flaticon-map', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:29:13', '个人中心、会员中心');
+INSERT INTO `s_menu` VALUES ('d07687ef-2798-11e5-965c-000c29d7a3a0', '1', '3631e59e-1175-11e5-a9de-000c29d7a3a0', '门店管理', '/system/store/getStoreList', '1', 'flaticon-map', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 09:48:09', '个人中心、会员中心');
 INSERT INTO `s_menu` VALUES ('d2aad1f2-4230-4aee-a1f1-91a6a6c5db40', '2', '21136dca-a230-4902-b370-73cedbfd37d1', '设备维护', '/system/maintain/list', null, 'flaticon-main', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:22:13', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:22:13', '设备保养记录');
 INSERT INTO `s_menu` VALUES ('d942abc1-b177-452e-8c53-1914ac448c7d', '4', '0B6D1F77-BAEC-4CFA-8D19-E1C4ECE995B9', '角色菜单', '/system/roleMenu/list', '1', 'flaticon-menu', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-08 17:50:28', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-08 17:53:27', '角色菜单设置');
 INSERT INTO `s_menu` VALUES ('dd6448d3-ade1-40c3-9043-a77c3036f829', '10', '10000000-0000-0000-0000-100000000000', '库存管理', '/system/stockManager/list', null, 'flaticon-network', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:04:57', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:41:28', '库存信息管理');
-INSERT INTO `s_menu` VALUES ('df1a659b-180f-4fd2-abb0-b42c7db62714', '1', '33fb6e82-2b8b-48fb-af3c-fb886049ca77', '加工1', '/system/teaMachin/list', null, 'flaticon-machin', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:03:25', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:03:25', '加工的事情');
+INSERT INTO `s_menu` VALUES ('df1a659b-180f-4fd2-abb0-b42c7db62714', '1', '33fb6e82-2b8b-48fb-af3c-fb886049ca77', '加工1', '/system/teaMachin/list', null, 'flaticon-machin', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:03:25', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 16:04:56', '加工的事情');
 INSERT INTO `s_menu` VALUES ('e38ab74b-bf14-11e7-a301-24fd52935962', '2', '0B6D1F77-BAEC-4CFA-8D19-E1C4ECE995B9', '角色管理', '/system/roles/list', '1', 'flaticon-profile', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-01 22:56:49', '角色信息管理');
 INSERT INTO `s_menu` VALUES ('f5baa02f-7e39-421f-a7dd-c8ee4773966b', '12', '10000000-0000-0000-0000-100000000000', '质检管理', '/system/quality/list', null, 'flaticon-notes', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:15:14', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:43:25', '产品质量管理');
 INSERT INTO `s_menu` VALUES ('fb69a533-1178-11e5-a9de-000c29d7a3a0', '7', '10000000-0000-0000-0000-100000000000', '数据管理', '/system/data/index', '1', 'flaticon-folder', '2', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 14:06:47', '销售数据分销');
@@ -625,8 +625,8 @@ CREATE TABLE `s_users` (
 -- ----------------------------
 -- Records of s_users
 -- ----------------------------
-INSERT INTO `s_users` VALUES ('0f1443aa-eade-410d-b8bf-74ebfa914ca4', 'morgan', '6a3fd4ce78066de7876e189ab9db43a9', '波波', 'jionlandry@gmail.com', '13713666160', '0', '2017-10-18 13:30:04', '1', '1', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '2017-10-18 13:30:10', '2017-10-18 13:30:12', '0f1443aa-eade-410d-b8bf-74ebfa914ca4');
-INSERT INTO `s_users` VALUES ('d56ad1f8-86a5-4e0f-a4bd-4fde333f9910', 'Alan', null, '哗哗', '2755527207@qq.com', '13713666160', '2', '2017-11-01 08:54:47', '0', '1', null, null, '2017-11-01 08:54:47', null);
+INSERT INTO `s_users` VALUES ('0f1443aa-eade-410d-b8bf-74ebfa914ca4', 'morgan', '6a3fd4ce78066de7876e189ab9db43a9', '波波', 'jionlandry@gmail.com', '13713666160', '1', '2017-10-18 13:30:04', '1', '1', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '2017-10-18 13:30:10', '2017-10-18 13:30:12', '0f1443aa-eade-410d-b8bf-74ebfa914ca4');
+INSERT INTO `s_users` VALUES ('d56ad1f8-86a5-4e0f-a4bd-4fde333f9910', 'Alan', null, '哗哗', '2755527207@qq.com', '13713666160', '2', '2017-11-01 08:54:47', '2', '1', null, null, '2017-11-01 08:54:47', null);
 
 -- ----------------------------
 -- Table structure for s_user_info
