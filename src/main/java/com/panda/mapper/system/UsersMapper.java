@@ -4,7 +4,6 @@ import com.panda.model.system.Users;
 import com.panda.util.abs.AbstractMapper;
 
 import java.util.List;
-import java.util.Map;
 
 public interface UsersMapper extends AbstractMapper<Users> {
     /**
@@ -13,11 +12,4 @@ public interface UsersMapper extends AbstractMapper<Users> {
      * @return
      */
     Users selectManagerAccount(String account);
-
-    /**
-     * 查询用户信息和用户扩展信息
-     * @param id
-     * @return
-     */
-    Map selectUserAndUserInfo(String id);
 }
