@@ -160,7 +160,7 @@ jQuery(document).ready(function () {
                         $("#role_edit_form [name='description']").val(result.data.description)
                     }
 
-            })
+                })
         }
     })
 
@@ -184,7 +184,7 @@ jQuery(document).ready(function () {
                         ToastrMsg(result.data,"error","topRight",'#roles_list');
                     }
                 })
-            }
+        }
     })
 
     /**

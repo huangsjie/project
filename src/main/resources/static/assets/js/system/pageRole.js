@@ -84,12 +84,12 @@ var PageRole = function () {
                     'get',
                     {'menuId':menuId,'roleId':roleId,'status': 1},
                     function (result) {
-                    if(result.message){
-                        showPageRoleList(result.data)
-                    }else{
-                        ToastrMsg(result.data,"warning","topRight");
-                    }
-                })
+                        if(result.message){
+                            showPageRoleList(result.data)
+                        }else{
+                            ToastrMsg(result.data,"warning","topRight");
+                        }
+                    })
             }
         })
     }
@@ -156,7 +156,7 @@ var PageRole = function () {
                         }else{
                             ToastrMsg(result.data,"warning","topRight",".table_page_role_list");
                         }
-                })
+                    })
             }else{
                 ToastrMsg('  请选择要赋予该角色的菜单,或者未修改过该项.',"error","topRight");
             }
