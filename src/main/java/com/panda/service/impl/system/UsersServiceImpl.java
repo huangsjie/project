@@ -59,4 +59,14 @@ public class UsersServiceImpl extends AbstractServiceImpl<Users> implements User
         }
         return user;
     }
+
+    /**
+     * 查询用户信息和用户扩展信息
+     * @param id
+     * @return
+     */
+    @Override
+    public Map selectUserAndUserInfo(String id){
+        return usersMapper.selectUserAndUserInfo(id);
+    }
 }

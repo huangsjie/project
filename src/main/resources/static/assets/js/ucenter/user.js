@@ -198,7 +198,7 @@ var User = function () {
     /**
      * 重置表单
      */
-    var removeValue = function () {
+    var removeValue = function (type) {
         if(type == 'edit'){
             $(".userEdit .modal-title").text("角色编辑")
             $(".userEdit [name='save']").val('edit')
@@ -229,12 +229,13 @@ var User = function () {
             delUserItem();
             userListShow();
             editUserItem();
+
         }
     };
 }();
 jQuery(document).ready(function () {
     User.init();
-    $('.status_switch').bootstrapSwitch();
+
     /**
      * 开关
      */
@@ -245,4 +246,6 @@ jQuery(document).ready(function () {
             $(this).parents("div").find(".status_switch_parent").find("[name='status']").val(2)
         }
     });
+    $('.status_switch').bootstrapSwitch();
+    $('.m_selectpicker').selectpicker();
 });

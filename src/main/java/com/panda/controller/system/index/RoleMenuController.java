@@ -99,8 +99,16 @@ public class RoleMenuController {
         try {
             if(!id.isEmpty()){
                 List<Map> menuList = roleMenuService.selectRoleMenuList(id);
+                if (menuList != null){
+                    message = true;
+                    data    = menuList;
+                }else{
+                    data    = ResultStateUtil.NO_MORE_DATA;
+                }
                 message = true;
                 data = menuList;
+            }else{
+                data = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
             }
         }catch (Exception e){
             e.printStackTrace();

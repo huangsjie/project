@@ -49,7 +49,7 @@
                             <input type="hidden" name="save" value="edit">
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-2 col-sm-12">
-                                    账号 *
+                                    账号 <span style="color: red">*</span>
                                 </label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
                                     <input type="text" class="form-control m-input" name="account" placeholder="登录账号">
@@ -58,7 +58,7 @@
                             </div>
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-2 col-sm-12">
-                                    密码 *
+                                    密码 <span style="color: red">*</span>
                                 </label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
                                     <div class="input-group">
@@ -69,7 +69,7 @@
                             </div>
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-2 col-sm-12">
-                                    邮箱 *
+                                    邮箱 <span style="color: red">&nbsp;&nbsp;</span>
                                 </label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
                                     <div class="input-group">
@@ -80,7 +80,7 @@
                             </div>
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-2 col-sm-12">
-                                    姓名 *
+                                    姓名 <span style="color: red">*</span>
                                 </label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
                                     <input  type="text" class="form-control m-input" name="chineseName" placeholder="中文/英文名">
@@ -90,7 +90,7 @@
                             </div>
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-2 col-sm-12">
-                                    电话 *
+                                    电话 <span style="color: red">*</span>
                                 </label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
                                     <input type="text" class="form-control m-input" name="mobile" placeholder="电话号码">
@@ -99,7 +99,30 @@
                             </div>
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-2 col-sm-12">
-                                    地址 *
+                                    类型 <span style="color: red">*</span>
+                                </label>
+                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                    <select class="form-control m-bootstrap-select m_selectpicker" name="userType">
+                                        <option value=""> 用户类型 </option>
+                                        <option th:each="item:${userType}" th:value="${item.value}" th:text="${item.name}"></option>
+                                    </select>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-lg-2 col-sm-12">
+                                    地区 <span style="color: red">&nbsp;&nbsp;</span>
+                                </label>
+                                <div class="col-lg-9 col-md-9 col-sm-12" data-toggle="distpicker">
+                                    <select class="distpicker_rss form-control" name="province"></select>
+                                    <select class="distpicker_rss form-control" name="city"></select>
+                                    <select class="distpicker_rss form-control" name="country"></select>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-lg-2 col-sm-12">
+                                    详细 <span style="color: red">&nbsp;&nbsp;</span>
                                 </label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
                                     <input type="text" class="form-control m-input" name="address" placeholder="所在位置">
@@ -108,7 +131,7 @@
                             </div>
                             <div class="form-group m-form__group row status_switch_parent">
                                 <label class="col-form-label col-lg-2 col-sm-12">
-                                    状态 *
+                                    状态 <span style="color: red">*</span>
                                 </label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
                                     <input data-switch="true" type="checkbox" class="status_switch" data-on-color="success" data-off-color="warning">
@@ -119,10 +142,10 @@
                             </div>
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-2 col-sm-12">
-                                    签名 *
+                                    签名 <span style="color: red">&nbsp;&nbsp;</span>
                                 </label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
-                                    <textarea class="form-control m-input" name="signature" placeholder="介绍"></textarea>
+                                    <textarea class="form-control m-input" name="signature" placeholder="介绍" style="height: 82px;resize: none;"></textarea>
                                     <span class="m-form__help"></span>
                                 </div>
                             </div>

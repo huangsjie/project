@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IDEA.
@@ -91,10 +92,12 @@ public class UserController {
         data    = null;
         try {
             if (id != null && !id.isEmpty()){
-                Users user = usersService.selectByPrimaryKey(id);
+                Map<String,Object> user = usersService.selectUserAndUserInfo(id);
                 if (user != null){
                     message = true;
                     data    = user;
+                }else{
+                    data    = ResultStateUtil.NO_MORE_DATA;
                 }
             }else{
                 data = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;

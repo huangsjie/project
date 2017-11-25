@@ -213,4 +213,17 @@
     from s_users
     where 1 = 1;
   </select>
+  <!-- 查询用户信息和用户扩展信息 -->
+  <select id="selectUserAndUserInfo" parameterType="java.lang.String" resultType="map">
+    SELECT
+        u.id userId,u.account,u.email,u.chinese_name,u.mobile,u.status,
+        u.user_type,i.nick_name,i.signature,i.province,i.city,i.country,
+        i.address,i.head_imgurl
+    FROM
+        s_users u
+        LEFT JOIN s_user_info i ON u.id = i.user_id
+    WHERE
+	  u.id = #{id}
+  </select>
+  <!-- 查询用户信息和用户扩展信息 -->
 </mapper>

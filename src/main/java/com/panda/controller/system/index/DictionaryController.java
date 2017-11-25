@@ -48,8 +48,6 @@ public class DictionaryController {
      */
     @RequestMapping(value = "/list")
     @RequiresPermissions("dictionary:view")//权限管理;
-    //@RequiresAuthentication
-    // @RequiresRoles("teller")
     public String list(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         List<Dictionary> dictionaryList = dictionaryService.selectAll();
