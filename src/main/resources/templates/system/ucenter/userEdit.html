@@ -17,7 +17,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="m-form m-form--state m-form--fit m-form--label-align-right" id="dictionary_child_form" novalidate="novalidate">
+            <form class="m-form m-form--state m-form--fit m-form--label-align-right" id="user_edit_form" novalidate="novalidate">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-3">
@@ -102,7 +102,7 @@
                                     类型 <span style="color: red">*</span>
                                 </label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
-                                    <select class="form-control m-bootstrap-select m_selectpicker" name="userType">
+                                    <select class="form-control" name="userType">
                                         <option value=""> 用户类型 </option>
                                         <option th:each="item:${userType}" th:value="${item.value}" th:text="${item.name}"></option>
                                     </select>
@@ -114,7 +114,7 @@
                                 <label class="col-form-label col-lg-2 col-sm-12">
                                     地区 <span style="color: red">&nbsp;&nbsp;</span>
                                 </label>
-                                <div class="col-lg-9 col-md-9 col-sm-12" data-toggle="distpicker">
+                                <div class="col-lg-9 col-md-9 col-sm-12" id="distpicker">
                                     <select class="distpicker_rss form-control" name="province"></select>
                                     <select class="distpicker_rss form-control" name="city"></select>
                                     <select class="distpicker_rss form-control" name="country"></select>

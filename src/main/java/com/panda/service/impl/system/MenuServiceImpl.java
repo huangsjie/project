@@ -143,8 +143,6 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
                     per.add(urlArr[2]+":"+item.get("value"));
                 }
                 menu.setPermissionList(per);
-            }else{
-                menu.setPermissionList(null);
             }
         }
     }
