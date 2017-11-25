@@ -1,7 +1,9 @@
 package com.panda.controller.system.ucenter;
 
+import com.panda.model.system.Dictionary;
 import com.panda.model.system.UserInfo;
 import com.panda.model.system.Users;
+import com.panda.service.system.DictionaryService;
 import com.panda.service.system.UsersService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
@@ -33,7 +35,8 @@ public class UserController {
 
     @Resource
     private UsersService usersService;
-
+    @Resource
+    private DictionaryService dictionaryService;
     private static boolean message = false;
     private static Object  data    = null;
 
@@ -45,8 +48,12 @@ public class UserController {
     @RequestMapping(value = "/getUserList",method = RequestMethod.GET)
     @RequiresPermissions("user:view")//权限管理;
     public String getUserList(HttpServletRequest request, Model model){
+        List<Dictionary> userType = dictionaryService.selectDictionaryValueList("155a1b9b-5fbb-11e7-8697-38d547b81379");
+        List<Dictionary> statusType = dictionaryService.selectDictionaryValueList("ba259a75-f5a7-4897-949f-1c90b7958b35");
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         model.addAttribute("menuList",user.getMenuList());
+        model.addAttribute("userType",userType);
+        model.addAttribute("statusType",statusType);
         model.addAttribute("user",user);
         return "system/ucenter/getUserList";
     }

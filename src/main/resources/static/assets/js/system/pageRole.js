@@ -1,5 +1,8 @@
 var PageRole = function () {
-    var MenuTree = $('#menu_tree');
+    var MenuTree = $('#menu_tree'),submit = typeof $("#submit").val(),disabled="";
+    if (submit == "undefined"){
+        disabled = "disabled"
+    }
     var status = {
         0: {'title':'未知', 'class':'m-badge--info'   , 'button':'btn m-btn--pill btn-success btn-sm change-status', 'change':'启用'},
         1: {'title':'启用', 'class':'m-badge--success', 'button':'btn m-btn--pill btn-danger btn-sm  change-status', 'change':'禁用'},
@@ -95,6 +98,7 @@ var PageRole = function () {
      * @param dictionaryList
      */
     var showPageRoleList = function(pageRoleList){
+
         var _html = '';
         if(pageRoleList.length > 0){
             $.each(pageRoleList, function (i, n) {
@@ -102,7 +106,7 @@ var PageRole = function () {
                 _html += "<td>"+n.name+"</td>";
                 _html += "<td>"+n.value+"</td>";
                 _html += '<td><span class="m-badge ' + status[n.pageRoleStatus].class + ' m-badge--wide">' + status[n.pageRoleStatus].title + '</span></td>';
-                _html += '<td><button type="button" class="'+status[n.pageRoleStatus].button+'" id="'+n.pageRoleId+'" value="'+n.pageRoleStatus+'" dict-id="'+n.id+'"  style="line-height: 1.2">' + status[n.pageRoleStatus].change + '</button></td>';
+                _html += '<td><button type="button" class="'+status[n.pageRoleStatus].button+'" id="'+n.pageRoleId+'" value="'+n.pageRoleStatus+'" dict-id="'+n.id+'"  style="line-height: 1.2" '+disabled+'>' + status[n.pageRoleStatus].change + '</button></td>';
                 _html += "</tr>";
             });
         }

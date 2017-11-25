@@ -33,7 +33,7 @@
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title" style="float: right;">
                                         <h3 class="m-portlet__head-text">
-                                            <button type="button" class="btn btn-info editDictionaryItem" data-toggle="modal" data-target=".dictionaryEdit" data-type="add_dictionary">
+                                            <button type="button" class="btn btn-info editDictionaryItem" shiro:hasPermission="dictionary:add" data-toggle="modal" data-target=".dictionaryEdit" data-type="add_dictionary">
                                                 新增字典
                                             </button>
                                         </h3>
@@ -77,7 +77,7 @@
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title" style="float: right;">
                                         <h3 class="m-portlet__head-text">
-                                            <button type="button" class="btn btn-info editDictionaryItem" data-toggle="modal" data-target=".dictionaryEdit" data-type="add_dictionary_child">
+                                            <button type="button" class="btn btn-info editDictionaryItem" shiro:hasPermission="dictionary:add" data-toggle="modal" data-target=".dictionaryEdit" data-type="add_dictionary_child">
                                                 新增属性
                                             </button>
                                         </h3>
@@ -183,8 +183,7 @@
                                                 <div class="m-form__actions m-form__actions">
                                                     <div class="form-group m-form__group row">
                                                         <div class="col-lg-9 ml-lg-auto">
-                                                            <button type="submit"
-                                                                    class="btn btn-accent dictionary_form_save">
+                                                            <button type="submit" shiro:hasPermission="dictionary:submit" class="btn btn-accent dictionary_form_save">
                                                                 确定
                                                             </button>
                                                         </div>
@@ -203,6 +202,16 @@
                 </div>
             </div>
             <!--END: Main Portlet-->
+            <!-- PageRole -->
+            <div class="m--hide" id="actionsTemplate">
+                <a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editDictionaryItem" title="编辑" shiro:hasPermission="dictionary:edit" item="#rowId#" data-toggle="modal" data-target=".dictionaryEdit">
+                    <i class="la la-edit"></i>
+                </a>
+                <a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delDictionaryItem" title="删除" shiro:hasPermission="dictionary:delete" item="#rowId#" >
+                    <i class="la la-trash"></i>
+                </a>
+            </div>
+            <!-- PageRole -->
         </div>
     </div>
     <!-- end:: Body -->

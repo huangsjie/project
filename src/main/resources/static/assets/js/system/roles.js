@@ -1,4 +1,5 @@
 var Roles = function () {
+    var actionsTemplate = $("#actionsTemplate").html();
     var rolesListShow = function () {
         var datatable = $('.roles_list_ajax').mDatatable({
             data: {
@@ -42,23 +43,6 @@ var Roles = function () {
                 title: "创建时间",
                 sortable: 'asc',
                 width: 150
-            }, {
-                field: "type",
-                title: "类型",
-                sortable: 'asc',
-                width: 60,
-                template: function (row) {
-                    var status = {
-                        1: {'title': '后台', 'class': ' m-badge--primary'},
-                        2: {'title': '用户', 'class': ' m-badge--info'},
-                        3: {'title': '6', 'class': ' m-badge--danger'},
-                        4: {'title': '4', 'class': ' m-badge--success'},
-                        5: {'title': '1', 'class': 'm-badge--brand'},
-                        6: {'title': '2', 'class': ' m-badge--metal'},
-                        7: {'title': '7', 'class': ' m-badge--warning'}
-                    };
-                    return '<span class="m-badge ' + status[row.type].class + ' m-badge--wide">' + status[row.type].title + '</span>';
-                }
             },{
                 field: "Actions",
                 width: 100,
@@ -67,14 +51,7 @@ var Roles = function () {
                 overflow: 'visible',
                 template: function (row) {
                     var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
-                    return '\
-						<a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editRoleItem" title="编辑" item="'+row.id+'" data-toggle="modal" data-target=".rolesEdit">\
-							<i class="la la-edit"></i>\
-						</a>\
-						<a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delRoleItem" title="删除" item="'+row.id+'" >\
-							<i class="la la-trash"></i>\
-						</a>\
-					';
+                    return actionsTemplate.replace(/#rowId#/g, row.id)
                 }
             }]
         });
@@ -94,13 +71,6 @@ var Roles = function () {
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(typeof query.status !== 'undefined' ? query.status : '');
-
-        $('#m_form_type').on('change', function () {
-            var query = datatable.getDataSourceQuery();
-            query.type = $(this).val().toLowerCase();
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.type !== 'undefined' ? query.type : '');
 
         $('#m_form_status, #m_form_type').selectpicker();
     };

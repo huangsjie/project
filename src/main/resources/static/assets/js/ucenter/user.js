@@ -1,4 +1,5 @@
 var User = function () {
+    var actionsTemplate = $("#actionsTemplate").html();
     var userListShow = function () {
         var datatable = $('.user_list_ajax').mDatatable({
             data: {
@@ -51,13 +52,10 @@ var User = function () {
                 width: 150,
                 template: function (row) {
                     var status = {
-                        1: {'title': '管理员','class': 'm-badge--info'},
-                        2: {'title': '用户','class': ' m-badge--metal'},
-                        3: {'title': '会员','class': ' m-badge--primary'},
-                        4: {'title': '商户','class': ' m-badge--info'},
-                        5: {'title': '激活','class': ' m-badge--success'},
-                        6: {'title': '禁用','class': ' m-badge--danger'},
-                        7: {'title': '未激活','class': ' m-badge--warning'},
+                        "manager": {'title': '管理员','class': 'm-badge--info'},
+                        "merchant": {'title': '商户','class': ' m-badge--success'},
+                        "member": {'title': '会员','class': ' m-badge--primary'},
+                        "user": {'title': '用户','class': ' m-badge--metal'},
                     };
                     return '<span class="m-badge ' + status[row.userType].class + ' m-badge--wide">' + status[row.userType].title + '</span>';
                 }
@@ -67,13 +65,9 @@ var User = function () {
                 width: 60,
                 template: function (row) {
                     var status = {
-                        6: {'title': '1', 'class': 'm-badge--brand'},
-                        6: {'title': '2', 'class': ' m-badge--metal'},
-                        6: {'title': '3', 'class': ' m-badge--primary'},
-                        6: {'title': '5', 'class': ' m-badge--info'},
+                        0: {'title': '未激活', 'class': ' m-badge--warning'},
                         1: {'title': '激活', 'class': ' m-badge--success'},
                         2: {'title': '禁用', 'class': ' m-badge--danger'},
-                        0: {'title': '未激活', 'class': ' m-badge--warning'}
                     };
                     return '<span class="m-badge ' + status[row.status].class + ' m-badge--wide">' + status[row.status].title + '</span>';
                 }
@@ -85,14 +79,7 @@ var User = function () {
                 overflow: 'visible',
                 template: function (row) {
                     var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
-                    return '\
-						<a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editUserItem" title="编辑" item="'+row.id+'" data-toggle="modal" data-target=".userEdit">\
-							<i class="la la-edit"></i>\
-						</a>\
-						<a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delUserItem" title="删除" item="'+row.id+'" >\
-							<i class="la la-trash"></i>\
-						</a>\
-					';
+                    return actionsTemplate.replace(/#rowId#/g, row.id)
                 }
             }]
         });

@@ -1,4 +1,5 @@
 var Dictionary = function () {
+    var actionsTemplate = $("#actionsTemplate").html();
     var status = {
         9: {'title': 'Pending', 'class': 'm-badge--brand'},
         9: {'title': 'Delivered', 'class': ' m-badge--metal'},
@@ -139,10 +140,7 @@ var Dictionary = function () {
                     _html += "<td>"+n.name+"</td>";
                     _html += "<td>"+n.value+"</td>";
                     _html += '<td><span class="m-badge ' + status[n.status].class + ' m-badge--wide">' + status[n.status].title + '</span></td>';
-                    _html += '<td><a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editDictionaryItem" title="编辑" item="'+n.id+'" data-toggle="modal" data-target=".dictionaryEdit">\
-							    <i class="la la-edit"></i></a>\
-						        <a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delDictionaryItem" title="删除" item="'+n.id+'" >\
-							    <i class="la la-trash"></i></a></td>';
+                    _html += '<td>'+actionsTemplate.replace(/#rowId#/g, n.id)+'</td>';
                     _html += "</tr>";
                 }
             });
@@ -205,6 +203,7 @@ var Dictionary = function () {
         $(formAttrIbute + " div").removeClass("has-danger");
         $(formAttrIbute + " div").removeClass("has-success");
         $(formAttrIbute + " .m-alert").addClass("m--hide");
+        $(formAttrIbute + " .status_switch").bootstrapSwitch('state',false);
     }
 
     /**
