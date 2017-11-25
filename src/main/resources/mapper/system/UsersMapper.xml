@@ -8,7 +8,7 @@
     <result column="chinese_name" property="chineseName" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
-    <result column="user_type" property="userType" jdbcType="INTEGER" />
+    <result column="user_type" property="userType" jdbcType="VARCHAR" />
     <result column="last_date" property="lastDate" jdbcType="TIMESTAMP" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="login_type" property="loginType" jdbcType="INTEGER" />
@@ -39,7 +39,7 @@
     modify_time, modify_id)
     values (#{id,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
     #{chineseName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR},
-    #{userType,jdbcType=INTEGER}, #{lastDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},
+    #{userType,jdbcType=VARCHAR}, #{lastDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},
     #{loginType,jdbcType=INTEGER}, #{roleId,jdbcType=VARCHAR}, #{registerTime,jdbcType=TIMESTAMP},
     #{modifyTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR})
   </insert>
@@ -109,7 +109,7 @@
         #{mobile,jdbcType=VARCHAR},
       </if>
       <if test="userType != null" >
-        #{userType,jdbcType=INTEGER},
+        #{userType,jdbcType=VARCHAR},
       </if>
       <if test="lastDate != null" >
         #{lastDate,jdbcType=TIMESTAMP},
@@ -153,7 +153,7 @@
         mobile = #{mobile,jdbcType=VARCHAR},
       </if>
       <if test="userType != null" >
-        user_type = #{userType,jdbcType=INTEGER},
+        user_type = #{userType,jdbcType=VARCHAR},
       </if>
       <if test="lastDate != null" >
         last_date = #{lastDate,jdbcType=TIMESTAMP},
@@ -186,7 +186,7 @@
     chinese_name = #{chineseName,jdbcType=VARCHAR},
     email = #{email,jdbcType=VARCHAR},
     mobile = #{mobile,jdbcType=VARCHAR},
-    user_type = #{userType,jdbcType=INTEGER},
+    user_type = #{userType,jdbcType=VARCHAR},
     last_date = #{lastDate,jdbcType=TIMESTAMP},
     status = #{status,jdbcType=INTEGER},
     login_type = #{loginType,jdbcType=INTEGER},
@@ -213,7 +213,6 @@
     from s_users
     where 1 = 1;
   </select>
-<<<<<<< HEAD
   <!-- 查询用户信息和用户扩展信息 -->
   <select id="selectUserAndUserInfo" parameterType="java.lang.String" resultType="map">
     SELECT
@@ -228,6 +227,3 @@
   </select>
   <!-- 查询用户信息和用户扩展信息 -->
 </mapper>
-=======
-</mapper>
->>>>>>> e5233115b9172265be45e20cf2467100897703cc

@@ -18,7 +18,7 @@ public class Users implements Serializable {
 
     private String mobile;
 
-    private Integer userType;
+    private String userType;
 
     private Date lastDate;
 
@@ -86,12 +86,12 @@ public class Users implements Serializable {
         this.mobile = mobile == null ? null : mobile.trim();
     }
 
-    public Integer getUserType() {
+    public String getUserType() {
         return userType;
     }
 
-    public void setUserType(Integer userType) {
-        this.userType = userType;
+    public void setUserType(String userType) {
+        this.userType = userType == null ? null : userType.trim();
     }
 
     public Date getLastDate() {
