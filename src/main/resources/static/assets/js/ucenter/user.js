@@ -1,11 +1,16 @@
 var User = function () {
+<<<<<<< HEAD
+=======
+    var actionsTemplate = $("#actionsTemplate").html();
+    var $distpicker = $('#distpicker')
+>>>>>>> 670d7e3071c819d259c573fa088f7b2b3ad6327b
     var userListShow = function () {
         var datatable = $('.user_list_ajax').mDatatable({
             data: {
                 type: 'remote',
                 source: {
                     read: {
-                        url: '/system/user/getUserDataList'
+                        url: 'getUserDataList'
                     }
                 },
                 pageSize: 10,
@@ -130,11 +135,11 @@ var User = function () {
     var userForm = function () {
         $( "#user_edit_form" ).validate({
             rules: {
-                name: {
+                account: {
                     required: true,
                     nameCheck:true
                 },
-                description: {
+                mobile: {
                     required: true,
                     nameCheck:true,
                     minlength: 3,
@@ -144,7 +149,7 @@ var User = function () {
             submitHandler: function (form){
                 blockUiOpen('.userEdit .modal-content');
                 request(
-                    "saveUser",
+                    "saveUserOrUpdate",
                     "post",
                     $("#user_edit_form").serialize(),
                     function(result){
@@ -166,6 +171,7 @@ var User = function () {
      */
     var editUserItem = function () {
         $("#user_list ").on("click", ".editUserItem", function () {
+            console.log(123)
             removeValue('edit')
             var id = $(this).attr("item");
             if(id != ""){
@@ -174,16 +180,39 @@ var User = function () {
                     'get',
                     {id:id},
                     function (result) {
+                        console.log(result)
                         if(result.message){
                             $("#user_edit_form [name='id']").val(result.data.id)
-                            $("#user_edit_form [name='name']").val(result.data.name)
-                            $("#user_edit_form [name='description']").val(result.data.description)
+                            $("#user_edit_form [name='account']").val(result.data.account)
+                            $("#user_edit_form [name='email']").val(result.data.email)
+                            $("#user_edit_form [name='mobile']").val(result.data.mobile)
+                            $("#user_edit_form [name='chineseName']").val(result.data.chinese_name)
+                            $("#user_edit_form [name='userType']").val(result.data.user_type)
+                            $("#user_edit_form [name='signature']").text(result.data.signature);
+                            $("#user_edit_form [name='address']").val(result.data.address)
+                            if(result.data.status == 1){
+                                $('.status_switch').bootstrapSwitch('state',true);
+                            }else{
+                                $('.status_switch').bootstrapSwitch('state',false);
+                            }
+                            $("#distpicker").distpicker({
+                                province: "浙江省",
+                                city: "杭州市",
+                                district: "西湖区"
+                            });
                         }
                     })
             }
         })
     }
-
+    /**
+     * 新用户
+     */
+    var addUser = function(){
+        $(".addUser").on("click",function(){
+            removeValue('add')
+        })
+    }
     /**
      * 删除用户
      */
@@ -211,17 +240,30 @@ var User = function () {
     /**
      * 重置表单
      */
+<<<<<<< HEAD
     var removeValue = function () {
+=======
+    var removeValue = function (type) {
+        $distpicker.distpicker('destroy');
+>>>>>>> 670d7e3071c819d259c573fa088f7b2b3ad6327b
         if(type == 'edit'){
-            $(".userEdit .modal-title").text("角色编辑")
+            $(".userEdit .modal-title").text("用户编辑")
             $(".userEdit [name='save']").val('edit')
+
         }else{
-            $(".userEdit .modal-title").text("角色新增")
+            $(".userEdit .modal-title").text("用户新增")
             $(".userEdit [name='save']").val('add');
+            $('#distpicker').distpicker({autoSelect: false});
         }
-        $(".userEdit [name='id']").val('')
-        $(".userEdit [name='name']").val('')
-        $(".userEdit [name='description']").val('');
+        $("#user_edit_form [name='id']").val("")
+        $("#user_edit_form [name='account']").val("")
+        $("#user_edit_form [name='userType']").val("")
+        $("#user_edit_form [name='email']").val("")
+        $("#user_edit_form [name='mobile']").val("")
+        $("#user_edit_form [name='chineseName']").val("")
+        $("#user_edit_form [name='address']").val("")
+        $("#user_edit_form [name='signature']").text("");
+        $('.status_switch').bootstrapSwitch('state',false);
         $(".userEdit .form-control-feedback").remove()
         $(".userEdit div").removeClass("has-danger")
         $(".userEdit div").removeClass("has-success")
@@ -238,6 +280,7 @@ var User = function () {
 
     return {
         init: function () {
+            addUser();
             userForm();
             delUserItem();
             userListShow();
@@ -247,4 +290,19 @@ var User = function () {
 }();
 jQuery(document).ready(function () {
     User.init();
+<<<<<<< HEAD
+=======
+
+    /**
+     * 开关
+     */
+    $('.status_switch').on('switchChange.bootstrapSwitch', function (event,state) {
+        if(state==true){
+            $(this).parents("div").find(".status_switch_parent").find("[name='status']").val(1)
+        }else{
+            $(this).parents("div").find(".status_switch_parent").find("[name='status']").val(2)
+        }
+    });
+    $('.status_switch').bootstrapSwitch();
+>>>>>>> 670d7e3071c819d259c573fa088f7b2b3ad6327b
 });
