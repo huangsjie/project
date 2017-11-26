@@ -154,6 +154,9 @@
     <if test="status != null and status != ''">
       AND r.status = #{status}
     </if>
+    <if test="type != null and type != ''">
+      AND r.type = #{type}
+    </if>
     ORDER BY r.create_time ASC
   </select>
 </mapper>

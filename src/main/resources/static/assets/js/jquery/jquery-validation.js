@@ -365,6 +365,8 @@
             account: "请输入一个有效的账号.",
             alphanumerical: "请输入字母或数字.",
             nameCheck: "请输入中文 或 字母.",
+            mobileZH: "请输入中国境内手机号码.",
+            phoneZH: "请输入中文中国境内固定电话.",
             iconCheck: "正确的icon-class 格式为 'flaticon-xxx'. ",
             urlCheck: "类型:(/system/**后台) (/home/**前台) (/wecaht/** 微信)",
             remote: "请解决这个问题.",
@@ -1401,6 +1403,14 @@
             //名称验证
             nameCheck: function( value, element) {
                 return this.optional( element ) || /^[\u4e00-\u9fa5]|[a-zA-Z]+$/.test( value);
+            },
+
+            mobileZH: function( value, element) {
+                return this.optional( element ) || /^([0-9]{11})?$/.test( value);
+            },
+
+            phoneZH: function( value, element) {
+                return this.optional( element ) || /^0\d{2,3}-\d{5,9}|0\d{2,3}-\d{5,9}$/.test( value);
             },
             // iconCheck
             iconCheck: function(value, element){

@@ -1,9 +1,13 @@
 package com.panda.controller.system.ucenter;
 
+import com.alibaba.citrus.util.StringEscapeUtil;
+import com.alibaba.fastjson.JSON;
 import com.panda.model.system.Dictionary;
+import com.panda.model.system.Roles;
 import com.panda.model.system.UserInfo;
 import com.panda.model.system.Users;
 import com.panda.service.system.DictionaryService;
+import com.panda.service.system.RolesService;
 import com.panda.service.system.UsersService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +43,8 @@ public class UserController {
     private UsersService usersService;
     @Resource
     private DictionaryService dictionaryService;
+    @Resource
+    private RolesService rolesService;
     private static boolean message = false;
     private static Object  data    = null;
 
@@ -49,11 +56,16 @@ public class UserController {
     @RequestMapping(value = "/getUserList",method = RequestMethod.GET)
     @RequiresPermissions("user:view")//权限管理;
     public String getUserList(HttpServletRequest request, Model model){
+        Map map = new HashMap();
+        map.put("type",1);
+        map.put("status",1);
         List<Dictionary> userType = dictionaryService.selectDictionaryValueList("155a1b9b-5fbb-11e7-8697-38d547b81379");
         List<Dictionary> statusType = dictionaryService.selectDictionaryValueList("ba259a75-f5a7-4897-949f-1c90b7958b35");
+        List<Roles> roleList = rolesService.selectRoleList(map);
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("userType",userType);
+        model.addAttribute("roleList",roleList);
         model.addAttribute("statusType",statusType);
         model.addAttribute("user",user);
         return "system/ucenter/getUserList";
@@ -61,11 +73,23 @@ public class UserController {
 
     @RequestMapping(value = "/getUserDataList")
     @ResponseBody
-    public Object getUserDataList(HttpServletRequest request){
+    public Object getUserDataList(HttpServletRequest request, String datatable){
         message = false;
         data    = null;
         try {
-            List<Users> usersList = usersService.selectAll();
+            Map params = new HashMap();
+            if (datatable != null && !datatable.isEmpty()){
+                String jsonStr = StringEscapeUtil.unescapeHtml(datatable);
+                Map jsonMap = JSON.parseObject(jsonStr,Map.class);
+                Map query = JSON.parseObject(jsonMap.get("query").toString(),Map.class);
+                if (query.size() > 0 && query.get("status") != ""){
+                    params.put("status",query.get("status"));
+                }
+                if (query.size() > 0 && query.get("userType") != ""){
+                    params.put("userType",query.get("userType"));
+                }
+            }
+            List<Users> usersList = usersService.selectUserList(params);
             if(usersList.size() > 0){
                 message = true;
                 data = usersList;
@@ -118,15 +142,33 @@ public class UserController {
      */
     @RequestMapping(value = "/saveUserOrUpdate",method = RequestMethod.POST)
     @ResponseBody
-    public Object saveUserOrUpdate(HttpServletRequest request, Users user, UserInfo userInfo){
+    public Object saveUserOrUpdate(HttpServletRequest request, Users user, UserInfo userInfo,String save,String infoId){
         message = false;
         data    = null;
         try {
             if (user != null){
-                //Users user = usersService.selectByPrimaryKey(id);
-                if (user != null){
-                    message = true;
-                    data    = user;
+                if (infoId != null && infoId != ""){
+                    userInfo.setId(infoId);
+                }
+                if (save.equals("add")){
+                    userInfo.setId(null);
+                    user.setId(null);
+                }
+                Integer resultStatus = usersService.saveUserOrUpdate(user,userInfo);
+                switch (resultStatus){
+                    case 101:
+                        data    = ResultStateUtil.FAIL_ABNORMAL;
+                        break;
+                    case 200:
+                        message = true;
+                        data    = ResultStateUtil.SUCCESS_UPDATE;
+                    case 203 :
+                        message = true;
+                        data    = ResultStateUtil.SUCCESS_ADD;
+                        break;
+                    case 0:
+                        data    = ResultStateUtil.ERROR_OPERATION;
+                        break;
                 }
             }else{
                 data = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;

@@ -1,8 +1,9 @@
 var User = function () {
     var actionsTemplate = $("#actionsTemplate").html();
+    var datatable = "";
     var $distpicker = $('#distpicker')
     var userListShow = function () {
-        var datatable = $('.user_list_ajax').mDatatable({
+        datatable = $('.user_list_ajax').mDatatable({
             data: {
                 type: 'remote',
                 source: {
@@ -96,7 +97,6 @@ var User = function () {
         $('#m_form_status').on('change', function () {
             var query = datatable.getDataSourceQuery();
             query.status = $(this).val().toLowerCase();
-            console.log(query)
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(typeof query.status !== 'undefined' ? query.status : '');
@@ -120,13 +120,27 @@ var User = function () {
             rules: {
                 account: {
                     required: true,
+                    account: true
+                },
+                password: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 14
+                },
+                roleId: {
+                    required: true
+                },
+                chineseName: {
+                    required: true,
                     nameCheck:true
+                },
+                userType: {
+                    required: true
                 },
                 mobile: {
                     required: true,
-                    nameCheck:true,
-                    minlength: 3,
-                    maxlength: 100
+                    mobileZH:true,
+
                 }
             },
             submitHandler: function (form){
@@ -137,11 +151,11 @@ var User = function () {
                     $("#user_edit_form").serialize(),
                     function(result){
                         if(result.message){
-                            removeValue('add');
                             blockUiClose('.userEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
+                            datatable.load();
                         }else{
-                            ToastrMsg(result.data,"error","topRight");
+                            ToastrMsg(result.data,"error","topRight",".userEdit .modal-content");
                         }
                     }
                 )
@@ -154,7 +168,6 @@ var User = function () {
      */
     var editUserItem = function () {
         $("#user_list ").on("click", ".editUserItem", function () {
-            console.log(123)
             removeValue('edit')
             var id = $(this).attr("item");
             if(id != ""){
@@ -163,25 +176,27 @@ var User = function () {
                     'get',
                     {id:id},
                     function (result) {
-                        console.log(result)
                         if(result.message){
-                            $("#user_edit_form [name='id']").val(result.data.id)
+                            $("#user_edit_form [name='id']").val(result.data.userId)
+                            $("#user_edit_form [name='infoId']").val(result.data.infoId)
                             $("#user_edit_form [name='account']").val(result.data.account)
                             $("#user_edit_form [name='email']").val(result.data.email)
                             $("#user_edit_form [name='mobile']").val(result.data.mobile)
+                            $("#user_edit_form [name='roleId']").val(result.data.roleId)
                             $("#user_edit_form [name='chineseName']").val(result.data.chinese_name)
                             $("#user_edit_form [name='userType']").val(result.data.user_type)
                             $("#user_edit_form [name='signature']").text(result.data.signature);
                             $("#user_edit_form [name='address']").val(result.data.address)
+                            $("#user_edit_form [name='status']").val(result.data.status)
                             if(result.data.status == 1){
                                 $('.status_switch').bootstrapSwitch('state',true);
                             }else{
                                 $('.status_switch').bootstrapSwitch('state',false);
                             }
                             $("#distpicker").distpicker({
-                                province: "浙江省",
-                                city: "杭州市",
-                                district: "西湖区"
+                                province: result.data.province,
+                                city: result.data.city,
+                                district: result.data.country
                             });
                         }
                     })
@@ -228,15 +243,20 @@ var User = function () {
         if(type == 'edit'){
             $(".userEdit .modal-title").text("用户编辑")
             $(".userEdit [name='save']").val('edit')
-
+            $("#user_edit_form [name='account']").attr("disabled",true)
+            $("#user_edit_form [name='password']").attr("disabled",true)
         }else{
             $(".userEdit .modal-title").text("用户新增")
             $(".userEdit [name='save']").val('add');
             $('#distpicker').distpicker({autoSelect: false});
+            $("#user_edit_form [name='account']").attr("disabled",false)
+            $("#user_edit_form [name='password']").attr("disabled",false)
         }
+        $("#user_edit_form [name='roleId']").val("")
         $("#user_edit_form [name='id']").val("")
         $("#user_edit_form [name='account']").val("")
         $("#user_edit_form [name='userType']").val("")
+        $("#user_edit_form [name='password']").val("")
         $("#user_edit_form [name='email']").val("")
         $("#user_edit_form [name='mobile']").val("")
         $("#user_edit_form [name='chineseName']").val("")
@@ -272,13 +292,14 @@ jQuery(document).ready(function () {
 
     /**
      * 开关
+     * 开关
      */
     $('.status_switch').on('switchChange.bootstrapSwitch', function (event,state) {
+        console.log(state)
         if(state==true){
-            $(this).parents("div").find(".status_switch_parent").find("[name='status']").val(1)
+            $("#status").val(1)
         }else{
-            $(this).parents("div").find(".status_switch_parent").find("[name='status']").val(2)
+            $("#status").val(2)
         }
     });
-    $('.status_switch').bootstrapSwitch();
 });
