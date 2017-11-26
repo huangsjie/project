@@ -1,8 +1,10 @@
 package com.panda.service.system;
 
+import com.panda.model.system.UserInfo;
 import com.panda.util.abs.AbstractService;
 import com.panda.model.system.Users;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,4 +28,19 @@ public interface UsersService extends AbstractService<Users>{
      * @return
      */
     Map selectUserAndUserInfo(String id);
+
+    /**
+     * 获取用户列表
+     * @param map
+     * @return
+     */
+    List<Users> selectUserList(Map map);
+
+    /**
+     * 事物 -- 保存用户信息和用户详情
+     * @param user
+     * @param info
+     * @return
+     */
+    Integer saveUserOrUpdate(Users user, UserInfo info);
 }

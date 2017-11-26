@@ -20,4 +20,11 @@ public interface UsersMapper extends AbstractMapper<Users> {
      * @return
      */
     Map selectUserAndUserInfo(String id);
+
+    /**
+     * 获取用户列表
+     * @param map
+     * @return
+     */
+    List<Users> selectUserList(Map map);
 }

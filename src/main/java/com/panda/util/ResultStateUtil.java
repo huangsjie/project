@@ -42,11 +42,9 @@ public class ResultStateUtil {
     public static final String SUCCESS_QUERY            = "查询成功";//202
     public static final String SUCCESS_ADD              = "新增了一条记录, 并保存成功 !";//203
     public static final String SUCCESS_UPLOAD           = "上传成功";//205
-    public static final String SUCCESS_OUTSIDE_MONEY    = "成功收款金额(￥)%s,剩余余款(￥)%s";//206
-    public static final String COLLECTION_COMPLETION    = "本次成功收款金额%s,此订单已完成全部收款(￥)%s！";//207
     public static final String SUCCESS_BINDING          = "绑定成功";//209
     public static final String SUCCESS_ISEXIST          = "单号正确";//211
-    public static final String SUCCESS_OUTSIDE_MONEY_ITEM = "本次成功收款金额(￥)%s,分配于%s个订单中";//210
+
 
 
     /**
