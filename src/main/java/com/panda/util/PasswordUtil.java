@@ -12,11 +12,11 @@ import org.apache.shiro.util.ByteSource;
  */
 public class PasswordUtil {
 
-    private static String algorithmName = "md5";
+    private String algorithmName = "md5";
 
-    private static int hashIterations = 2;
+    private int hashIterations = 2;
 
-    public static void encryptPassword(Users user) {
+    public void encryptPassword(Users user) {
         String newPassword = new SimpleHash(algorithmName, user.getPassword(), ByteSource.Util.bytes(user.getAccount() + user.getId()), hashIterations).toHex();
         user.setPassword(newPassword);
     }

@@ -31,7 +31,7 @@ public class ResultStateUtil {
     public static final String FAIL_BUSINESS    = "主营业务格式化失败";//107
     public static final String FALL_LONGITUDE   = "经纬度匹配城市失败,请重新获取正确的经纬度！";//108
     public static final String FAIL_BINDING     = "绑定失败";//109
-
+    public static final String IO_EXCEPTION     = "IO异常";
 
     /**
      * 常用成功

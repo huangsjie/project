@@ -38,6 +38,9 @@ public class UsersServiceImpl extends AbstractServiceImpl<Users> implements User
     @Resource
     private UserInfoService userInfoService;
 
+    @Resource
+    private PasswordUtil passwordUtil;
+
     @Override
     protected AbstractMapper<Users> getAbstractMapper() {
         return usersMapper;
@@ -121,7 +124,7 @@ public class UsersServiceImpl extends AbstractServiceImpl<Users> implements User
                 user.setModifyTime(new Date());
                 user.setLoginType(user.getUserType().equals("manager")? 1 : 2);
                 user.setLastDate(new Date());
-                PasswordUtil.encryptPassword(user);
+                passwordUtil.encryptPassword(user);
                 int res = usersMapper.insertSelective(user);
                 if (res > 0){
                     info.setId(UUID.randomUUID().toString());
