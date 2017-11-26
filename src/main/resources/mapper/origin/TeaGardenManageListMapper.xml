@@ -196,4 +196,15 @@
       description = #{description,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <!-- -->
+  <select id="selectTeaGardenManageList" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from e_tea_garden_manage_list tgm
+    where 1 = 1
+    <if test="status != null and status != ''">
+      AND tgm.status = #{status}
+    </if>
+    ORDER BY tgm.create_time ASC
+  </select>
 </mapper>

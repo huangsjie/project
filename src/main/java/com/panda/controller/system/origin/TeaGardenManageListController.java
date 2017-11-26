@@ -4,10 +4,10 @@ import com.alibaba.citrus.util.StringEscapeUtil;
 import com.alibaba.fastjson.JSON;
 import com.panda.controller.system.index.IndexController;
 
-import com.panda.model.origin.TeaGardenInfo;
+import com.panda.model.origin.TeaGardenManageList;
 import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
-import com.panda.service.origin.TeaGardenInfoService;
+import com.panda.service.origin.TeaGardenManageListService;
 import com.panda.service.system.DictionaryService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
@@ -27,30 +27,31 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/system/origin")
-public class TeaGardenController {
+public class TeaGardenManageListController {
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
     @Resource
-    private TeaGardenInfoService  teaGardenInfoService;
+    private TeaGardenManageListService teaGardenManageListService;
     @Resource
     private DictionaryService dictionaryService;
     private static boolean message = false;
     private static Object  data    = null;
-
     /**
      * 获取菜单 Tree 当前菜单为用户 信息一起存储到 Redis 内
      * @return
      */
-    @RequestMapping(value = "/teaGarden",method= RequestMethod.GET)
+    @RequestMapping(value = "/manageList",method= RequestMethod.GET)
     @RequiresPermissions("origin:view")//权限管理;
-    public String getTeaGardenList(HttpServletRequest request, Model model){
+    public String getTeaGardenManageList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         List<Dictionary> statusType = dictionaryService.selectDictionaryValueList("ba259a75-f5a7-4897-949f-1c90b7958b35");
+        List<Dictionary> farmType = dictionaryService.selectDictionaryValueList("92253cc8-2128-11e5-965c-000c29d7a3a0");
         model.addAttribute("baseUrl",request.getRequestURI());
         model.addAttribute("statusType",statusType);
+        model.addAttribute("farmType",farmType);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("authMenu",user.getAuthMenuList());
         model.addAttribute("user",user);
-        return "system/origin/getTeaGardenList";
+        return "system/origin/getTeaGardenManageList";
     }
 
     /**
@@ -58,7 +59,7 @@ public class TeaGardenController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/getTeaGardenDataList",method = RequestMethod.POST)
+    @RequestMapping(value = "/getTeaGardenManageDataList",method = RequestMethod.POST)
     @ResponseBody
     public Object getTeaGardenDataList(HttpServletRequest request,String datatable){
         message = false;
@@ -74,10 +75,10 @@ public class TeaGardenController {
                 }
             }
 
-            List<TeaGardenInfo> teaGardenInfoList = teaGardenInfoService.selectTeaGardenList(query);
-            if(teaGardenInfoList.size() > 0){
+            List<TeaGardenManageList> teaGardenManageList = teaGardenManageListService.selectTeaGardenManageList(query);
+            if(teaGardenManageList.size() > 0){
                 message = true;
-                data = teaGardenInfoList;
+                data = teaGardenManageList;
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -86,23 +87,24 @@ public class TeaGardenController {
         return ResultMsgUtil.getResultMsg(message,data);
     }
 
+
     /**
      * Ajax 获取当前编辑项的内容
      * @param request
      * @param id
      * @return
      */
-    @RequestMapping(value = "/getTeaGardenItem", method = RequestMethod.GET)
+    @RequestMapping(value = "/getTeaGardenManageItem", method = RequestMethod.GET)
     @ResponseBody
-    public Object getTeaGardenItem(HttpServletRequest request,String id){
+    public Object getTeaGardenManageItem(HttpServletRequest request,String id){
         message = false;
         data    = null;
         if (!id.isEmpty()){
             try {
-                TeaGardenInfo teaGardenInfo = teaGardenInfoService.selectByPrimaryKey(id);
-                if(teaGardenInfo != null){
+                TeaGardenManageList teaGardenManageList = teaGardenManageListService.selectByPrimaryKey(id);
+                if(teaGardenManageList != null){
                     message = true;
-                    data = teaGardenInfo;
+                    data = teaGardenManageList;
                 }else{
                     data = ResultStateUtil.ERROR_QUERY;
                 }
@@ -114,22 +116,23 @@ public class TeaGardenController {
         return ResultMsgUtil.getResultMsg(message,data);
     }
 
+
     /**
      * 保存
      * @param request
-     * @param teaGardenInfo
+     * @param teaGardenManageList
      * @param save
      * @return
      */
-    @RequestMapping(value = "/saveTeaGardenInfo",method = RequestMethod.POST)
+    @RequestMapping(value = "/saveTeaGardenManage",method = RequestMethod.POST)
     @ResponseBody
-    public Object SaveTeaGardenInfo(HttpServletRequest request, TeaGardenInfo teaGardenInfo ,String save){
+    public Object SaveTeaGardenManage(HttpServletRequest request, TeaGardenManageList teaGardenManageList ,String save){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         message = false;
         data    = null;
         try{
-            if(!teaGardenInfo.getId().isEmpty() && save.equals("edit")){
-                int i = teaGardenInfoService.updateByPrimaryKeySelective(teaGardenInfo);
+            if(!teaGardenManageList.getId().isEmpty() && save.equals("edit")){
+                int i = teaGardenManageListService.updateByPrimaryKeySelective(teaGardenManageList);
                 if(i > 0){
                     message = true;
                     data    = ResultStateUtil.SUCCESS_UPDATE;
@@ -137,14 +140,14 @@ public class TeaGardenController {
                     data    = ResultStateUtil.FAIL_UPDATE;
                 }
             }else if(save.equals("add")) {
-                teaGardenInfo.setId(UUID.randomUUID().toString());
-                teaGardenInfo.setCreateId(user.getId());
-                teaGardenInfo.setCreateTime(new Date());
-                teaGardenInfo.setModifyId(user.getId());
-                teaGardenInfo.setModifyTime(new Date());
-                teaGardenInfo.setCultivarId(UUID.randomUUID().toString());
-                teaGardenInfo.setStatus(1);
-                int insert = teaGardenInfoService.insertSelective(teaGardenInfo);
+                teaGardenManageList.setId(UUID.randomUUID().toString());
+                teaGardenManageList.setCreateId(user.getId());
+                teaGardenManageList.setCreateTime(new Date());
+                teaGardenManageList.setModifyId(user.getId());
+                teaGardenManageList.setModifyTime(new Date());
+                teaGardenManageList.setCultivarId(UUID.randomUUID().toString());
+                teaGardenManageList.setStatus(1);
+                int insert = teaGardenManageListService.insertSelective(teaGardenManageList);
                 if(insert > 0){
                     message = true;
                     data    = ResultStateUtil.SUCCESS_ADD;
@@ -161,21 +164,20 @@ public class TeaGardenController {
 
     }
 
-
     /**
      * 刪除
      * @param request
      * @param id
      * @return
      */
-    @RequestMapping(value="/delTeaGardenItem",method = RequestMethod.GET)
+    @RequestMapping(value="/delTeaGardenManageItem",method = RequestMethod.GET)
     @ResponseBody
-    public Object DelTeaGardenItem(HttpServletRequest request ,String id){
+    public Object DelTeaGardenManageItem(HttpServletRequest request ,String id){
         message = false;
         data    = null;
         try{
             if (!id.isEmpty()){
-                int i = teaGardenInfoService.deleteByPrimaryKey(id);
+                int i = teaGardenManageListService.deleteByPrimaryKey(id);
                 if(i > 0){
                     message = true;
                     data = ResultStateUtil.SUCCESS_DELETE;
@@ -192,4 +194,5 @@ public class TeaGardenController {
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
+
 }
