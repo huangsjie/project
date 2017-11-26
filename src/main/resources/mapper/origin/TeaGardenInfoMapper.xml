@@ -155,8 +155,18 @@
     <include refid="Base_Column_List" />
     from e_tea_garden_info
     where 1=1
-
-
   </select>
+
+  <select id="selectTeaGardenList" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from e_tea_garden_info tg
+    where 1 = 1
+    <if test="status != null and status != ''">
+      AND tg.status = #{status}
+    </if>
+    ORDER BY tg.create_time ASC
+  </select>
+
 
 </mapper>
