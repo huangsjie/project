@@ -37,8 +37,23 @@ public class RolesServiceImpl extends AbstractServiceImpl<Roles> implements Role
         return null;
     }
 
+    /**
+     * 获取用户角色信息
+     * @param userId
+     * @return
+     */
     @Override
     public List<Map> selectUserRoleMap(String userId) {
-        return null;
+        return rolesMapper.selectUserRoleMap(userId);
+    }
+
+    /**
+     * 获取角色列表
+     * @param map
+     * @return
+     */
+    @Override
+    public List<Roles> selectRoleList(Map map){
+        return rolesMapper.selectRoleList(map);
     }
 }

@@ -29,4 +29,11 @@ public interface RolesService extends AbstractService<Roles> {
      * @return
      */
     List<Map> selectUserRoleMap(String userId);
+
+    /**
+     * 获取角色列表
+     * @param map
+     * @return
+     */
+    List<Roles> selectRoleList(Map map);
 }

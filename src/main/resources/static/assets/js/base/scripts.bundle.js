@@ -748,7 +748,6 @@ jQuery.fn.extend({
 			init: function (options) {
 				dt.setupBaseDOM.call();
 				dt.setupDOM(datatable.table);
-
 				// on event after layout had done setup, show datatable
 				$(datatable).on('m-datatable--on-layout-updated', dt.afterRender);
 
@@ -1667,10 +1666,9 @@ jQuery.fn.extend({
 					params.url = API.getOption('data.source.read.url');
 					if (typeof params.url !== 'string') params.url = API.getOption('data.source.read');
 					if (typeof params.url !== 'string') params.url = API.getOption('data.source');
-					params.data['datatable'] = $.extend({}, API.getDataSourceParam(), API.getOption('data.source.read.params'));
+					params.data['datatable'] = JSON.stringify($.extend({}, API.getDataSourceParam(), API.getOption('data.source.read.params')));
 					params.method = 'POST';
 				}
-
 				return $.ajax(params)
 					.done(function (data, textStatus, jqXHR) {
 						// extendible data map callback for custom datasource in future
@@ -1707,7 +1705,7 @@ jQuery.fn.extend({
 							if (pg.meta.perpage === 0) {
 								pg.meta.perpage = options.data.pageSize || 10;
 							}
-							pg.meta.total = datatable.jsonData.length;
+							pg.meta.total = datatable.jsonData != null && datatable.jsonData.length > 0 ? datatable.jsonData.length : 0;
 							pg.initCallback = true;
 						}
 
@@ -3196,6 +3194,7 @@ jQuery.fn.extend({
 
 	// default options
 	$.fn.mDatatable.defaults = {
+
 		// datasource definition
 		data: {
 			type: null,
@@ -5295,7 +5294,7 @@ jQuery.fn.extend({
                 qs.processing = true;
                 qs.form.addClass(qs.options.spinner);
                 Plugin.handleCancelIconVisibility('off');
-                
+
                 $.ajax({
                     url: qs.options.source,
                     data: {query: query},

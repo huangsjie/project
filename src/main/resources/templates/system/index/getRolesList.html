@@ -79,18 +79,18 @@
                     <div th:replace="~{system/index/rolesEdit :: rolesEdit}"></div>
                     <!--end::Modal-->
                 </div>
-                <!-- PageRole -->
-                <div class="m--hide" id="actionsTemplate">
-                    <a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editRoleItem" title="编辑" shiro:hasPermission="roles:edit" item="#rowId#" data-toggle="modal" data-target=".rolesEdit">
-                        <i class="la la-edit"></i>
-                    </a>
-                    <a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delRoleItem" title="删除" shiro:hasPermission="roles:delete" item="#rowId#" >
-                        <i class="la la-trash"></i>
-                    </a>
-                </div>
-                <!-- PageRole -->
             </div>
             <!--END: Main Portlet-->
+            <!-- PageRole -->
+            <div class="m--hide" id="actionsTemplate">
+                <a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editRoleItem" title="编辑" shiro:hasPermission="roles:edit" item="#rowId#" data-toggle="modal" data-target=".rolesEdit">
+                    <i class="la la-edit"></i>
+                </a>
+                <a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delRoleItem" title="删除" shiro:hasPermission="roles:delete" item="#rowId#" >
+                    <i class="la la-trash"></i>
+                </a>
+            </div>
+            <!-- PageRole -->
         </div>
     </div>
     <!-- end:: Body -->

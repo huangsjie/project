@@ -145,4 +145,15 @@
     from s_roles
     where 1 = 1
   </select>
+
+  <select id="selectRoleList" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from s_roles r
+    where 1 = 1
+    <if test="status != null and status != ''">
+      AND r.status = #{status}
+    </if>
+    ORDER BY r.create_time ASC
+  </select>
 </mapper>
