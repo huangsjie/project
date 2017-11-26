@@ -1,7 +1,12 @@
 package com.panda.controller.system.index;
 
+import com.alibaba.citrus.util.StringEscapeUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.panda.model.system.Dictionary;
 import com.panda.model.system.Roles;
 import com.panda.model.system.Users;
+import com.panda.service.system.DictionaryService;
 import com.panda.service.system.RolesService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
@@ -17,9 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * Created with IDEA.
@@ -33,6 +37,9 @@ public class RolesController {
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
     @Resource
     private RolesService rolesService;
+    @Resource
+    private DictionaryService dictionaryService;
+
     private static boolean message = false;
     private static Object  data    = null;
     /**
@@ -43,10 +50,10 @@ public class RolesController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @RequiresPermissions("roles:view")//权限管理;
-    //@RequiresAuthentication
-    // @RequiresRoles("teller")
     public String getRolesList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+        List<Dictionary> statusType = dictionaryService.selectDictionaryValueList("ba259a75-f5a7-4897-949f-1c90b7958b35");
+        model.addAttribute("statusType",statusType);
         model.addAttribute("baseUrl",request.getRequestURI());
         model.addAttribute("menuList",user.getMenuList());
         return "system/index/getRolesList";
@@ -59,11 +66,22 @@ public class RolesController {
      */
     @RequestMapping(value = "/getRolesDataList",method = RequestMethod.POST)
     @ResponseBody
-    public Object getRolesDataList(HttpServletRequest request){
+    public Object getRolesDataList(HttpServletRequest request, String datatable){
+
         message = false;
         data    = null;
         try {
-            List<Roles> rolesList = rolesService.selectAll();
+            Map query = new HashMap();
+            if (datatable != null && !datatable.isEmpty()){
+                String jsonStr = StringEscapeUtil.unescapeHtml(datatable);
+                Map params = JSON.parseObject(jsonStr,Map.class);
+                Map status = JSON.parseObject(params.get("query").toString(),Map.class);
+                if (status.get("status") != ""){
+                    query.put("status",status.get("status"));
+                }
+            }
+
+            List<Roles> rolesList = rolesService.selectRoleList(query);
             if(rolesList.size() > 0){
                 message = true;
                 data = rolesList;
