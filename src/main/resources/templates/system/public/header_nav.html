@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="UTF-8"/>
 </head>
@@ -219,7 +219,7 @@
                                 data-dropdown-toggle="click">
                                 <a href="#" class="m-nav__link m-dropdown__toggle">
                                     <span class="m-topbar__userpic">
-                                        <img th:src="${user.headImgUrl}" class="m--img-rounded m--marginless m--img-centered" alt=""/>
+                                        <img th:src="${not #strings.isEmpty(user.headImgUrl)} ? ${user.headImgUrl} : '/assets/img/users/300_14.jpg'" class="m--img-rounded m--marginless m--img-centered" alt=""/>
                                     </span>
                                     <span class="m-topbar__username m--hide"> Nick </span>
                                 </a>
@@ -229,13 +229,13 @@
                                         <div class="m-dropdown__header m--align-center"
                                              style="background: url('/assets/img/misc/user_profile_bg.jpg'); background-size: cover;">
                                             <div class="m-card-user m-card-user--skin-dark">
-                                                <div class="m-card-user__pic">
-                                                    <img th:src="${user.headImgUrl}" class="m--img-rounded m--marginless" alt=""/>
-                                                </div>
+                                                <!--<div class="m-card-user__pic">-->
+                                                    <!--<img th:src="${user.headImgUrl}" class="m&#45;&#45;img-rounded m&#45;&#45;marginless" alt=""/>-->
+                                                <!--</div>-->
                                                 <div class="m-card-user__details">
-																<span class="m-card-user__name m--font-weight-500">
-																	[[${user.chineseName}]]
-																</span>
+                                                    <span class="m-card-user__name m--font-weight-500">
+                                                        [[${user.chineseName}]]
+                                                    </span>
                                                     <a href="" class="m-card-user__email m--font-weight-300 m-link">
                                                         [[${user.email}]]
                                                     </a>
