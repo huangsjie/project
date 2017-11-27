@@ -209,4 +209,18 @@ public class UserController {
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
+
+    /**
+     * 修改我的信息 header_nav.html 快捷方式
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/editMyAccount" ,method = RequestMethod.GET)
+    @RequiresPermissions("user:edit")//权限管理;
+    public String editMyAccount(HttpServletRequest request, Model model){
+        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("menuList",user.getMenuList());
+        model.addAttribute("user",user);
+        return "system/ucenter/editMyAccount";
+    }
 }

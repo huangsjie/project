@@ -48,7 +48,6 @@ public class TeaGardenController {
         model.addAttribute("baseUrl",request.getRequestURI());
         model.addAttribute("statusType",statusType);
         model.addAttribute("menuList",user.getMenuList());
-        model.addAttribute("authMenu",user.getAuthMenuList());
         model.addAttribute("user",user);
         return "system/origin/getTeaGardenList";
     }

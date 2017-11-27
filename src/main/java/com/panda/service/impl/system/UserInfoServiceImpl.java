@@ -26,4 +26,14 @@ public class UserInfoServiceImpl extends AbstractServiceImpl<UserInfo> implement
     protected AbstractMapper<UserInfo> getAbstractMapper() {
         return userInfoMapper;
     }
+
+    /**
+     * 查询用户头像
+     * @param userId
+     * @return
+     */
+    @Override
+    public String selectUserHeadImgUrl(String userId){
+        return userInfoMapper.selectUserHeadImgUrl(userId);
+    }
 }

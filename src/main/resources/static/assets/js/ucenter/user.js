@@ -188,6 +188,9 @@ var User = function () {
                             $("#user_edit_form [name='signature']").text(result.data.signature);
                             $("#user_edit_form [name='address']").val(result.data.address)
                             $("#user_edit_form [name='status']").val(result.data.status)
+                            if (typeof result.data.head_imgurl !== 'undefined' && result.data.head_imgurl !== ''){
+                                $("#upload_image img").attr('src',result.data.head_imgurl)
+                            }
                             $(".user_nick_name").text(result.data.chinese_name)
                             $(".user_email").text(result.data.email)
                             if(result.data.status == 1){
@@ -248,12 +251,16 @@ var User = function () {
             $("#user_edit_form [name='account']").attr("disabled",true)
             $("#user_edit_form [name='password']").attr("disabled",true)
         }else{
+            $(".user_nick_name").text("Jion Landry")
+            $(".user_email").text("jionlandry@gmail.com")
             $(".userEdit .modal-title").text("用户新增")
             $(".userEdit [name='save']").val('add');
             $('#distpicker').distpicker({autoSelect: false});
             $("#user_edit_form [name='account']").attr("disabled",false)
             $("#user_edit_form [name='password']").attr("disabled",false)
         }
+        $("#upload_image img").attr('src','/assets/img/users/300_14.jpg')
+        $("#headImgurl").val()
         $("#user_edit_form [name='roleId']").val("")
         $("#user_edit_form [name='id']").val("")
         $("#user_edit_form [name='account']").val("")
@@ -297,7 +304,6 @@ jQuery(document).ready(function () {
      * 开关
      */
     $('.status_switch').on('switchChange.bootstrapSwitch', function (event,state) {
-        console.log(state)
         if(state==true){
             $("#status").val(1)
         }else{
