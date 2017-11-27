@@ -24,44 +24,33 @@ var TeaGarden = function () {
             sortable: true,
             filterable: false,
             pagination: true,
-            columns: [{
-                title: "#",
-                width: 40,
-                template: function (row) {
+            columns: [
+                {title: "#", width: 40, template: function (row) {
+                    console.log(row)
                     return row.rowIndex+1;
-                }
-            }, {
-                field: "name",
-                title: "名称",
-                width: 100
-            }, {
-                field: "area",
-                title: "区域",
-                width: 100
-            }, {
-                field: "description",
-                title: "描述",
-                width: 100
-            }, {
-                field: "createTime",
-                title: "创建时间",
-                sortable: 'asc',
-                width: 150
-            }, {
+                }},
+                {field: "name", title: "名称", width: 100},
+                {field: "teaGradeName", title: "等级", width: 100},
+                {field: "gardenTypeName", title: "类型", width: 100},
+                {field: "area", title: "区域", width: 100},
+                {field: "acreage", title: "面积", width: 100},
+                {field: "age_limit", title: "树龄", width: 100},
+                //{field: "description", title: "描述", width: 100},
+                {field: "create_time", title: "创建时间", sortable: 'asc', width: 150},
+               /* {
                 field: "status",
                 title: "状态",
                 sortable: 'asc',
                 width: 60,
                 template: function (row) {
                     var status = {
-
                         //0: {'title': '未知', 'class': ' m-badge--info'},
                         1: {'title': '启用', 'class': ' m-badge--success'},
                         2: {'title': '禁用', 'class': ' m-badge--danger'}
                     };
                     return '<span class="m-badge ' + status[row.status].class + ' m-badge--wide">' + status[row.status].title + '</span>';
                 }
-            },{
+            },*/{
                 field: "Actions",
                 width: 100,
                 title: "操作",
@@ -83,12 +72,22 @@ var TeaGarden = function () {
             datatable.load();
         }).val(query.generalSearch);
 
-        $('#m_form_status').on('change', function () {
+        $('#m_form_tea_grade_level').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.status = $(this).val().toLowerCase();
+            query.tea_grade = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.status !== 'undefined' ? query.status : '');
+        }).val(typeof query.tea_grade !== 'undefined' ? query.tea_grade : '');
+
+        $('#m_form_tea_garden_type').on('change', function () {
+            var query = datatable.getDataSourceQuery();
+            query.garden_type = $(this).val().toLowerCase();
+            datatable.setDataSourceQuery(query);
+            datatable.load();
+        }).val(typeof query.garden_type !== 'undefined' ? query.garden_type : '');
+
+
+
        /* $('#m_form_status').on('change', function () {
             var query = datatable.getDataSourceQuery();
             query.status = $(this).val();
@@ -97,7 +96,8 @@ var TeaGarden = function () {
 
         }).val(typeof query.status !== 'undefined' ? query.status : '');*/
 
-        $('#m_form_status').selectpicker();
+        $('#m_form_tea_grade_level').selectpicker();
+        $('#m_form_tea_garden_type').selectpicker();
     };
 
 
@@ -112,12 +112,11 @@ var TeaGarden = function () {
                     required: true,
                     nameCheck:true
                 },
-                description: {
-                    required: true,
-                    nameCheck:true,
-                    minlength: 1,
-                    maxlength: 100
-                }
+                teaGrade:{required: true,},
+                gardenType:{required: true,},
+                area:{required: true,},
+                acreage:{required: true,},
+                ageLimit:{required: true,number:true},
             },
 
             submitHandler: function (form){
@@ -186,7 +185,12 @@ var TeaGarden = function () {
                             console.log(result.data)
                             $("#tea_garden_edit_form [name='id']").val(result.data.id)
                             $("#tea_garden_edit_form [name='name']").val(result.data.name)
+                            $("#tea_garden_edit_form [name='teaGrade']").val(result.data.teaGrade)
+                            $("#tea_garden_edit_form [name='gardenType']").val(result.data.gardenType)
                             $("#tea_garden_edit_form [name='area']").val(result.data.area)
+                            $("#tea_garden_edit_form [name='acreage']").val(result.data.acreage)
+                            $("#tea_garden_edit_form [name='ageLimit']").val(result.data.ageLimit)
+                            $("#tea_garden_edit_form [name='sortId']").val(result.data.sortId)
                             $("#tea_garden_edit_form [name='description']").val(result.data.description)
                         }
 

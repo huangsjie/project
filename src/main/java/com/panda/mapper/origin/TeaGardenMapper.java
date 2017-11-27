@@ -12,6 +12,6 @@ public interface TeaGardenMapper extends AbstractMapper<TeaGarden> {
      * @param map
      * @return
      */
-    List<TeaGarden> selectTeaGardenList(Map map);
+    List<Map> selectTeaGardenList(Map map);
 
 }

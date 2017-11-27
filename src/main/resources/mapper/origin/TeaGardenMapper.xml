@@ -8,6 +8,7 @@
     <result column="area" property="area" jdbcType="VARCHAR" />
     <result column="tea_grade" property="teaGrade" jdbcType="VARCHAR" />
     <result column="tea_is" property="teaIs" jdbcType="VARCHAR" />
+    <result column="age_limit" property="ageLimit" jdbcType="VARCHAR" />
     <result column="garden_type" property="gardenType" jdbcType="VARCHAR" />
     <result column="cultivar_id" property="cultivarId" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
@@ -208,10 +209,12 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
-  <select id="selectTeaGardenList" resultMap="BaseResultMap" parameterType="map">
+  <select id="selectTeaGardenList" resultType="map" parameterType="map">
     select
-    <include refid="Base_Column_List" />
+    tg.*,d.name teaGradeName ,d1.name gardenTypeName
     from e_tea_garden tg
+    LEFT JOIN s_dictionary as d on tg.tea_grade = d.id
+    LEFT JOIN s_dictionary as d1 on tg.garden_type = d1.id
     where 1 = 1
     <if test="status != null and status != ''">
       AND tg.status = #{status}

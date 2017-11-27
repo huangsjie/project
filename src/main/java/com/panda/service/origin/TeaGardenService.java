@@ -12,5 +12,5 @@ public interface TeaGardenService extends AbstractService<TeaGarden> {
      * @param map
      * @return
      */
-    List<TeaGarden> selectTeaGardenList(Map map);
+    List<Map> selectTeaGardenList(Map map);
 }
