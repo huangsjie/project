@@ -64,7 +64,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xl-4 order-1 order-xl-2 m--align-left">
-                                    <button type="button" shiro:hasPermission="origin:add" class="btn btn-info" data-toggle="modal" data-target=".teaGardenManageEdit">
+                                    <button type="button" shiro:hasPermission="origin:add" class="btn btn-info" data-toggle="modal" data-target=".teaGardenLogEdit">
                                         新增
                                     </button>
                                 </div>
@@ -76,17 +76,17 @@
                         <!--end: Datatable -->
                     </div>
                     <!--begin::Modal-->
-                    <div th:replace="~{system/origin/teaGardenManageEdit :: teaGardenManageEdit}"></div>
+                    <div th:replace="~{system/origin/teaGardenLogEdit :: teaGardenLogEdit}"></div>
                     <!--end::Modal-->
                 </div>
             </div>
             <!--END: Main Portlet-->
             <!-- PageRole -->
             <div class="m--hide" id="actionsTemplate">
-                <a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editRoleItem" title="编辑" shiro:hasPermission="roles:edit" item="#rowId#" data-toggle="modal" data-target=".rolesEdit">
+                <a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editTeaGardenLogItem" title="编辑" shiro:hasPermission="roles:edit" item="#rowId#" data-toggle="modal" data-target=".teaGardenLogEdit">
                     <i class="la la-edit"></i>
                 </a>
-                <a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delTeaGardenItem" title="删除" shiro:hasPermission="roles:delete" item="#rowId#" >
+                <a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delTeaGardenLogItem" title="删除" shiro:hasPermission="roles:delete" item="#rowId#" >
                     <i class="la la-trash"></i>
                 </a>
             </div>
