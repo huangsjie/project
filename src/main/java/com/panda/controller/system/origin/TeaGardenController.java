@@ -181,7 +181,6 @@ public class TeaGardenController {
                 }else{
                     data = ResultStateUtil.ERROR_QUERY;
                 }
-
             }else{
                 data = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
             }

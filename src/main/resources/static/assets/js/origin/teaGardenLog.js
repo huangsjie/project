@@ -1,11 +1,12 @@
 var TeaGardenManage = function () {
+    var actionsTemplate = $("#actionsTemplate").html();
     var teaGardenManageShow = function () {
         var datatable = $('.tea_garden_manage_ajax').mDatatable({
             data: {
                 type: 'remote',
                 source: {
                     read: {
-                        url: '/system/origin/getTeaGardenManageDataList'
+                        url: 'getTeaGardenLogList'
                     }
                 },
                 pageSize: 10,
@@ -72,14 +73,7 @@ var TeaGardenManage = function () {
                 overflow: 'visible',
                 template: function (row) {
                     var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
-                    return '\
-						<a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editTeaGardenManageItem" title="编辑" item="'+row.id+'" data-toggle="modal" data-target=".teaGardenManageEdit">\
-							<i class="la la-edit"></i>\
-						</a>\
-						<a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delTeaGardenManageItem" title="删除" item="'+row.id+'" >\
-							<i class="la la-trash"></i>\
-						</a>\
-					';
+                    return actionsTemplate.replace(/#rowId#/g, row.id);
                 }
             }]
         });
@@ -131,15 +125,15 @@ var TeaGardenManage = function () {
             },
 
             submitHandler: function (form){
-                blockUiOpen('.teaGardenManageEdit .modal-content');
+                blockUiOpen('.teaGardenLogEdit .modal-content');
                 request(
-                    "saveTeaGardenManage",
+                    "saveTeaGardenLog",
                     "post",
                     $("#tea_garden_manage_edit_form").serialize(),
                     function(result){
                         if(result.message){
                             removeValue('add');
-                            blockUiClose('.teaGardenManageEdit .modal-content',1,".close-parent",0);
+                            blockUiClose('.teaGardenLogEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
                             //blockUiOpen('.rolesEdit .modal-content',result.data);
                             //blockUiClose('.rolesEdit .modal-content',1,".close-parent",2000);
@@ -155,87 +149,93 @@ var TeaGardenManage = function () {
             }
         });
     }
+    /**
+     * 获取角色信息,并移除上一轮错误信息
+     */
+    var editTeaGardenLogItem = function () {
+        $("#tea_garden_manage_list").on("click", ".editTeaGardenLogItem", function () {
+            removeValue('edit')
+            var id = $(this).attr("item");
+            if(id != ""){
+                request(
+                    "getTeaGardenLogItem",
+                    'get',
+                    {id:id},
+                    function (result) {
+                        if(result.message){
+                            $("#tea_garden_manage_edit_form [name='id']").val(result.data.id)
+                            $("#tea_garden_manage_edit_form [name='name']").val(result.data.name)
+                            $("#tea_garden_manage_edit_form [name='area']").val(result.data.area)
+                            $("#tea_garden_manage_edit_form [name='description']").val(result.data.description)
+                        }
+                    })
+            }
+        })
+    }
+    /**
+     * 删除角色
+     */
+    var delTeaGardenItem = function () {
+        $("#tea_garden_manage_list ").on("click", ".delTeaGardenItem", function () {
+            blockUiOpen('#tea_garden_list');
+            var self = $(this);
+            var id = self.attr("item");
+            if(id != ""){
+                request(
+                    "delTeaGardenLogItem",
+                    'get',
+                    {id:id},
+                    function (result) {
+                        if(!result.message){
+                            self.parents("tr").remove();
+                            ToastrMsg(result.data,"success","topRight",'#tea_garden_list');
+                        }else{
+                            ToastrMsg(result.data,"error","topRight",'#tea_garden_list');
+                        }
+                    })
+            }
+        })
+    }
+
+    /**
+     * 重置表单
+     */
+    var removeValue = function(type){
+        if(type == 'edit'){
+            $(".teaGardenLogEdit .modal-title").text("管理记录编辑")
+            $(".teaGardenLogEdit [name='save']").val('edit')
+        }else{
+            $(".teaGardenLogEdit .modal-title").text("茶园新增")
+            $(".teaGardenLogEdit [name='save']").val('add');
+        }
+        $(".teaGardenLogEdit [name='id']").val('')
+        $(".teaGardenLogEdit [name='name']").val('')
+        $(".teaGardenLogEdit [name='description']").val('');
+        $(".teaGardenLogEdit .form-control-feedback").remove()
+        $(".teaGardenLogEdit div").removeClass("has-danger")
+        $(".teaGardenLogEdit div").removeClass("has-success")
+    }
+
+    /**
+     * 取消编辑时 重置表单初始值为 add 类型
+     */
+    var addTeaGardenLog = function () {
+        $(".addTeaGardenLog").on('click',function(){
+            removeValue('add')
+        })
+    }
 
     return {
         init: function () {
+            editTeaGardenLogItem()
             teaGardenManageShow();
             teaGardenManageForm();
         }
     };
 }();
 
-/**
- * 重置表单
- */
-function removeValue(type){
-    if(type == 'edit'){
-        $(".teaGardenManageEdit .modal-title").text("管理记录编辑")
-        $(".teaGardenManageEdit [name='save']").val('edit')
-    }else{
-        $(".teaGardenManageEdit .modal-title").text("茶园新增")
-        $(".teaGardenManageEdit [name='save']").val('add');
-    }
-    $(".teaGardenManageEdit [name='id']").val('')
-    $(".teaGardenManageEdit [name='name']").val('')
-    $(".teaGardenManageEdit [name='description']").val('');
-    $(".teaGardenManageEdit .form-control-feedback").remove()
-    $(".teaGardenManageEdit div").removeClass("has-danger")
-    $(".teaGardenManageEdit div").removeClass("has-success")
-}
+
 
 jQuery(document).ready(function () {
-    /**
-     * 获取角色信息,并移除上一轮错误信息
-     */
-    $("#tea_garden_manage_list").on("click", ".editTeaGardenManageItem", function () {
-        removeValue('edit')
-        var id = $(this).attr("item");
-        if(id != ""){
-            request(
-                "getTeaGardenManageItem",
-                'get',
-                {id:id},
-                function (result) {
-                    if(result.message){
-                        $("#tea_garden_manage_edit_form [name='id']").val(result.data.id)
-                        $("#tea_garden_manage_edit_form [name='name']").val(result.data.name)
-                        $("#tea_garden_manage_edit_form [name='area']").val(result.data.area)
-                        $("#tea_garden_manage_edit_form [name='description']").val(result.data.description)
-                    }
-
-
-            })
-        }
-    })
-
-    /**
-     * 删除角色
-     */
-    $("#tea_garden_manage_list ").on("click", ".delTeaGardenManageItem", function () {
-        blockUiOpen('#tea_garden_list');
-        var self = $(this);
-        var id = self.attr("item");
-        if(id != ""){
-            request(
-                "delTeaGardenManageItem",
-                'get',
-                {id:id},
-                function (result) {
-                    if(!result.message){
-                        self.parents("tr").remove();
-                        ToastrMsg(result.data,"success","topRight",'#tea_garden_list');
-                    }else{
-                        ToastrMsg(result.data,"error","topRight",'#tea_garden_list');
-                    }
-                })
-            }
-    })
-
-    /**
-     * 取消编辑时 重置表单初始值为 add 类型
-     */
-    $(".close-parent").on('click',function(){
-        removeValue('add')
-    })
     TeaGardenManage.init();
 });

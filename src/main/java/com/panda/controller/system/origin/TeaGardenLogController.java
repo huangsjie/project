@@ -26,9 +26,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Controller
-@RequestMapping("/system/origin")
+@RequestMapping("/system/teaLog")
 public class TeaGardenLogController {
-    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
+    private static final Logger logger = LoggerFactory.getLogger(TeaGardenLogController.class);
     @Resource
     private TeaGardenLogService teaGardenLogService;
     @Resource
