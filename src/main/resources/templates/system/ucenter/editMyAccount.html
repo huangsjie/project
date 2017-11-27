@@ -39,7 +39,7 @@
                                     </div>
                                     <div class="m-card-profile__pic">
                                         <div class="m-card-profile__pic-wrapper" id="upload_image" data-toggle="modal" data-target=".upload_image">
-                                            <img th:src="${user.headImgUrl}" class="m--img-rounded m--marginless m--img-centered" alt=""/>
+                                            <img th:src="${not #strings.isEmpty(user.headImgUrl)} ? ${user.headImgUrl} : @{/assets/img/users/300_14.jpg}" class="m--img-rounded m--marginless m--img-centered" alt=""/>
                                         </div>
                                     </div>
                                     <input type="hidden" value="" name="headImgurl" id="headImgurl">
