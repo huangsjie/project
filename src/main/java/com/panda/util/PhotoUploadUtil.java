@@ -64,6 +64,7 @@ public class PhotoUploadUtil {
             if (response.isOK()){
                 result.setSuccess(1);
                 result.setUrl(basePath+getFilePath(filename));
+                result.setMessage(ResultStateUtil.SUCCESS_UPLOAD);
                 return result;
             }
         } catch (QiniuException e) {

@@ -1,11 +1,9 @@
 package com.panda.controller.system.index;
 
 import com.alibaba.fastjson.JSONObject;
-import com.panda.model.system.Users;
 import com.panda.util.ImageCutUtil;
-import com.panda.util.PhotoUploadUtil;
 import com.panda.util.PhotoResult;
-import org.apache.shiro.SecurityUtils;
+import com.panda.util.PhotoUploadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,10 +18,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * 上传图片的controller
+ * 上传图片的RestController
  * Created by eumji on 17-5-31.
  */
 @RestController
+@RequestMapping(value = "/system/image")
 public class ImageController {
 
     private Logger logger = LoggerFactory.getLogger(ImageController.class);
@@ -31,9 +30,14 @@ public class ImageController {
     @Resource
     private PhotoUploadUtil photoUploadUtil;
 
+    /**
+     * 单图上传,图片未剪裁
+     * @param file
+     * @return
+     */
     @RequestMapping("/imageUpload")
     public PhotoResult imageUpload(@RequestParam(value = "editormd-image-file",required = true) MultipartFile file){
-        com.panda.util.PhotoResult result = null;
+        PhotoResult result = null;
         //设置filename
         // String filename = new Random().nextInt(10000)+file.getOriginalFilename();
         try {
@@ -49,14 +53,14 @@ public class ImageController {
     }
 
     /**
-     * 头像修改
+     * 单图上传，图片裁剪后上传
      * @param request 获取session的request
      * @param avatar_src 图片路径
      * @param avatar_data 图片裁剪的内容
      * @param file 图片
      * @return
      */
-    @RequestMapping("/admin/avatar/update")
+    @RequestMapping("/updateAvatar")
     public PhotoResult updateAvatar(HttpServletRequest request, String avatar_src, String avatar_data, @RequestParam(value = "avatar_file",required = true) MultipartFile file){
         PhotoResult result = null;
         String type = file.getContentType();
@@ -74,9 +78,6 @@ public class ImageController {
             inputStream.close();
             //上传图片
             result = photoUploadUtil.uploadPhoto(files.getAbsolutePath(), file.getOriginalFilename());
-            Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-            //userService.updateAvatar(result.getUrl(),user.getChineseName());result.getUrl()
-            result.setMessage("修改图像成功！！！");
 
         }catch (IOException e){
            logger.error(e.getMessage());
