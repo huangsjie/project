@@ -3,7 +3,8 @@ package com.panda.model.origin;
 import java.io.Serializable;
 import java.util.Date;
 
-public class TeaGardenManageList implements Serializable {
+public class TeaGardenLog implements Serializable {
+
     private String id;
 
     private String teaGardenId;
@@ -20,6 +21,10 @@ public class TeaGardenManageList implements Serializable {
 
     private String operatorId;
 
+    private Integer status;
+
+    private String description;
+
     private String createId;
 
     private Date createTime;
@@ -27,10 +32,6 @@ public class TeaGardenManageList implements Serializable {
     private String modifyId;
 
     private Date modifyTime;
-
-    private Integer status;
-
-    private String description;
 
     public String getId() {
         return id;
@@ -96,6 +97,22 @@ public class TeaGardenManageList implements Serializable {
         this.operatorId = operatorId;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getCreateId() {
         return createId;
     }
@@ -126,21 +143,5 @@ public class TeaGardenManageList implements Serializable {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

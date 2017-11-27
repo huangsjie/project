@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.panda.mapper.origin.TeaGardenManageListMapper" >
-  <resultMap id="BaseResultMap" type="com.panda.model.origin.TeaGardenManageList" >
+<mapper namespace="com.panda.mapper.origin.TeaGardenLogMapper" >
+  <resultMap id="BaseResultMap" type="com.panda.model.origin.TeaGardenLog" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="tea_garden_id" property="teaGardenId" jdbcType="VARCHAR" />
     <result column="farm_type_id" property="farmTypeId" jdbcType="VARCHAR" />
@@ -10,41 +10,41 @@
     <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
     <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
     <result column="operator_id" property="operatorId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="create_id" property="createId" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="modify_id" property="modifyId" jdbcType="VARCHAR" />
     <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
-    <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="description" property="description" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, tea_garden_id, farm_type_id, farm_desc, cultivar_id, begin_time, end_time, operator_id, 
-    create_id, create_time, modify_id, modify_time, status, description
+    status, description, create_id, create_time, modify_id, modify_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from e_tea_garden_manage_list
+    from e_tea_garden_log
     where id = #{id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from e_tea_garden_manage_list
+    delete from e_tea_garden_log
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.panda.model.origin.TeaGardenManageList" >
-    insert into e_tea_garden_manage_list (id, tea_garden_id, farm_type_id, 
+  <insert id="insert" parameterType="com.panda.model.origin.TeaGardenLog" >
+    insert into e_tea_garden_log (id, tea_garden_id, farm_type_id, 
       farm_desc, cultivar_id, begin_time, 
-      end_time, operator_id, create_id, 
-      create_time, modify_id, modify_time, 
-      status, description)
+      end_time, operator_id, status, 
+      description, create_id, create_time, 
+      modify_id, modify_time)
     values (#{id,jdbcType=VARCHAR}, #{teaGardenId,jdbcType=VARCHAR}, #{farmTypeId,jdbcType=VARCHAR}, 
       #{farmDesc,jdbcType=VARCHAR}, #{cultivarId,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP}, 
-      #{endTime,jdbcType=TIMESTAMP}, #{operatorId,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR})
+      #{endTime,jdbcType=TIMESTAMP}, #{operatorId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.panda.model.origin.TeaGardenManageList" >
-    insert into e_tea_garden_manage_list
+  <insert id="insertSelective" parameterType="com.panda.model.origin.TeaGardenLog" >
+    insert into e_tea_garden_log
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -70,6 +70,12 @@
       <if test="operatorId != null" >
         operator_id,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
       <if test="createId != null" >
         create_id,
       </if>
@@ -81,12 +87,6 @@
       </if>
       <if test="modifyTime != null" >
         modify_time,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="description != null" >
-        description,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -114,6 +114,12 @@
       <if test="operatorId != null" >
         #{operatorId,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
       <if test="createId != null" >
         #{createId,jdbcType=VARCHAR},
       </if>
@@ -126,16 +132,10 @@
       <if test="modifyTime != null" >
         #{modifyTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="status != null" >
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="description != null" >
-        #{description,jdbcType=VARCHAR},
-      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.panda.model.origin.TeaGardenManageList" >
-    update e_tea_garden_manage_list
+  <update id="updateByPrimaryKeySelective" parameterType="com.panda.model.origin.TeaGardenLog" >
+    update e_tea_garden_log
     <set >
       <if test="teaGardenId != null" >
         tea_garden_id = #{teaGardenId,jdbcType=VARCHAR},
@@ -158,6 +158,12 @@
       <if test="operatorId != null" >
         operator_id = #{operatorId,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
       <if test="createId != null" >
         create_id = #{createId,jdbcType=VARCHAR},
       </if>
@@ -170,17 +176,11 @@
       <if test="modifyTime != null" >
         modify_time = #{modifyTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="description != null" >
-        description = #{description,jdbcType=VARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.panda.model.origin.TeaGardenManageList" >
-    update e_tea_garden_manage_list
+  <update id="updateByPrimaryKey" parameterType="com.panda.model.origin.TeaGardenLog" >
+    update e_tea_garden_log
     set tea_garden_id = #{teaGardenId,jdbcType=VARCHAR},
       farm_type_id = #{farmTypeId,jdbcType=VARCHAR},
       farm_desc = #{farmDesc,jdbcType=VARCHAR},
@@ -188,23 +188,25 @@
       begin_time = #{beginTime,jdbcType=TIMESTAMP},
       end_time = #{endTime,jdbcType=TIMESTAMP},
       operator_id = #{operatorId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
       create_id = #{createId,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       modify_id = #{modifyId,jdbcType=VARCHAR},
-      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=INTEGER},
-      description = #{description,jdbcType=VARCHAR}
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <!-- -->
-  <select id="selectTeaGardenManageList" resultMap="BaseResultMap" parameterType="map">
+
+  <!-- 茶园日志列表数据 -->
+  <select id="selectTeaGardenLogList" resultMap="BaseResultMap" parameterType="map">
     select
     <include refid="Base_Column_List" />
-    from e_tea_garden_manage_list tgm
+    from e_tea_garden_log tgm
     where 1 = 1
     <if test="status != null and status != ''">
       AND tgm.status = #{status}
     </if>
     ORDER BY tgm.create_time ASC
   </select>
+  <!-- 茶园日志列表数据 -->
 </mapper>
