@@ -36,7 +36,7 @@ public class Users implements Serializable {
 
     private List<Menu> menuList;
 
-    private List<Menu> authMenuList;
+    private String headImgUrl;
 
     public String getId() {
         return id;
@@ -158,9 +158,9 @@ public class Users implements Serializable {
         this.menuList = menuList;
     }
 
-    public List<Menu> getAuthMenuList(){ return authMenuList; }
+    public String getHeadImgUrl(){ return headImgUrl; }
 
-    public void setAuthMenuList(List<Menu> authMenuList) { this.authMenuList = authMenuList; }
+    public void setHeadImgUrl(String headImgUrl) { this.headImgUrl = headImgUrl; }
 
     public String getCredentialsSalt() {
         return this.account + this.id;

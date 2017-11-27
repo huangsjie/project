@@ -69,6 +69,7 @@ public class PageRoleController {
         model.addAttribute("baseUrl",request.getRequestURI());
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("rolesList",rolesList);
+        model.addAttribute("user",user);
         return "system/index/getPageRoleList";
     }
 

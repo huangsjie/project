@@ -303,7 +303,9 @@
         cropDone: function () {
             this.$avatarForm.get(0).reset();
             this.$avatar.attr('src', this.url);
-            $('.img-circle').attr('src',this.url);
+           // $('.img-circle').attr('src',this.url);
+            $('#upload_image img').attr('src',this.url);
+            $('#headImgurl').val(this.url);
             this.stopCropper();
             this.$avatarModal.modal('hide');
         },
