@@ -28,7 +28,7 @@ public class TeaGardenServiceImpl extends AbstractServiceImpl<TeaGarden> impleme
      * @return
      */
     @Override
-    public List<TeaGarden> selectTeaGardenList(Map map){
+    public List<Map> selectTeaGardenList(Map map){
         return teaGardenMapper.selectTeaGardenList(map);
     }
 }

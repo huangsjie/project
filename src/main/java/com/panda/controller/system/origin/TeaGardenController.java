@@ -45,8 +45,12 @@ public class TeaGardenController {
     public String getTeaGardenList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         List<Dictionary> statusType = dictionaryService.selectDictionaryValueList("ba259a75-f5a7-4897-949f-1c90b7958b35");
+        List<Dictionary> teaGardenLevel = dictionaryService.selectDictionaryValueList("3a68b833-3db7-436c-a656-15365525f782");
+        List<Dictionary> gardenType = dictionaryService.selectDictionaryValueList("96a73505-f111-49a8-84c5-78788f3a3986");
         model.addAttribute("baseUrl",request.getRequestURI());
         model.addAttribute("statusType",statusType);
+        model.addAttribute("teaGardenLevel",teaGardenLevel);
+        model.addAttribute("gardenType",gardenType);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
         return "system/origin/getTeaGardenList";
@@ -68,12 +72,15 @@ public class TeaGardenController {
                 String jsonStr = StringEscapeUtil.unescapeHtml(datatable);
                 Map params = JSON.parseObject(jsonStr,Map.class);
                 Map status = JSON.parseObject(params.get("query").toString(),Map.class);
-                if (status.size() > 0 && status.get("status") != ""){
-                    query.put("status",status.get("status"));
+                if (status.size() > 0 && status.get("tea_grade") != ""){
+                    query.put("tea_grade",status.get("tea_grade"));
+                }
+                if (status.size() > 0 && status.get("garden_type") != ""){
+                    query.put("garden_type",status.get("garden_type"));
                 }
             }
 
-            List<TeaGarden> teaGardenInfoList = teaGardenService.selectTeaGardenList(query);
+            List<Map> teaGardenInfoList = teaGardenService.selectTeaGardenList(query);
             if(teaGardenInfoList.size() > 0){
                 message = true;
                 data = teaGardenInfoList;
@@ -143,6 +150,7 @@ public class TeaGardenController {
                 teaGarden.setModifyTime(new Date());
                 teaGarden.setCultivarId(UUID.randomUUID().toString());
                 teaGarden.setStatus(1);
+
                 int insert = teaGardenService.insertSelective(teaGarden);
                 if(insert > 0){
                     message = true;
