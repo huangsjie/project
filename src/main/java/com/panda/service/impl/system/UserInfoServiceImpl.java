@@ -36,4 +36,14 @@ public class UserInfoServiceImpl extends AbstractServiceImpl<UserInfo> implement
     public String selectUserHeadImgUrl(String userId){
         return userInfoMapper.selectUserHeadImgUrl(userId);
     }
+
+    /**
+     * 查询用户扩展信息
+     * @param userId
+     * @return
+     */
+    @Override
+    public UserInfo selectUserInfoByUserId(String userId){
+        return userInfoMapper.selectUserInfoByUserId(userId);
+    }
 }
