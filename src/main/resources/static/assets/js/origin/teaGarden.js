@@ -1,4 +1,5 @@
 var TeaGardenInfo = function () {
+    var actionsTemplate = $("#actionsTemplate").html();
     var teaGardenInfoShow = function () {
         var datatable = $('.tea_garden_info_ajax').mDatatable({
             data: {
@@ -68,14 +69,7 @@ var TeaGardenInfo = function () {
                 overflow: 'visible',
                 template: function (row) {
                     var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
-                    return '\
-						<a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editTeaGardenItem" title="编辑" item="'+row.id+'" data-toggle="modal" data-target=".teaGardenInfoEdit">\
-							<i class="la la-edit"></i>\
-						</a>\
-						<a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delTeaGardenItem" title="删除" item="'+row.id+'" >\
-							<i class="la la-trash"></i>\
-						</a>\
-					';
+                    return actionsTemplate.replace(/#rowId#/g, row.id);
                 }
             }]
         });
@@ -127,15 +121,15 @@ var TeaGardenInfo = function () {
             },
 
             submitHandler: function (form){
-                blockUiOpen('.teaGardenInfoEdit .modal-content');
+                blockUiOpen('.teaGardenEdit .modal-content');
                 request(
-                    "saveTeaGardenInfo",
+                    "saveTeaGarden",
                     "post",
                     $("#tea_garden_edit_form").serialize(),
                     function(result){
                         if(result.message){
                             removeValue('add');
-                            blockUiClose('.teaGardenInfoEdit .modal-content',1,".close-parent",0);
+                            blockUiClose('.teaGardenEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
                             //blockUiOpen('.rolesEdit .modal-content',result.data);
                             //blockUiClose('.rolesEdit .modal-content',1,".close-parent",2000);
@@ -165,25 +159,25 @@ var TeaGardenInfo = function () {
  */
 function removeValue(type){
     if(type == 'edit'){
-        $(".teaGardenInfoEdit .modal-title").text("茶园编辑")
-        $(".teaGardenInfoEdit [name='save']").val('edit')
+        $(".teaGardenEdit .modal-title").text("茶园编辑")
+        $(".teaGardenEdit [name='save']").val('edit')
     }else{
-        $(".teaGardenInfoEdit .modal-title").text("茶园新增")
-        $(".teaGardenInfoEdit [name='save']").val('add');
+        $(".teaGardenEdit .modal-title").text("茶园新增")
+        $(".teaGardenEdit [name='save']").val('add');
     }
-    $(".teaGardenInfoEdit [name='id']").val('')
-    $(".teaGardenInfoEdit [name='name']").val('')
-    $(".teaGardenInfoEdit [name='description']").val('');
-    $(".teaGardenInfoEdit .form-control-feedback").remove()
-    $(".teaGardenInfoEdit div").removeClass("has-danger")
-    $(".teaGardenInfoEdit div").removeClass("has-success")
+    $(".teaGardenEdit [name='id']").val('')
+    $(".teaGardenEdit [name='name']").val('')
+    $(".teaGardenEdit [name='description']").val('');
+    $(".teaGardenEdit .form-control-feedback").remove()
+    $(".teaGardenEdit div").removeClass("has-danger")
+    $(".teaGardenEdit div").removeClass("has-success")
 }
 
 jQuery(document).ready(function () {
     /**
      * 获取角色信息,并移除上一轮错误信息
      */
-    $("#tea_garden_list").on("click", ".editTeaGardenItem", function () {
+    $("#tea_garden_list").on("click", ".teaGardenEdit", function () {
         removeValue('edit')
         var id = $(this).attr("item");
         if(id != ""){

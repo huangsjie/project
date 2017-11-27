@@ -4,10 +4,10 @@ import com.alibaba.citrus.util.StringEscapeUtil;
 import com.alibaba.fastjson.JSON;
 import com.panda.controller.system.index.IndexController;
 
-import com.panda.model.origin.TeaGardenManageList;
+import com.panda.model.origin.TeaGardenLog;
 import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
-import com.panda.service.origin.TeaGardenManageListService;
+import com.panda.service.origin.TeaGardenLogService;
 import com.panda.service.system.DictionaryService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
@@ -27,10 +27,10 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/system/origin")
-public class TeaGardenManageListController {
+public class TeaGardenLogController {
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
     @Resource
-    private TeaGardenManageListService teaGardenManageListService;
+    private TeaGardenLogService teaGardenLogService;
     @Resource
     private DictionaryService dictionaryService;
     private static boolean message = false;
@@ -39,9 +39,9 @@ public class TeaGardenManageListController {
      * 获取菜单 Tree 当前菜单为用户 信息一起存储到 Redis 内
      * @return
      */
-    @RequestMapping(value = "/manageList",method= RequestMethod.GET)
+    @RequestMapping(value = "/list",method= RequestMethod.GET)
     @RequiresPermissions("origin:view")//权限管理;
-    public String getTeaGardenManageList(HttpServletRequest request, Model model){
+    public String getTeaGardenLog(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         List<Dictionary> statusType = dictionaryService.selectDictionaryValueList("ba259a75-f5a7-4897-949f-1c90b7958b35");
         List<Dictionary> farmType = dictionaryService.selectDictionaryValueList("92253cc8-2128-11e5-965c-000c29d7a3a0");
@@ -50,7 +50,7 @@ public class TeaGardenManageListController {
         model.addAttribute("farmType",farmType);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
-        return "system/origin/getTeaGardenManageList";
+        return "system/origin/getTeaGardenLogList";
     }
 
     /**
@@ -58,9 +58,9 @@ public class TeaGardenManageListController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/getTeaGardenManageDataList",method = RequestMethod.POST)
+    @RequestMapping(value = "/getTeaGardenLogList",method = RequestMethod.POST)
     @ResponseBody
-    public Object getTeaGardenDataList(HttpServletRequest request,String datatable){
+    public Object getTeaGardenLogList(HttpServletRequest request,String datatable){
         message = false;
         data    = null;
         try {
@@ -74,10 +74,10 @@ public class TeaGardenManageListController {
                 }
             }
 
-            List<TeaGardenManageList> teaGardenManageList = teaGardenManageListService.selectTeaGardenManageList(query);
-            if(teaGardenManageList.size() > 0){
+            List<TeaGardenLog> TeaGardenLog = teaGardenLogService.selectTeaGardenLogList(query);
+            if(TeaGardenLog.size() > 0){
                 message = true;
-                data = teaGardenManageList;
+                data = TeaGardenLog;
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -93,17 +93,17 @@ public class TeaGardenManageListController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/getTeaGardenManageItem", method = RequestMethod.GET)
+    @RequestMapping(value = "/getTeaGardenLogItem", method = RequestMethod.GET)
     @ResponseBody
-    public Object getTeaGardenManageItem(HttpServletRequest request,String id){
+    public Object getTeaGardenLogItem(HttpServletRequest request,String id){
         message = false;
         data    = null;
         if (!id.isEmpty()){
             try {
-                TeaGardenManageList teaGardenManageList = teaGardenManageListService.selectByPrimaryKey(id);
-                if(teaGardenManageList != null){
+                TeaGardenLog TeaGardenLog = teaGardenLogService.selectByPrimaryKey(id);
+                if(TeaGardenLog != null){
                     message = true;
-                    data = teaGardenManageList;
+                    data = TeaGardenLog;
                 }else{
                     data = ResultStateUtil.ERROR_QUERY;
                 }
@@ -119,19 +119,19 @@ public class TeaGardenManageListController {
     /**
      * 保存
      * @param request
-     * @param teaGardenManageList
+     * @param TeaGardenLog
      * @param save
      * @return
      */
-    @RequestMapping(value = "/saveTeaGardenManage",method = RequestMethod.POST)
+    @RequestMapping(value = "/saveTeaGardenLog",method = RequestMethod.POST)
     @ResponseBody
-    public Object SaveTeaGardenManage(HttpServletRequest request, TeaGardenManageList teaGardenManageList ,String save){
+    public Object saveTeaGardenLog(HttpServletRequest request, TeaGardenLog TeaGardenLog ,String save){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         message = false;
         data    = null;
         try{
-            if(!teaGardenManageList.getId().isEmpty() && save.equals("edit")){
-                int i = teaGardenManageListService.updateByPrimaryKeySelective(teaGardenManageList);
+            if(!TeaGardenLog.getId().isEmpty() && save.equals("edit")){
+                int i = teaGardenLogService.updateByPrimaryKeySelective(TeaGardenLog);
                 if(i > 0){
                     message = true;
                     data    = ResultStateUtil.SUCCESS_UPDATE;
@@ -139,14 +139,14 @@ public class TeaGardenManageListController {
                     data    = ResultStateUtil.FAIL_UPDATE;
                 }
             }else if(save.equals("add")) {
-                teaGardenManageList.setId(UUID.randomUUID().toString());
-                teaGardenManageList.setCreateId(user.getId());
-                teaGardenManageList.setCreateTime(new Date());
-                teaGardenManageList.setModifyId(user.getId());
-                teaGardenManageList.setModifyTime(new Date());
-                teaGardenManageList.setCultivarId(UUID.randomUUID().toString());
-                teaGardenManageList.setStatus(1);
-                int insert = teaGardenManageListService.insertSelective(teaGardenManageList);
+                TeaGardenLog.setId(UUID.randomUUID().toString());
+                TeaGardenLog.setCreateId(user.getId());
+                TeaGardenLog.setCreateTime(new Date());
+                TeaGardenLog.setModifyId(user.getId());
+                TeaGardenLog.setModifyTime(new Date());
+                TeaGardenLog.setCultivarId(UUID.randomUUID().toString());
+                TeaGardenLog.setStatus(1);
+                int insert = teaGardenLogService.insertSelective(TeaGardenLog);
                 if(insert > 0){
                     message = true;
                     data    = ResultStateUtil.SUCCESS_ADD;
@@ -154,13 +154,11 @@ public class TeaGardenManageListController {
                     data    = ResultStateUtil.FAIL_ADD;
                 }
             }
-
         }catch (Exception e){
             e.printStackTrace();
             data  = ResultStateUtil.ERROR_DATABASE_OPERATION;
         }
         return ResultMsgUtil.getResultMsg(message,data);
-
     }
 
     /**
@@ -169,14 +167,14 @@ public class TeaGardenManageListController {
      * @param id
      * @return
      */
-    @RequestMapping(value="/delTeaGardenManageItem",method = RequestMethod.GET)
+    @RequestMapping(value="/delTeaGardenLogItem",method = RequestMethod.GET)
     @ResponseBody
-    public Object DelTeaGardenManageItem(HttpServletRequest request ,String id){
+    public Object delTeaGardenLogItem(HttpServletRequest request ,String id){
         message = false;
         data    = null;
         try{
             if (!id.isEmpty()){
-                int i = teaGardenManageListService.deleteByPrimaryKey(id);
+                int i = teaGardenLogService.deleteByPrimaryKey(id);
                 if(i > 0){
                     message = true;
                     data = ResultStateUtil.SUCCESS_DELETE;

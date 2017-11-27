@@ -4,10 +4,10 @@ import com.alibaba.citrus.util.StringEscapeUtil;
 import com.alibaba.fastjson.JSON;
 import com.panda.controller.system.index.IndexController;
 
-import com.panda.model.origin.TeaGardenInfo;
+import com.panda.model.origin.TeaGarden;
 import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
-import com.panda.service.origin.TeaGardenInfoService;
+import com.panda.service.origin.TeaGardenService;
 import com.panda.service.system.DictionaryService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
@@ -30,7 +30,7 @@ import java.util.*;
 public class TeaGardenController {
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
     @Resource
-    private TeaGardenInfoService  teaGardenInfoService;
+    private TeaGardenService teaGardenService;
     @Resource
     private DictionaryService dictionaryService;
     private static boolean message = false;
@@ -73,7 +73,7 @@ public class TeaGardenController {
                 }
             }
 
-            List<TeaGardenInfo> teaGardenInfoList = teaGardenInfoService.selectTeaGardenList(query);
+            List<TeaGarden> teaGardenInfoList = teaGardenService.selectTeaGardenList(query);
             if(teaGardenInfoList.size() > 0){
                 message = true;
                 data = teaGardenInfoList;
@@ -98,10 +98,10 @@ public class TeaGardenController {
         data    = null;
         if (!id.isEmpty()){
             try {
-                TeaGardenInfo teaGardenInfo = teaGardenInfoService.selectByPrimaryKey(id);
-                if(teaGardenInfo != null){
+                TeaGarden teaGarden = teaGardenService.selectByPrimaryKey(id);
+                if(teaGarden != null){
                     message = true;
-                    data = teaGardenInfo;
+                    data = teaGarden;
                 }else{
                     data = ResultStateUtil.ERROR_QUERY;
                 }
@@ -116,19 +116,19 @@ public class TeaGardenController {
     /**
      * 保存
      * @param request
-     * @param teaGardenInfo
+     * @param teaGarden
      * @param save
      * @return
      */
-    @RequestMapping(value = "/saveTeaGardenInfo",method = RequestMethod.POST)
+    @RequestMapping(value = "/saveTeaGarden",method = RequestMethod.POST)
     @ResponseBody
-    public Object SaveTeaGardenInfo(HttpServletRequest request, TeaGardenInfo teaGardenInfo ,String save){
+    public Object saveTeaGarden(HttpServletRequest request, TeaGarden teaGarden ,String save){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         message = false;
         data    = null;
         try{
-            if(!teaGardenInfo.getId().isEmpty() && save.equals("edit")){
-                int i = teaGardenInfoService.updateByPrimaryKeySelective(teaGardenInfo);
+            if(!teaGarden.getId().isEmpty() && save.equals("edit")){
+                int i = teaGardenService.updateByPrimaryKeySelective(teaGarden);
                 if(i > 0){
                     message = true;
                     data    = ResultStateUtil.SUCCESS_UPDATE;
@@ -136,14 +136,14 @@ public class TeaGardenController {
                     data    = ResultStateUtil.FAIL_UPDATE;
                 }
             }else if(save.equals("add")) {
-                teaGardenInfo.setId(UUID.randomUUID().toString());
-                teaGardenInfo.setCreateId(user.getId());
-                teaGardenInfo.setCreateTime(new Date());
-                teaGardenInfo.setModifyId(user.getId());
-                teaGardenInfo.setModifyTime(new Date());
-                teaGardenInfo.setCultivarId(UUID.randomUUID().toString());
-                teaGardenInfo.setStatus(1);
-                int insert = teaGardenInfoService.insertSelective(teaGardenInfo);
+                teaGarden.setId(UUID.randomUUID().toString());
+                teaGarden.setCreateId(user.getId());
+                teaGarden.setCreateTime(new Date());
+                teaGarden.setModifyId(user.getId());
+                teaGarden.setModifyTime(new Date());
+                teaGarden.setCultivarId(UUID.randomUUID().toString());
+                teaGarden.setStatus(1);
+                int insert = teaGardenService.insertSelective(teaGarden);
                 if(insert > 0){
                     message = true;
                     data    = ResultStateUtil.SUCCESS_ADD;
@@ -174,7 +174,7 @@ public class TeaGardenController {
         data    = null;
         try{
             if (!id.isEmpty()){
-                int i = teaGardenInfoService.deleteByPrimaryKey(id);
+                int i = teaGardenService.deleteByPrimaryKey(id);
                 if(i > 0){
                     message = true;
                     data = ResultStateUtil.SUCCESS_DELETE;
