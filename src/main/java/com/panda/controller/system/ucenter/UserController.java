@@ -8,6 +8,7 @@ import com.panda.model.system.UserInfo;
 import com.panda.model.system.Users;
 import com.panda.service.system.DictionaryService;
 import com.panda.service.system.RolesService;
+import com.panda.service.system.UserInfoService;
 import com.panda.service.system.UsersService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
@@ -41,6 +42,8 @@ public class UserController {
 
     @Resource
     private UsersService usersService;
+    @Resource
+    private UserInfoService userInfoService;
     @Resource
     private DictionaryService dictionaryService;
     @Resource
@@ -146,7 +149,7 @@ public class UserController {
         message = false;
         data    = null;
         try {
-            if (user != null){
+            if (user != null && (save.equals("add") || save.equals("edit"))){
                 if (infoId != null && infoId != ""){
                     userInfo.setId(infoId);
                 }
@@ -162,6 +165,7 @@ public class UserController {
                     case 200:
                         message = true;
                         data    = ResultStateUtil.SUCCESS_UPDATE;
+                        break;
                     case 203 :
                         message = true;
                         data    = ResultStateUtil.SUCCESS_ADD;
@@ -219,8 +223,10 @@ public class UserController {
     @RequiresPermissions("user:edit")//权限管理;
     public String editMyAccount(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+        UserInfo info = userInfoService.selectUserInfoByUserId(user.getId());
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
+        model.addAttribute("info",info);
         return "system/ucenter/editMyAccount";
     }
 }

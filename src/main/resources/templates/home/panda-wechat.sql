@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-11-26 23:12:50
+Date: 2017-11-27 18:27:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -121,22 +121,25 @@ DROP TABLE IF EXISTS `e_tea_garden_info`;
 CREATE TABLE `e_tea_garden_info` (
   `id` varchar(36) NOT NULL DEFAULT '' COMMENT '自增id',
   `name` varchar(50) NOT NULL COMMENT '茶园名称',
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
+  `area` varchar(100) DEFAULT NULL COMMENT '区域',
+  `tea_grade` varchar(36) DEFAULT NULL COMMENT '等级',
+  `tea_is` varchar(36) DEFAULT NULL COMMENT '茶系',
+  `garden_type` varchar(36) DEFAULT NULL,
+  `cultivar_id` varchar(36) DEFAULT NULL COMMENT '栽培品种',
+  `description` varchar(300) DEFAULT NULL COMMENT '备注',
   `create_id` varchar(36) NOT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_id` varchar(36) DEFAULT NULL COMMENT '修改人',
   `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
-  `description` varchar(300) DEFAULT NULL COMMENT '备注',
-  `area` varchar(100) NOT NULL COMMENT '区域',
-  ` cultivar_id` varchar(36) NOT NULL COMMENT '栽培品种',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of e_tea_garden_info
 -- ----------------------------
-INSERT INTO `e_tea_garden_info` VALUES ('60053ec7-cdf7-11e7-a0af-50465deb996e', '茶园A', '13165056-cdf9-11e7-a0af-50465deb996e', '2017-11-20 21:33:46', '13165056-cdf9-11e7-a0af-50465deb996e', '2017-11-20 21:33:52', '1', 'qq', '湖北', '13165056-cdf9-11e7-a0af-50465deb996e');
-INSERT INTO `e_tea_garden_info` VALUES ('800a25d7-6d35-401d-bb7f-db0c48906b69', '你好', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 21:15:14', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 21:15:14', '1', '啊是D阿斯顿发生的方法', '123', '7235cfc8-bcd7-48ef-88e0-fcc0c640ab13');
+INSERT INTO `e_tea_garden_info` VALUES ('60053ec7-cdf7-11e7-a0af-50465deb996e', '茶园A', '1', '湖北', null, null, null, '13165056-cdf9-11e7-a0af-50465deb996e', 'qq', '13165056-cdf9-11e7-a0af-50465deb996e', '2017-11-20 21:33:46', '13165056-cdf9-11e7-a0af-50465deb996e', '2017-11-20 21:33:52');
+INSERT INTO `e_tea_garden_info` VALUES ('800a25d7-6d35-401d-bb7f-db0c48906b69', '你好', '1', '123', null, null, null, '7235cfc8-bcd7-48ef-88e0-fcc0c640ab13', '啊是D阿斯顿发生的方法', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 21:15:14', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 21:15:14');
 
 -- ----------------------------
 -- Table structure for e_tea_garden_manage_list
@@ -223,8 +226,7 @@ CREATE TABLE `s_dictionary` (
   `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
   `description` varchar(300) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `value` (`value`),
-  UNIQUE KEY `name` (`name`)
+  UNIQUE KEY `name` (`name`,`value`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -233,33 +235,63 @@ CREATE TABLE `s_dictionary` (
 INSERT INTO `s_dictionary` VALUES ('02e71242-9fea-11e5-a07b-000c29d29d54', '13', '10000000-0000-0000-0000-000000000000', '设备类型', 'customerType', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-11 17:16:00', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-11 17:16:00', '1', '设备类型');
 INSERT INTO `s_dictionary` VALUES ('072b643a-9a30-11e5-a07b-000c29d29d54', '12', '10000000-0000-0000-0000-000000000000', '成品品阶', 'checkType', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:49:23', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:49:23', '1', '成品品阶');
 INSERT INTO `s_dictionary` VALUES ('0b9ed538-29d6-11e5-965c-000c29d7a3a0', '8', '10000000-0000-0000-0000-000000000000', '加工类型', 'machiningType', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:48:21', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-16 22:45:54', '1', '加工类型 -machiningType');
+INSERT INTO `s_dictionary` VALUES ('0c794e95-3e24-471a-9cea-3a62532f87c9', '7', '1e12732d-246e-11e5-965c-000c29d7a3a0', '半成品', 'BCP', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:50:58', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:50:58', '1', '半成品');
+INSERT INTO `s_dictionary` VALUES ('0fb92203-be20-4705-87e8-ae6862a91743', '2', 'f63fe4f8-27ab-11e5-965c-000c29d7a3a0', '二等', '2', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:11:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:11:06', '1', '二等');
+INSERT INTO `s_dictionary` VALUES ('1301e136-8d75-4e05-9fa3-06cbdcad1eea', '1', '68d6888f-2b91-11e5-965c-000c29d7a3a0', '自检', 'incheck', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:02:23', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:03:01', '1', '公司内部QC质检');
 INSERT INTO `s_dictionary` VALUES ('155a1b9b-5fbb-11e7-8697-38d547b81379', '2', '10000000-0000-0000-0000-000000000000', '用户类型', 'userType', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:46:27', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:46:27', '1', '用户类型');
-INSERT INTO `s_dictionary` VALUES ('1689fac5-4b03-4d4b-94c1-d1bbbe8d06ee', '2', '92253cc8-2128-11e5-965c-000c29d7a3a0', '茶园属性2', 'status2', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-16 22:30:18', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-16 22:30:18', '2', '茶园属性2');
+INSERT INTO `s_dictionary` VALUES ('16595d6b-b5f0-4b49-970d-2c26c691e66a', '2', '1e12732d-246e-11e5-965c-000c29d7a3a0', '萎凋', 'WD', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:49:19', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:49:19', '1', '萎凋');
+INSERT INTO `s_dictionary` VALUES ('1689fac5-4b03-4d4b-94c1-d1bbbe8d06ee', '2', '92253cc8-2128-11e5-965c-000c29d7a3a0', '播种', 'seed', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-16 22:30:18', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:13:45', '1', '茶园属性播种');
+INSERT INTO `s_dictionary` VALUES ('1699d859-66af-4ea6-8913-0a1e0899f5de', '1', '02e71242-9fea-11e5-a07b-000c29d29d54', '烘烤设备', 'bakefacility', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:05:40', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:05:40', '1', '此处为示例内容');
 INSERT INTO `s_dictionary` VALUES ('1e12732d-246e-11e5-965c-000c29d7a3a0', '6', '10000000-0000-0000-0000-000000000000', '加工工序', 'machinProcess', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:48:28', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-16 22:46:34', '1', 'machiningType');
 INSERT INTO `s_dictionary` VALUES ('203ebb76-6a7a-4710-a234-7750c8d5358d', '1', 'ba259a75-f5a7-4897-949f-1c90b7958b35', '未激活', '0', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-25 15:52:20', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-25 15:57:52', '1', '未开启的状态');
 INSERT INTO `s_dictionary` VALUES ('2192b69e-e600-461f-b7f6-57a9134e12cc', '4', '155a1b9b-5fbb-11e7-8697-38d547b81379', '用户', 'user', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-25 15:42:23', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-25 15:42:23', '1', '普通用户类型');
 INSERT INTO `s_dictionary` VALUES ('241f8263-5e9e-4479-8463-4b902f54e736', '1', '155a1b9b-5fbb-11e7-8697-38d547b81379', '管理员', 'manager', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-16 22:51:54', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-25 15:38:23', '1', '管理员类型');
-INSERT INTO `s_dictionary` VALUES ('4b2946d6-ec92-403f-ae59-6a2d6311e6cd', '1', '92253cc8-2128-11e5-965c-000c29d7a3a0', '茶园属性1', 'status1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-16 22:30:03', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-16 22:30:03', '1', '茶园属性1');
+INSERT INTO `s_dictionary` VALUES ('26b273b3-a49b-4910-a68c-23a1fde3ece0', '3', '68d6888f-2b91-11e5-965c-000c29d7a3a0', '送检', 'inspect', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:04:05', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:04:05', '1', '第三方机构送检');
+INSERT INTO `s_dictionary` VALUES ('31783870-956f-469f-b43e-9fefd905afca', '7', '10000000-0000-0000-0000-000000000000', '所属茶系', 'teaAttr', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:53:47', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:53:47', '1', '茶系字典');
+INSERT INTO `s_dictionary` VALUES ('4b2946d6-ec92-403f-ae59-6a2d6311e6cd', '1', '92253cc8-2128-11e5-965c-000c29d7a3a0', '耕地', 'plough', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-16 22:30:03', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:13:13', '1', '茶园当前操作为耕地');
+INSERT INTO `s_dictionary` VALUES ('4c23ef06-e0b5-49ae-947b-bb1ff3af9118', '1', '31783870-956f-469f-b43e-9fefd905afca', '绿茶', 'GREENTEA', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:55:32', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:00:20', '1', 'CXLC （茶系-绿茶）首字母大写');
 INSERT INTO `s_dictionary` VALUES ('4c387b0a-5c56-43fc-8e5a-9050df95b2c0', '2', 'ba259a75-f5a7-4897-949f-1c90b7958b35', '激活', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-25 15:52:51', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-25 15:53:37', '1', '使用中的状态');
+INSERT INTO `s_dictionary` VALUES ('53389185-9001-44cc-8c53-83c862b6dc64', '4', 'be0ba01c-23ad-11e5-965c-000c29d7a3a0', '丹桂', 'DG', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:46:43', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:46:43', '1', '丹桂');
 INSERT INTO `s_dictionary` VALUES ('54398001-2a31-42a9-9fed-9d3ce4612fed', '2', '155a1b9b-5fbb-11e7-8697-38d547b81379', '商户', 'merchant', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-16 22:52:58', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-25 15:41:01', '1', '门店和经销商');
+INSERT INTO `s_dictionary` VALUES ('56a4a63d-2cb8-474d-8da4-9bc9bce662e7', '1', '1e12732d-246e-11e5-965c-000c29d7a3a0', '鲜叶', 'XY', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:48:38', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:48:38', '1', '鲜叶');
+INSERT INTO `s_dictionary` VALUES ('5fe37095-7d9a-4235-914f-cf0c6f1e592a', '6', '92253cc8-2128-11e5-965c-000c29d7a3a0', '灌溉', 'irrigate', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:16:07', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:16:07', '1', '茶园灌溉');
+INSERT INTO `s_dictionary` VALUES ('65bac923-24d4-4a61-b933-ca3bd1fae8ae', '3', 'f63fe4f8-27ab-11e5-965c-000c29d7a3a0', '三等', '3', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:11:21', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:11:21', '1', '三等');
 INSERT INTO `s_dictionary` VALUES ('68d6888f-2b91-11e5-965c-000c29d7a3a0', '9', '10000000-0000-0000-0000-000000000000', '质检类型', 'attestation', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:52:05', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:52:05', '1', '质检类型');
+INSERT INTO `s_dictionary` VALUES ('74125ba6-0ec1-4286-b9c2-f56d95fe4ac4', '1', 'f63fe4f8-27ab-11e5-965c-000c29d7a3a0', '一等', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:10:51', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:10:51', '1', '一等品级');
 INSERT INTO `s_dictionary` VALUES ('75b11562-9a2b-11e5-a07b-000c29d29d54', '11', '10000000-0000-0000-0000-000000000000', '包装规格', 'operation', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:52:57', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:52:57', '1', '包装规格');
 INSERT INTO `s_dictionary` VALUES ('8978edce-c9c6-11e7-8126-38d547b81379', '2', 'b6315b3a-1587-11e5-a9de-000c29d7a3a0', '删除', 'delete', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-15 13:33:40', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-26 10:16:25', '1', '删除');
+INSERT INTO `s_dictionary` VALUES ('8a3e0d08-ca66-48b7-9924-b98d98fd193d', '2', '31783870-956f-469f-b43e-9fefd905afca', '红茶', 'REDTEA', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:55:59', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:01:03', '1', '红茶典范');
+INSERT INTO `s_dictionary` VALUES ('8aa97837-a152-49be-98b8-47a11c3b1de4', '4', '1e12732d-246e-11e5-965c-000c29d7a3a0', '揉捻', 'RN', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:49:35', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:49:35', '1', '揉捻');
 INSERT INTO `s_dictionary` VALUES ('9162c28b-e360-4e44-9e7d-a79b843f3645', '3', '155a1b9b-5fbb-11e7-8697-38d547b81379', '会员', 'member', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-16 22:51:26', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-25 15:39:51', '1', '标识为会员的用户');
 INSERT INTO `s_dictionary` VALUES ('92253cc8-2128-11e5-965c-000c29d7a3a0', '4', '10000000-0000-0000-0000-000000000000', '茶园状态', 'teaStatus', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-10 13:16:08', 'fd8b9374-2134-4eb2-b7c7-0019d65d94b2', '2017-11-10 13:16:08', '1', '茶园状态');
 INSERT INTO `s_dictionary` VALUES ('9bda9313-c9c6-11e7-8126-38d547b81379', '3', 'b6315b3a-1587-11e5-a9de-000c29d7a3a0', '编辑', 'edit', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-15 13:34:11', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-26 10:16:25', '1', '编辑');
 INSERT INTO `s_dictionary` VALUES ('9d590186-c9c6-11e7-8126-38d547b81379', '4', 'b6315b3a-1587-11e5-a9de-000c29d7a3a0', '导出', 'export', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-15 13:34:13', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-26 10:16:25', '1', '导出');
 INSERT INTO `s_dictionary` VALUES ('9e15db46-c9c6-11e7-8126-38d547b81379', '5', 'b6315b3a-1587-11e5-a9de-000c29d7a3a0', '提交', 'submit', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-15 13:34:15', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-26 10:16:25', '1', '提交');
+INSERT INTO `s_dictionary` VALUES ('9ea19fba-8765-48f7-8a8a-b5ea412bda2e', '3', '1e12732d-246e-11e5-965c-000c29d7a3a0', '杀青', 'SQ', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:47:26', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:48:42', '1', '杀青');
+INSERT INTO `s_dictionary` VALUES ('9fd1943d-b955-4921-a1cd-76d60126e114', '5', '1e12732d-246e-11e5-965c-000c29d7a3a0', '发酵', 'FJ', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:49:55', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:49:55', '1', '发酵');
+INSERT INTO `s_dictionary` VALUES ('b1c94b1c-67e4-4e45-a516-0976fb142a81', '4', 'f63fe4f8-27ab-11e5-965c-000c29d7a3a0', '特等', '4', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:11:42', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:11:42', '1', '特等');
 INSERT INTO `s_dictionary` VALUES ('b6315b3a-1587-11e5-a9de-000c29d7a3a0', '1', '10000000-0000-0000-0000-000000000000', '按钮权限', 'roleButtn', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-10 13:16:18', 'fd8b9374-2134-4eb2-b7c7-0019d65d94b2', '2017-11-16 22:35:22', '1', '按钮权限组，以实现分区控制功能');
 INSERT INTO `s_dictionary` VALUES ('ba259a75-f5a7-4897-949f-1c90b7958b35', '3', '10000000-0000-0000-0000-000000000000', '状态类型', 'statusType', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-25 15:49:55', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-25 15:49:55', '1', '系统通用的唯一状态');
 INSERT INTO `s_dictionary` VALUES ('be0ba01c-23ad-11e5-965c-000c29d7a3a0', '5', '10000000-0000-0000-0000-000000000000', '茶叶品种', 'teaType', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:51:24', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:51:24', '1', '茶园类型');
 INSERT INTO `s_dictionary` VALUES ('c0de59f4-63a7-11e7-b264-000c29b92c50', '14', '10000000-0000-0000-0000-000000000000', '营销类型', 'marketingType', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:44:46', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:44:46', '1', '营销类型');
+INSERT INTO `s_dictionary` VALUES ('c307d686-7dce-4b2f-9efb-16fbeb348de6', '6', '1e12732d-246e-11e5-965c-000c29d7a3a0', '干燥', 'GZ', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:50:21', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:50:21', '1', '干燥');
+INSERT INTO `s_dictionary` VALUES ('c416d2c1-10b1-4ce7-9666-d5e18c79a584', '3', '31783870-956f-469f-b43e-9fefd905afca', '乌龙茶', 'OOLONG', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:56:19', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:01:08', '1', '乌龙茶');
 INSERT INTO `s_dictionary` VALUES ('c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', 'b6315b3a-1587-11e5-a9de-000c29d7a3a0', '新增', 'add', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-16 23:08:25', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-16 23:08:25', '1', '测试组建唯一');
+INSERT INTO `s_dictionary` VALUES ('c655acc2-0a62-4665-8353-41b269b17d3c', '4', '31783870-956f-469f-b43e-9fefd905afca', '黄茶', 'YELLOWTEA', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:58:01', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:59:58', '1', '黄茶');
+INSERT INTO `s_dictionary` VALUES ('cc32f7fc-24d6-471a-a5d5-05962737468a', '1', 'be0ba01c-23ad-11e5-965c-000c29d7a3a0', '元宵绿', 'YXL', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:44:59', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:44:59', '1', '茶叶品种信息');
+INSERT INTO `s_dictionary` VALUES ('ce84f35c-2d8b-4a72-981d-dcbb8150a8c7', '2', '68d6888f-2b91-11e5-965c-000c29d7a3a0', '抽检', 'spotcheck', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:03:33', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:03:33', '1', '抽检');
+INSERT INTO `s_dictionary` VALUES ('d09cffcc-3704-493d-bf45-8c2a90079a8d', '8', '1e12732d-246e-11e5-965c-000c29d7a3a0', '成品', 'CP', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:51:26', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:51:26', '1', '成品');
+INSERT INTO `s_dictionary` VALUES ('d5bbd9b5-91c4-48c2-b5f8-0c7328f8902f', '4', '92253cc8-2128-11e5-965c-000c29d7a3a0', '除草', 'weeding', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:14:49', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:14:49', '1', '茶园除草');
+INSERT INTO `s_dictionary` VALUES ('d687763c-2a2e-41a7-b57d-71e9caebf579', '3', '92253cc8-2128-11e5-965c-000c29d7a3a0', '施肥', 'fertilizer', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:14:25', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:14:25', '1', '茶园操作-施肥');
 INSERT INTO `s_dictionary` VALUES ('d7bd09c0-4114-4445-a2b3-6e17bcb04f09', '3', 'ba259a75-f5a7-4897-949f-1c90b7958b35', '禁用', '2', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-25 15:53:31', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-25 15:53:31', '1', '禁止使用的状态');
 INSERT INTO `s_dictionary` VALUES ('de46c408-c9c6-11e7-8126-38d547b81379', '6', 'b6315b3a-1587-11e5-a9de-000c29d7a3a0', '上传', 'upload', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-15 13:36:02', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-26 10:16:25', '1', '上传');
+INSERT INTO `s_dictionary` VALUES ('de639eec-dd97-497a-953d-7246247aec95', '2', 'be0ba01c-23ad-11e5-965c-000c29d7a3a0', '福云595', 'FY595', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:45:37', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:45:37', '1', '595');
 INSERT INTO `s_dictionary` VALUES ('deed64de-c9c6-11e7-8126-38d547b81379', '7', 'b6315b3a-1587-11e5-a9de-000c29d7a3a0', '审核', 'verify', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-15 13:36:03', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-26 10:16:25', '1', '审核');
+INSERT INTO `s_dictionary` VALUES ('e1f3e464-31c2-46b5-8e20-20d7ea12fb3f', '5', '92253cc8-2128-11e5-965c-000c29d7a3a0', '治虫', 'insecticide', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:15:35', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:15:35', '1', '茶园治虫');
+INSERT INTO `s_dictionary` VALUES ('e6cd00da-fb86-45c4-a0d5-766f781eacc8', '5', '31783870-956f-469f-b43e-9fefd905afca', '黑茶', 'BLACKTEA', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:58:49', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:59:37', '1', '黑茶');
+INSERT INTO `s_dictionary` VALUES ('e9ce4ae0-2c4e-4563-9292-ee7fe182fe4e', '3', 'be0ba01c-23ad-11e5-965c-000c29d7a3a0', '茗科一号', 'MKYH', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:46:21', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:46:21', '1', '茗科');
 INSERT INTO `s_dictionary` VALUES ('efec119e-31ee-11e5-993d-000c29d7a3a0', '10', '10000000-0000-0000-0000-000000000000', '包材类型', 'rankType', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:52:40', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-16 22:46:52', '1', '包材类型1');
-INSERT INTO `s_dictionary` VALUES ('f63fe4f8-27ab-11e5-965c-000c29d7a3a0', '7', '10000000-0000-0000-0000-000000000000', '加工时长', 'machiningTime', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:50:43', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-16 22:45:37', '1', '加工时长-machiningTime');
+INSERT INTO `s_dictionary` VALUES ('f63fe4f8-27ab-11e5-965c-000c29d7a3a0', '7', '10000000-0000-0000-0000-000000000000', '质量等级', 'grade', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:50:43', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-27 18:09:15', '1', '等级，用于品级产品或对应的商品');
 INSERT INTO `s_dictionary` VALUES ('fea1871b-c9c6-11e7-8126-38d547b81379', '8', 'b6315b3a-1587-11e5-a9de-000c29d7a3a0', '查看', 'view', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-15 13:36:57', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-26 10:16:25', '1', '查看');
 
 -- ----------------------------
@@ -632,8 +664,6 @@ CREATE TABLE `s_users` (
 -- ----------------------------
 INSERT INTO `s_users` VALUES ('0f1443aa-eade-410d-b8bf-74ebfa914ca4', 'morgan', '6a3fd4ce78066de7876e189ab9db43a9', '波波', 'jionlandry@gmail.com', '13713666160', 'manager', '2017-10-18 13:30:04', '1', '1', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '2017-10-18 13:30:10', '2017-10-18 13:30:12', '0f1443aa-eade-410d-b8bf-74ebfa914ca4');
 INSERT INTO `s_users` VALUES ('aae3184b-0af7-49c8-9b8c-0ec33cb5ffa1', 'jionlandry', 'f365f8e29fcf4412ee3be47ef8497b23', 'Alan', '123@11213.com', '15011191110', 'manager', '2017-11-26 17:31:03', '1', '1', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '2017-11-26 17:31:03', '2017-11-26 17:31:03', 'aae3184b-0af7-49c8-9b8c-0ec33cb5ffa1');
-INSERT INTO `s_users` VALUES ('d56ad1f8-86a5-4e0f-a4bd-4fde333f9910', 'Alan', null, '哗哗', '2755527207@qq.com', '13713666166', 'user', '2017-11-01 08:54:47', '2', '1', null, null, '2017-11-01 08:54:47', null);
-INSERT INTO `s_users` VALUES ('ff92d2e1-87be-4c32-b61c-3e32c6c45d13', 'account1', 'd6144f7a911700505a5c358500d14964', '爱是as', '12123@1123.com', '15011191111', 'merchant', '2017-11-26 17:29:16', '1', '2', '0C03F6B6-8CC4-4826-8A51-149990861BE3', '2017-11-26 17:29:13', '2017-11-26 17:29:14', 'ff92d2e1-87be-4c32-b61c-3e32c6c45d13');
 
 -- ----------------------------
 -- Table structure for s_user_info
@@ -661,9 +691,9 @@ CREATE TABLE `s_user_info` (
 -- ----------------------------
 -- Records of s_user_info
 -- ----------------------------
-INSERT INTO `s_user_info` VALUES ('0e813589-a977-4a52-9e96-6785efa1667e', 'aae3184b-0af7-49c8-9b8c-0ec33cb5ffa1', null, '123123123', '包头市', '内蒙古自治区', '达尔罕茂明安联合旗', '123123', null, null, '123', null, '2017-11-26 17:31:03', '0f1443aa-eade-410d-b8bf-74ebfa914ca4');
-INSERT INTO `s_user_info` VALUES ('a8381549-d1d9-11e7-ad5f-24fd52935962', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', 'Mollty', '我再写代码', '深圳市', '广东省', '南山区', '西丽官龙村', '22.123123', '113.3211', '123', '123123', '2017-11-25 20:11:48', '0f1443aa-eade-410d-b8bf-74ebfa914ca4');
-INSERT INTO `s_user_info` VALUES ('c1db1398-f9eb-4cfd-a262-d3c58715768b', 'ff92d2e1-87be-4c32-b61c-3e32c6c45d13', null, '12121212', '厦门市', '福建省', '湖里区', '1212', null, null, '123', null, '2017-11-26 17:29:33', '0f1443aa-eade-410d-b8bf-74ebfa914ca4');
+INSERT INTO `s_user_info` VALUES ('0e813589-a977-4a52-9e96-6785efa1667e', 'aae3184b-0af7-49c8-9b8c-0ec33cb5ffa1', null, '123123123', '包头市', '内蒙古自治区', '达尔罕茂明安联合旗', '123123', null, null, '', null, '2017-11-26 17:31:03', '0f1443aa-eade-410d-b8bf-74ebfa914ca4');
+INSERT INTO `s_user_info` VALUES ('a8381549-d1d9-11e7-ad5f-24fd52935962', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', 'Mollty', '我再写代码', '深圳市', '广东省', '南山区', '西丽官龙村', '22.123123', '113.3211', '', '123123', '2017-11-25 20:11:48', '0f1443aa-eade-410d-b8bf-74ebfa914ca4');
+INSERT INTO `s_user_info` VALUES ('c1db1398-f9eb-4cfd-a262-d3c58715768b', 'ff92d2e1-87be-4c32-b61c-3e32c6c45d13', null, '12121212', '厦门市', '福建省', '湖里区', '1212', null, null, '', null, '2017-11-26 17:29:33', '0f1443aa-eade-410d-b8bf-74ebfa914ca4');
 
 -- ----------------------------
 -- Table structure for t_wechat

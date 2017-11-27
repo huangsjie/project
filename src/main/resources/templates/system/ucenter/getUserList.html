@@ -104,8 +104,12 @@
                         <!--end: Datatable -->
                     </div>
                     <!--begin::Modal-->
-                    <div th:replace="~{system/ucenter/userEdit :: userEdit}"></div>
-                    <div th:replace="~{system/public/upload_image :: upload_image}"></div>
+                    <div shiro:hasPermission="user:edit">
+                        <div th:replace="~{system/ucenter/userEdit :: userEdit}"></div>
+                    </div>
+                    <div shiro:hasPermission="user:upload">
+                        <div th:replace="~{system/public/upload_image :: upload_image}"></div>
+                    </div>
                     <!--end::Modal-->
                 </div>
             </div>

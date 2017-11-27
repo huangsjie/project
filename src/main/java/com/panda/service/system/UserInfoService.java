@@ -18,4 +18,12 @@ public interface UserInfoService extends AbstractService<UserInfo> {
      * @return
      */
     String selectUserHeadImgUrl(String userId);
+
+
+    /**
+     * 查询用户扩展信息
+     * @param userId
+     * @return
+     */
+    UserInfo selectUserInfoByUserId(String userId);
 }

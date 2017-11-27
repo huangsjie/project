@@ -38,9 +38,7 @@ var Dictionary = function () {
                     alphanumerical:true
                 },
                 description: {
-                    required: true,
-                    minlength: 5,
-                    maxlength: 100
+                    required: true
                 }
             },
             submitHandler: function (form){
