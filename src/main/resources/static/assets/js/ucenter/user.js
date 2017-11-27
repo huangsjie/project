@@ -188,6 +188,8 @@ var User = function () {
                             $("#user_edit_form [name='signature']").text(result.data.signature);
                             $("#user_edit_form [name='address']").val(result.data.address)
                             $("#user_edit_form [name='status']").val(result.data.status)
+                            $(".user_nick_name").text(result.data.chinese_name)
+                            $(".user_email").text(result.data.email)
                             if(result.data.status == 1){
                                 $('.status_switch').bootstrapSwitch('state',true);
                             }else{

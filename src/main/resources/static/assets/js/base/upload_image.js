@@ -80,7 +80,6 @@
 
         initPreview: function () {
             var url = this.$avatar.attr('src');
-            console.log(url)
             this.$avatarPreview.html('<img src="' + url + '">');
         },
 
@@ -127,8 +126,7 @@
         },
 
         click: function () {
-            console.log("@")
-            this.$avatarModal.modal('show');
+            //this.$avatarModal.modal('show');
             this.initPreview();
         },
 
@@ -154,9 +152,7 @@
                 }
             } else {
                 file = this.$avatarInput.val();
-                console.log(121113)
                 if (this.isImageFile(file)) {
-                    console.log(123)
                     this.syncUpload();
                 }
             }
@@ -275,8 +271,6 @@
         },
 
         submitDone: function (data) {
-            console.log(data);
-
             if (data.success == 1) {
                 if (data.url) {
                     this.url = data.url;
@@ -289,18 +283,17 @@
                         this.$avatarSrc.val(this.url);
                         this.startCropper();
                     }
-
                     this.$avatarInput.val('');
                 } else if (data.message) {
-                    this.alert(data.message);
+                    ToastrMsg(data.message,"error","topRight");
                 }
             } else {
-                this.alert('Failed to response');
+                ToastrMsg('上传出错,请扫后再试.',"error","topRight");
             }
         },
 
         submitFail: function (msg) {
-            this.alert(msg);
+            ToastrMsg(msg,"warning","topRight");
         },
 
         submitEnd: function () {
@@ -334,7 +327,7 @@
 });
 
 $("#upload_image").on('click',function () {
-    var url =  $('.img-circle').attr('src');
+    var url =  $("#upload_image img").attr('src');
     $('.avatar-preview').html('<img src="' + url + '">');
 })
 
