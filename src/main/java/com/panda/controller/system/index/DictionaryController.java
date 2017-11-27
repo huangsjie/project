@@ -53,7 +53,7 @@ public class DictionaryController {
     public String list(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         List<Dictionary> dictionaryList = dictionaryService.selectAll();
-        model.addAttribute("baseUrl",request.getRequestURI());
+        model.addAttribute("user",user);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("dictionaryList",dictionaryList);
         return "system/index/getDictionaryList";

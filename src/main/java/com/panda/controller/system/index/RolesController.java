@@ -2,7 +2,6 @@ package com.panda.controller.system.index;
 
 import com.alibaba.citrus.util.StringEscapeUtil;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.panda.model.system.Dictionary;
 import com.panda.model.system.Roles;
 import com.panda.model.system.Users;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -54,7 +52,7 @@ public class RolesController {
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         List<Dictionary> statusType = dictionaryService.selectDictionaryValueList("ba259a75-f5a7-4897-949f-1c90b7958b35");
         model.addAttribute("statusType",statusType);
-        model.addAttribute("baseUrl",request.getRequestURI());
+        model.addAttribute("user",user);
         model.addAttribute("menuList",user.getMenuList());
         return "system/index/getRolesList";
     }

@@ -49,11 +49,10 @@ public class RoleMenuController {
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @RequiresPermissions("roleMenu:view")//权限管理;
-    //@RequiresAuthentication
-    // @RequiresRoles("teller")
     public String list(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         List<Roles> rolesList = rolesService.selectAll();
+        model.addAttribute("user",user);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("rolesList",rolesList);
         return "system/index/getRoleMenuList";

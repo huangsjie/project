@@ -196,4 +196,19 @@
       create_id = #{createId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <!-- 查询用户头像图片 -->
+  <select id="selectUserHeadImgUrl" resultType="java.lang.String" parameterType="java.lang.String">
+    select
+    i.head_imgurl
+    from s_user_info i
+    where i.user_id = #{user_id} limit 1;
+  </select>
+  <!-- 查询用户头像图片 -->
+  
+  <select id="selectUserInfoByUserId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from s_user_info i
+    where i.user_id = #{user_id} limit 1;
+  </select>
 </mapper>

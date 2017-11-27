@@ -24,18 +24,17 @@
                             <div class="m-portlet m-portlet--full-height ">
                                 <div class="m-portlet__body">
                                     <div class="m-card-profile">
-                                        <div class="m-card-profile__pic">
-                                            <div class="m-card-profile__pic-wrapper">
+                                        <div class="m-card-profile__pic col-lg-9 col-md-9 col-sm-12">
+                                            <div class="m-card-profile__pic-wrapper" id="upload_image" data-toggle="modal" data-target=".upload_image">
                                                 <img th:src="@{/assets/img/users/300_14.jpg}" alt="">
-
                                             </div>
                                         </div>
-                                        <input type="hidden" value="123" name="headImgurl">
+                                        <input type="hidden" value="" name="headImgurl" id="headImgurl">
                                         <div class="m-card-profile__details">
-												<span class="m-card-profile__name">
+												<span class="m-card-profile__name user_nick_name">
 													Jion Landry
 												</span>
-                                            <a href="" class="m-card-profile__email m-link">
+                                            <a href="" class="m-card-profile__email m-link user_email">
                                                 jionlandry@gmail.com
                                             </a>
                                         </div>
@@ -58,19 +57,19 @@
                             <input type="hidden" name="infoId" value="">
                             <input type="hidden" name="save" value="edit">
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-2 col-sm-12">
+                                <label class="col-form-label col-lg-3 col-sm-12">
                                     账号 <span style="color: red">*</span>
                                 </label>
-                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                <div class="col-lg-8 col-md-9 col-sm-12">
                                     <input type="text" class="form-control m-input" name="account" placeholder="登录账号">
                                     <span class="m-form__help"></span>
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-2 col-sm-12">
+                                <label class="col-form-label col-lg-3 col-sm-12">
                                     密码 <span style="color: red">*</span>
                                 </label>
-                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                <div class="col-lg-8 col-md-9 col-sm-12">
                                     <div class="input-group">
                                         <input type="password" class="form-control m-input" name="password" placeholder="登录密码">
                                     </div>
@@ -78,10 +77,10 @@
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-2 col-sm-12">
+                                <label class="col-form-label col-lg-3 col-sm-12">
                                     角色 <span style="color: red">*</span>
                                 </label>
-                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                <div class="col-lg-8 col-md-9 col-sm-12">
                                     <select class="form-control" name="roleId">
                                         <option value=""> 角色类型 </option>
                                         <option th:each="item:${roleList}" th:value="${item.id}" th:text="${item.name}"></option>
@@ -90,10 +89,10 @@
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-2 col-sm-12">
+                                <label class="col-form-label col-lg-3 col-sm-12">
                                     邮箱 <span style="color: red">&nbsp;&nbsp;</span>
                                 </label>
-                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                <div class="col-lg-8 col-md-9 col-sm-12">
                                     <div class="input-group">
                                         <input type="text" class="form-control m-input" name="email" placeholder="联系邮箱">
                                     </div>
@@ -101,28 +100,28 @@
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-2 col-sm-12">
+                                <label class="col-form-label col-lg-3 col-sm-12">
                                     姓名 <span style="color: red">*</span>
                                 </label>
-                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                <div class="col-lg-8 col-md-9 col-sm-12">
                                     <input  type="text" class="form-control m-input" name="chineseName" placeholder="中文/英文名">
                                     <span class="m-form__help"></span>
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-2 col-sm-12">
+                                <label class="col-form-label col-lg-3 col-sm-12">
                                     电话 <span style="color: red">*</span>
                                 </label>
-                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                <div class="col-lg-8 col-md-9 col-sm-12">
                                     <input type="text" class="form-control m-input" name="mobile" placeholder="电话号码">
                                     <span class="m-form__help"></span>
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-2 col-sm-12">
+                                <label class="col-form-label col-lg-3 col-sm-12">
                                     类型 <span style="color: red">*</span>
                                 </label>
-                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                <div class="col-lg-8 col-md-9 col-sm-12">
                                     <select class="form-control" name="userType">
                                         <option value=""> 用户类型 </option>
                                         <option th:each="item:${userType}" th:value="${item.value}" th:text="${item.name}"></option>
@@ -132,29 +131,29 @@
                             </div>
 
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-2 col-sm-12">
+                                <label class="col-form-label col-lg-3 col-sm-12">
                                     地区 <span style="color: red">&nbsp;&nbsp;</span>
                                 </label>
-                                <div class="col-lg-9 col-md-9 col-sm-12" id="distpicker">
+                                <div class="col-lg-8 col-md-9 col-sm-12" id="distpicker">
                                     <select class="distpicker_rss form-control" name="province"></select>
                                     <select class="distpicker_rss form-control" name="city"></select>
                                     <select class="distpicker_rss form-control" name="country"></select>
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-2 col-sm-12">
+                                <label class="col-form-label col-lg-3 col-sm-12">
                                     详细 <span style="color: red">&nbsp;&nbsp;</span>
                                 </label>
-                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                <div class="col-lg-8 col-md-9 col-sm-12">
                                     <input type="text" class="form-control m-input" name="address" placeholder="所在位置">
                                     <span class="m-form__help"></span>
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-2 col-sm-12">
+                                <label class="col-form-label col-lg-3 col-sm-12">
                                     签名 <span style="color: red">&nbsp;&nbsp;</span>
                                 </label>
-                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                <div class="col-lg-8 col-md-9 col-sm-12">
                                     <textarea class="form-control m-input" name="signature" placeholder="介绍" style="height: 82px;resize: none;"></textarea>
                                     <span class="m-form__help"></span>
                                 </div>

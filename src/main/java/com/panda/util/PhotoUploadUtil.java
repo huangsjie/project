@@ -15,21 +15,17 @@ import java.util.Calendar;
 /**
  * 使用七牛存储图片
  *
- * 2017年5月22日 修改硬编码 wei
- * FILE: com.panda.wechat.util.PhotoUploadUtil.java
-
-
+ * 2017年11月22日 修改硬编码 wei
+ * 设置好账号的ACCESS_KEY和SECRET_KEY
  * DATE: 2017/4/21
  * TIME: 22:08
  */
 @Component
 public class PhotoUploadUtil {
-    //设置好账号的ACCESS_KEY和SECRET_KEY
     @Value("${qiniu.accessKey}")
     private String ACCESS_KEY;
     @Value("${qiniu.secretKey}")
     private String SECRET_KEY;
-    //要上传的空间
     @Value("${qiniu.bucketName}")
     private String bucketname;
     @Value("${qiniu.basePath}")
@@ -68,6 +64,7 @@ public class PhotoUploadUtil {
             if (response.isOK()){
                 result.setSuccess(1);
                 result.setUrl(basePath+getFilePath(filename));
+                result.setMessage(ResultStateUtil.SUCCESS_UPLOAD);
                 return result;
             }
         } catch (QiniuException e) {

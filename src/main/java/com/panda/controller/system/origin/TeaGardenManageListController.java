@@ -49,7 +49,6 @@ public class TeaGardenManageListController {
         model.addAttribute("statusType",statusType);
         model.addAttribute("farmType",farmType);
         model.addAttribute("menuList",user.getMenuList());
-        model.addAttribute("authMenu",user.getAuthMenuList());
         model.addAttribute("user",user);
         return "system/origin/getTeaGardenManageList";
     }
