@@ -34,13 +34,8 @@
         <!-- 存放位置 -->
 
         <!-- 数据表 -->
-<<<<<<< HEAD
         <table tableName="e_machin_set" domainObjectName="MachinSet" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
         <table tableName="e_machin_tea" domainObjectName="MachinTea" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-=======
-        <table tableName="e_manage_batch" domainObjectName="ManageBatchaaaaa" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-        <table tableName="e_process_batch" domainObjectName="ProcessBatchAAAAAA" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
->>>>>>> lbb
         <!-- 数据表 -->
     </context>
     <!-- tea

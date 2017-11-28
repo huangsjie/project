@@ -10,10 +10,79 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-11-28 18:26:32
+Date: 2017-11-29 00:24:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for e_machin_set
+-- ----------------------------
+DROP TABLE IF EXISTS `e_machin_set`;
+CREATE TABLE `e_machin_set` (
+  `id` varchar(36) NOT NULL DEFAULT '' COMMENT '自增id',
+  `dic_mac_type` varchar(36) NOT NULL COMMENT '加工类型',
+  `dic_tea_attr` varchar(36) NOT NULL COMMENT '茶系ID',
+  `dic_mac_pro` varchar(36) NOT NULL COMMENT '工序ID',
+  `dic_tea_type` varchar(36) DEFAULT NULL COMMENT '材料品种（茶叶）',
+  `dic_tea_gra` varchar(36) DEFAULT NULL COMMENT '等级',
+  `begin_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
+  `description` varchar(300) DEFAULT NULL COMMENT '备注',
+  `create_id` varchar(36) NOT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_id` varchar(36) DEFAULT NULL COMMENT '修改人',
+  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of e_machin_set
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for e_machin_tea
+-- ----------------------------
+DROP TABLE IF EXISTS `e_machin_tea`;
+CREATE TABLE `e_machin_tea` (
+  `id` varchar(36) NOT NULL DEFAULT '' COMMENT '自增id',
+  `batch_number` varchar(36) NOT NULL COMMENT '批次号',
+  `machin_set_id` varchar(36) NOT NULL COMMENT '加工设置ID',
+  `operator_id` varchar(36) NOT NULL COMMENT '操作人ID（暂时明文名称）',
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
+  `description` varchar(300) DEFAULT NULL COMMENT '备注',
+  `create_id` varchar(36) NOT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_id` varchar(36) DEFAULT NULL COMMENT '修改人',
+  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of e_machin_tea
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for e_manage_batch
+-- ----------------------------
+DROP TABLE IF EXISTS `e_manage_batch`;
+CREATE TABLE `e_manage_batch` (
+  `id` varchar(36) NOT NULL,
+  `batch_number` varchar(50) NOT NULL COMMENT '批次号',
+  `tea_garden_id` varchar(36) NOT NULL COMMENT '茶园ID',
+  `create_id` varchar(36) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_id` varchar(36) DEFAULT NULL COMMENT '修改人',
+  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `status` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of e_manage_batch
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for e_processing_step_info
@@ -37,6 +106,27 @@ CREATE TABLE `e_processing_step_info` (
 
 -- ----------------------------
 -- Records of e_processing_step_info
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for e_process_batch
+-- ----------------------------
+DROP TABLE IF EXISTS `e_process_batch`;
+CREATE TABLE `e_process_batch` (
+  `id` varchar(36) NOT NULL,
+  `batch_number` varchar(50) NOT NULL COMMENT '批次号',
+  `manage_batch_id` varchar(36) NOT NULL COMMENT '管理批次号ID',
+  `product_id` varchar(36) NOT NULL COMMENT '产品ID',
+  `create_id` varchar(36) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_id` varchar(36) DEFAULT NULL COMMENT '修改人',
+  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `status` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of e_process_batch
 -- ----------------------------
 
 -- ----------------------------
@@ -176,53 +266,6 @@ INSERT INTO `e_tea_garden_log` VALUES ('e109fb5b-d403-11e7-99a0-38d547b81379', '
 INSERT INTO `e_tea_garden_log` VALUES ('e31b19dd-d403-11e7-99a0-38d547b81379', '249a802b-d37c-11e7-b5d6-24fd52935962', '5fe37095-7d9a-4235-914f-cf0c6f1e592a', '隔壁老王今天不见了', 'de639eec-dd97-497a-953d-7246247aec95', '2017-11-27 22:25:37', '2017-11-27 22:25:39', '隔壁老王', '1', '阿斯顿发生', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 14:18:03', 'b90c7f48-d37e-11e7-b5d6-24fd52935962', '2017-11-28 14:18:03');
 
 -- ----------------------------
--- Table structure for e_tea_garden_manage_list
--- ----------------------------
-DROP TABLE IF EXISTS `e_tea_garden_manage_list`;
-CREATE TABLE `e_tea_garden_manage_list` (
-  `id` varchar(36) NOT NULL DEFAULT '' COMMENT '自增id',
-  `tea_garden_id` varchar(36) NOT NULL COMMENT '茶园',
-  `farm_type_id` varchar(36) NOT NULL COMMENT '农事ID',
-  `farm_desc` varchar(300) NOT NULL COMMENT '农事类型值(如施化肥5kg)',
-  `cultivar_id` varchar(36) NOT NULL,
-  `begin_time` datetime NOT NULL COMMENT '开始时间',
-  `end_time` datetime NOT NULL COMMENT '结束时间',
-  `operator_id` varchar(36) NOT NULL COMMENT '操作人ID',
-  `create_id` varchar(36) NOT NULL COMMENT '创建人',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `modify_id` varchar(36) DEFAULT NULL COMMENT '修改人',
-  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
-  `description` varchar(300) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of e_tea_garden_manage_list
--- ----------------------------
-
--- ----------------------------
--- Table structure for e_tea_system_step
--- ----------------------------
-DROP TABLE IF EXISTS `e_tea_system_step`;
-CREATE TABLE `e_tea_system_step` (
-  `id` varchar(36) NOT NULL DEFAULT '' COMMENT '自增id',
-  `tea_system_id` varchar(36) NOT NULL COMMENT '茶系ID',
-  `step_id` varchar(50) NOT NULL COMMENT '工序ID',
-  `create_id` varchar(36) NOT NULL COMMENT '创建人',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `modify_id` varchar(36) DEFAULT NULL COMMENT '修改人',
-  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
-  `description` varchar(300) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of e_tea_system_step
--- ----------------------------
-
--- ----------------------------
 -- Table structure for e_warehouse
 -- ----------------------------
 DROP TABLE IF EXISTS `e_warehouse`;
@@ -268,7 +311,7 @@ CREATE TABLE `s_dictionary` (
 -- ----------------------------
 INSERT INTO `s_dictionary` VALUES ('02e71242-9fea-11e5-a07b-000c29d29d54', '13', '10000000-0000-0000-0000-000000000000', '设备类型', 'customerType', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-11 17:16:00', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-11 17:16:00', '1', '设备类型');
 INSERT INTO `s_dictionary` VALUES ('072b643a-9a30-11e5-a07b-000c29d29d54', '12', '10000000-0000-0000-0000-000000000000', '成品品阶', 'checkType', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:49:23', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:49:23', '1', '成品品阶');
-INSERT INTO `s_dictionary` VALUES ('0b9ed538-29d6-11e5-965c-000c29d7a3a0', '8', '10000000-0000-0000-0000-000000000000', '加工类型', 'machiningType', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:48:21', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-16 22:45:54', '1', '加工类型 -machiningType');
+INSERT INTO `s_dictionary` VALUES ('0b9ed538-29d6-11e5-965c-000c29d7a3a0', '8', '10000000-0000-0000-0000-000000000000', '加工类型', 'machinType', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-08 14:48:21', 'c6830623-3988-11e5-993d-000c29d7a3a0', '2017-11-16 22:45:54', '1', '加工类型 -machiningType');
 INSERT INTO `s_dictionary` VALUES ('0c794e95-3e24-471a-9cea-3a62532f87c9', '7', '1e12732d-246e-11e5-965c-000c29d7a3a0', '半成品', 'BCP', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:50:58', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:50:58', '1', '半成品');
 INSERT INTO `s_dictionary` VALUES ('0fb92203-be20-4705-87e8-ae6862a91743', '2', 'f63fe4f8-27ab-11e5-965c-000c29d7a3a0', '二等', '2', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:11:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:11:06', '1', '二等');
 INSERT INTO `s_dictionary` VALUES ('1301e136-8d75-4e05-9fa3-06cbdcad1eea', '1', '68d6888f-2b91-11e5-965c-000c29d7a3a0', '自检', 'incheck', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:02:23', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:03:01', '1', '公司内部QC质检');
@@ -287,8 +330,10 @@ INSERT INTO `s_dictionary` VALUES ('4031b009-b799-4bf0-add0-c7069900bed3', '4', 
 INSERT INTO `s_dictionary` VALUES ('4b2946d6-ec92-403f-ae59-6a2d6311e6cd', '1', '92253cc8-2128-11e5-965c-000c29d7a3a0', '耕地', 'plough', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-16 22:30:03', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:13:13', '1', '茶园当前操作为耕地');
 INSERT INTO `s_dictionary` VALUES ('4c23ef06-e0b5-49ae-947b-bb1ff3af9118', '1', '31783870-956f-469f-b43e-9fefd905afca', '绿茶', 'GREENTEA', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:55:32', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:00:20', '1', 'CXLC （茶系-绿茶）首字母大写');
 INSERT INTO `s_dictionary` VALUES ('4c387b0a-5c56-43fc-8e5a-9050df95b2c0', '2', 'ba259a75-f5a7-4897-949f-1c90b7958b35', '激活', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-25 15:52:51', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-25 15:53:37', '1', '使用中的状态');
+INSERT INTO `s_dictionary` VALUES ('4dc6f1b2-5bbb-4324-9d74-b318dab9e8a3', '2', '0b9ed538-29d6-11e5-965c-000c29d7a3a0', '成品', 'finished', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 20:50:48', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 20:50:48', '1', '加工完成的类型');
 INSERT INTO `s_dictionary` VALUES ('50d0367d-102a-481f-90f2-5af7a00749db', '7', '92253cc8-2128-11e5-965c-000c29d7a3a0', '采摘', 'pickTea', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 18:06:16', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 18:06:16', '1', '茶叶采摘-茶园管理最后一道工序-勿改');
 INSERT INTO `s_dictionary` VALUES ('53389185-9001-44cc-8c53-83c862b6dc64', '4', 'be0ba01c-23ad-11e5-965c-000c29d7a3a0', '丹桂', 'DG', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:46:43', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:46:43', '1', '丹桂');
+INSERT INTO `s_dictionary` VALUES ('5382c8cc-27ad-4b2e-8842-b1d194403753', '1', '0b9ed538-29d6-11e5-965c-000c29d7a3a0', '半成品', 'halfProducts', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 20:49:40', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 20:49:40', '1', '粗加工的产品');
 INSERT INTO `s_dictionary` VALUES ('54398001-2a31-42a9-9fed-9d3ce4612fed', '2', '155a1b9b-5fbb-11e7-8697-38d547b81379', '商户', 'merchant', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-16 22:52:58', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-25 15:41:01', '1', '门店和经销商');
 INSERT INTO `s_dictionary` VALUES ('56a4a63d-2cb8-474d-8da4-9bc9bce662e7', '1', '1e12732d-246e-11e5-965c-000c29d7a3a0', '鲜叶', 'XY', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:48:38', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 17:48:38', '1', '鲜叶');
 INSERT INTO `s_dictionary` VALUES ('5fe37095-7d9a-4235-914f-cf0c6f1e592a', '6', '92253cc8-2128-11e5-965c-000c29d7a3a0', '灌溉', 'irrigate', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:16:07', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-27 18:16:07', '1', '茶园灌溉');
@@ -370,15 +415,17 @@ INSERT INTO `s_menu` VALUES ('20692517-9187-41df-920b-7c7342a93d37', '3', '0B6D1
 INSERT INTO `s_menu` VALUES ('21136dca-a230-4902-b370-73cedbfd37d1', '11', '10000000-0000-0000-0000-100000000000', '设备管理', '/system/equipment/list', null, 'flaticon-profile-1', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:19:52', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:44:10', '生产设备管理');
 INSERT INTO `s_menu` VALUES ('2c68aa86-891b-4661-ba76-327e8a2a6215', '1', '0bc54201-f2e3-4585-a9c7-bb5d9b44e26d', '溯源信息', '/system/originInfo/list', null, 'flaticon-info', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:33:58', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:33:58', '溯源信息记录');
 INSERT INTO `s_menu` VALUES ('2d42e55d-5e6a-4b92-ba22-5c188c0d13d2', '2', 'f5baa02f-7e39-421f-a7dd-c8ee4773966b', '取样记录', '/system/sampling/list', null, 'flaticon-samp', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:18:24', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:18:24', '质检取样记录管理');
+INSERT INTO `s_menu` VALUES ('2dc7b0aa-e46e-4583-9738-72e71de1426c', '2', 'b4a121a8-5e4d-41f8-b4a0-672eebb0a74d', '管理批次', '/system/manageBatch/list', null, 'flaticon-batch', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 21:52:57', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-29 00:23:00', '茶园批次号生成');
 INSERT INTO `s_menu` VALUES ('33fb6e82-2b8b-48fb-af3c-fb886049ca77', '5', '10000000-0000-0000-0000-100000000000', '加工管理', '/system/teaMachin/list', '1', 'flaticon-open-box', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 23:48:20', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:40:33', '茶叶加工流程管理');
 INSERT INTO `s_menu` VALUES ('3631e59e-1175-11e5-a9de-000c29d7a3a0', '2', '10000000-0000-0000-0000-100000000000', '客户管理', '/system/ucenter/index', '1', 'flaticon-users', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:25:39', '供应链管理');
 INSERT INTO `s_menu` VALUES ('4bcab523-1174-11e5-a9de-000c29d7a3a0', '7', '10000000-0000-0000-0000-100000000000', '商品管理', '/system/commodity/index', '1', 'flaticon-business', '2', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 14:07:05', '电商平台管理');
 INSERT INTO `s_menu` VALUES ('5863e4f5-927d-4c96-8bda-2294703bc909', '2', 'dd6448d3-ade1-40c3-9043-a77c3036f829', '库存管理', '/system/inventory/list', null, 'flaticon-inven', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:10:15', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:10:15', '产品库存管理');
-INSERT INTO `s_menu` VALUES ('5af24cc1-0a73-4f28-8972-dae2f138c1a8', '2', 'b4a121a8-5e4d-41f8-b4a0-672eebb0a74d', '茶园日志', '/system/teaLog/list', '1', 'flaticon-app-1', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 23:44:10', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 23:44:10', '记录茶园操作日志');
+INSERT INTO `s_menu` VALUES ('5af24cc1-0a73-4f28-8972-dae2f138c1a8', '3', 'b4a121a8-5e4d-41f8-b4a0-672eebb0a74d', '茶园日志', '/system/teaLog/list', '1', 'flaticon-app-1', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 23:44:10', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 21:54:27', '记录茶园操作日志');
 INSERT INTO `s_menu` VALUES ('5d2f2a0d-9326-4026-b338-c03bf6e255db', '12', '10000000-0000-0000-0000-100000000000', '包装管理', '/system/packing/list', null, 'flaticon-bag', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:11:43', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:41:50', '产品包装信息等');
 INSERT INTO `s_menu` VALUES ('67416840-6b15-473b-80fc-bbf1b28dfac5', '1', '21136dca-a230-4902-b370-73cedbfd37d1', '清洁记录', '/system/clear/list', null, 'flaticon-clear', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:20:59', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:20:59', '设备清洁记录');
 INSERT INTO `s_menu` VALUES ('6fc0d40a-ca6e-4c19-8d24-485d5a61ea50', '1', 'f5baa02f-7e39-421f-a7dd-c8ee4773966b', '质检记录', '/system/process/list', null, 'flaticon-process', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:17:01', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:17:01', '质检记录管理');
 INSERT INTO `s_menu` VALUES ('76849bfe-dfd4-476c-b2f8-11072c25ceb8', '1', 'b4a121a8-5e4d-41f8-b4a0-672eebb0a74d', '茶园信息', '/system/origin/teaGarden', '1', 'flaticon-list-3', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:41:46', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 23:40:03', '茶园信息管理');
+INSERT INTO `s_menu` VALUES ('96e55b56-ab35-4774-a248-14a683a932e7', '2', '33fb6e82-2b8b-48fb-af3c-fb886049ca77', '加工批次', '/system/processBatch/list', null, 'flaticon-mac-b', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 21:54:07', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-29 00:23:30', '加工批次加工批次');
 INSERT INTO `s_menu` VALUES ('97ea6edb-1178-11e5-a9de-000c29d7a3a0', '9', '10000000-0000-0000-0000-100000000000', '财务管理', '/system/demand/index', '1', 'flaticon-coins', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '财务结算中心');
 INSERT INTO `s_menu` VALUES ('b4a121a8-5e4d-41f8-b4a0-672eebb0a74d', '4', '10000000-0000-0000-0000-100000000000', '茶园管理', '/system/origin/teaGarden', '1', 'flaticon-tea-cup', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:31:29', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 23:40:26', '茶园管理模块');
 INSERT INTO `s_menu` VALUES ('c3538d54-8e09-11e6-b311-005056812bf6', '10', '10000000-0000-0000-0000-100000000000', '物流管理', '/system/operation/index', '1', 'flaticon-truck', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '跨境物流管理');
@@ -386,9 +433,10 @@ INSERT INTO `s_menu` VALUES ('caf65c04-beed-11e7-959c-38d547b81379', '1', '0B6D1
 INSERT INTO `s_menu` VALUES ('ce43305b-a658-4e8c-b864-10b6ee797429', '1', '5d2f2a0d-9326-4026-b338-c03bf6e255db', '包材管理', '/system/packageMaterial/list', null, 'flaticon-mate', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:13:42', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:13:42', '包材材料管理');
 INSERT INTO `s_menu` VALUES ('d07687ef-2798-11e5-965c-000c29d7a3a0', '1', '3631e59e-1175-11e5-a9de-000c29d7a3a0', '门店管理', '/system/store/getStoreList', '1', 'flaticon-map', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 09:48:09', '个人中心、会员中心');
 INSERT INTO `s_menu` VALUES ('d2aad1f2-4230-4aee-a1f1-91a6a6c5db40', '2', '21136dca-a230-4902-b370-73cedbfd37d1', '设备维护', '/system/maintain/list', null, 'flaticon-main', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:22:13', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:22:13', '设备保养记录');
+INSERT INTO `s_menu` VALUES ('d6b1760b-e2e4-47e1-8e65-660fcd0c0f2a', '3', '33fb6e82-2b8b-48fb-af3c-fb886049ca77', '茶叶加工', '/system/machinTea/list', null, 'flaticon-machin-tea', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 21:19:03', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 21:54:31', '茶叶加工工序');
 INSERT INTO `s_menu` VALUES ('d942abc1-b177-452e-8c53-1914ac448c7d', '4', '0B6D1F77-BAEC-4CFA-8D19-E1C4ECE995B9', '角色菜单', '/system/roleMenu/list', '1', 'flaticon-menu', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-08 17:50:28', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-08 17:53:27', '角色菜单设置');
 INSERT INTO `s_menu` VALUES ('dd6448d3-ade1-40c3-9043-a77c3036f829', '6', '10000000-0000-0000-0000-100000000000', '库存管理', '/system/stockManager/list', null, 'flaticon-network', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:04:57', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:41:28', '库存信息管理');
-INSERT INTO `s_menu` VALUES ('df1a659b-180f-4fd2-abb0-b42c7db62714', '1', '33fb6e82-2b8b-48fb-af3c-fb886049ca77', '加工1', '/system/teaMachin/list', null, 'flaticon-machin', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:03:25', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 16:04:56', '加工的事情');
+INSERT INTO `s_menu` VALUES ('df1a659b-180f-4fd2-abb0-b42c7db62714', '1', '33fb6e82-2b8b-48fb-af3c-fb886049ca77', '加工设置', '/system/machinSet/list', null, 'flaticon-machin', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:03:25', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 21:17:26', '加工的事情');
 INSERT INTO `s_menu` VALUES ('e38ab74b-bf14-11e7-a301-24fd52935962', '2', '0B6D1F77-BAEC-4CFA-8D19-E1C4ECE995B9', '角色管理', '/system/roles/list', '1', 'flaticon-profile', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-01 22:56:49', '角色信息管理');
 INSERT INTO `s_menu` VALUES ('f5baa02f-7e39-421f-a7dd-c8ee4773966b', '8', '10000000-0000-0000-0000-100000000000', '质检管理', '/system/quality/list', null, 'flaticon-notes', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:15:14', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:43:25', '产品质量管理');
 INSERT INTO `s_menu` VALUES ('fb69a533-1178-11e5-a9de-000c29d7a3a0', '13', '10000000-0000-0000-0000-100000000000', '数据管理', '/system/data/index', '1', 'flaticon-folder', '2', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 14:06:47', '销售数据分销');
@@ -413,27 +461,35 @@ CREATE TABLE `s_page_role` (
 -- ----------------------------
 -- Records of s_page_role
 -- ----------------------------
+INSERT INTO `s_page_role` VALUES ('00170715-3203-4453-b2b8-701796e92b0b', '96e55b56-ab35-4774-a248-14a683a932e7', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:43', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:43');
 INSERT INTO `s_page_role` VALUES ('00b8596c-480e-4325-ae5b-9d934e0ffb69', 'd942abc1-b177-452e-8c53-1914ac448c7d', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9d590186-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 15:19:08', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 15:19:08');
 INSERT INTO `s_page_role` VALUES ('020e0cea-5869-480e-b77d-c20980e679ab', 'd2aad1f2-4230-4aee-a1f1-91a6a6c5db40', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:49', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:49');
 INSERT INTO `s_page_role` VALUES ('04f7dbe2-75fe-4e14-b267-c7ae859c5987', 'e38ab74b-bf14-11e7-a301-24fd52935962', '0C03F6B6-8CC4-4826-8A51-149990861BE3', 'deed64de-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:54', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:54');
 INSERT INTO `s_page_role` VALUES ('051c7747-7236-444e-8bfa-d1885be4d86f', '2d42e55d-5e6a-4b92-ba22-5c188c0d13d2', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9e15db46-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:30', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:30');
+INSERT INTO `s_page_role` VALUES ('05d22852-2840-4157-8ca5-c781bf963b2f', 'd6b1760b-e2e4-47e1-8e65-660fcd0c0f2a', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '8978edce-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:54', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:54');
 INSERT INTO `s_page_role` VALUES ('089aa77d-0666-4b0d-90d1-6e3061d248f6', '2c68aa86-891b-4661-ba76-327e8a2a6215', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9bda9313-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:56', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:56');
+INSERT INTO `s_page_role` VALUES ('0bfa53f6-f542-4612-8370-f1497f1f83c7', '2dc7b0aa-e46e-4583-9738-72e71de1426c', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'deed64de-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:14', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:14');
 INSERT INTO `s_page_role` VALUES ('0d6925a7-dce4-4b22-b982-6d7e1172b5cb', 'df1a659b-180f-4fd2-abb0-b42c7db62714', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:37', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:37');
 INSERT INTO `s_page_role` VALUES ('0f93d0c3-01aa-4d73-af44-dcf67415148e', '5863e4f5-927d-4c96-8bda-2294703bc909', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'deed64de-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:04', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:04');
 INSERT INTO `s_page_role` VALUES ('0ffdc442-2544-4fe5-bbd4-5245f1f88394', '0a1e90f6-cc25-11e7-843e-24fd52935962', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'deed64de-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:31', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:31');
 INSERT INTO `s_page_role` VALUES ('125cd21d-8b42-4852-977a-8edf9d185793', 'd942abc1-b177-452e-8c53-1914ac448c7d', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9e15db46-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 15:19:11', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 15:19:11');
+INSERT INTO `s_page_role` VALUES ('13d133cc-6a17-4986-8613-dcd3b25b31bf', '2dc7b0aa-e46e-4583-9738-72e71de1426c', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'fea1871b-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:16', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:16');
 INSERT INTO `s_page_role` VALUES ('14a2a083-74be-4d82-a881-93494f686092', '5af24cc1-0a73-4f28-8972-dae2f138c1a8', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:31', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:31');
 INSERT INTO `s_page_role` VALUES ('14e35dda-54f3-4e70-801f-205f0985664e', '6fc0d40a-ca6e-4c19-8d24-485d5a61ea50', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:22', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:22');
 INSERT INTO `s_page_role` VALUES ('1889d39c-a7f3-42e4-b407-f3d38523b71c', '0a1e90f6-cc25-11e7-843e-24fd52935962', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:49', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:49');
 INSERT INTO `s_page_role` VALUES ('18b73917-592f-421e-80eb-277715ac405b', 'df1a659b-180f-4fd2-abb0-b42c7db62714', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9e15db46-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:39', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:39');
 INSERT INTO `s_page_role` VALUES ('1a773f13-6816-4723-b4ca-ed2711b9c94c', '0a1e90f6-cc25-11e7-843e-24fd52935962', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:44', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:44');
 INSERT INTO `s_page_role` VALUES ('1b29a6cc-abb3-471f-a97b-646289e801c2', '76849bfe-dfd4-476c-b2f8-11072c25ceb8', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '8978edce-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 15:18:59', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 15:18:59');
+INSERT INTO `s_page_role` VALUES ('1dc171eb-8be9-4fe7-bcf7-49d60ee548f1', '96e55b56-ab35-4774-a248-14a683a932e7', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '8978edce-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:39', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:39');
 INSERT INTO `s_page_role` VALUES ('1dc9564c-1704-4d4a-a1e8-51781220fca9', '2c68aa86-891b-4661-ba76-327e8a2a6215', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:58', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:58');
 INSERT INTO `s_page_role` VALUES ('1f704ca2-0c0f-4505-accc-560ad90d7f30', 'e38ab74b-bf14-11e7-a301-24fd52935962', '0C03F6B6-8CC4-4826-8A51-149990861BE3', '9d590186-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:52', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:52');
 INSERT INTO `s_page_role` VALUES ('205cc0d5-92c6-4b80-a9b4-b6cfa77d9097', '2d42e55d-5e6a-4b92-ba22-5c188c0d13d2', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:27', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:27');
 INSERT INTO `s_page_role` VALUES ('20e6816d-bb56-4ef1-a38a-cf447067a109', '04c21bbc-f0c1-4981-bbe7-17627cce0664', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'deed64de-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:18', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:18');
+INSERT INTO `s_page_role` VALUES ('228bae69-57f5-42ef-b01d-b45a67a250ef', '96e55b56-ab35-4774-a248-14a683a932e7', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:38', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:38');
 INSERT INTO `s_page_role` VALUES ('2361473b-1880-43a5-85f8-463f4725c1ee', '6fc0d40a-ca6e-4c19-8d24-485d5a61ea50', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:18', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:18');
 INSERT INTO `s_page_role` VALUES ('24724370-ffce-4f15-bde9-17d35aeb5028', 'ce43305b-a658-4e8c-b864-10b6ee797429', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9d590186-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:12', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:12');
+INSERT INTO `s_page_role` VALUES ('261977f2-c999-4a49-9030-1de757d6d6b7', '96e55b56-ab35-4774-a248-14a683a932e7', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9e15db46-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:42', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:42');
+INSERT INTO `s_page_role` VALUES ('274feb91-84f1-4b15-85cb-b697140f0469', 'd6b1760b-e2e4-47e1-8e65-660fcd0c0f2a', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:53', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:53');
 INSERT INTO `s_page_role` VALUES ('29480c54-0ad9-4b90-920d-9747b1e247f7', '6fc0d40a-ca6e-4c19-8d24-485d5a61ea50', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '8978edce-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:19', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:19');
 INSERT INTO `s_page_role` VALUES ('2aa3d062-45b6-48fd-89a1-1357645862d3', '2d42e55d-5e6a-4b92-ba22-5c188c0d13d2', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9bda9313-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:29', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:29');
 INSERT INTO `s_page_role` VALUES ('2bdc16a0-fc52-434f-bf7c-e673fd1f1e52', '162e38d7-5b27-488b-9776-e60d7aa07b68', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:38:03', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:38:03');
@@ -445,6 +501,7 @@ INSERT INTO `s_page_role` VALUES ('32119401-0c36-4982-9bdf-e0af1c5467a0', '04c21
 INSERT INTO `s_page_role` VALUES ('32f3be37-e32f-490d-9f8c-70b49a229dc8', '67416840-6b15-473b-80fc-bbf1b28dfac5', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:36', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:36');
 INSERT INTO `s_page_role` VALUES ('33734c49-46c6-4a04-a8c1-c2b58ecbd7ce', '5af24cc1-0a73-4f28-8972-dae2f138c1a8', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'deed64de-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:32', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:32');
 INSERT INTO `s_page_role` VALUES ('355efc0f-a08f-443e-96a4-02278e248424', '04c21bbc-f0c1-4981-bbe7-17627cce0664', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9d590186-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:16', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:16');
+INSERT INTO `s_page_role` VALUES ('37b4844b-88a5-4b5d-833a-2a1afe1b4f9f', '2dc7b0aa-e46e-4583-9738-72e71de1426c', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9bda9313-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:09', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:09');
 INSERT INTO `s_page_role` VALUES ('38458ab3-cfa8-495a-8a76-290763e854af', 'd07687ef-2798-11e5-965c-000c29d7a3a0', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9d590186-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:05', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:05');
 INSERT INTO `s_page_role` VALUES ('399df380-45da-4c41-9d75-786619976847', 'e38ab74b-bf14-11e7-a301-24fd52935962', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:19', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:19');
 INSERT INTO `s_page_role` VALUES ('3b1e2541-b46b-4a8e-b2ad-3174823444ce', '5863e4f5-927d-4c96-8bda-2294703bc909', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9bda9313-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:59', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:59');
@@ -454,23 +511,28 @@ INSERT INTO `s_page_role` VALUES ('45bcf3fa-ae77-477a-8957-1c108c93bd5e', '67416
 INSERT INTO `s_page_role` VALUES ('49ae13c8-34f3-4d28-bf69-d1668221f932', '20692517-9187-41df-920b-7c7342a93d37', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:31', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:31');
 INSERT INTO `s_page_role` VALUES ('4ab306fc-0236-420e-9a2f-848e8ab989db', 'd07687ef-2798-11e5-965c-000c29d7a3a0', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'fea1871b-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:10', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:10');
 INSERT INTO `s_page_role` VALUES ('4ac88108-40aa-4282-bdc7-e83207ef7809', '2c68aa86-891b-4661-ba76-327e8a2a6215', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9d590186-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:57', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:57');
+INSERT INTO `s_page_role` VALUES ('4b683deb-e1e8-450a-ac89-2f5be1cc4447', 'd6b1760b-e2e4-47e1-8e65-660fcd0c0f2a', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9d590186-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:56', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:56');
 INSERT INTO `s_page_role` VALUES ('5005558b-c6b5-4c91-81ef-3a65d6dd6aa1', '04c21bbc-f0c1-4981-bbe7-17627cce0664', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9bda9313-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:15', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:15');
 INSERT INTO `s_page_role` VALUES ('5064b108-f4d6-4b2a-9b9e-ddab3876a87b', '04c21bbc-f0c1-4981-bbe7-17627cce0664', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:18', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:18');
 INSERT INTO `s_page_role` VALUES ('5099d0bd-e4e4-4d9c-a440-1942293d8982', 'df1a659b-180f-4fd2-abb0-b42c7db62714', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:40', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:40');
 INSERT INTO `s_page_role` VALUES ('5147ce21-5fd9-4afc-a449-b9acd398a347', 'd07687ef-2798-11e5-965c-000c29d7a3a0', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:03', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:03');
 INSERT INTO `s_page_role` VALUES ('516d24c7-87f1-47d8-8e01-df28aaebc30a', 'ce43305b-a658-4e8c-b864-10b6ee797429', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '8978edce-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:10', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:10');
 INSERT INTO `s_page_role` VALUES ('526dd681-055c-4c4b-b5d5-900b390214f2', 'ce43305b-a658-4e8c-b864-10b6ee797429', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'deed64de-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:14', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:14');
+INSERT INTO `s_page_role` VALUES ('530e46a6-9c9a-478a-8c05-601769a15b19', 'd6b1760b-e2e4-47e1-8e65-660fcd0c0f2a', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9bda9313-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:55', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:55');
 INSERT INTO `s_page_role` VALUES ('553b3b7f-a52c-4e3b-82f6-4147adfa8116', '0de2c731-9dd6-4a95-8fef-0fa88b625c98', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:51', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:51');
 INSERT INTO `s_page_role` VALUES ('55426de5-9214-4c57-9bfa-f82916589a32', 'd942abc1-b177-452e-8c53-1914ac448c7d', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 15:19:09', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 15:19:09');
 INSERT INTO `s_page_role` VALUES ('58559771-7e14-4c7b-bff5-898363c36ad1', 'd2aad1f2-4230-4aee-a1f1-91a6a6c5db40', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9e15db46-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:48', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:48');
 INSERT INTO `s_page_role` VALUES ('59846d41-a448-41b2-b156-faa194156213', '20692517-9187-41df-920b-7c7342a93d37', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9e15db46-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:24', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:24');
 INSERT INTO `s_page_role` VALUES ('5cb7ecc2-361e-493e-9839-4620df59f5e9', '2d42e55d-5e6a-4b92-ba22-5c188c0d13d2', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '8978edce-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:28', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:28');
+INSERT INTO `s_page_role` VALUES ('5d1376b1-934d-4d00-9c3f-bf348a025bf6', 'd6b1760b-e2e4-47e1-8e65-660fcd0c0f2a', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:58', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:58');
 INSERT INTO `s_page_role` VALUES ('5d2dda2a-b833-40ff-869b-61d6b634a3dd', '5af24cc1-0a73-4f28-8972-dae2f138c1a8', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:26', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:26');
+INSERT INTO `s_page_role` VALUES ('5df91695-141d-415b-879a-3eca438f38c2', '2dc7b0aa-e46e-4583-9738-72e71de1426c', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9e15db46-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:12', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:12');
 INSERT INTO `s_page_role` VALUES ('5e83f553-3fca-4cb5-a707-f3d25ea683b0', 'e38ab74b-bf14-11e7-a301-24fd52935962', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9bda9313-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:17', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:17');
 INSERT INTO `s_page_role` VALUES ('5e9fcddb-3aa8-48c8-b6ca-d0b1cad14da7', '5863e4f5-927d-4c96-8bda-2294703bc909', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '8978edce-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:58', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:58');
 INSERT INTO `s_page_role` VALUES ('6084bc0a-4f20-4910-abb9-672a753ad1dc', 'ce43305b-a658-4e8c-b864-10b6ee797429', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9bda9313-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:11', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:11');
 INSERT INTO `s_page_role` VALUES ('613e7321-9422-40e1-8355-8239111f7199', 'e38ab74b-bf14-11e7-a301-24fd52935962', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'fea1871b-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:21', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:21');
 INSERT INTO `s_page_role` VALUES ('61447d6d-0818-4d62-af26-60f0c00522a4', '2d42e55d-5e6a-4b92-ba22-5c188c0d13d2', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:31', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:31');
+INSERT INTO `s_page_role` VALUES ('61ccf727-8672-44de-963c-260338760ee1', 'd6b1760b-e2e4-47e1-8e65-660fcd0c0f2a', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'deed64de-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:59', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:59');
 INSERT INTO `s_page_role` VALUES ('638a122b-7595-42f6-9a57-c01a3bd0cb0c', '2c68aa86-891b-4661-ba76-327e8a2a6215', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:54', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:54');
 INSERT INTO `s_page_role` VALUES ('677d436c-8d48-493b-9a2c-61b0103da9a8', 'd07687ef-2798-11e5-965c-000c29d7a3a0', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9e15db46-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:06');
 INSERT INTO `s_page_role` VALUES ('682f58b3-2ba5-473f-ad10-c2c3eb4ee746', '5af24cc1-0a73-4f28-8972-dae2f138c1a8', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9e15db46-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:31', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:31');
@@ -488,6 +550,7 @@ INSERT INTO `s_page_role` VALUES ('7291299f-1997-4207-bf14-b8237477d1aa', 'caf65
 INSERT INTO `s_page_role` VALUES ('7401737d-02e0-42c0-9a14-9c794d67e841', '20692517-9187-41df-920b-7c7342a93d37', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9bda9313-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:33', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:33');
 INSERT INTO `s_page_role` VALUES ('76441396-9548-409b-aa36-234aff5f8560', '162e38d7-5b27-488b-9776-e60d7aa07b68', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9e15db46-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:38:07', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:38:07');
 INSERT INTO `s_page_role` VALUES ('79ce2421-1200-485c-b387-fc45b297f52a', '5863e4f5-927d-4c96-8bda-2294703bc909', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'fea1871b-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:05', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:05');
+INSERT INTO `s_page_role` VALUES ('79eaecd8-5c8b-4801-b3c3-b006b00f116c', '96e55b56-ab35-4774-a248-14a683a932e7', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9d590186-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:41', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:41');
 INSERT INTO `s_page_role` VALUES ('7f1ef68a-a13b-408b-9779-aa8c3f41271e', 'df1a659b-180f-4fd2-abb0-b42c7db62714', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'fea1871b-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:42', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:42');
 INSERT INTO `s_page_role` VALUES ('805a355d-3236-4fd0-98ab-9624dc535545', 'e38ab74b-bf14-11e7-a301-24fd52935962', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '8978edce-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:16', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:16');
 INSERT INTO `s_page_role` VALUES ('80b03523-2054-4359-955c-d69525ebbed6', 'e38ab74b-bf14-11e7-a301-24fd52935962', '0C03F6B6-8CC4-4826-8A51-149990861BE3', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:51', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:51');
@@ -502,18 +565,22 @@ INSERT INTO `s_page_role` VALUES ('8730f65d-16a0-4f25-bca1-7c8bf38ef3f9', '2d42e
 INSERT INTO `s_page_role` VALUES ('8b8fee70-a44a-4e48-a2e5-e6d08512f14d', '5af24cc1-0a73-4f28-8972-dae2f138c1a8', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'fea1871b-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:33', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:33');
 INSERT INTO `s_page_role` VALUES ('8d3e106d-9af3-4683-ba0c-2596c9917d5f', 'e38ab74b-bf14-11e7-a301-24fd52935962', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9d590186-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:18', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:18');
 INSERT INTO `s_page_role` VALUES ('8d575d02-e420-40ca-b184-9c40a62dc651', 'd942abc1-b177-452e-8c53-1914ac448c7d', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 15:19:10', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 15:19:10');
+INSERT INTO `s_page_role` VALUES ('90896a95-35a6-4a20-b889-09dd9b29521b', '2dc7b0aa-e46e-4583-9738-72e71de1426c', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9d590186-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:11', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:11');
 INSERT INTO `s_page_role` VALUES ('97eb9038-610f-40b7-8b28-4bf0c8abcc6b', '5af24cc1-0a73-4f28-8972-dae2f138c1a8', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '8978edce-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:27', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:27');
 INSERT INTO `s_page_role` VALUES ('9a2f7ef3-fc85-47d3-9893-6af1ec7cf4f5', '162e38d7-5b27-488b-9776-e60d7aa07b68', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9d590186-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:38:06');
 INSERT INTO `s_page_role` VALUES ('9a802bab-de24-4ae0-ad3d-d969ef9c4017', '5af24cc1-0a73-4f28-8972-dae2f138c1a8', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9d590186-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:30', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:30');
+INSERT INTO `s_page_role` VALUES ('9b7f2ee5-2a98-4e79-a036-0d8cb9925639', '2dc7b0aa-e46e-4583-9738-72e71de1426c', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '8978edce-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:08', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:08');
 INSERT INTO `s_page_role` VALUES ('9ba3e496-4c6e-4d43-860d-1ef21b6edcfb', 'caf65c04-beed-11e7-959c-38d547b81379', '0C03F6B6-8CC4-4826-8A51-149990861BE3', '9d590186-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:45', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:45');
 INSERT INTO `s_page_role` VALUES ('9bd9ee94-27a9-4f74-afa9-dddb07832086', 'e38ab74b-bf14-11e7-a301-24fd52935962', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9e15db46-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:20', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:20');
 INSERT INTO `s_page_role` VALUES ('a0992344-a906-43a5-adcc-a88900aba964', 'd2aad1f2-4230-4aee-a1f1-91a6a6c5db40', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'deed64de-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:50', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:50');
 INSERT INTO `s_page_role` VALUES ('a1d56c8a-4da1-44cd-9d36-e26e27e36615', '5863e4f5-927d-4c96-8bda-2294703bc909', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:03', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:03');
 INSERT INTO `s_page_role` VALUES ('a2e76970-77e9-40df-9e36-92cedd25602f', '67416840-6b15-473b-80fc-bbf1b28dfac5', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:40', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:40');
 INSERT INTO `s_page_role` VALUES ('a31f6119-e9d4-4967-8bd2-ae5c1724adb5', '04c21bbc-f0c1-4981-bbe7-17627cce0664', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:13', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:13');
+INSERT INTO `s_page_role` VALUES ('aa224ce6-30dc-4c78-85b9-43fe1020e602', '96e55b56-ab35-4774-a248-14a683a932e7', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'deed64de-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:44', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:44');
 INSERT INTO `s_page_role` VALUES ('ac78a126-701e-478d-a101-17a84d1ceae5', '20692517-9187-41df-920b-7c7342a93d37', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'deed64de-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:36', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:36');
 INSERT INTO `s_page_role` VALUES ('acc82e5f-0d6e-42f5-8f2d-457222179c48', '2d42e55d-5e6a-4b92-ba22-5c188c0d13d2', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9d590186-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:30', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:30');
 INSERT INTO `s_page_role` VALUES ('ae56902c-d723-4abd-a74e-25cc2483eb74', '04c21bbc-f0c1-4981-bbe7-17627cce0664', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9e15db46-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:17', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:17');
+INSERT INTO `s_page_role` VALUES ('b00d3079-0dd0-4148-8fe6-f88d0e501051', '2dc7b0aa-e46e-4583-9738-72e71de1426c', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:06');
 INSERT INTO `s_page_role` VALUES ('b07a7ba5-93a8-4f85-b327-fbfb403b6a5d', 'd07687ef-2798-11e5-965c-000c29d7a3a0', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'deed64de-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:09', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:09');
 INSERT INTO `s_page_role` VALUES ('b2a9c5ff-2bf0-4046-b944-7a295ffdd665', 'caf65c04-beed-11e7-959c-38d547b81379', '0C03F6B6-8CC4-4826-8A51-149990861BE3', '8978edce-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:48', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:48');
 INSERT INTO `s_page_role` VALUES ('b408c715-19ed-46ee-9428-5e5cfd58fd13', '0a1e90f6-cc25-11e7-843e-24fd52935962', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'fea1871b-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:50', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:50');
@@ -538,6 +605,7 @@ INSERT INTO `s_page_role` VALUES ('c56668bb-c56b-40c4-9143-f87d8c139def', '6fc0d
 INSERT INTO `s_page_role` VALUES ('c6352c33-05d3-4d2e-b66e-2f5627e6dfb0', '20692517-9187-41df-920b-7c7342a93d37', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:35', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:35');
 INSERT INTO `s_page_role` VALUES ('c6cd6715-6203-4f84-b55a-68c57eae82e4', '20692517-9187-41df-920b-7c7342a93d37', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'fea1871b-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:37', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:37');
 INSERT INTO `s_page_role` VALUES ('c6e7a1f7-31cc-439a-9daa-69b5aab08308', '67416840-6b15-473b-80fc-bbf1b28dfac5', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9bda9313-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:38', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:38');
+INSERT INTO `s_page_role` VALUES ('c74316a2-41e1-489b-aa20-215199bc2840', '2dc7b0aa-e46e-4583-9738-72e71de1426c', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:13', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:13');
 INSERT INTO `s_page_role` VALUES ('c8ea16e2-79ad-42c3-b76a-883b4d4a4724', 'caf65c04-beed-11e7-959c-38d547b81379', '0C03F6B6-8CC4-4826-8A51-149990861BE3', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:43', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:43');
 INSERT INTO `s_page_role` VALUES ('ca9b9c64-ccd9-11e7-b07e-24fd52935962', 'caf65c04-beed-11e7-959c-38d547b81379', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9d590186-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-19 11:29:03', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-19 11:29:03');
 INSERT INTO `s_page_role` VALUES ('cb07d6fe-d17c-47f0-bdd6-3f0b7af58147', '0de2c731-9dd6-4a95-8fef-0fa88b625c98', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'fea1871b-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:53', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:53');
@@ -551,7 +619,9 @@ INSERT INTO `s_page_role` VALUES ('cff06d81-8833-460c-a0d2-4386cb30fcab', '0a1e9
 INSERT INTO `s_page_role` VALUES ('d0f06bbb-ccd9-11e7-b07e-24fd52935962', 'caf65c04-beed-11e7-959c-38d547b81379', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9e15db46-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-19 11:29:14', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-19 11:29:14');
 INSERT INTO `s_page_role` VALUES ('d4869692-e7ab-47e8-b71c-76d522a0528a', '5863e4f5-927d-4c96-8bda-2294703bc909', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:57', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:57');
 INSERT INTO `s_page_role` VALUES ('d4b76915-12f2-4be4-a7ca-bcd12ee40a67', '162e38d7-5b27-488b-9776-e60d7aa07b68', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'deed64de-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:38:09', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:38:09');
+INSERT INTO `s_page_role` VALUES ('d54537a9-3704-40d8-926b-675cbfb5d092', '96e55b56-ab35-4774-a248-14a683a932e7', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'fea1871b-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:46', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:46');
 INSERT INTO `s_page_role` VALUES ('d62cbf1c-ccd9-11e7-b07e-24fd52935962', 'caf65c04-beed-11e7-959c-38d547b81379', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-19 11:29:23', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-19 11:29:23');
+INSERT INTO `s_page_role` VALUES ('d7b18c0a-b97b-4e8e-b4fc-df93c0c6c492', 'd6b1760b-e2e4-47e1-8e65-660fcd0c0f2a', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9e15db46-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:57', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:57');
 INSERT INTO `s_page_role` VALUES ('d8895364-5ec2-46d5-9f59-e779fae092ad', 'd942abc1-b177-452e-8c53-1914ac448c7d', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '8978edce-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 15:19:07', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 15:19:07');
 INSERT INTO `s_page_role` VALUES ('dd0eac49-ccd9-11e7-b07e-24fd52935962', 'caf65c04-beed-11e7-959c-38d547b81379', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'deed64de-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-19 11:29:34', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-19 11:29:34');
 INSERT INTO `s_page_role` VALUES ('dda029b3-2fd7-4729-9658-983d2683bed0', '76849bfe-dfd4-476c-b2f8-11072c25ceb8', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'fea1871b-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 15:19:01', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 15:19:01');
@@ -564,6 +634,8 @@ INSERT INTO `s_page_role` VALUES ('e6307870-aa9d-46d5-b704-b2f856fdf973', 'd2aad
 INSERT INTO `s_page_role` VALUES ('e959be1c-e6aa-47c6-b96e-bad7e39b9981', 'd942abc1-b177-452e-8c53-1914ac448c7d', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'deed64de-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:26', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:26:26');
 INSERT INTO `s_page_role` VALUES ('ea3f6d1e-c700-4877-9a8b-e87483f0c2d7', '0a1e90f6-cc25-11e7-843e-24fd52935962', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '8978edce-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:46', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 21:35:46');
 INSERT INTO `s_page_role` VALUES ('ea8504db-dd70-484e-bc79-75028ef4f2e1', '0de2c731-9dd6-4a95-8fef-0fa88b625c98', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9d590186-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:50', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:36:50');
+INSERT INTO `s_page_role` VALUES ('eb01f894-3c82-4b32-be90-451fac2cb8e6', '96e55b56-ab35-4774-a248-14a683a932e7', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9bda9313-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:40', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:02:40');
+INSERT INTO `s_page_role` VALUES ('ec69f624-15fd-4aa7-babe-191e31b52888', 'd6b1760b-e2e4-47e1-8e65-660fcd0c0f2a', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'fea1871b-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:03:01', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 23:03:01');
 INSERT INTO `s_page_role` VALUES ('ec86ca7f-d6e6-4fd7-8f62-c0d92e1b6631', '6fc0d40a-ca6e-4c19-8d24-485d5a61ea50', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '9bda9313-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:20', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:20');
 INSERT INTO `s_page_role` VALUES ('ec993411-82d4-4a78-97b1-c47ac6833541', 'ce43305b-a658-4e8c-b864-10b6ee797429', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'c50dc6f7-b35b-4294-959e-e6e79abffc1e', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:09', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:37:09');
 INSERT INTO `s_page_role` VALUES ('efd1d268-1660-4d40-b159-1abb26698352', '162e38d7-5b27-488b-9776-e60d7aa07b68', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'de46c408-c9c6-11e7-8126-38d547b81379', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:38:08', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:38:08');
@@ -636,10 +708,12 @@ INSERT INTO `s_role_menu` VALUES ('28b46f54-6cc8-42ca-af69-231ae2fd38c4', 'c716b
 INSERT INTO `s_role_menu` VALUES ('29805307-37f1-407f-82e9-aa989369c2a5', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '20692517-9187-41df-920b-7c7342a93d37', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 17:13:46');
 INSERT INTO `s_role_menu` VALUES ('2f95acd0-d067-11e7-a807-24fd52935962', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '5af24cc1-0a73-4f28-8972-dae2f138c1a8', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 23:58:45');
 INSERT INTO `s_role_menu` VALUES ('3744e89c-a116-4783-9f47-bb935386ec41', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '5d2f2a0d-9326-4026-b338-c03bf6e255db', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:11:43');
+INSERT INTO `s_role_menu` VALUES ('478233a6-3ee8-42f5-93d5-5d06df2f2d4f', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '96e55b56-ab35-4774-a248-14a683a932e7', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 21:54:07');
 INSERT INTO `s_role_menu` VALUES ('49ea090b-1f1e-4e4b-baa5-fbbb392d474d', '0C03F6B6-8CC4-4826-8A51-149990861BE3', 'caf65c04-beed-11e7-959c-38d547b81379', '2', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 12:49:10');
 INSERT INTO `s_role_menu` VALUES ('512ce723-cc25-11e7-843e-24fd52935962', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '0a1e90f6-cc25-11e7-843e-24fd52935962', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-18 13:57:11');
 INSERT INTO `s_role_menu` VALUES ('519d6387-4e6e-4ab9-976a-41b9b331edfa', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '2c68aa86-891b-4661-ba76-327e8a2a6215', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:33:58');
 INSERT INTO `s_role_menu` VALUES ('574858b8-1fc1-4dea-b458-d46a88202051', 'c716be42-78c2-4c80-8c88-25814b2e683b', '10000000-0000-0000-0000-300000000000', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 12:49:31');
+INSERT INTO `s_role_menu` VALUES ('58ac537e-c804-4114-bf8e-e2a95eef389d', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '2dc7b0aa-e46e-4583-9738-72e71de1426c', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 21:52:57');
 INSERT INTO `s_role_menu` VALUES ('5c6efcb2-62a1-4a80-860f-85556ff2ad96', '0C03F6B6-8CC4-4826-8A51-149990861BE3', '3631e59e-1175-11e5-a9de-000c29d7a3a0', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 12:49:13');
 INSERT INTO `s_role_menu` VALUES ('5e03e76a-5b01-4b50-99b6-ec088cbbe482', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '0bc54201-f2e3-4585-a9c7-bb5d9b44e26d', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:32:44');
 INSERT INTO `s_role_menu` VALUES ('6b571011-cdf0-11e7-a0af-50465deb996e', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '76849bfe-dfd4-476c-b2f8-11072c25ceb8', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 17:12:13');
@@ -650,6 +724,7 @@ INSERT INTO `s_role_menu` VALUES ('7cc42f97-cf40-11e7-ad32-38d547b81379', '0C03F
 INSERT INTO `s_role_menu` VALUES ('87b72623-a691-4405-97b2-2a4cd03b7b65', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'df1a659b-180f-4fd2-abb0-b42c7db62714', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:03:25');
 INSERT INTO `s_role_menu` VALUES ('8b1bc67a-34c2-422d-9574-b236371ddfa6', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '2d42e55d-5e6a-4b92-ba22-5c188c0d13d2', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:18:24');
 INSERT INTO `s_role_menu` VALUES ('9c85de13-8c9e-4281-bebd-820036b178cd', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '162e38d7-5b27-488b-9776-e60d7aa07b68', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:35:28');
+INSERT INTO `s_role_menu` VALUES ('9c8c80fb-7b0c-482e-870a-d1c285d89664', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'd6b1760b-e2e4-47e1-8e65-660fcd0c0f2a', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 21:19:03');
 INSERT INTO `s_role_menu` VALUES ('ac8fb970-78ad-40f5-a082-1f2a171f1986', '0C03F6B6-8CC4-4826-8A51-149990861BE3', 'd07687ef-2798-11e5-965c-000c29d7a3a0', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 12:49:13');
 INSERT INTO `s_role_menu` VALUES ('b452c7d9-8570-45c7-a4ee-b55938cc1047', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '21136dca-a230-4902-b370-73cedbfd37d1', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:19:52');
 INSERT INTO `s_role_menu` VALUES ('b8b84474-02e6-4210-a5e5-e94390685099', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'e38ab74b-bf14-11e7-a301-24fd52935962', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-14 17:12:13');
