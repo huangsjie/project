@@ -31,4 +31,14 @@ public class TeaGardenServiceImpl extends AbstractServiceImpl<TeaGarden> impleme
     public List<Map> selectTeaGardenList(Map map){
         return teaGardenMapper.selectTeaGardenList(map);
     }
+
+    /**
+     * 查询茶园名称和ID 茶园日志使用
+     * @param map
+     * @return
+     */
+    @Override
+    public List<Map> selectTeaGardenNameAndId(Map map){
+        return teaGardenMapper.selectTeaGardenNameAndId(map);
+    }
 }

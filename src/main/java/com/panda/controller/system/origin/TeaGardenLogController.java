@@ -2,12 +2,11 @@ package com.panda.controller.system.origin;
 
 import com.alibaba.citrus.util.StringEscapeUtil;
 import com.alibaba.fastjson.JSON;
-import com.panda.controller.system.index.IndexController;
-
 import com.panda.model.origin.TeaGardenLog;
 import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
 import com.panda.service.origin.TeaGardenLogService;
+import com.panda.service.origin.TeaGardenService;
 import com.panda.service.system.DictionaryService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
@@ -29,10 +28,16 @@ import java.util.*;
 @RequestMapping("/system/teaLog")
 public class TeaGardenLogController {
     private static final Logger logger = LoggerFactory.getLogger(TeaGardenLogController.class);
+
     @Resource
-    private TeaGardenLogService teaGardenLogService;
+    private TeaGardenService teaGardenService;
+
     @Resource
     private DictionaryService dictionaryService;
+
+    @Resource
+    private TeaGardenLogService teaGardenLogService;
+
     private static boolean message = false;
     private static Object  data    = null;
     /**
@@ -43,10 +48,9 @@ public class TeaGardenLogController {
     @RequiresPermissions("origin:view")//权限管理;
     public String getTeaGardenLog(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        List<Dictionary> statusType = dictionaryService.selectDictionaryValueList("ba259a75-f5a7-4897-949f-1c90b7958b35");
-        List<Dictionary> farmType = dictionaryService.selectDictionaryValueList("92253cc8-2128-11e5-965c-000c29d7a3a0");
-        model.addAttribute("baseUrl",request.getRequestURI());
-        model.addAttribute("statusType",statusType);
+        List<Map> gardenType = teaGardenService.selectTeaGardenNameAndId(new HashMap());
+        List<Dictionary> farmType = dictionaryService.selectDictionaryValueList("92253cc8-2128-11e5-965c-000c29d7a3a0");//农事
+        model.addAttribute("gardenType",gardenType);
         model.addAttribute("farmType",farmType);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);

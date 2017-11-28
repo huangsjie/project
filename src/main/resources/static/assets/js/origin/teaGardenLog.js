@@ -101,7 +101,7 @@ var TeaGardenManage = function () {
 
         }).val(typeof query.status !== 'undefined' ? query.status : '');*/
 
-        $('#m_form_status').selectpicker();
+        $('.select_selectpicker').selectpicker();
     };
 
 
@@ -238,4 +238,15 @@ var TeaGardenManage = function () {
 
 jQuery(document).ready(function () {
     TeaGardenManage.init();
+
+    $('#m_datetimepicker_3').datetimepicker({
+        todayHighlight: false,
+        autoclose: true,
+        startView: 4,
+        minView: 4,
+        autoclose: true,
+        sideBySide: false,
+        pickerPosition: 'bottom-left',
+        format: 'yyyy'
+    });
 });

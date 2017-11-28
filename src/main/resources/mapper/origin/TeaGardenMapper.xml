@@ -235,4 +235,27 @@
     </if>
     ORDER BY tg.create_time ASC
   </select>
+
+  <select id="selectTeaGardenNameAndId" resultType="map" parameterType="map">
+    SELECT
+    tg.id, tg.name
+    FROM e_tea_garden tg
+    WHERE 1 = 1
+    <if test="status != null and status != ''">
+      AND tg.status = #{status}
+    </if>
+    <if test="teaIs != null and teaIs != ''">
+      AND tg.tea_is = #{teaIs}
+    </if>
+    <if test="cultivarId != null and cultivarId != ''">
+      AND tg.cultivar_id = #{cultivarId}
+    </if>
+    <if test="teaGrade != null and teaGrade != ''">
+      AND tg.tea_grade = #{teaGrade}
+    </if>
+    <if test="gardenType != null and gardenType != ''">
+      AND tg.garden_type = #{gardenType}
+    </if>
+    ORDER BY tg.create_time ASC
+  </select>
 </mapper>
