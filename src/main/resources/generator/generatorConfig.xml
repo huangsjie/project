@@ -34,8 +34,8 @@
         <!-- 存放位置 -->
 
         <!-- 数据表 -->
-        <table tableName="e_tea_garden" domainObjectName="TeaGardenAAAAAAAA" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-        <table tableName="e_tea_garden_log" domainObjectName="TeaGardenLogAAAAAAA" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="e_manage_batch" domainObjectName="ManageBatchaaaaa" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="e_process_batch" domainObjectName="ProcessBatchAAAAAA" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
         <!-- 数据表 -->
     </context>
     <!-- tea
