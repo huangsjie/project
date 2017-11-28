@@ -45,11 +45,12 @@ public class TeaGardenController {
     public String getTeaGardenList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         List<Dictionary> statusType = dictionaryService.selectDictionaryValueList("ba259a75-f5a7-4897-949f-1c90b7958b35");
-        List<Dictionary> teaGardenLevel = dictionaryService.selectDictionaryValueList("3a68b833-3db7-436c-a656-15365525f782");
-        List<Dictionary> gardenType = dictionaryService.selectDictionaryValueList("96a73505-f111-49a8-84c5-78788f3a3986");
-        model.addAttribute("baseUrl",request.getRequestURI());
+        List<Dictionary> teaGardenLevel = dictionaryService.selectDictionaryValueList("f63fe4f8-27ab-11e5-965c-000c29d7a3a0");
+        List<Dictionary> gardenType = dictionaryService.selectDictionaryValueList("4031b009-b799-4bf0-add0-c7069900bed3");
+        List<Dictionary> cultivarType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");
         model.addAttribute("statusType",statusType);
         model.addAttribute("teaGardenLevel",teaGardenLevel);
+        model.addAttribute("cultivarType",cultivarType);
         model.addAttribute("gardenType",gardenType);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
@@ -77,6 +78,9 @@ public class TeaGardenController {
                 }
                 if (status.size() > 0 && status.get("garden_type") != ""){
                     query.put("garden_type",status.get("garden_type"));
+                }
+                if (status.size() > 0 && status.get("cultivar_id") != ""){
+                    query.put("cultivar_id",status.get("cultivar_id"));
                 }
             }
 

@@ -211,10 +211,12 @@
 
   <select id="selectTeaGardenList" resultType="map" parameterType="map">
     select
-    tg.*,d.name teaGradeName ,d1.name gardenTypeName
+    tg.*,d.name teaGradeName ,d1.name gardenTypeName,d2.name cultivarName,d3.name teaIsName
     from e_tea_garden tg
     LEFT JOIN s_dictionary as d on tg.tea_grade = d.id
     LEFT JOIN s_dictionary as d1 on tg.garden_type = d1.id
+    LEFT JOIN s_dictionary as d2 on tg.cultivar_id = d2.id
+    LEFT JOIN s_dictionary as d3 on tg.tea_is = d3.id
     where 1 = 1
     <if test="status != null and status != ''">
       AND tg.status = #{status}

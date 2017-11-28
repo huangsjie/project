@@ -35,22 +35,10 @@ var TeaGarden = function () {
                 {field: "area", title: "区域", width: 100},
                 {field: "acreage", title: "面积", width: 100},
                 {field: "age_limit", title: "树龄", width: 100},
-                //{field: "description", title: "描述", width: 100},
+                {field: "cultivarName", title: "品种", width: 100},
+                {field: "teaIsName", title: "茶系", width: 100},
                 {field: "create_time", title: "创建时间", sortable: 'asc', width: 150},
-               /* {
-                field: "status",
-                title: "状态",
-                sortable: 'asc',
-                width: 60,
-                template: function (row) {
-                    var status = {
-                        //0: {'title': '未知', 'class': ' m-badge--info'},
-                        1: {'title': '启用', 'class': ' m-badge--success'},
-                        2: {'title': '禁用', 'class': ' m-badge--danger'}
-                    };
-                    return '<span class="m-badge ' + status[row.status].class + ' m-badge--wide">' + status[row.status].title + '</span>';
-                }
-            },*/{
+                {
                 field: "Actions",
                 width: 100,
                 title: "操作",
@@ -86,18 +74,15 @@ var TeaGarden = function () {
             datatable.load();
         }).val(typeof query.garden_type !== 'undefined' ? query.garden_type : '');
 
-
-
-       /* $('#m_form_status').on('change', function () {
+       $('#cultivarType').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.status = $(this).val();
+            query.cultivar_id = $(this).val();
             datatable.setDataSourceQuery(query);
             datatable.load();
 
-        }).val(typeof query.status !== 'undefined' ? query.status : '');*/
+        }).val(typeof query.cultivar_id !== 'undefined' ? query.cultivar_id : '');
 
-        $('#m_form_tea_grade_level').selectpicker();
-        $('#m_form_tea_garden_type').selectpicker();
+        $('.select_selectpicker').selectpicker();
     };
 
 
