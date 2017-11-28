@@ -26,7 +26,7 @@ var TeaGardenManage = function () {
                 footer: false     // 页脚启用,隐藏
             },
             sortable: true,
-            filterable: true,
+            filterable: false,
             pagination: true,
             columns: [{
                 title: "#",
@@ -60,7 +60,7 @@ var TeaGardenManage = function () {
                 title: "进度",
                 width: 60,
                 template: function (row) {
-                    return '123';
+                    return '<span class="m-badge ' + statusOff[row.statusOff].class + ' m-badge--wide">' + statusOff[row.statusOff].title + '</span>';
                 }
             },{
                 field: "create_time",
@@ -84,13 +84,13 @@ var TeaGardenManage = function () {
             }]
         });
         var query = datatable.getDataSourceQuery();
-        // $('#m_form_search').on('keyup', function (e) {
-        //     var query = datatable.getDataSourceQuery();
-        //     query.generalSearch = $(this).val().toLowerCase();
-        //     datatable.setDataSourceQuery(query);
-        //     datatable.load();
-        // }).val(query.generalSearch);
-        $('#createYear').on('', function () {
+        $('#m_form_search').on('keyup', function (e) {
+            var query = datatable.getDataSourceQuery();
+            query.generalSearch = $(this).val().toLowerCase();
+            datatable.setDataSourceQuery(query);
+            datatable.load();
+        }).val(query.generalSearch);
+        $('#createYear').on('change', function () {
             var query = datatable.getDataSourceQuery();
             query.createYear = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
@@ -114,51 +114,51 @@ var TeaGardenManage = function () {
 
 
     /**
-     * RoleEdit 表单验证
-     * 新增与编辑
+     * 新增与编辑表单验证
+     * 茶园日志
      */
     var teaGardenManageForm = function () {
-        $( "#tea_garden_manage_edit_form" ).validate({
+        $( "#tea_garden_log_form" ).validate({
             rules: {
-                name: {
+                teaGardenId: {
+                    required: true
+                },
+                farmTypeId: {
+                    required: true
+                },
+                farmDesc: {
                     required: true,
                     nameCheck:true
                 },
-                description: {
+                operatorId: {
                     required: true,
-                    nameCheck:true,
-                    minlength: 3,
-                    maxlength: 100
+                    nameCheck:true
+                },
+                beginTime: {
+                    required: true
                 }
             },
-
             submitHandler: function (form){
                 blockUiOpen('.teaGardenLogEdit .modal-content');
                 request(
                     "saveTeaGardenLog",
                     "post",
-                    $("#tea_garden_manage_edit_form").serialize(),
+                    $("#tea_garden_log_form").serialize(),
                     function(result){
                         if(result.message){
                             removeValue('add');
                             blockUiClose('.teaGardenLogEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
-                            //blockUiOpen('.rolesEdit .modal-content',result.data);
-                            //blockUiClose('.rolesEdit .modal-content',1,".close-parent",2000);
                         }else{
-                            // 失败不关闭窗口
-                            //blockUiOpen('.rolesEdit .modal-content',result.data);
-                            //blockUiClose('.rolesEdit .modal-content','','',2000);
                             ToastrMsg(result.data,"error","topRight");
                         }
-
                     }
                 )
             }
         });
     }
     /**
-     * 获取角色信息,并移除上一轮错误信息
+     * 获取日志信息,并移除上一轮错误信息
      */
     var editTeaGardenLogItem = function () {
         $("#tea_garden_manage_list").on("click", ".editTeaGardenLogItem", function () {
@@ -171,10 +171,13 @@ var TeaGardenManage = function () {
                     {id:id},
                     function (result) {
                         if(result.message){
-                            $("#tea_garden_manage_edit_form [name='id']").val(result.data.id)
-                            $("#tea_garden_manage_edit_form [name='name']").val(result.data.name)
-                            $("#tea_garden_manage_edit_form [name='area']").val(result.data.area)
-                            $("#tea_garden_manage_edit_form [name='description']").val(result.data.description)
+                            $(".teaGardenLogEdit [name='id']").val(result.data.id)
+                            $(".teaGardenLogEdit [name='teaGardenId']").val(result.data.teaGardenId)
+                            $(".teaGardenLogEdit [name='farmTypeId']").val(result.data.farmTypeId)
+                            $(".teaGardenLogEdit [name='farmDesc']").val(result.data.farmDesc)
+                            $(".teaGardenLogEdit [name='operatorId']").val(result.data.operatorId)
+                            $(".teaGardenLogEdit [name='beginTime']").val(result.data.beginTime)
+                            $(".teaGardenLogEdit [name='description']").val(result.data.description)
                         }
                     })
             }
@@ -184,7 +187,7 @@ var TeaGardenManage = function () {
      * 删除角色
      */
     var delTeaGardenItem = function () {
-        $("#tea_garden_manage_list ").on("click", ".delTeaGardenItem", function () {
+        $("#tea_garden_manage_list ").on("click", ".delTeaGardenLogItem", function () {
             blockUiOpen('#tea_garden_list');
             var self = $(this);
             var id = self.attr("item");
@@ -210,15 +213,19 @@ var TeaGardenManage = function () {
      */
     var removeValue = function(type){
         if(type == 'edit'){
-            $(".teaGardenLogEdit .modal-title").text("管理记录编辑")
+            $(".teaGardenLogEdit .modal-title").text("编辑记录")
             $(".teaGardenLogEdit [name='save']").val('edit')
         }else{
-            $(".teaGardenLogEdit .modal-title").text("茶园新增")
+            $(".teaGardenLogEdit .modal-title").text("新增记录")
             $(".teaGardenLogEdit [name='save']").val('add');
         }
-        $(".teaGardenLogEdit [name='id']").val('')
-        $(".teaGardenLogEdit [name='name']").val('')
-        $(".teaGardenLogEdit [name='description']").val('');
+        $(".teaGardenLogEdit [name='id']").val("")
+        $(".teaGardenLogEdit [name='teaGardenId']").val("")
+        $(".teaGardenLogEdit [name='farmTypeId']").val("")
+        $(".teaGardenLogEdit [name='farmDesc']").val("")
+        $(".teaGardenLogEdit [name='operatorId']").val("")
+        $(".teaGardenLogEdit [name='beginTime']").val("")
+        $(".teaGardenLogEdit [name='description']").val("")
         $(".teaGardenLogEdit .form-control-feedback").remove()
         $(".teaGardenLogEdit div").removeClass("has-danger")
         $(".teaGardenLogEdit div").removeClass("has-success")
@@ -233,11 +240,34 @@ var TeaGardenManage = function () {
         })
     }
 
+    var datetimepickerSelect = function () {
+        $('.datetimepicker_select').datetimepicker({
+            todayHighlight: false,
+            autoclose: true,
+            startView: 4,
+            minView: 4,
+            sideBySide: false,
+            pickerPosition: 'bottom-left',
+            format: 'yyyy'
+        });
+
+        $('.begin_time').datetimepicker({
+            todayHighlight: false,
+            autoclose: true,
+            sideBySide: false,
+            pickerPosition: 'top-left',
+            format: 'yyyy-mm-dd hh:ii'
+        });
+    }
+
     return {
         init: function () {
-            editTeaGardenLogItem()
+            editTeaGardenLogItem();
             teaGardenManageShow();
             teaGardenManageForm();
+            datetimepickerSelect();
+            delTeaGardenItem();
+            addTeaGardenLog();
         }
     };
 }();
@@ -246,15 +276,4 @@ var TeaGardenManage = function () {
 
 jQuery(document).ready(function () {
     TeaGardenManage.init();
-
-    $('#m_datetimepicker_3').datetimepicker({
-        todayHighlight: false,
-        autoclose: true,
-        startView: 4,
-        minView: 4,
-        autoclose: true,
-        sideBySide: false,
-        pickerPosition: 'bottom-left',
-        format: 'yyyy'
-    });
 });
