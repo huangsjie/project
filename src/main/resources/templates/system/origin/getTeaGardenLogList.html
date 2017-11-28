@@ -42,10 +42,10 @@
                                                 </div>
                                                 <div class="m-form__control">
                                                     <div class='input-group date' id='m_datetimepicker_3'>
-                                                        <input type='text' class="form-control m-input" readonly value=""/>
+                                                        <input type='text' class="form-control m-input" name="createYear" readonly value="" id="createYear"/>
                                                         <span class="input-group-addon">
-                                                                <i class="la la-calendar glyphicon-th"></i>
-                                                            </span>
+                                                            <i class="la la-calendar glyphicon-th"></i>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -59,7 +59,7 @@
                                                 <div class="m-form__control">
                                                     <select class="form-control m-bootstrap-select select_selectpicker" id="farmType" >
                                                         <option value=""> 全部 </option>
-                                                        <option th:each="item:${farmType}" th:value="${item.value}" th:text="${item.name}"> 未激活 </option>
+                                                        <option th:each="item:${farmType}" th:value="${item.id}" th:text="${item.name}"></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -73,7 +73,7 @@
                                                 <div class="m-form__control">
                                                     <select class="form-control m-bootstrap-select select_selectpicker" id="gardenType" >
                                                         <option value=""> 全部 </option>
-                                                        <option th:each="item:${gardenType}" th:value="${item.id}" th:text="${item.name}"> 未激活 </option>
+                                                        <option th:each="item:${gardenType}" th:value="${item.id}" th:text="${item.name}"></option>
                                                     </select>
                                                 </div>
                                             </div>

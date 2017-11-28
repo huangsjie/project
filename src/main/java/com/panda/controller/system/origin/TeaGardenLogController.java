@@ -76,12 +76,22 @@ public class TeaGardenLogController {
                 if (status.size() > 0 && status.get("status") != ""){
                     query.put("status",status.get("status"));
                 }
+                if (status.size() > 0 && status.get("createYear") != ""){
+                    query.put("createYear",status.get("createYear"));
+                }
+                if (status.size() > 0 && status.get("farmType") != ""){
+                    query.put("farmType",status.get("farmType"));
+                }
+                if (status.size() > 0 && status.get("gardenType") != ""){
+                    query.put("gardenType",status.get("gardenType"));
+                }
             }
-
             List<TeaGardenLog> TeaGardenLog = teaGardenLogService.selectTeaGardenLogList(query);
             if(TeaGardenLog.size() > 0){
                 message = true;
                 data = TeaGardenLog;
+            }else{
+                data    = ResultStateUtil.NO_MORE_DATA;
             }
         }catch (Exception e){
             e.printStackTrace();

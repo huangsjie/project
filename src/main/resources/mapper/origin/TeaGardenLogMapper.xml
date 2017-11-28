@@ -198,15 +198,35 @@
   </update>
 
   <!-- 茶园日志列表数据 -->
-  <select id="selectTeaGardenLogList" resultMap="BaseResultMap" parameterType="map">
-    select
-    <include refid="Base_Column_List" />
-    from e_tea_garden_log tgm
-    where 1 = 1
-    <if test="status != null and status != ''">
-      AND tgm.status = #{status}
+  <select id="selectTeaGardenLogList" resultType="map" parameterType="map">
+    SELECT
+    tgl.id, tgl.farm_desc, tgl.operator_id,tgl.create_time,
+    tg.name teaGardenName, year(tgl.create_time) createYear,
+    (case tgl.end_time when  null then '0' else '1' end  ) statusOff,
+    d.name cultivarName, d1.name farmName, u.chinese_name createName
+    FROM	e_tea_garden tg, e_tea_garden_log tgl
+    LEFT JOIN s_dictionary as d  ON tgl.cultivar_id = d.id
+    LEFT JOIN s_dictionary as d1 ON tgl.farm_type_id = d1.id
+    LEFT JOIN s_users as u ON u.id = tgl.create_id = u.id
+    WHERE
+    1 = 1
+    AND tgl.tea_garden_id = tg.id
+    <if test="cultivarId != null and cultivarId != ''">
+      AND tgl.cultivar_id = #{cultivarId}
     </if>
-    ORDER BY tgm.create_time ASC
+    <if test="gardenType != null and gardenType != ''">
+      AND tgl.tea_garden_id = #{gardenType}
+    </if>
+    <if test="farmType != null and farmType != ''">
+      AND tgl.farm_type_id = #{farmType}
+    </if>
+    <if test="status != null and status != ''">
+      AND tgl.status = #{status}
+    </if>
+    <if test="createYear != null and createYear != ''">
+      AND year(tgl.create_time) = #{createYear}
+    </if>
+    GROUP BY tgl.id ORDER BY tgl.create_time DESC
   </select>
   <!-- 茶园日志列表数据 -->
 </mapper>

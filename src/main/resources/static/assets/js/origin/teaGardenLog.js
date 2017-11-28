@@ -1,5 +1,9 @@
 var TeaGardenManage = function () {
     var actionsTemplate = $("#actionsTemplate").html();
+    var statusOff = {
+        1: {'title': '已完成', 'class': ' m-badge--success'},
+        0: {'title': '进行中', 'class': ' m-badge--warning'}
+    };
     var teaGardenManageShow = function () {
         var datatable = $('.tea_garden_manage_ajax').mDatatable({
             data: {
@@ -30,41 +34,43 @@ var TeaGardenManage = function () {
                 template: function (row) {
                     return row.rowIndex+1;
                 }
-            }, {
-                field: "teaGardenId",
+            },{
+                field: "createYear",
+                title: "年份",
+                width: 60
+            },{
+                field: "teaGardenName",
                 title: "茶园",
-                width: 100
+                width: 60
             }, {
-                field: "farmTypeId",
-                title: "农事类型",
-                width: 100
+                field: "farmName",
+                title: "农事",
+                width: 60
             }, {
-                field: "farmDesc",
+                field: "farm_desc",
                 title: "农事描述",
+                overflow: 'hide',
                 width: 100
             }, {
-                field: "operatorId",
+                field: "operator_id",
                 title: "实施人",
-                width: 100
+                width: 60
             }, {
-                field: "createTime",
-                title: "创建时间",
-                sortable: 'asc',
-                width: 150
-            }, {
-                field: "status",
-                title: "状态",
-                sortable: 'asc',
+                field: "statusOff",
+                title: "进度",
                 width: 60,
                 template: function (row) {
-                    var status = {
-
-                        //0: {'title': '未知', 'class': ' m-badge--info'},
-                        1: {'title': '启用', 'class': ' m-badge--success'},
-                        2: {'title': '禁用', 'class': ' m-badge--danger'}
-                    };
-                    return '<span class="m-badge ' + status[row.status].class + ' m-badge--wide">' + status[row.status].title + '</span>';
+                    return '123';
                 }
+            },{
+                field: "create_time",
+                title: "创建时间",
+                sortable: 'asc',
+                width: 100
+            }, {
+                field: "createName",
+                title: "创建人",
+                width: 60
             },{
                 field: "Actions",
                 width: 100,
@@ -77,29 +83,31 @@ var TeaGardenManage = function () {
                 }
             }]
         });
-
         var query = datatable.getDataSourceQuery();
-
         $('#m_form_search').on('keyup', function (e) {
             var query = datatable.getDataSourceQuery();
             query.generalSearch = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(query.generalSearch);
-
-        $('#m_form_status').on('change', function () {
+        $('#createYear').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.status = $(this).val().toLowerCase();
+            query.createYear = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.status !== 'undefined' ? query.status : '');
-       /* $('#m_form_status').on('change', function () {
+        }).val(typeof query.createYear !== 'undefined' ? query.createYear : '');
+        $('#farmType').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.status = $(this).val();
+            query.farmType = $(this).val();
             datatable.setDataSourceQuery(query);
             datatable.load();
-
-        }).val(typeof query.status !== 'undefined' ? query.status : '');*/
+        }).val(typeof query.farmType !== 'undefined' ? query.farmType : '');
+        $('#gardenType').on('change', function () {
+            var query = datatable.getDataSourceQuery();
+            query.gardenType = $(this).val();
+            datatable.setDataSourceQuery(query);
+            datatable.load();
+        }).val(typeof query.gardenType !== 'undefined' ? query.gardenType : '');
 
         $('.select_selectpicker').selectpicker();
     };
