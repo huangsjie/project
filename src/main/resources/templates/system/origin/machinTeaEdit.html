@@ -6,8 +6,8 @@
 </head>
 <body>
 <!--begin::Modal-->
-<div class="modal fade teaGardenEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true" th:fragment="teaGardenEdit">
+<div class="modal fade machinTeaEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true" th:fragment="machinTeaEdit">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -18,7 +18,7 @@
                     </span>
                 </button>
             </div>
-            <form class="m-form m-form--state m-form--fit m-form--label-align-right" id="tea_garden_edit_form"
+            <form class="m-form m-form--state m-form--fit m-form--label-align-right" id="machin_tea_edit_form"
                   novalidate="novalidate">
                 <div class="modal-body">
                     <input type="hidden" name="id" value="">
@@ -106,7 +106,7 @@
                         <button type="button" class="btn btn-secondary close-parent" data-dismiss="modal">
                             关闭
                         </button>
-                        <button type="submit" shiro:hasPermission="teaGarden:submit" class="btn btn-accent">
+                        <button type="submit" shiro:hasPermission="machinTea:submit" class="btn btn-accent">
                             确定
                         </button>
                     </div>

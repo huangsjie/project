@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.panda.mapper.origin.MachinSetMapper" >
+  <resultMap id="BaseResultMap" type="com.panda.model.origin.MachinSet" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="dic_mac_type" property="dicMacType" jdbcType="VARCHAR" />
+    <result column="dic_tea_attr" property="dicTeaAttr" jdbcType="VARCHAR" />
+    <result column="dic_mac_pro" property="dicMacPro" jdbcType="VARCHAR" />
+    <result column="dic_tea_type" property="dicTeaType" jdbcType="VARCHAR" />
+    <result column="dic_tea_gra" property="dicTeaGra" jdbcType="VARCHAR" />
+    <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_id" property="modifyId" jdbcType="VARCHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, dic_mac_type, dic_tea_attr, dic_mac_pro, dic_tea_type, dic_tea_gra, begin_time, 
+    end_time, status, description, create_id, create_time, modify_id, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from e_machin_set
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from e_machin_set
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.panda.model.origin.MachinSet" >
+    insert into e_machin_set (id, dic_mac_type, dic_tea_attr, 
+      dic_mac_pro, dic_tea_type, dic_tea_gra, 
+      begin_time, end_time, status, 
+      description, create_id, create_time, 
+      modify_id, modify_time)
+    values (#{id,jdbcType=VARCHAR}, #{dicMacType,jdbcType=VARCHAR}, #{dicTeaAttr,jdbcType=VARCHAR}, 
+      #{dicMacPro,jdbcType=VARCHAR}, #{dicTeaType,jdbcType=VARCHAR}, #{dicTeaGra,jdbcType=VARCHAR}, 
+      #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.panda.model.origin.MachinSet" >
+    insert into e_machin_set
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dicMacType != null" >
+        dic_mac_type,
+      </if>
+      <if test="dicTeaAttr != null" >
+        dic_tea_attr,
+      </if>
+      <if test="dicMacPro != null" >
+        dic_mac_pro,
+      </if>
+      <if test="dicTeaType != null" >
+        dic_tea_type,
+      </if>
+      <if test="dicTeaGra != null" >
+        dic_tea_gra,
+      </if>
+      <if test="beginTime != null" >
+        begin_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyId != null" >
+        modify_id,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="dicMacType != null" >
+        #{dicMacType,jdbcType=VARCHAR},
+      </if>
+      <if test="dicTeaAttr != null" >
+        #{dicTeaAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="dicMacPro != null" >
+        #{dicMacPro,jdbcType=VARCHAR},
+      </if>
+      <if test="dicTeaType != null" >
+        #{dicTeaType,jdbcType=VARCHAR},
+      </if>
+      <if test="dicTeaGra != null" >
+        #{dicTeaGra,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyId != null" >
+        #{modifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.panda.model.origin.MachinSet" >
+    update e_machin_set
+    <set >
+      <if test="dicMacType != null" >
+        dic_mac_type = #{dicMacType,jdbcType=VARCHAR},
+      </if>
+      <if test="dicTeaAttr != null" >
+        dic_tea_attr = #{dicTeaAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="dicMacPro != null" >
+        dic_mac_pro = #{dicMacPro,jdbcType=VARCHAR},
+      </if>
+      <if test="dicTeaType != null" >
+        dic_tea_type = #{dicTeaType,jdbcType=VARCHAR},
+      </if>
+      <if test="dicTeaGra != null" >
+        dic_tea_gra = #{dicTeaGra,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null" >
+        begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyId != null" >
+        modify_id = #{modifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.panda.model.origin.MachinSet" >
+    update e_machin_set
+    set dic_mac_type = #{dicMacType,jdbcType=VARCHAR},
+      dic_tea_attr = #{dicTeaAttr,jdbcType=VARCHAR},
+      dic_mac_pro = #{dicMacPro,jdbcType=VARCHAR},
+      dic_tea_type = #{dicTeaType,jdbcType=VARCHAR},
+      dic_tea_gra = #{dicTeaGra,jdbcType=VARCHAR},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_id = #{modifyId,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
