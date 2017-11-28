@@ -26,7 +26,7 @@ var TeaGardenManage = function () {
                 footer: false     // 页脚启用,隐藏
             },
             sortable: true,
-            filterable: false,
+            filterable: true,
             pagination: true,
             columns: [{
                 title: "#",
@@ -84,13 +84,13 @@ var TeaGardenManage = function () {
             }]
         });
         var query = datatable.getDataSourceQuery();
-        $('#m_form_search').on('keyup', function (e) {
-            var query = datatable.getDataSourceQuery();
-            query.generalSearch = $(this).val().toLowerCase();
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(query.generalSearch);
-        $('#createYear').on('change', function () {
+        // $('#m_form_search').on('keyup', function (e) {
+        //     var query = datatable.getDataSourceQuery();
+        //     query.generalSearch = $(this).val().toLowerCase();
+        //     datatable.setDataSourceQuery(query);
+        //     datatable.load();
+        // }).val(query.generalSearch);
+        $('#createYear').on('', function () {
             var query = datatable.getDataSourceQuery();
             query.createYear = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);

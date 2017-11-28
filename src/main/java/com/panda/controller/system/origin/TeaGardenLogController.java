@@ -90,8 +90,6 @@ public class TeaGardenLogController {
             if(TeaGardenLog.size() > 0){
                 message = true;
                 data = TeaGardenLog;
-            }else{
-                data    = ResultStateUtil.NO_MORE_DATA;
             }
         }catch (Exception e){
             e.printStackTrace();

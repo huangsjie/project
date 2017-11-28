@@ -200,7 +200,7 @@
   <!-- 茶园日志列表数据 -->
   <select id="selectTeaGardenLogList" resultType="map" parameterType="map">
     SELECT
-    tgl.id, tgl.farm_desc, tgl.operator_id,tgl.create_time,
+    tgl.id, tgl.farm_desc, tgl.operator_id,tgl.create_time, tgl.cultivar_id cultivarId, tgl.farm_type_id farmType, tgl.tea_garden_id gardenType,
     tg.name teaGardenName, year(tgl.create_time) createYear,
     (case tgl.end_time when  null then '0' else '1' end  ) statusOff,
     d.name cultivarName, d1.name farmName, u.chinese_name createName

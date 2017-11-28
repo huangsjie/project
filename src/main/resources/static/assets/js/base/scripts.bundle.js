@@ -3320,8 +3320,8 @@ jQuery.fn.extend({
 		// By default the stirngs will be in the plugin source and here can override it
 		translate: {
 			records: {
-				processing: 'Please wait...',
-				noRecords: 'No records found'
+				processing: '请稍后...',
+				noRecords: '没有找到记录'
 			},
 			toolbar: {
 				pagination: {
