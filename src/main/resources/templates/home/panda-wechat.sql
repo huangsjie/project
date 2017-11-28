@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-11-27 18:27:22
+Date: 2017-11-28 08:05:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -115,17 +115,19 @@ CREATE TABLE `e_stock_list` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for e_tea_garden_info
+-- Table structure for e_tea_garden
 -- ----------------------------
-DROP TABLE IF EXISTS `e_tea_garden_info`;
-CREATE TABLE `e_tea_garden_info` (
+DROP TABLE IF EXISTS `e_tea_garden`;
+CREATE TABLE `e_tea_garden` (
   `id` varchar(36) NOT NULL DEFAULT '' COMMENT '自增id',
   `name` varchar(50) NOT NULL COMMENT '茶园名称',
   `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
   `area` varchar(100) DEFAULT NULL COMMENT '区域',
   `tea_grade` varchar(36) DEFAULT NULL COMMENT '等级',
   `tea_is` varchar(36) DEFAULT NULL COMMENT '茶系',
-  `garden_type` varchar(36) DEFAULT NULL,
+  `age_limit` varchar(200) DEFAULT NULL COMMENT '茶园年龄',
+  `acreage` char(20) DEFAULT NULL COMMENT '面积',
+  `garden_type` varchar(36) DEFAULT NULL COMMENT '茶园类型',
   `cultivar_id` varchar(36) DEFAULT NULL COMMENT '栽培品种',
   `description` varchar(300) DEFAULT NULL COMMENT '备注',
   `create_id` varchar(36) NOT NULL COMMENT '创建人',
@@ -136,36 +138,37 @@ CREATE TABLE `e_tea_garden_info` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of e_tea_garden_info
+-- Records of e_tea_garden
 -- ----------------------------
-INSERT INTO `e_tea_garden_info` VALUES ('60053ec7-cdf7-11e7-a0af-50465deb996e', '茶园A', '1', '湖北', null, null, null, '13165056-cdf9-11e7-a0af-50465deb996e', 'qq', '13165056-cdf9-11e7-a0af-50465deb996e', '2017-11-20 21:33:46', '13165056-cdf9-11e7-a0af-50465deb996e', '2017-11-20 21:33:52');
-INSERT INTO `e_tea_garden_info` VALUES ('800a25d7-6d35-401d-bb7f-db0c48906b69', '你好', '1', '123', null, null, null, '7235cfc8-bcd7-48ef-88e0-fcc0c640ab13', '啊是D阿斯顿发生的方法', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 21:15:14', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 21:15:14');
+INSERT INTO `e_tea_garden` VALUES ('249a802b-d37c-11e7-b5d6-24fd52935962', '茶园B', '1', '湖南', '1', '1', '1', '1', '249a802b-d37c-11e7-b5d6-24fd52935962', '249a802b-d37c-11e7-b5d6-24fd52935962', '茶园B', '249a802b-d37c-11e7-b5d6-24fd52935962', '2017-11-27 22:06:47', '249a802b-d37c-11e7-b5d6-24fd52935962', '2017-11-27 22:06:50');
+INSERT INTO `e_tea_garden` VALUES ('8893e29b-d37b-11e7-b5d6-24fd52935962', '茶园A', '1', '湖北', '1', '1', '1', '1', '8893e29b-d37b-11e7-b5d6-24fd52935962', '8893e29b-d37b-11e7-b5d6-24fd52935962', '毛线', '8893e29b-d37b-11e7-b5d6-24fd52935962', '2017-11-27 22:02:45', '8893e29b-d37b-11e7-b5d6-24fd52935962', '2017-11-27 22:02:49');
 
 -- ----------------------------
--- Table structure for e_tea_garden_manage_list
+-- Table structure for e_tea_garden_log
 -- ----------------------------
-DROP TABLE IF EXISTS `e_tea_garden_manage_list`;
-CREATE TABLE `e_tea_garden_manage_list` (
+DROP TABLE IF EXISTS `e_tea_garden_log`;
+CREATE TABLE `e_tea_garden_log` (
   `id` varchar(36) NOT NULL DEFAULT '' COMMENT '自增id',
   `tea_garden_id` varchar(36) NOT NULL COMMENT '茶园',
-  `farm_type_id` varchar(36) NOT NULL COMMENT '农事ID',
-  `farm_desc` varchar(300) NOT NULL COMMENT '农事类型值(如施化肥5kg)',
-  `cultivar_id` varchar(36) NOT NULL,
-  `begin_time` datetime NOT NULL COMMENT '开始时间',
-  `end_time` datetime NOT NULL COMMENT '结束时间',
-  `operator_id` varchar(36) NOT NULL COMMENT '操作人ID',
-  `create_id` varchar(36) NOT NULL COMMENT '创建人',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `modify_id` varchar(36) DEFAULT NULL COMMENT '修改人',
-  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `farm_type_id` varchar(36) DEFAULT NULL COMMENT '农事ID',
+  `farm_desc` varchar(36) DEFAULT NULL COMMENT '农事类型值(如施化肥5kg)',
+  `cultivar_id` varchar(36) DEFAULT NULL,
+  `begin_time` datetime DEFAULT NULL COMMENT '开始时间',
+  `end_time` datetime DEFAULT NULL COMMENT '结束时间',
+  `operator_id` varchar(36) DEFAULT NULL COMMENT '操作人ID',
   `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
   `description` varchar(300) DEFAULT NULL COMMENT '备注',
+  `create_id` varchar(36) NOT NULL COMMENT '创建人',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `modify_id` varchar(36) NOT NULL COMMENT '修改人',
+  `modify_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of e_tea_garden_manage_list
+-- Records of e_tea_garden_log
 -- ----------------------------
+INSERT INTO `e_tea_garden_log` VALUES ('b90c7f48-d37e-11e7-b5d6-24fd52935962', 'b90c7f48-d37e-11e7-b5d6-24fd52935962', 'b90c7f48-d37e-11e7-b5d6-24fd52935962', 'b90c7f48-d37e-11e7-b5d6-24fd52935962', 'b90c7f48-d37e-11e7-b5d6-24fd52935962', '2017-11-27 22:25:37', '2017-11-27 22:25:39', 'b90c7f48-d37e-11e7-b5d6-24fd52935962', '1', '阿斯顿发生', 'b90c7f48-d37e-11e7-b5d6-24fd52935962', '2017-11-27 22:25:48', 'b90c7f48-d37e-11e7-b5d6-24fd52935962', '2017-11-27 22:25:53');
 
 -- ----------------------------
 -- Table structure for e_tea_system_step
