@@ -202,12 +202,12 @@
     SELECT
     tgl.id, tgl.farm_desc, tgl.operator_id,tgl.create_time, tgl.cultivar_id cultivarId, tgl.farm_type_id farmType, tgl.tea_garden_id gardenType,
     tg.name teaGardenName, year(tgl.create_time) createYear,
-    (case tgl.end_time when  null then '0' else '1' end  ) statusOff,
+    CASE WHEN ISNULL(tgl.end_time) THEN 0 ELSE 1 END statusOff,
     d.name cultivarName, d1.name farmName, u.chinese_name createName
     FROM	e_tea_garden tg, e_tea_garden_log tgl
     LEFT JOIN s_dictionary as d  ON tgl.cultivar_id = d.id
     LEFT JOIN s_dictionary as d1 ON tgl.farm_type_id = d1.id
-    LEFT JOIN s_users as u ON u.id = tgl.create_id = u.id
+    LEFT JOIN s_users as u ON tgl.create_id = u.id
     WHERE
     1 = 1
     AND tgl.tea_garden_id = tg.id

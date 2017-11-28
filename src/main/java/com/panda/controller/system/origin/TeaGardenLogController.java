@@ -69,6 +69,8 @@ public class TeaGardenLogController {
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         List<Map> gardenType = teaGardenService.selectTeaGardenNameAndId(new HashMap());
         List<Dictionary> farmType = dictionaryService.selectDictionaryValueList("92253cc8-2128-11e5-965c-000c29d7a3a0");//农事
+        List<Dictionary> cultivarType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");//品种
+        model.addAttribute("cultivarType",cultivarType);
         model.addAttribute("gardenType",gardenType);
         model.addAttribute("farmType",farmType);
         model.addAttribute("menuList",user.getMenuList());
