@@ -139,6 +139,7 @@ var TeaGardenManage = function () {
                 }
             },
             submitHandler: function (form){
+                console.log("A")
                 blockUiOpen('.teaGardenLogEdit .modal-content');
                 request(
                     "saveTeaGardenLog",
@@ -146,7 +147,6 @@ var TeaGardenManage = function () {
                     $("#tea_garden_log_form").serialize(),
                     function(result){
                         if(result.message){
-                            removeValue('add');
                             blockUiClose('.teaGardenLogEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
                         }else{
@@ -256,7 +256,7 @@ var TeaGardenManage = function () {
             autoclose: true,
             sideBySide: false,
             pickerPosition: 'top-left',
-            format: 'yyyy-mm-dd hh:ii'
+            format: 'yyyy-mm-dd hh:mm:ss'
         });
     }
 

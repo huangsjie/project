@@ -14,14 +14,19 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -40,6 +45,20 @@ public class TeaGardenLogController {
 
     private static boolean message = false;
     private static Object  data    = null;
+
+    /**
+     * bootstart  date 注解 格式化页面上传过来的 String 日期
+     * @param request
+     * @param binder
+     * @throws
+     */
+    @InitBinder
+    protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        CustomDateEditor dateEditor = new CustomDateEditor(fmt, true);
+        binder.registerCustomEditor(Date.class, dateEditor);
+    }
+
     /**
      * 获取菜单 Tree 当前菜单为用户 信息一起存储到 Redis 内
      * @return
