@@ -63,7 +63,7 @@ public class MachinSetController {
     }
 
     /**
-     * Ajax 获取茶园信息列表
+     * Ajax 获取信息列表
      * @param request
      * @return
      */
