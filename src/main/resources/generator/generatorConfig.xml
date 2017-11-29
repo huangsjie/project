@@ -34,8 +34,7 @@
         <!-- 存放位置 -->
 
         <!-- 数据表 -->
-        <table tableName="e_machin_set" domainObjectName="MachinSet" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-        <table tableName="e_machin_tea" domainObjectName="MachinTea" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="e_machin_set" domainObjectName="MachinSetAAAAA" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
         <!-- 数据表 -->
     </context>
     <!-- tea

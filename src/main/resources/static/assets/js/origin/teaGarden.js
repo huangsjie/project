@@ -26,7 +26,6 @@ var TeaGarden = function () {
             pagination: true,
             columns: [
                 {title: "#", width: 40, template: function (row) {
-                    console.log(row)
                     return row.rowIndex+1;
                 }},
                 {field: "name", title: "名称", width: 100},
@@ -167,7 +166,6 @@ var TeaGarden = function () {
                     {id:id},
                     function (result) {
                         if(result.message){
-                            console.log(result.data)
                             $("#tea_garden_edit_form [name='id']").val(result.data.id)
                             $("#tea_garden_edit_form [name='name']").val(result.data.name)
                             $("#tea_garden_edit_form [name='teaGrade']").val(result.data.teaGrade)
@@ -177,9 +175,9 @@ var TeaGarden = function () {
                             $("#tea_garden_edit_form [name='ageLimit']").val(result.data.ageLimit)
                             $("#tea_garden_edit_form [name='sortId']").val(result.data.sortId)
                             $("#tea_garden_edit_form [name='description']").val(result.data.description)
+                        }else{
+                            ToastrMsg(result.data,"error","topRight");
                         }
-
-
                     })
             }
         })
@@ -221,9 +219,6 @@ var TeaGarden = function () {
         }
     };
 }();
-
-
-
 jQuery(document).ready(function () {
     TeaGarden.init();
 });

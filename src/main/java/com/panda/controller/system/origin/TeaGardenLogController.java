@@ -60,7 +60,7 @@ public class TeaGardenLogController {
     }
 
     /**
-     * 获取菜单 Tree 当前菜单为用户 信息一起存储到 Redis 内
+     * 进入列表页
      * @return
      */
     @RequestMapping(value = "/list",method= RequestMethod.GET)
@@ -79,7 +79,7 @@ public class TeaGardenLogController {
     }
 
     /**
-     * Ajax 获取茶园信息列表
+     * Ajax 获取日志列表
      * @param request
      * @return
      */
@@ -152,19 +152,19 @@ public class TeaGardenLogController {
     /**
      * 保存
      * @param request
-     * @param TeaGardenLog
+     * @param teaGardenLog
      * @param save
      * @return
      */
     @RequestMapping(value = "/saveTeaGardenLog",method = RequestMethod.POST)
     @ResponseBody
-    public Object saveTeaGardenLog(HttpServletRequest request, TeaGardenLog TeaGardenLog ,String save){
+    public Object saveTeaGardenLog(HttpServletRequest request, TeaGardenLog teaGardenLog ,String save){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         message = false;
         data    = null;
         try{
-            if(!TeaGardenLog.getId().isEmpty() && save.equals("edit")){
-                int i = teaGardenLogService.updateByPrimaryKeySelective(TeaGardenLog);
+            if(!teaGardenLog.getId().isEmpty() && save.equals("edit")){
+                int i = teaGardenLogService.updateByPrimaryKeySelective(teaGardenLog);
                 if(i > 0){
                     message = true;
                     data    = ResultStateUtil.SUCCESS_UPDATE;
@@ -172,14 +172,14 @@ public class TeaGardenLogController {
                     data    = ResultStateUtil.FAIL_UPDATE;
                 }
             }else if(save.equals("add")) {
-                TeaGardenLog.setId(UUID.randomUUID().toString());
-                TeaGardenLog.setCreateId(user.getId());
-                TeaGardenLog.setCreateTime(new Date());
-                TeaGardenLog.setModifyId(user.getId());
-                TeaGardenLog.setModifyTime(new Date());
-                TeaGardenLog.setCultivarId(UUID.randomUUID().toString());
-                TeaGardenLog.setStatus(1);
-                int insert = teaGardenLogService.insertSelective(TeaGardenLog);
+                teaGardenLog.setId(UUID.randomUUID().toString());
+                teaGardenLog.setCreateId(user.getId());
+                teaGardenLog.setCreateTime(new Date());
+                teaGardenLog.setModifyId(user.getId());
+                teaGardenLog.setModifyTime(new Date());
+                teaGardenLog.setCultivarId(UUID.randomUUID().toString());
+                teaGardenLog.setStatus(1);
+                int insert = teaGardenLogService.insertSelective(teaGardenLog);
                 if(insert > 0){
                     message = true;
                     data    = ResultStateUtil.SUCCESS_ADD;
@@ -223,5 +223,4 @@ public class TeaGardenLogController {
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
-
 }

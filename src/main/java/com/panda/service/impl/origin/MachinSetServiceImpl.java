@@ -9,6 +9,8 @@ import com.panda.util.abs.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IDEA.
@@ -26,5 +28,25 @@ public class MachinSetServiceImpl extends AbstractServiceImpl<MachinSet> impleme
     @Override
     protected AbstractMapper<MachinSet> getAbstractMapper() {
         return machinSetMapper;
+    }
+
+    /**
+     * 查询所有的设置记录返回 List列表 包含设置的字典数据 入参 Map
+     * (dicMacType,dicTeaAttr,dicMacPro,dicTeaType,dicTeaGra,status)
+     * @param map
+     * @return
+     */
+    @Override
+    public List<Map> selectMachinSetDataList(Map map) {
+        return machinSetMapper.selectMachinSetDataList(map);
+    }
+    /**
+     * 查询一条记录 返回 Map 包含设置的字典数据
+     * @param id
+     * @return
+     */
+    @Override
+    public Map selectMachinSetDataByOne(String id) {
+        return machinSetMapper.selectMachinSetDataByOne(id);
     }
 }

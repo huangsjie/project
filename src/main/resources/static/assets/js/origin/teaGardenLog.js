@@ -139,7 +139,6 @@ var TeaGardenManage = function () {
                 }
             },
             submitHandler: function (form){
-                console.log("A")
                 blockUiOpen('.teaGardenLogEdit .modal-content');
                 request(
                     "saveTeaGardenLog",
@@ -178,6 +177,8 @@ var TeaGardenManage = function () {
                             $(".teaGardenLogEdit [name='operatorId']").val(result.data.operatorId)
                             $(".teaGardenLogEdit [name='beginTime']").val(result.data.beginTime)
                             $(".teaGardenLogEdit [name='description']").val(result.data.description)
+                        }else{
+                            ToastrMsg(result.data,"error","topRight");
                         }
                     })
             }

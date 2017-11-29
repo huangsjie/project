@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class MachinSet implements Serializable {
-
     private String id;
 
     private String dicMacType;
@@ -17,9 +16,17 @@ public class MachinSet implements Serializable {
 
     private String dicTeaGra;
 
-    private Date beginTime;
+    private Integer temperature;
 
-    private Date endTime;
+    private Integer humidity;
+
+    private Integer macLoss;
+
+    private Integer beginDuration;
+
+    private Integer endDuration;
+
+    private Integer durationType;
 
     private Integer status;
 
@@ -81,20 +88,52 @@ public class MachinSet implements Serializable {
         this.dicTeaGra = dicTeaGra;
     }
 
-    public Date getBeginTime() {
-        return beginTime;
+    public Integer getTemperature() {
+        return temperature;
     }
 
-    public void setBeginTime(Date beginTime) {
-        this.beginTime = beginTime;
+    public void setTemperature(Integer temperature) {
+        this.temperature = temperature;
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public Integer getHumidity() {
+        return humidity;
     }
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+    public void setHumidity(Integer humidity) {
+        this.humidity = humidity;
+    }
+
+    public Integer getMacLoss() {
+        return macLoss;
+    }
+
+    public void setMacLoss(Integer macLoss) {
+        this.macLoss = macLoss;
+    }
+
+    public Integer getBeginDuration() {
+        return beginDuration;
+    }
+
+    public void setBeginDuration(Integer beginDuration) {
+        this.beginDuration = beginDuration;
+    }
+
+    public Integer getEndDuration() {
+        return endDuration;
+    }
+
+    public void setEndDuration(Integer endDuration) {
+        this.endDuration = endDuration;
+    }
+
+    public Integer getDurationType() {
+        return durationType;
+    }
+
+    public void setDurationType(Integer durationType) {
+        this.durationType = durationType;
     }
 
     public Integer getStatus() {

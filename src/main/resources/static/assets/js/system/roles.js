@@ -158,8 +158,9 @@ jQuery(document).ready(function () {
                         $("#role_edit_form [name='id']").val(result.data.id)
                         $("#role_edit_form [name='name']").val(result.data.name)
                         $("#role_edit_form [name='description']").val(result.data.description)
+                    }else{
+                        ToastrMsg(result.data,"error","topRight");
                     }
-
                 })
         }
     })
