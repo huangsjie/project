@@ -3,11 +3,11 @@ package com.panda.controller.system.origin;
 import com.alibaba.citrus.util.StringEscapeUtil;
 import com.alibaba.fastjson.JSON;
 import com.panda.controller.system.index.IndexController;
-import com.panda.model.origin.ManageBatch;
-import com.panda.model.origin.TeaGarden;
+import com.panda.mapper.origin.ProcessBatchMapper;
+import com.panda.model.origin.ProcessBatch;
 import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
-import com.panda.service.origin.ManageBatchService;
+import com.panda.service.origin.ProcessBatchService;
 import com.panda.service.origin.TeaGardenService;
 import com.panda.service.system.DictionaryService;
 import com.panda.util.ResultMsgUtil;
@@ -27,11 +27,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Controller
-@RequestMapping("/system/manageBatch")
-public class ManageBatchController {
+@RequestMapping("/system/processBatch")
+public class ProcessBatchController {
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
     @Resource
-    private ManageBatchService manageBatchService;
+    private ProcessBatchService processBatchService;
     @Resource
     private DictionaryService dictionaryService;
     @Resource
@@ -44,8 +44,8 @@ public class ManageBatchController {
      * @return
      */
     @RequestMapping(value = "/list",method= RequestMethod.GET)
-    @RequiresPermissions("manageBatch:view")//权限管理;
-    public String getManageBatchList(HttpServletRequest request, Model model){
+    @RequiresPermissions("processBatch:view")//权限管理;
+    public String getProcessBatchList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         List<Dictionary> statusType = dictionaryService.selectDictionaryValueList("ba259a75-f5a7-4897-949f-1c90b7958b35");
         Map query = new HashMap();
@@ -55,18 +55,17 @@ public class ManageBatchController {
         model.addAttribute("teaGardens",teaGardens);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
-        return "system/origin/getManageBatchList";
+        return "system/origin/getProcessBatchList";
     }
-
 
     /**
      * Ajax 获取茶园管理批次列表
      * @param request
      * @return
      */
-    @RequestMapping(value = "/getManageBatchDataList",method = RequestMethod.POST)
+    @RequestMapping(value = "/getProcessBatchDataList",method = RequestMethod.POST)
     @ResponseBody
-    public Object getManageBatchDataList(HttpServletRequest request,String datatable){
+    public Object getProcessBatchDataList(HttpServletRequest request,String datatable){
         message = false;
         data    = null;
         try {
@@ -84,10 +83,10 @@ public class ManageBatchController {
 
             }
 
-            List<Map> manageBatchList = manageBatchService.selectManageBatchList(query);
-            if(manageBatchList.size() > 0){
+            List<Map> processBatchList = processBatchService.selectProcessBatchList(query);
+            if(processBatchList.size() > 0){
                 message = true;
-                data = manageBatchList;
+                data = processBatchList;
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -103,17 +102,17 @@ public class ManageBatchController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/getManageBatchItem", method = RequestMethod.GET)
+    @RequestMapping(value = "/getProcessBatchItem", method = RequestMethod.GET)
     @ResponseBody
-    public Object getManageBatchItem(HttpServletRequest request,String id){
+    public Object getProcessBatchItem(HttpServletRequest request,String id){
         message = false;
         data    = null;
         if (!id.isEmpty()){
             try {
-                ManageBatch manageBatch = manageBatchService.selectByPrimaryKey(id);
-                if(manageBatch != null){
+                ProcessBatch processBatch = processBatchService.selectByPrimaryKey(id);
+                if(processBatch != null){
                     message = true;
-                    data = manageBatch;
+                    data = processBatch;
                 }else{
                     data = ResultStateUtil.ERROR_QUERY;
                 }
@@ -133,15 +132,15 @@ public class ManageBatchController {
      * @param save
      * @return
      */
-    @RequestMapping(value = "/saveManageBatch",method = RequestMethod.POST)
+    @RequestMapping(value = "/saveProcessBatch",method = RequestMethod.POST)
     @ResponseBody
-    public Object saveManageBatch(HttpServletRequest request, ManageBatch manageBatch ,String save){
+    public Object saveProcessBatch(HttpServletRequest request, ProcessBatch processBatch ,String save){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         message = false;
         data    = null;
         try{
-            if(!manageBatch.getId().isEmpty() && save.equals("edit")){
-                int i = manageBatchService.updateByPrimaryKeySelective(manageBatch);
+            if(!processBatch.getId().isEmpty() && save.equals("edit")){
+                int i = processBatchService.updateByPrimaryKeySelective(processBatch);
                 if(i > 0){
                     message = true;
                     data    = ResultStateUtil.SUCCESS_UPDATE;
@@ -149,14 +148,14 @@ public class ManageBatchController {
                     data    = ResultStateUtil.FAIL_UPDATE;
                 }
             }else if(save.equals("add")) {
-                manageBatch.setId(UUID.randomUUID().toString());
-                manageBatch.setCreateId(user.getId());
-                manageBatch.setCreateTime(new Date());
-                manageBatch.setModifyId(user.getId());
-                manageBatch.setModifyTime(new Date());
-                manageBatch.setStatus(1);
+                processBatch.setId(UUID.randomUUID().toString());
+                processBatch.setCreateId(user.getId());
+                processBatch.setCreateTime(new Date());
+                processBatch.setModifyId(user.getId());
+                processBatch.setModifyTime(new Date());
+                processBatch.setStatus(1);
 
-                int insert = manageBatchService.insertSelective(manageBatch);
+                int insert = processBatchService.insertSelective(processBatch);
                 if(insert > 0){
                     message = true;
                     data    = ResultStateUtil.SUCCESS_ADD;
@@ -179,14 +178,14 @@ public class ManageBatchController {
      * @param id
      * @return
      */
-    @RequestMapping(value="/delManageBatchItem",method = RequestMethod.GET)
+    @RequestMapping(value="/delProcessBatchItem",method = RequestMethod.GET)
     @ResponseBody
-    public Object DelManageBatchItem(HttpServletRequest request ,String id){
+    public Object DelProcessBatchItem(HttpServletRequest request ,String id){
         message = false;
         data    = null;
         try{
             if (!id.isEmpty()){
-                int i = manageBatchService.deleteByPrimaryKey(id);
+                int i = processBatchService.deleteByPrimaryKey(id);
                 if(i > 0){
                     message = true;
                     data = ResultStateUtil.SUCCESS_DELETE;

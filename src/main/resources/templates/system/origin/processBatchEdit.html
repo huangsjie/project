@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="UTF-8">
-    <title>编辑管理批次信息</title>
+    <title>编辑加工批次信息</title>
 </head>
 <body>
 <!--begin::Modal-->
-<div class="modal fade manageBatchEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true" th:fragment="manageBatchEdit">
+<div class="modal fade processBatchEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true" th:fragment="processBatchEdit">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -18,7 +18,7 @@
                     </span>
                 </button>
             </div>
-            <form class="m-form m-form--state m-form--fit m-form--label-align-right" id="manage_batch_edit_form"
+            <form class="m-form m-form--state m-form--fit m-form--label-align-right" id="process_batch_edit_form"
                   novalidate="novalidate">
                 <div class="modal-body">
                     <input type="hidden" name="id" value="">
@@ -27,12 +27,12 @@
 
                     <div class="form-group m-form__group row">
                         <label class="col-form-label col-lg-3 col-sm-12">
-                            茶园名称  <span style="color: red">*</span>
+                            管理批次  <span style="color: red">*</span>
                         </label>
                         <div class="col-lg-8 col-md-9 col-sm-12">
-                            <select class="form-control" name="teaGardenId">
-                                <option value=""> 茶园名称 </option>
-                                <option th:each="item:${teaGardens}" th:value="${item.id}" th:text="${item.name}"></option>
+                            <select class="form-control" name="manageBatchId">
+                                <option value=""> 管理批次 </option>
+                                <option th:each="item:${manageBatchs}" th:value="${item.id}" th:text="${item.name}"></option>
                             </select>
                             <span class="m-form__help"></span>
                         </div>
@@ -41,11 +41,11 @@
 
                     <div class="form-group m-form__group row">
                         <label class="col-form-label col-lg-3 col-sm-12">
-                            管理批次号 *
+                            加工批次号 *
                         </label>
                         <div class="col-lg-8 col-md-9 col-sm-12">
                             <div class="input-group">
-                                <input type="text" class="form-control m-input" name="batchNumber" placeholder="管理批次号">
+                                <input type="text" class="form-control m-input" name="batchNumber" placeholder="加工批次号">
                             </div>
                             <span class="m-form__help"></span>
                         </div>

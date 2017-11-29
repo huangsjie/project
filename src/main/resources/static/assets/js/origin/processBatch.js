@@ -1,12 +1,12 @@
-var manageBatch = function () {
+var processBatch = function () {
     var actionsTemplate = $("#actionsTemplate").html();
-    var manageBatchShow = function () {
-        var datatable = $('.manage_batch_ajax').mDatatable({
+    var processBatchShow = function () {
+        var datatable = $('.process_batch_ajax').mDatatable({
             data: {
                 type: 'remote',
                 source: {
                     read: {
-                        url: '/system/manageBatch/getManageBatchDataList'
+                        url: '/system/processBatch/getProcessBatchDataList'
                     }
                 },
                 pageSize: 10,
@@ -29,8 +29,8 @@ var manageBatch = function () {
                     console.log(row)
                     return row.rowIndex+1;
                 }},
-                {field: "batch_number", title: "批次号", width: 100},
-                {field: "gardenName", title: "茶园名称", width: 100},
+                {field: "batch_number", title: "加工批次号", width: 100},
+                {field: "manageBatch", title: "管理批次号", width: 100},
                 {field: "create_time", title: "创建时间", sortable: 'asc', width: 150},
                 {
                 field: "Actions",
@@ -54,12 +54,12 @@ var manageBatch = function () {
             datatable.load();
         }).val(query.generalSearch);
 
-        $('#m_form_tea_garden').on('change', function () {
+        /*$('#m_form_tea_garden').on('change', function () {
             var query = datatable.getDataSourceQuery();
             query.tea_garden_id = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.tea_garden_id !== 'undefined' ? query.tea_garden_id : '');
+        }).val(typeof query.tea_garden_id !== 'undefined' ? query.tea_garden_id : '');*/
 
 
         $('.select_selectpicker').selectpicker();
@@ -67,27 +67,27 @@ var manageBatch = function () {
 
 
     /**
-     * 茶园信息表单验证
+     * 信息表单验证
      * 新增与编辑
      */
-    var manageBatchForm = function () {
-        $( "#manage_batch_edit_form" ).validate({
+    var processBatchForm = function () {
+        $( "#process_batch_edit_form" ).validate({
             rules: {
 
-                teaGardenId:{required: true,},
+                manageBatchId:{required: true,},
                 batchNumber:{required: true,},
             },
 
             submitHandler: function (form){
-                blockUiOpen('.manageBatchEdit .modal-content');
+                blockUiOpen('.processBatchEdit .modal-content');
                 request(
-                    "saveManageBatch",
+                    "saveProcessBatch",
                     "post",
-                    $("#manage_batch_edit_form").serialize(),
+                    $("#process_batch_edit_form").serialize(),
                     function(result){
                         if(result.message){
                             removeValue('add');
-                            blockUiClose('.manageBatchEdit .modal-content',1,".close-parent",0);
+                            blockUiClose('.processBatchEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
                         }else{
                             ToastrMsg(result.data,"error","topRight");
@@ -104,25 +104,25 @@ var manageBatch = function () {
      */
     var removeValue = function(type){
         if(type == 'edit'){
-            $(".manageBatchEdit .modal-title").text("批次编辑")
-            $(".manageBatchEdit [name='save']").val('edit')
+            $(".processBatchEdit .modal-title").text("批次编辑")
+            $(".processBatchEdit [name='save']").val('edit')
         }else{
-            $(".manageBatchEdit .modal-title").text("批次新增")
-            $(".manageBatchEdit [name='save']").val('add');
+            $(".processBatchEdit .modal-title").text("批次新增")
+            $(".processBatchEdit [name='save']").val('add');
         }
-        $(".manageBatchEdit [name='id']").val('')
-        $(".manageBatchEdit [name='name']").val('')
-        $(".manageBatchEdit [name='description']").val('');
-        $(".teaGardenEdit .form-control-feedback").remove()
-        $(".manageBatchEdit div").removeClass("has-danger")
-        $(".manageBatchEdit div").removeClass("has-success")
+        $(".processBatchEdit [name='id']").val('')
+        $(".processBatchEdit [name='name']").val('')
+        $(".processBatchEdit [name='description']").val('');
+        $(".processBatchEdit .form-control-feedback").remove()
+        $(".processBatchEdit div").removeClass("has-danger")
+        $(".processBatchEdit div").removeClass("has-success")
     }
 
     /**
      * 新增茶园信息
      */
-    var addManageBatch = function () {
-        $(".addManageBatch").on('click',function(){
+    var addProcessBatch = function () {
+        $(".addProcessBatch").on('click',function(){
             removeValue('add')
         })
     }
@@ -130,21 +130,21 @@ var manageBatch = function () {
     /**
      * 获取角色信息,并移除上一轮错误信息
      */
-    var editManageBatchItem = function () {
-        $("#manage_batch_list").on("click", ".editManageBatchItem", function () {
+    var editProcessBatchItem = function () {
+        $("#process_batch_list").on("click", ".editProcessBatchItem", function () {
             removeValue('edit')
             var id = $(this).attr("item");
             if(id != ""){
                 request(
-                    "getManageBatchItem",
+                    "getProcessBatchItem",
                     'get',
                     {id:id},
                     function (result) {
                         if(result.message){
                             console.log(result.data)
-                            $("#manage_batch_edit_form [name='id']").val(result.data.id)
-                            $("#manage_batch_edit_form [name='batchNumber']").val(result.data.batchNumber)
-                            $("#manage_batch_edit_form [name='teaGardenId']").val(result.data.teaGardenId)
+                            $("#process_batch_edit_form [name='id']").val(result.data.id)
+                            $("#process_batch_edit_form [name='batchNumber']").val(result.data.batchNumber)
+                            $("#process_batch_edit_form [name='manageBatchId']").val(result.data.manageBatchId)
                         }
 
 
@@ -157,22 +157,22 @@ var manageBatch = function () {
     /**
      * 删除
      */
-    var delManageBatchItem = function () {
-        $("#manage_batch_list ").on("click", ".delManageBatchItem", function () {
-            blockUiOpen('#manage_batch_list');
+    var delProcessBatchItem = function () {
+        $("#process_batch_list ").on("click", ".delProcessBatchItem", function () {
+            blockUiOpen('#process_batch_list');
             var self = $(this);
             var id = self.attr("item");
             if(id != ""){
                 request(
-                    "delManageBatchItem",
+                    "delProcessBatchItem",
                     'get',
                     {id:id},
                     function (result) {
                         if(result.message){
                             self.parents("tr").remove();
-                            ToastrMsg(result.data,"success","topRight",'#manage_batch_list');
+                            ToastrMsg(result.data,"success","topRight",'#process_batch_list');
                         }else{
-                            ToastrMsg(result.data,"error","topRight",'#manage_batch_list');
+                            ToastrMsg(result.data,"error","topRight",'#process_batch_list');
                         }
                     })
             }
@@ -181,11 +181,11 @@ var manageBatch = function () {
 
     return {
         init: function () {
-            addManageBatch();
-            editManageBatchItem();
-            delManageBatchItem();
-            manageBatchShow();
-            manageBatchForm();
+            addProcessBatch();
+            editProcessBatchItem();
+            delProcessBatchItem();
+            processBatchShow();
+            processBatchForm();
         }
     };
 }();
@@ -193,5 +193,5 @@ var manageBatch = function () {
 
 
 jQuery(document).ready(function () {
-    manageBatch.init();
+    processBatch.init();
 });

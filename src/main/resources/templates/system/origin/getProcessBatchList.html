@@ -22,7 +22,7 @@
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
                                 <h3 class="m-portlet__head-text">
-                                    管理批次信息
+                                    加工批次信息
                                     <small>
                                     </small>
                                 </h3>
@@ -85,21 +85,21 @@
                         </div>
                         <!--end: Search Form -->
                         <!--begin: Datatable -->
-                        <div class="manage_batch_ajax" id="manage_batch_list"></div>
+                        <div class="process_batch_ajax" id="process_batch_list"></div>
                         <!--end: Datatable -->
                     </div>
                     <!--begin::Modal-->
-                    <div th:replace="~{system/origin/manageBatchEdit :: manageBatchEdit}"></div>
+                    <div th:replace="~{system/origin/processBatchEdit :: processBatchEdit}"></div>
                     <!--end::Modal-->
                 </div>
             </div>
             <!--END: Main Portlet-->
             <!-- PageRole -->
             <div class="m--hide" id="actionsTemplate">
-                <a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editManageBatchItem" title="编辑" shiro:hasPermission="roles:edit" item="#rowId#" data-toggle="modal" data-target=".manageBatchEdit">
+                <a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editProcessBatchItem" title="编辑" shiro:hasPermission="roles:edit" item="#rowId#" data-toggle="modal" data-target=".processBatchEdit">
                     <i class="la la-edit"></i>
                 </a>
-                <a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delManageBatchItem" title="删除" shiro:hasPermission="roles:delete" item="#rowId#" >
+                <a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delProcessBatchItem" title="删除" shiro:hasPermission="roles:delete" item="#rowId#" >
                     <i class="la la-trash"></i>
                 </a>
             </div>
@@ -125,6 +125,6 @@
 <script th:src="@{/assets/js/jquery/jquery.slimscroll.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/jquery/jquery-validation.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/system/base.js}" type="text/javascript"></script>
-<script th:src="@{/assets/js/origin/manageBatch.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/origin/processBatch.js}" type="text/javascript"></script>
 </body>
 </html>

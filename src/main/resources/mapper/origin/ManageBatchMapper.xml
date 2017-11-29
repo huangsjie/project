@@ -126,4 +126,45 @@
       status = #{status,jdbcType=INTEGER}
       where id = #{id,jdbcType=VARCHAR}
     </update>
+
+  <!--<select id="selectManageBatchList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from e_manage_batch
+    where
+      1 = 1
+    <if test="id != null and id != ''">
+      and id = #{id}
+    </if>
+    <if test="batchNumber != null and batchNumber != ''">
+      and batch_number = #{batchNumber}
+    </if>
+    <if test="teaGardenId != null and teaGardenId != ''">
+      and tea_garden_id = #{teaGardenId}
+    </if>
+    <if test="status != null and status != ''">
+      and status = #{status}
+    </if>
+    ORDER BY create_time desc
+  </select> -->
+
+  <select id="selectManageBatchList" resultType="map" parameterType="map">
+    SELECT mb.*,tg.name gardenName FROM e_manage_batch as mb
+    LEFT JOIN e_tea_garden as tg on mb.tea_garden_id = tg.id
+    <if test="id != null and id != ''">
+      and id = #{id}
+    </if>
+    <if test="batchNumber != null and batchNumber != ''">
+      and batch_number = #{batchNumber}
+    </if>
+    <if test="teaGardenId != null and teaGardenId != ''">
+      and tea_garden_id = #{teaGardenId}
+    </if>
+    <if test="status != null and status != ''">
+      and status = #{status}
+    </if>
+    ORDER BY tg.create_time ASC
+  </select>
+
+
   </mapper>

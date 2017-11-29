@@ -140,4 +140,24 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+
+  <select id="selectProcessBatchList" resultType="map" parameterType="map">
+    SELECT pb.*,mb.batch_number manageBatchNumber  FROM e_process_batch as pb
+    LEFT JOIN e_mamage_batch as mb on pb.manage_batch_id = mb.id
+    <if test="id != null and id != ''">
+      and id = #{id}
+    </if>
+    <if test="batchNumber != null and batchNumber != ''">
+      and batch_number = #{batchNumber}
+    </if>
+    <if test="manageBatchId != null and manageBatchId != ''">
+      and manage_batch_id = #{manageBatchId}
+    </if>
+    <if test="status != null and status != ''">
+      and status = #{status}
+    </if>
+    ORDER BY tg.create_time ASC
+  </select>
+
   </mapper>
