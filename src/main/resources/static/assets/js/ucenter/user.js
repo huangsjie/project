@@ -3,7 +3,7 @@ var User = function () {
     var datatable = "";
     var $distpicker = $('#distpicker')
     var userListShow = function () {
-        datatable = $('.user_list_ajax').mDatatable({
+        var option = {
             data: {
                 type: 'remote',
                 source: {
@@ -84,8 +84,8 @@ var User = function () {
                     return actionsTemplate.replace(/#rowId#/g, row.id)
                 }
             }]
-        });
-
+        }
+        datatable = $('.user_list_ajax').mDatatable(option);
         var query = datatable.getDataSourceQuery();
         $('#m_form_search').on('keyup', function (e) {
             var query = datatable.getDataSourceQuery();
@@ -107,7 +107,10 @@ var User = function () {
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(typeof query.userType !== 'undefined' ? query.userType : '');
-
+        $('.datatableRoload').on('click', function () {
+            datatable.destroy();
+            datatable = $('.user_list_ajax').mDatatable(option);
+        });
         $('#m_form_status, #m_form_type').selectpicker();
     };
 
@@ -153,7 +156,7 @@ var User = function () {
                         if(result.message){
                             blockUiClose('.userEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
-                            datatable.load();
+                            $('.datatableRoload').click();
                         }else{
                             ToastrMsg(result.data,"error","topRight",".userEdit .modal-content");
                         }

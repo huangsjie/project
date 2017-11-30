@@ -1,7 +1,7 @@
 var manageBatch = function () {
     var actionsTemplate = $("#actionsTemplate").html();
     var manageBatchShow = function () {
-        var datatable = $('.manage_batch_ajax').mDatatable({
+        var option = {
             data: {
                 type: 'remote',
                 source: {
@@ -32,17 +32,18 @@ var manageBatch = function () {
                 {field: "gardenName", title: "茶园名称", width: 100},
                 {field: "create_time", title: "创建时间", sortable: 'asc', width: 150},
                 {
-                field: "Actions",
-                width: 100,
-                title: "操作",
-                sortable: false,
-                overflow: 'visible',
-                template: function (row) {
-                    var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
-                    return actionsTemplate.replace(/#rowId#/g, row.id);
-                }
-            }]
-        });
+                    field: "Actions",
+                    width: 100,
+                    title: "操作",
+                    sortable: false,
+                    overflow: 'visible',
+                    template: function (row) {
+                        var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
+                        return actionsTemplate.replace(/#rowId#/g, row.id);
+                    }
+                }]
+        }
+        var datatable = $('.manage_batch_ajax').mDatatable(option);
 
         var query = datatable.getDataSourceQuery();
 
@@ -59,8 +60,10 @@ var manageBatch = function () {
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(typeof query.tea_garden_id !== 'undefined' ? query.tea_garden_id : '');
-
-
+        $('.datatableRoload').on('click', function () {
+            datatable.destroy();
+            datatable = $('.manage_batch_ajax').mDatatable(option);
+        });
         $('.select_selectpicker').selectpicker();
     };
 
@@ -72,7 +75,6 @@ var manageBatch = function () {
     var manageBatchForm = function () {
         $( "#manage_batch_edit_form" ).validate({
             rules: {
-
                 teaGardenId:{required: true,},
                 batchNumber:{required: true,},
             },
@@ -87,6 +89,7 @@ var manageBatch = function () {
                             removeValue('add');
                             blockUiClose('.manageBatchEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
+                            $('.datatableRoload').click()
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }

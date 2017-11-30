@@ -1,7 +1,7 @@
 var TeaGarden = function () {
     var actionsTemplate = $("#actionsTemplate").html();
     var teaGardenInfoShow = function () {
-        var datatable = $('.tea_garden_info_ajax').mDatatable({
+        var option = {
             data: {
                 type: 'remote',
                 source: {
@@ -38,17 +38,18 @@ var TeaGarden = function () {
                 {field: "teaIsName", title: "茶系", width: 100},
                 {field: "create_time", title: "创建时间", sortable: 'asc', width: 150},
                 {
-                field: "Actions",
-                width: 100,
-                title: "操作",
-                sortable: false,
-                overflow: 'visible',
-                template: function (row) {
-                    var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
-                    return actionsTemplate.replace(/#rowId#/g, row.id);
-                }
-            }]
-        });
+                    field: "Actions",
+                    width: 100,
+                    title: "操作",
+                    sortable: false,
+                    overflow: 'visible',
+                    template: function (row) {
+                        var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
+                        return actionsTemplate.replace(/#rowId#/g, row.id);
+                    }
+                }]
+        }
+        var datatable = $('.tea_garden_info_ajax').mDatatable(option);
 
         var query = datatable.getDataSourceQuery();
 
@@ -78,9 +79,11 @@ var TeaGarden = function () {
             query.cultivar_id = $(this).val();
             datatable.setDataSourceQuery(query);
             datatable.load();
-
         }).val(typeof query.cultivar_id !== 'undefined' ? query.cultivar_id : '');
-
+        $('.datatableRoload').on('click', function () {
+            datatable.destroy();
+            datatable = $('.tea_garden_info_ajax').mDatatable(option);
+        });
         $('.select_selectpicker').selectpicker();
     };
 
@@ -114,6 +117,7 @@ var TeaGarden = function () {
                             removeValue('add');
                             blockUiClose('.teaGardenEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
+                            $('.datatableRoload').click();
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }

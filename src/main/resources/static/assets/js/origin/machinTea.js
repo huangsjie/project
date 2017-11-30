@@ -9,7 +9,7 @@ var MachinTea = function () {
      * 获取列表数据
      */
     var getMachinTeaDataList = function () {
-        var datatable = $('.machin_tea_list').mDatatable({
+        var option = {
             data: {
                 type: 'remote',
                 source: {
@@ -73,7 +73,8 @@ var MachinTea = function () {
                     return actionsTemplate.replace(/#rowId#/g, row.id);
                 }
             }]
-        });
+        }
+        var datatable = $('.machin_tea_list').mDatatable(option);
         var query = datatable.getDataSourceQuery();
         $('#m_form_search').on('keyup', function (e) {
             var query = datatable.getDataSourceQuery();
@@ -99,6 +100,10 @@ var MachinTea = function () {
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(typeof query.dicMacPro !== 'undefined' ? query.dicMacPro : '');
+        $('.datatableRoload').on('click', function () {
+            datatable.destroy();
+            datatable = $('.machin_tea_list').mDatatable(option);
+        });
         // $('#dicTeaGra').on('change', function () {
         //     var query = datatable.getDataSourceQuery();
         //     query.dicTeaGra = $(this).val();
@@ -139,6 +144,7 @@ var MachinTea = function () {
                         if(result.message){
                             blockUiClose('.MachinTeaEditModal .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
+                            $('.datatableRoload').click()
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }

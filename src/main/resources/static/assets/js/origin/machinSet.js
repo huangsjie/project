@@ -9,7 +9,7 @@ var MachinSet = function () {
      * 获取列表数据
      */
     var getMachinSetDataList = function () {
-        var datatable = $('.machin_set_list').mDatatable({
+        var option = {
             data: {
                 type: 'remote',
                 source: {
@@ -99,7 +99,8 @@ var MachinSet = function () {
                     return actionsTemplate.replace(/#rowId#/g, row.id);
                 }
             }]
-        });
+        }
+        var datatable = $('.machin_set_list').mDatatable(option);
         var query = datatable.getDataSourceQuery();
         $('#m_form_search').on('keyup', function (e) {
             var query = datatable.getDataSourceQuery();
@@ -125,6 +126,12 @@ var MachinSet = function () {
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(typeof query.dicMacPro !== 'undefined' ? query.dicMacPro : '');
+
+        $('.datatableRoload').on('click', function () {
+            datatable.destroy();
+            datatable = $('.machin_set_list').mDatatable(option);
+        });
+
         // $('#dicTeaGra').on('change', function () {
         //     var query = datatable.getDataSourceQuery();
         //     query.dicTeaGra = $(this).val();
@@ -164,6 +171,7 @@ var MachinSet = function () {
                         if(result.message){
                             blockUiClose('.machinSetEditModal .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
+                            $('.datatableRoload').click()
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }

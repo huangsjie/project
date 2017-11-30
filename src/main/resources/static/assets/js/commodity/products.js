@@ -1,7 +1,7 @@
 var products = function () {
     var actionsTemplate = $("#actionsTemplate").html();
     var productsListShow = function () {
-        var datatable = $('.products_list').mDatatable({
+        var option = {
             data: {
                 type: 'remote',
                 source: {
@@ -11,8 +11,8 @@ var products = function () {
                 },
                 pageSize: 10,
                 saveState: {
-                    cookie: true,
-                    webstorage: true
+                    cookie: false,
+                    webstorage: false
                 }
             },
             layout: {
@@ -66,7 +66,8 @@ var products = function () {
                     return actionsTemplate.replace(/#rowId#/g, row.id)
                 }
             }]
-        });
+        };
+        var datatable = $('.products_list').mDatatable(option);
 
         var query = datatable.getDataSourceQuery();
 
@@ -84,6 +85,11 @@ var products = function () {
             datatable.load();
         }).val(typeof query.status !== 'undefined' ? query.status : '');
 
+        $('.datatableRoload').on('click', function () {
+            datatable.destroy();
+            datatable = $('.products_list').mDatatable(option);
+        });
+
         $('#m_form_status, #m_form_type').selectpicker();
     };
 
@@ -98,11 +104,11 @@ var products = function () {
                     required: true,
                     nameCheck:true
                 },
-                description: {
+                status: {
                     required: true,
+                },
+                description: {
                     nameCheck:true,
-                    minlength: 3,
-                    maxlength: 100
                 }
             },
             submitHandler: function (form){
@@ -116,6 +122,7 @@ var products = function () {
                             removeValue('add');
                             blockUiClose('.productsEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
+                            $('.datatableRoload').click()
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }

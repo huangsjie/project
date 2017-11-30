@@ -26,11 +26,23 @@
                             <input type="hidden" name="save" value="edit">
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-3 col-sm-12">
+                                    产品类型  <span style="color: red">*</span>
+                                </label>
+                                <div class="col-lg-8 col-md-9 col-sm-12">
+                                    <select class="form-control" name="dicTeaGra" id="dicTeaGra">
+                                        <option value=""> 选择 </option>
+                                        <option th:each="item:${productsList}" th:value="${item.id}" th:text="${item.name}"></option>
+                                    </select>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">
                                     加工类型 <span style="color: red">*</span>
                                 </label>
                                 <div class="col-lg-8 col-md-9 col-sm-12">
                                     <select class="form-control" name="dicMacType" id="dicMacType" >
-                                        <option value=""> 全部 </option>
+                                        <option value=""> 选择 </option>
                                         <option th:each="item:${machinType}" th:value="${item.id}" th:text="${item.name}"></option>
                                     </select>
                                     <span class="m-form__help"></span>
@@ -42,7 +54,7 @@
                                 </label>
                                 <div class="col-lg-8 col-md-9 col-sm-12">
                                     <select class="form-control" name="dicTeaAttr" id="dicTeaAttr" >
-                                        <option value=""> 全部 </option>
+                                        <option value=""> 选择 </option>
                                         <option th:each="item:${teaArrt}" th:value="${item.id}" th:text="${item.name}"></option>
                                     </select>
                                     <span class="m-form__help"></span>
@@ -54,7 +66,7 @@
                                 </label>
                                 <div class="col-lg-8 col-md-9 col-sm-12">
                                     <select class="form-control" name="dicMacPro" id="dicMacPro" >
-                                        <option value=""> 全部 </option>
+                                        <option value=""> 选择 </option>
                                         <option th:each="item:${machinProcess}" th:value="${item.id}" th:text="${item.name}"></option>
                                     </select>
                                     <span class="m-form__help"></span>
@@ -66,7 +78,7 @@
                                 </label>
                                 <div class="col-lg-8 col-md-9 col-sm-12">
                                     <select class="form-control" name="dicTeaType" id="dicTeaType">
-                                        <option value=""> 全部 </option>
+                                        <option value=""> 选择 </option>
                                         <option th:each="item:${teaType}" th:value="${item.id}" th:text="${item.name}"></option>
                                     </select>
                                     <span class="m-form__help"></span>
@@ -120,7 +132,7 @@
                         <div class="col-lg-6">
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-3 col-sm-12">
-                                    温度 <span style="color: red">*</span>
+                                    温度
                                 </label>
                                 <div class="col-lg-8 col-md-9 col-sm-12">
                                     <div class="input-group m-input-group ">
@@ -134,7 +146,7 @@
                             </div>
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-3 col-sm-12">
-                                    湿度  <span style="color: red">*</span>
+                                    湿度
                                 </label>
                                 <div class="col-lg-8 col-md-9 col-sm-12">
                                     <div class="input-group m-input-group ">
@@ -148,7 +160,7 @@
                             </div>
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-3 col-sm-12">
-                                    损耗  <span style="color: red">*</span>
+                                    损耗
                                 </label>
                                 <div class="col-lg-8 col-md-9 col-sm-12">
                                     <div class="input-group m-input-group ">
@@ -160,18 +172,6 @@
                                     <span class="m-form__help"></span>
                                 </div>
                             </div>
-                            <!--<div class="form-group m-form__group row">-->
-                                <!--<label class="col-form-label col-lg-3 col-sm-12">-->
-                                    <!--等级  <span style="color: red">*</span>-->
-                                <!--</label>-->
-                                <!--<div class="col-lg-8 col-md-9 col-sm-12">-->
-                                    <!--<select class="form-control" name="dicTeaGra" id="dicTeaGra">-->
-                                        <!--<option value=""> 茶园等级 </option>-->
-                                        <!--<option th:each="item:${teaGrade}" th:value="${item.id}" th:text="${item.name}"></option>-->
-                                    <!--</select>-->
-                                    <!--<span class="m-form__help"></span>-->
-                                <!--</div>-->
-                            <!--</div>-->
                             <div class="form-group m-form__group row status_switch_parent">
                                 <label class="col-form-label col-lg-3 col-sm-12">
                                     状态  <span style="color: red">*</span>

@@ -5,7 +5,7 @@ var TeaGardenManage = function () {
         0: {'title': '进行中', 'class': ' m-badge--warning'}
     };
     var teaGardenManageShow = function () {
-        var datatable = $('.tea_garden_manage_ajax').mDatatable({
+        var option = {
             data: {
                 type: 'remote',
                 source: {
@@ -82,7 +82,8 @@ var TeaGardenManage = function () {
                     return actionsTemplate.replace(/#rowId#/g, row.id);
                 }
             }]
-        });
+        }
+        var datatable = $('.tea_garden_manage_ajax').mDatatable(option);
         var query = datatable.getDataSourceQuery();
         $('#m_form_search').on('keyup', function (e) {
             var query = datatable.getDataSourceQuery();
@@ -108,7 +109,10 @@ var TeaGardenManage = function () {
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(typeof query.gardenType !== 'undefined' ? query.gardenType : '');
-
+        $('.datatableRoload').on('click', function () {
+            datatable.destroy();
+            datatable = $('.tea_garden_manage_ajax').mDatatable(option);
+        });
         $('.select_selectpicker').selectpicker();
     };
 
@@ -148,6 +152,7 @@ var TeaGardenManage = function () {
                         if(result.message){
                             blockUiClose('.teaGardenLogEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
+                            $('.datatableRoload').click();
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }

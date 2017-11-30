@@ -1,7 +1,7 @@
 var processBatch = function () {
     var actionsTemplate = $("#actionsTemplate").html();
     var processBatchShow = function () {
-        var datatable = $('.process_batch_ajax').mDatatable({
+        var option = {
             data: {
                 type: 'remote',
                 source: {
@@ -33,17 +33,18 @@ var processBatch = function () {
                 {field: "manageBatch", title: "管理批次号", width: 100},
                 {field: "create_time", title: "创建时间", sortable: 'asc', width: 150},
                 {
-                field: "Actions",
-                width: 100,
-                title: "操作",
-                sortable: false,
-                overflow: 'visible',
-                template: function (row) {
-                    var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
-                    return actionsTemplate.replace(/#rowId#/g, row.id);
-                }
-            }]
-        });
+                    field: "Actions",
+                    width: 100,
+                    title: "操作",
+                    sortable: false,
+                    overflow: 'visible',
+                    template: function (row) {
+                        var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
+                        return actionsTemplate.replace(/#rowId#/g, row.id);
+                    }
+                }]
+        }
+        var datatable = $('.process_batch_ajax').mDatatable(option);
 
         var query = datatable.getDataSourceQuery();
 
@@ -53,7 +54,10 @@ var processBatch = function () {
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(query.generalSearch);
-
+        $('.datatableRoload').on('click', function () {
+            datatable.destroy();
+            datatable = $('.process_batch_ajax').mDatatable(option);
+        });
         /*$('#m_form_tea_garden').on('change', function () {
             var query = datatable.getDataSourceQuery();
             query.tea_garden_id = $(this).val().toLowerCase();
@@ -73,7 +77,6 @@ var processBatch = function () {
     var processBatchForm = function () {
         $( "#process_batch_edit_form" ).validate({
             rules: {
-
                 manageBatchId:{required: true,},
                 batchNumber:{required: true,},
             },
@@ -89,6 +92,7 @@ var processBatch = function () {
                             removeValue('add');
                             blockUiClose('.processBatchEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
+                            $('.datatableRoload').click()
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }

@@ -1,7 +1,7 @@
 var Roles = function () {
     var actionsTemplate = $("#actionsTemplate").html();
     var rolesListShow = function () {
-        var datatable = $('.roles_list_ajax').mDatatable({
+        var option = {
             data: {
                 type: 'remote',
                 source: {
@@ -54,10 +54,9 @@ var Roles = function () {
                     return actionsTemplate.replace(/#rowId#/g, row.id)
                 }
             }]
-        });
-
+        }
+        var datatable = $('.roles_list_ajax').mDatatable(option);
         var query = datatable.getDataSourceQuery();
-
         $('#m_form_search').on('keyup', function (e) {
             var query = datatable.getDataSourceQuery();
             query.generalSearch = $(this).val().toLowerCase();
@@ -71,7 +70,10 @@ var Roles = function () {
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(typeof query.status !== 'undefined' ? query.status : '');
-
+        $('.datatableRoload').on('click', function () {
+            datatable.destroy();
+            datatable = $('.roles_list_ajax').mDatatable(option);
+        });
         $('#m_form_status, #m_form_type').selectpicker();
     };
 
@@ -105,6 +107,7 @@ var Roles = function () {
                             removeValue('add');
                             blockUiClose('.rolesEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
+                            $('.datatableRoload').click();
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }

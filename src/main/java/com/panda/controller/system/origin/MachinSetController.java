@@ -2,9 +2,11 @@ package com.panda.controller.system.origin;
 
 import com.alibaba.citrus.util.StringEscapeUtil;
 import com.alibaba.fastjson.JSON;
+import com.panda.model.commodity.Products;
 import com.panda.model.origin.MachinSet;
 import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
+import com.panda.service.commodity.ProductsService;
 import com.panda.service.origin.MachinSetService;
 import com.panda.service.system.DictionaryService;
 import com.panda.util.ResultMsgUtil;
@@ -36,6 +38,9 @@ public class MachinSetController {
     private MachinSetService machinSetService;
 
     @Resource
+    private ProductsService productsService;
+
+    @Resource
     private DictionaryService dictionaryService;
     private static boolean message = false;
     private static Object  data    = null;
@@ -47,15 +52,18 @@ public class MachinSetController {
     @RequiresPermissions("machinSet:view")//权限管理;
     public String getMachinSetList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+        Map map = new HashMap();
         List<Dictionary> machinType = dictionaryService.selectDictionaryValueList("0b9ed538-29d6-11e5-965c-000c29d7a3a0");//加工类型
         List<Dictionary> teaArrt = dictionaryService.selectDictionaryValueList("31783870-956f-469f-b43e-9fefd905afca");//茶系
         List<Dictionary> machinProcess = dictionaryService.selectDictionaryValueList("1e12732d-246e-11e5-965c-000c29d7a3a0");//工序
-        List<Dictionary> teaGrade = dictionaryService.selectDictionaryValueList("f63fe4f8-27ab-11e5-965c-000c29d7a3a0");//等级
         List<Dictionary> teaType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");//品种
+        List<Dictionary> teaGrade = dictionaryService.selectDictionaryValueList("f63fe4f8-27ab-11e5-965c-000c29d7a3a0");//等级
+        List<Products> productsList = productsService.selectProductsList(map);
         model.addAttribute("machinType",machinType);
         model.addAttribute("teaArrt",teaArrt);
         model.addAttribute("machinProcess",machinProcess);
         model.addAttribute("teaGrade",teaGrade);
+        model.addAttribute("productsList",productsList);
         model.addAttribute("teaType",teaType);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
