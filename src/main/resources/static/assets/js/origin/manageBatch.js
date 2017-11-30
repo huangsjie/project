@@ -26,7 +26,6 @@ var manageBatch = function () {
             pagination: true,
             columns: [
                 {title: "#", width: 40, template: function (row) {
-                    console.log(row)
                     return row.rowIndex+1;
                 }},
                 {field: "batch_number", title: "批次号", width: 100},
@@ -141,13 +140,12 @@ var manageBatch = function () {
                     {id:id},
                     function (result) {
                         if(result.message){
-                            console.log(result.data)
                             $("#manage_batch_edit_form [name='id']").val(result.data.id)
                             $("#manage_batch_edit_form [name='batchNumber']").val(result.data.batchNumber)
                             $("#manage_batch_edit_form [name='teaGardenId']").val(result.data.teaGardenId)
+                        }else{
+                            ToastrMsg(result.data,"error","topRight",'#manage_batch_list');
                         }
-
-
                     })
             }
         })
