@@ -143,8 +143,13 @@
 
 
   <select id="selectProcessBatchList" resultType="map" parameterType="map">
-    SELECT pb.*,mb.batch_number manageBatchNumber  FROM e_process_batch as pb
-    LEFT JOIN e_mamage_batch as mb on pb.manage_batch_id = mb.id
+    SELECT
+      p.* , m.batch_number manageBatchNumber
+    FROM
+      e_process_batch p
+      LEFT JOIN e_manage_batch m ON p.manage_batch_id = m.id
+    WHERE
+    1 = 1
     <if test="id != null and id != ''">
       and id = #{id}
     </if>
@@ -157,7 +162,7 @@
     <if test="status != null and status != ''">
       and status = #{status}
     </if>
-    ORDER BY tg.create_time ASC
+    ORDER BY create_time ASC
   </select>
 
   </mapper>

@@ -2,8 +2,6 @@ package com.panda.controller.system.origin;
 
 import com.alibaba.citrus.util.StringEscapeUtil;
 import com.alibaba.fastjson.JSON;
-import com.panda.controller.system.index.IndexController;
-import com.panda.mapper.origin.ProcessBatchMapper;
 import com.panda.model.origin.ProcessBatch;
 import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
@@ -78,9 +76,6 @@ public class ProcessBatchController {
                 String jsonStr = StringEscapeUtil.unescapeHtml(datatable);
                 Map params = JSON.parseObject(jsonStr,Map.class);
                 Map status = JSON.parseObject(params.get("query").toString(),Map.class);
-                /*if (status.size() > 0 && status.get("status") != ""){
-                    query.put("status",status.get("status"));
-                }*/
                 if (status.size() > 0 && status.get("tea_garden_id") != ""){
                     query.put("tea_garden_id",status.get("tea_garden_id"));
                 }

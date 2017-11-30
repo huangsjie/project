@@ -26,11 +26,10 @@ var processBatch = function () {
             pagination: true,
             columns: [
                 {title: "#", width: 40, template: function (row) {
-                    console.log(row)
                     return row.rowIndex+1;
                 }},
                 {field: "batch_number", title: "加工批次号", width: 100},
-                {field: "manageBatch", title: "管理批次号", width: 100},
+                {field: "manageBatchNumber", title: "管理批次号", width: 100},
                 {field: "create_time", title: "创建时间", sortable: 'asc', width: 150},
                 {
                     field: "Actions",
@@ -144,13 +143,10 @@ var processBatch = function () {
                     {id:id},
                     function (result) {
                         if(result.message){
-                            console.log(result.data)
                             $("#process_batch_edit_form [name='id']").val(result.data.id)
                             $("#process_batch_edit_form [name='batchNumber']").val(result.data.batchNumber)
                             $("#process_batch_edit_form [name='manageBatchId']").val(result.data.manageBatchId)
                         }
-
-
                     })
             }
         })
