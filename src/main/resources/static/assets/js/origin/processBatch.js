@@ -30,6 +30,7 @@ var processBatch = function () {
                 }},
                 {field: "batch_number", title: "加工批次号", width: 100},
                 {field: "manageBatchNumber", title: "管理批次号", width: 100},
+                {field: "productName", title: "产品名称", width: 150},
                 {field: "create_time", title: "创建时间", sortable: 'asc', width: 150},
                 {
                     field: "Actions",
@@ -113,9 +114,11 @@ var processBatch = function () {
             $(".processBatchEdit [name='save']").val('add');
         }
         $(".processBatchEdit [name='id']").val('')
-        $(".processBatchEdit [name='name']").val('')
-        $(".processBatchEdit [name='description']").val('');
+        $(".processBatchEdit [name='manageBatchId']").val('');
+        $(".processBatchEdit [name='productId']").val('');
+        $(".processBatchEdit [name='batchNumber']").val('');
         $(".processBatchEdit .form-control-feedback").remove()
+        $('.status_switch').bootstrapSwitch('state',false);
         $(".processBatchEdit div").removeClass("has-danger")
         $(".processBatchEdit div").removeClass("has-success")
     }
@@ -143,9 +146,19 @@ var processBatch = function () {
                     {id:id},
                     function (result) {
                         if(result.message){
-                            $("#process_batch_edit_form [name='id']").val(result.data.id)
-                            $("#process_batch_edit_form [name='batchNumber']").val(result.data.batchNumber)
-                            $("#process_batch_edit_form [name='manageBatchId']").val(result.data.manageBatchId)
+                            console.log(result.data)
+                            $(".processBatchEdit [name='id']").val(result.data.id)
+                            $(".processBatchEdit [name='batchNumber']").val(result.data.batchNumber)
+                            $(".processBatchEdit [name='manageBatchId']").val(result.data.manageBatchId)
+                            $(".processBatchEdit [name='status']").val(result.data.status)
+                            $(".processBatchEdit [name='productId']").val(result.data.productId);
+                            if(result.data.status == 1){
+                                $('.status_switch').bootstrapSwitch('state',true);
+                            }else{
+                                $('.status_switch').bootstrapSwitch('state',false);
+                            }
+                        }else{
+                            ToastrMsg(result.data,"error","topRight",'#process_batch_list');
                         }
                     })
             }

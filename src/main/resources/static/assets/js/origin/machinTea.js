@@ -1,9 +1,9 @@
 var MachinTea = function () {
     var actionsTemplate = $("#actionsTemplate").html();
     var status = {
-        1: {'title': '启用', 'class': ' m-badge--success'},
-        0: {'title': '未知', 'class': ' m-badge--warning'},
-        2: {'title': '禁用', 'class': ' m-badge--danger'}
+        1: {'title': '进行中', 'class': ' m-badge--warning'},
+        3: {'title': '终止', 'class': ' m-badge--danger'},
+        2: {'title': '完成', 'class': ' m-badge--success'}
     };
     /**
      * 获取列表数据
@@ -33,11 +33,9 @@ var MachinTea = function () {
             filterable: false,
             pagination: true,
             columns: [{
-                title: "#",
-                width: 40,
-                template: function (row) {
-                    return row.rowIndex+1;
-                }
+                field: "batchNumber",
+                title: "加工批次",
+                width: 150
             },{
                 field: "macTypeName",
                 title: "类型",
@@ -50,6 +48,32 @@ var MachinTea = function () {
                 field: "macProName",
                 title: "工序",
                 width: 60
+            }, {
+                field: "teaTypeName",
+                title: "品种",
+                overflow: 'hide',
+                width: 60
+            }, {
+                field: "mac_loss",
+                title: "损耗",
+                width: 60,
+                template: function (row) {
+                    return row.mac_loss+" %∑";
+                }
+            },{
+                field: "temperature",
+                title: "温度",
+                width: 60,
+                template: function (row) {
+                    return row.temperature+" &#8451;";
+                }
+            },{
+                field: "humidity",
+                title: "湿度",
+                width: 60,
+                template: function (row) {
+                    return row.humidity+" %RH";
+                }
             },{
                 field: "status",
                 title: "状态",
@@ -76,6 +100,13 @@ var MachinTea = function () {
         }
         var datatable = $('.machin_tea_list').mDatatable(option);
         var query = datatable.getDataSourceQuery();
+        $('#processBatchId').on('change', function () {
+            var query = datatable.getDataSourceQuery();
+            query.processBatchId = $(this).val();
+            datatable.setDataSourceQuery(query);
+            datatable.load();
+        }).val(typeof query.processBatchId !== 'undefined' ? query.processBatchId : '');
+
         $('#m_form_search').on('keyup', function (e) {
             var query = datatable.getDataSourceQuery();
             query.generalSearch = $(this).val().toLowerCase();
@@ -100,19 +131,12 @@ var MachinTea = function () {
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(typeof query.dicMacPro !== 'undefined' ? query.dicMacPro : '');
+
         $('.datatableRoload').on('click', function () {
             location.reload()
         });
-        // $('#dicTeaGra').on('change', function () {
-        //     var query = datatable.getDataSourceQuery();
-        //     query.dicTeaGra = $(this).val();
-        //     datatable.setDataSourceQuery(query);
-        //     datatable.load();
-        // }).val(typeof query.dicTeaGra !== 'undefined' ? query.dicTeaGra : '');
-
         $('.select_selectpicker').selectpicker();
     };
-
 
 
     /**
@@ -138,7 +162,7 @@ var MachinTea = function () {
                 request(
                     "saveOrUpdateMachinTea",
                     "post",
-                    $("#machin_set_edit_form").serialize(),
+                    $("#machin_tea_edit_form").serialize(),
                     function(result){
                         if(result.message){
                             blockUiClose('.MachinTeaEditModal .modal-content',1,".close-parent",0);
@@ -180,6 +204,7 @@ var MachinTea = function () {
                             $(".MachinTeaEditModal [name='macLoss']").val(result.data.macLoss)
                             $(".MachinTeaEditModal [name='description']").val(result.data.description)
                             $(".MachinTeaEditModal [name='status']").val(result.data.status)
+                            $(".MachinTeaEditModal [name='processBatchId']").val(result.data.processBatchId)
                             if(result.data.status == 1){
                                 $('.status_switch').bootstrapSwitch('state',true);
                             }else{
@@ -240,6 +265,7 @@ var MachinTea = function () {
         $(".MachinTeaEditModal [name='macLoss']").val("")
         $(".MachinTeaEditModal [name='description']").val("")
         $(".MachinTeaEditModal [name='status']").val(2)
+        $(".MachinTeaEditModal [name='processBatchId']").val("")
         $('.status_switch').bootstrapSwitch('state',false);
         $(".MachinTeaEditModal .form-control-feedback").remove()
         $(".MachinTeaEditModal div").removeClass("has-danger")

@@ -30,9 +30,21 @@
                         <div class="col-lg-8 col-md-9 col-sm-12">
                             <select class="form-control" name="manageBatchId">
                                 <option value=""> 管理批次 </option>
-                                <option th:each="item:${manageBatchs}" th:value="${item.id}" th:text="${item.name}"></option>
+                                <option th:each="item:${manageBatchList}" th:value="${item.id}" th:text="${item.batch_number}"></option>
                             </select>
-                            <span class="m-form__help">(茶园管理的批次号)</span>
+                            <span class="m-form__help"></span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <label class="col-form-label col-lg-3 col-sm-12">
+                            产品  <span style="color: red">*</span>
+                        </label>
+                        <div class="col-lg-8 col-md-9 col-sm-12">
+                            <select class="form-control" name="productId">
+                                <option value=""> 选择产品 </option>
+                                <option th:each="item:${productsList}" th:value="${item.id}" th:text="${item.name}"> </option>
+                            </select>
+                            <span class="m-form__help"></span>
                         </div>
                     </div>
                     <div class="form-group m-form__group row">
@@ -62,7 +74,7 @@
                         <button type="button" class="btn btn-secondary close-parent" data-dismiss="modal">
                             关闭
                         </button>
-                        <button type="submit" shiro:hasPermission="dictionary:submit" class="btn btn-accent">
+                        <button type="submit" shiro:hasPermission="processBatch:submit" class="btn btn-accent">
                             确定
                         </button>
                     </div>

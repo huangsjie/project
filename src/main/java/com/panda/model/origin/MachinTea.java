@@ -4,14 +4,31 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class MachinTea implements Serializable {
-
     private String id;
 
-    private String batchNumber;
+    private String dicMacType;
 
-    private String machinSetId;
+    private String dicTeaAttr;
 
-    private String operatorId;
+    private String dicMacPro;
+
+    private String dicTeaType;
+
+    private String productId;
+
+    private String processBatchId;
+
+    private Integer temperature;
+
+    private Integer humidity;
+
+    private Integer macLoss;
+
+    private Integer beginDuration;
+
+    private Integer endDuration;
+
+    private Integer durationType;
 
     private Integer status;
 
@@ -33,28 +50,100 @@ public class MachinTea implements Serializable {
         this.id = id;
     }
 
-    public String getBatchNumber() {
-        return batchNumber;
+    public String getDicMacType() {
+        return dicMacType;
     }
 
-    public void setBatchNumber(String batchNumber) {
-        this.batchNumber = batchNumber;
+    public void setDicMacType(String dicMacType) {
+        this.dicMacType = dicMacType;
     }
 
-    public String getMachinSetId() {
-        return machinSetId;
+    public String getDicTeaAttr() {
+        return dicTeaAttr;
     }
 
-    public void setMachinSetId(String machinSetId) {
-        this.machinSetId = machinSetId;
+    public void setDicTeaAttr(String dicTeaAttr) {
+        this.dicTeaAttr = dicTeaAttr;
     }
 
-    public String getOperatorId() {
-        return operatorId;
+    public String getDicMacPro() {
+        return dicMacPro;
     }
 
-    public void setOperatorId(String operatorId) {
-        this.operatorId = operatorId;
+    public void setDicMacPro(String dicMacPro) {
+        this.dicMacPro = dicMacPro;
+    }
+
+    public String getDicTeaType() {
+        return dicTeaType;
+    }
+
+    public void setDicTeaType(String dicTeaType) {
+        this.dicTeaType = dicTeaType;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getProcessBatchId() {
+        return processBatchId;
+    }
+
+    public void setProcessBatchId(String processBatchId) {
+        this.processBatchId = processBatchId;
+    }
+
+    public Integer getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(Integer temperature) {
+        this.temperature = temperature;
+    }
+
+    public Integer getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(Integer humidity) {
+        this.humidity = humidity;
+    }
+
+    public Integer getMacLoss() {
+        return macLoss;
+    }
+
+    public void setMacLoss(Integer macLoss) {
+        this.macLoss = macLoss;
+    }
+
+    public Integer getBeginDuration() {
+        return beginDuration;
+    }
+
+    public void setBeginDuration(Integer beginDuration) {
+        this.beginDuration = beginDuration;
+    }
+
+    public Integer getEndDuration() {
+        return endDuration;
+    }
+
+    public void setEndDuration(Integer endDuration) {
+        this.endDuration = endDuration;
+    }
+
+    public Integer getDurationType() {
+        return durationType;
+    }
+
+    public void setDurationType(Integer durationType) {
+        this.durationType = durationType;
     }
 
     public Integer getStatus() {

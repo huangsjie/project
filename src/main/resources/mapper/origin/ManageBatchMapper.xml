@@ -149,21 +149,23 @@
   </select> -->
 
   <select id="selectManageBatchList" resultType="map" parameterType="map">
-    SELECT mb.*,tg.name gardenName FROM e_manage_batch as mb
+    SELECT mb.*,tg.name gardenName
+    FROM e_manage_batch mb
     LEFT JOIN e_tea_garden as tg on mb.tea_garden_id = tg.id
+    where 1 = 1
     <if test="id != null and id != ''">
-      and id = #{id}
+      and mb.id = #{id}
     </if>
     <if test="batchNumber != null and batchNumber != ''">
-      and batch_number = #{batchNumber}
+      and mb.batch_number = #{batchNumber}
     </if>
     <if test="teaGardenId != null and teaGardenId != ''">
-      and tea_garden_id = #{teaGardenId}
+      and mb.tea_garden_id = #{teaGardenId}
     </if>
     <if test="status != null and status != ''">
-      and status = #{status}
+      and mb.status = #{status}
     </if>
-    ORDER BY tg.create_time ASC
+    ORDER BY mb.create_time ASC
   </select>
 
 

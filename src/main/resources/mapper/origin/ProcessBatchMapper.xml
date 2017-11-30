@@ -144,25 +144,29 @@
 
   <select id="selectProcessBatchList" resultType="map" parameterType="map">
     SELECT
-      p.* , m.batch_number manageBatchNumber
+      p.* , m.batch_number manageBatchNumber, r.name productName
     FROM
       e_process_batch p
       LEFT JOIN e_manage_batch m ON p.manage_batch_id = m.id
+      LEFT JOIN c_products r ON p.product_id = r.id
     WHERE
     1 = 1
     <if test="id != null and id != ''">
-      and id = #{id}
+      and p.id = #{id}
     </if>
     <if test="batchNumber != null and batchNumber != ''">
-      and batch_number = #{batchNumber}
+      and p.batch_number = #{batchNumber}
     </if>
     <if test="manageBatchId != null and manageBatchId != ''">
-      and manage_batch_id = #{manageBatchId}
+      and p.manage_batch_id = #{manageBatchId}
     </if>
     <if test="status != null and status != ''">
-      and status = #{status}
+      and p.status = #{status}
     </if>
-    ORDER BY create_time ASC
+    <if test="productId != null and productId != ''">
+      and p.product_id = #{productId}
+    </if>
+    ORDER BY p.create_time ASC
   </select>
 
   </mapper>

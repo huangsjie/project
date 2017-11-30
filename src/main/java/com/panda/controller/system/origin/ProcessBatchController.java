@@ -2,9 +2,12 @@ package com.panda.controller.system.origin;
 
 import com.alibaba.citrus.util.StringEscapeUtil;
 import com.alibaba.fastjson.JSON;
+import com.panda.model.commodity.Products;
 import com.panda.model.origin.ProcessBatch;
 import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
+import com.panda.service.commodity.ProductsService;
+import com.panda.service.origin.ManageBatchService;
 import com.panda.service.origin.ProcessBatchService;
 import com.panda.service.origin.TeaGardenService;
 import com.panda.service.system.DictionaryService;
@@ -38,6 +41,12 @@ public class ProcessBatchController {
     @Resource
     private TeaGardenService teaGardenService;
 
+    @Resource
+    private ProductsService productsService;
+
+    @Resource
+    private ManageBatchService manageBatchService;
+
     private static boolean message = false;
     private static Object  data    = null;
 
@@ -52,9 +61,12 @@ public class ProcessBatchController {
         List<Dictionary> statusType = dictionaryService.selectDictionaryValueList("ba259a75-f5a7-4897-949f-1c90b7958b35");
         Map query = new HashMap();
         query.put("status","1");
-        List<Map> teaGardens = teaGardenService.selectTeaGardenList(query);
+        List<Products> productsList = productsService.selectProductsList(query);
+        List<Map> manageBatchList = manageBatchService.selectManageBatchList(query);
+        //List<Map> teaGardens = teaGardenService.selectTeaGardenList(query);
         model.addAttribute("statusType",statusType);
-        model.addAttribute("teaGardens",teaGardens);
+        model.addAttribute("productsList",productsList);
+        model.addAttribute("manageBatchList",manageBatchList);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
         return "system/origin/getProcessBatchList";

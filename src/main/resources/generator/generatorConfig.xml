@@ -28,13 +28,13 @@
         </jdbcConnection>
         <!-- 数据库链接 -->
         <!-- 存放位置 -->
-        <javaModelGenerator targetPackage="com.panda.model.commodity" targetProject="src/main/java"/>
-        <sqlMapGenerator targetPackage="mapper.commodity" targetProject="src/main/resources"/>
-        <javaClientGenerator targetPackage="com.panda.mapper.commodity" targetProject="src/main/java" type="XMLMAPPER"/>
+        <javaModelGenerator targetPackage="com.panda.model.origin" targetProject="src/main/java"/>
+        <sqlMapGenerator targetPackage="mapper.origin" targetProject="src/main/resources"/>
+        <javaClientGenerator targetPackage="com.panda.mapper.origin" targetProject="src/main/java" type="XMLMAPPER"/>
         <!-- 存放位置 -->
 
         <!-- 数据表 -->
-        <table tableName="c_products" domainObjectName="Products" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="e_machin_tea" domainObjectName="MachinTea" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
         <!-- 数据表 -->
     </context>
     <!-- tea

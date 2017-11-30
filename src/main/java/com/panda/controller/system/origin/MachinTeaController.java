@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSON;
 import com.panda.model.origin.MachinTea;
 import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
+import com.panda.service.commodity.ProductsService;
 import com.panda.service.origin.MachinTeaService;
+import com.panda.service.origin.ProcessBatchService;
 import com.panda.service.system.DictionaryService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
@@ -37,6 +39,12 @@ public class MachinTeaController {
     @Resource
     private MachinTeaService machinTeaService;
 
+    @Resource
+    private ProductsService productsService;
+
+    @Resource
+    private ProcessBatchService processBatchService;
+
     private static boolean message = false;
     private static Object  data    = null;
 
@@ -48,12 +56,16 @@ public class MachinTeaController {
     @RequiresPermissions("machinTea:view")//权限管理;
     public String getMachinTeaList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+        Map map = new HashMap();
+        map.put("status",1);
         List<Dictionary> machinType = dictionaryService.selectDictionaryValueList("0b9ed538-29d6-11e5-965c-000c29d7a3a0");//加工类型
         List<Dictionary> teaArrt = dictionaryService.selectDictionaryValueList("31783870-956f-469f-b43e-9fefd905afca");//茶系
         List<Dictionary> machinProcess = dictionaryService.selectDictionaryValueList("1e12732d-246e-11e5-965c-000c29d7a3a0");//工序
         List<Dictionary> teaGrade = dictionaryService.selectDictionaryValueList("f63fe4f8-27ab-11e5-965c-000c29d7a3a0");//等级
         List<Dictionary> teaType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");//品种
+        List<Map> processBatchList = processBatchService.selectProcessBatchList(map);
         model.addAttribute("machinType",machinType);
+        model.addAttribute("processBatchList",processBatchList);
         model.addAttribute("teaArrt",teaArrt);
         model.addAttribute("machinProcess",machinProcess);
         model.addAttribute("teaGrade",teaGrade);
@@ -88,14 +100,14 @@ public class MachinTeaController {
                 if (status.size() > 0 && status.get("dicMacPro") != ""){
                     query.put("dicMacPro",status.get("dicMacPro"));
                 }
-                if (status.size() > 0 && status.get("dicTeaGra") != ""){
-                    query.put("dicTeaGra",status.get("dicTeaGra"));
+                if (status.size() > 0 && status.get("processBatchId") != ""){
+                    query.put("processBatchId",status.get("processBatchId"));
                 }
             }
-            List<MachinTea> machinSetList = machinTeaService.selectAll();
-            if(machinSetList.size() > 0){
+            List<Map> MachinTeaList = machinTeaService.selectMachinTeaDataList(query);
+            if(MachinTeaList.size() > 0){
                 message = true;
-                data = machinSetList;
+                data = MachinTeaList;
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -110,9 +122,9 @@ public class MachinTeaController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/editMachinSetItem", method = RequestMethod.GET)
+    @RequestMapping(value = "/editMachinTeaItem", method = RequestMethod.GET)
     @ResponseBody
-    public Object editMachinSetItem(HttpServletRequest request,String id){
+    public Object editMachinTeaItem(HttpServletRequest request,String id){
         message = false;
         data    = null;
         if (!id.isEmpty()){
@@ -139,9 +151,9 @@ public class MachinTeaController {
      * @param save
      * @return
      */
-    @RequestMapping(value = "/saveOrUpdateMachinSet",method = RequestMethod.POST)
+    @RequestMapping(value = "/saveOrUpdateMachinTea",method = RequestMethod.POST)
     @ResponseBody
-    public Object saveOrUpdateMachinSet(HttpServletRequest request, MachinTea machinTea , String save){
+    public Object saveOrUpdateMachinTea(HttpServletRequest request, MachinTea machinTea , String save){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         message = false;
         data    = null;
@@ -182,9 +194,9 @@ public class MachinTeaController {
      * @param id
      * @return
      */
-    @RequestMapping(value="/delMachinSetItem",method = RequestMethod.GET)
+    @RequestMapping(value="/delMachinTeaItem",method = RequestMethod.GET)
     @ResponseBody
-    public Object delMachinSetItem(HttpServletRequest request ,String id){
+    public Object delMachinTeaItem(HttpServletRequest request ,String id){
         message = false;
         data    = null;
         try{
