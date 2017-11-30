@@ -71,8 +71,7 @@ var Roles = function () {
             datatable.load();
         }).val(typeof query.status !== 'undefined' ? query.status : '');
         $('.datatableRoload').on('click', function () {
-            datatable.destroy();
-            datatable = $('.roles_list_ajax').mDatatable(option);
+            location.reload()
         });
         $('#m_form_status, #m_form_type').selectpicker();
     };
@@ -107,7 +106,7 @@ var Roles = function () {
                             removeValue('add');
                             blockUiClose('.rolesEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
-                            $('.datatableRoload').click();
+                            ;
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }

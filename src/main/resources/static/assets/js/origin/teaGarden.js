@@ -81,8 +81,7 @@ var TeaGarden = function () {
             datatable.load();
         }).val(typeof query.cultivar_id !== 'undefined' ? query.cultivar_id : '');
         $('.datatableRoload').on('click', function () {
-            datatable.destroy();
-            datatable = $('.tea_garden_info_ajax').mDatatable(option);
+            location.reload()
         });
         $('.select_selectpicker').selectpicker();
     };
@@ -117,7 +116,7 @@ var TeaGarden = function () {
                             removeValue('add');
                             blockUiClose('.teaGardenEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
-                            $('.datatableRoload').click();
+                            ;
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }

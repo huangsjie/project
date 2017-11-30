@@ -108,8 +108,7 @@ var User = function () {
             datatable.load();
         }).val(typeof query.userType !== 'undefined' ? query.userType : '');
         $('.datatableRoload').on('click', function () {
-            datatable.destroy();
-            datatable = $('.user_list_ajax').mDatatable(option);
+            location.reload()
         });
         $('#m_form_status, #m_form_type').selectpicker();
     };
@@ -156,7 +155,7 @@ var User = function () {
                         if(result.message){
                             blockUiClose('.userEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
-                            $('.datatableRoload').click();
+                            ;
                         }else{
                             ToastrMsg(result.data,"error","topRight",".userEdit .modal-content");
                         }

@@ -128,8 +128,7 @@ var MachinSet = function () {
         }).val(typeof query.dicMacPro !== 'undefined' ? query.dicMacPro : '');
 
         $('.datatableRoload').on('click', function () {
-            datatable.destroy();
-            datatable = $('.machin_set_list').mDatatable(option);
+            location.reload()
         });
 
         // $('#dicTeaGra').on('change', function () {
@@ -171,7 +170,7 @@ var MachinSet = function () {
                         if(result.message){
                             blockUiClose('.machinSetEditModal .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
-                            $('.datatableRoload').click()
+
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }

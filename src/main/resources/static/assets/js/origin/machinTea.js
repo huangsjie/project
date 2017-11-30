@@ -101,8 +101,7 @@ var MachinTea = function () {
             datatable.load();
         }).val(typeof query.dicMacPro !== 'undefined' ? query.dicMacPro : '');
         $('.datatableRoload').on('click', function () {
-            datatable.destroy();
-            datatable = $('.machin_tea_list').mDatatable(option);
+            location.reload()
         });
         // $('#dicTeaGra').on('change', function () {
         //     var query = datatable.getDataSourceQuery();
@@ -144,7 +143,7 @@ var MachinTea = function () {
                         if(result.message){
                             blockUiClose('.MachinTeaEditModal .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
-                            $('.datatableRoload').click()
+
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }

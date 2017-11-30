@@ -110,8 +110,7 @@ var TeaGardenManage = function () {
             datatable.load();
         }).val(typeof query.gardenType !== 'undefined' ? query.gardenType : '');
         $('.datatableRoload').on('click', function () {
-            datatable.destroy();
-            datatable = $('.tea_garden_manage_ajax').mDatatable(option);
+            location.reload()
         });
         $('.select_selectpicker').selectpicker();
     };
@@ -152,7 +151,7 @@ var TeaGardenManage = function () {
                         if(result.message){
                             blockUiClose('.teaGardenLogEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
-                            $('.datatableRoload').click();
+                            ;
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }

@@ -86,8 +86,7 @@ var products = function () {
         }).val(typeof query.status !== 'undefined' ? query.status : '');
 
         $('.datatableRoload').on('click', function () {
-            datatable.destroy();
-            datatable = $('.products_list').mDatatable(option);
+            location.reload()
         });
 
         $('#m_form_status, #m_form_type').selectpicker();
@@ -122,7 +121,7 @@ var products = function () {
                             removeValue('add');
                             blockUiClose('.productsEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
-                            $('.datatableRoload').click()
+
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }
@@ -190,10 +189,10 @@ var products = function () {
      */
     var removeValue = function (type){
         if(type == 'edit'){
-            $(".productsEditModal .modal-title").text("角色编辑")
+            $(".productsEditModal .modal-title").text("产品编辑")
             $(".productsEditModal [name='save']").val('edit')
         }else{
-            $(".productsEditModal .modal-title").text("角色新增")
+            $(".productsEditModal .modal-title").text("产品新增")
             $(".productsEditModal [name='save']").val('add');
         }
         $(".productsEditModal [name='id']").val('')

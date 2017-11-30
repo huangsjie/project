@@ -55,8 +55,7 @@ var processBatch = function () {
             datatable.load();
         }).val(query.generalSearch);
         $('.datatableRoload').on('click', function () {
-            datatable.destroy();
-            datatable = $('.process_batch_ajax').mDatatable(option);
+            location.reload()
         });
         /*$('#m_form_tea_garden').on('change', function () {
             var query = datatable.getDataSourceQuery();
@@ -92,7 +91,7 @@ var processBatch = function () {
                             removeValue('add');
                             blockUiClose('.processBatchEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
-                            $('.datatableRoload').click()
+
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }
