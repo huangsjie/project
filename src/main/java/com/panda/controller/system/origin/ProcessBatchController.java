@@ -29,13 +29,17 @@ import java.util.*;
 @Controller
 @RequestMapping("/system/processBatch")
 public class ProcessBatchController {
-    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProcessBatchController.class);
+
     @Resource
     private ProcessBatchService processBatchService;
+
     @Resource
     private DictionaryService dictionaryService;
+
     @Resource
     private TeaGardenService teaGardenService;
+
     private static boolean message = false;
     private static Object  data    = null;
 
@@ -128,7 +132,7 @@ public class ProcessBatchController {
     /**
      * 保存
      * @param request
-     * @param manageBatch
+     * @param processBatch
      * @param save
      * @return
      */

@@ -5,11 +5,13 @@ import com.panda.model.origin.ProcessBatch;
 import com.panda.service.origin.ProcessBatchService;
 import com.panda.util.abs.AbstractMapper;
 import com.panda.util.abs.AbstractServiceImpl;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class ProcessBatchServiceImpl extends AbstractServiceImpl<ProcessBatch> implements ProcessBatchService{
 
     @Resource
