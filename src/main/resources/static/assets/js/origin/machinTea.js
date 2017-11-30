@@ -201,7 +201,7 @@ var MachinTea = function () {
                     'get',
                     {id:id},
                     function (result) {
-                        if(!result.message){
+                        if(result.message){
                             self.parents("tr").remove();
                             ToastrMsg(result.data,"success","topRight",'#machin_tea_list');
                         }else{

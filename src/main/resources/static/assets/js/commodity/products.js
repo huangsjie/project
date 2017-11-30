@@ -47,7 +47,7 @@ var products = function () {
                     return '<span class="m-badge ' + status[row.status].class + ' m-badge--wide">' + status[row.status].title + '</span>';
                 }
             }, {
-                field: "description",
+                field: "descriptin",
                 title: "描述",
                 width: 100
             }, {
@@ -105,11 +105,10 @@ var products = function () {
                     maxlength: 100
                 }
             },
-
             submitHandler: function (form){
                 blockUiOpen('.productsEdit .modal-content');
                 request(
-                    "saveproduct",
+                    "saveOrUpdateProducts",
                     "post",
                     $("#product_edit_form").serialize(),
                     function(result){
@@ -126,7 +125,7 @@ var products = function () {
         });
     }
     /**
-     * 获取角色信息,并移除上一轮错误信息
+     * 获取信息,并移除上一轮错误信息
      */
     var getProductsItem = function () {
         $("#products_list ").on("click", ".editProductsItem", function () {
@@ -141,7 +140,13 @@ var products = function () {
                         if(result.message){
                             $("#product_edit_form [name='id']").val(result.data.id)
                             $("#product_edit_form [name='name']").val(result.data.name)
-                            $("#product_edit_form [name='description']").val(result.data.description)
+                            $("#product_edit_form [name='status']").val(result.data.status)
+                            $("#product_edit_form [name='descriptin']").val(result.data.descriptin)
+                            if(result.data.status == 1){
+                                $('.status_switch').bootstrapSwitch('state',true);
+                            }else{
+                                $('.status_switch').bootstrapSwitch('state',false);
+                            }
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }
@@ -149,11 +154,10 @@ var products = function () {
             }
         })
     }
-
+    /**
+     * 删除产品
+     */
     var delProductsItem = function () {
-        /**
-         * 删除角色
-         */
         $("#products_list ").on("click", ".delProductsItem", function () {
             blockUiOpen('#products_list');
             var self = $(this);
@@ -164,7 +168,7 @@ var products = function () {
                     'get',
                     {id:id},
                     function (result) {
-                        if(!result.message){
+                        if(result.message){
                             self.parents("tr").remove();
                             ToastrMsg(result.data,"success","topRight",'#products_list');
                         }else{
@@ -179,18 +183,19 @@ var products = function () {
      */
     var removeValue = function (type){
         if(type == 'edit'){
-            $(".productsEdit .modal-title").text("角色编辑")
-            $(".productsEdit [name='save']").val('edit')
+            $(".productsEditModal .modal-title").text("角色编辑")
+            $(".productsEditModal [name='save']").val('edit')
         }else{
-            $(".productsEdit .modal-title").text("角色新增")
-            $(".productsEdit [name='save']").val('add');
+            $(".productsEditModal .modal-title").text("角色新增")
+            $(".productsEditModal [name='save']").val('add');
         }
-        $(".productsEdit [name='id']").val('')
-        $(".productsEdit [name='name']").val('')
-        $(".productsEdit [name='description']").val('');
-        $(".productsEdit .form-control-feedback").remove()
-        $(".productsEdit div").removeClass("has-danger")
-        $(".productsEdit div").removeClass("has-success")
+        $(".productsEditModal [name='id']").val('')
+        $(".productsEditModal [name='name']").val('')
+        $(".productsEditModal [name='descriptin']").val('');
+        $('.status_switch').bootstrapSwitch('state',false);
+        $(".productsEditModal .form-control-feedback").remove()
+        $(".productsEditModal div").removeClass("has-danger")
+        $(".productsEditModal div").removeClass("has-success")
     }
     /**
      * 取消编辑时 重置表单初始值为 add 类型
@@ -215,4 +220,12 @@ var products = function () {
 
 jQuery(document).ready(function () {
     products.init();
+    $('.status_switch').bootstrapSwitch();
+    $('.status_switch').on('switchChange.bootstrapSwitch', function (event,state) {
+        if(state==true){
+            $(this).parents("div").find(".status_switch_parent").find("[name='status']").val(1)
+        }else{
+            $(this).parents("div").find(".status_switch_parent").find("[name='status']").val(2)
+        }
+    });
 });

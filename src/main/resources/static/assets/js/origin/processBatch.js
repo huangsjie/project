@@ -194,4 +194,12 @@ var processBatch = function () {
 
 jQuery(document).ready(function () {
     processBatch.init();
+    $('.status_switch').bootstrapSwitch();
+    $('.status_switch').on('switchChange.bootstrapSwitch', function (event,state) {
+        if(state==true){
+            $(this).parents("div").find(".status_switch_parent").find("[name='status']").val(1)
+        }else{
+            $(this).parents("div").find(".status_switch_parent").find("[name='status']").val(2)
+        }
+    });
 });

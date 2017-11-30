@@ -76,7 +76,6 @@ var manageBatch = function () {
                 teaGardenId:{required: true,},
                 batchNumber:{required: true,},
             },
-
             submitHandler: function (form){
                 blockUiOpen('.manageBatchEdit .modal-content');
                 request(
@@ -112,6 +111,8 @@ var manageBatch = function () {
         $(".manageBatchEdit [name='id']").val('')
         $(".manageBatchEdit [name='name']").val('')
         $(".manageBatchEdit [name='description']").val('');
+        $('.status_switch').bootstrapSwitch('state',false);
+        $(".manageBatchEdit [name='status']").val("")
         $(".teaGardenEdit .form-control-feedback").remove()
         $(".manageBatchEdit div").removeClass("has-danger")
         $(".manageBatchEdit div").removeClass("has-success")
@@ -143,6 +144,12 @@ var manageBatch = function () {
                             $("#manage_batch_edit_form [name='id']").val(result.data.id)
                             $("#manage_batch_edit_form [name='batchNumber']").val(result.data.batchNumber)
                             $("#manage_batch_edit_form [name='teaGardenId']").val(result.data.teaGardenId)
+                            $("#manage_batch_edit_form [name='status']").val(result.data.status)
+                            if(result.data.status == 1){
+                                $('.status_switch').bootstrapSwitch('state',true);
+                            }else{
+                                $('.status_switch').bootstrapSwitch('state',false);
+                            }
                         }else{
                             ToastrMsg(result.data,"error","topRight",'#manage_batch_list');
                         }
@@ -192,4 +199,12 @@ var manageBatch = function () {
 
 jQuery(document).ready(function () {
     manageBatch.init();
+    $('.status_switch').bootstrapSwitch();
+    $('.status_switch').on('switchChange.bootstrapSwitch', function (event,state) {
+        if(state==true){
+            $(this).parents("div").find(".status_switch_parent").find("[name='status']").val(1)
+        }else{
+            $(this).parents("div").find(".status_switch_parent").find("[name='status']").val(2)
+        }
+    });
 });

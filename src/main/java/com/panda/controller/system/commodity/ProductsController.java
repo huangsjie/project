@@ -83,9 +83,9 @@ public class ProductsController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/editProductsItem", method = RequestMethod.GET)
+    @RequestMapping(value = "/getProductsItem", method = RequestMethod.GET)
     @ResponseBody
-    public Object editProductsItem(HttpServletRequest request,String id){
+    public Object getProductsItem(HttpServletRequest request,String id){
         message = false;
         data    = null;
         if (!id.isEmpty()){

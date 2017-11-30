@@ -113,81 +113,85 @@ var Roles = function () {
             }
         });
     }
+    /**
+     * 删除角色
+     */
+    var delRoleItem = function () {
+        $("#roles_list ").on("click", ".delRoleItem", function () {
+            blockUiOpen('#roles_list');
+            var self = $(this);
+            var id = self.attr("item");
+            if(id != ""){
+                request(
+                    "delRoleItem",
+                    'get',
+                    {id:id},
+                    function (result) {
+                        if(result.message){
+                            self.parents("tr").remove();
+                            ToastrMsg(result.data,"success","topRight",'#roles_list');
+                        }else{
+                            ToastrMsg(result.data,"error","topRight",'#roles_list');
+                        }
+                    })
+            }
+        })
+    }
+    /**
+     * 获取角色信息,并移除上一轮错误信息
+     */
+    var editRoleItem = function () {
+        $("#roles_list ").on("click", ".editRoleItem", function () {
+            removeValue('edit')
+            var id = $(this).attr("item");
+            if(id != ""){
+                request(
+                    "getRoleItem",
+                    'get',
+                    {id:id},
+                    function (result) {
+                        if(result.message){
+                            $("#role_edit_form [name='id']").val(result.data.id)
+                            $("#role_edit_form [name='name']").val(result.data.name)
+                            $("#role_edit_form [name='description']").val(result.data.description)
+                        }else{
+                            ToastrMsg(result.data,"error","topRight");
+                        }
+                    })
+            }
+        })
+    }
+
+    /**
+     * 重置表单
+     */
+    var removeValue = function (type){
+        if(type == 'edit'){
+            $(".rolesEdit .modal-title").text("角色编辑")
+            $(".rolesEdit [name='save']").val('edit')
+        }else{
+            $(".rolesEdit .modal-title").text("角色新增")
+            $(".rolesEdit [name='save']").val('add');
+        }
+        $(".rolesEdit [name='id']").val('')
+        $(".rolesEdit [name='name']").val('')
+        $(".rolesEdit [name='description']").val('');
+        $(".rolesEdit .form-control-feedback").remove()
+        $(".rolesEdit div").removeClass("has-danger")
+        $(".rolesEdit div").removeClass("has-success")
+    }
 
     return {
         init: function () {
             rolesListShow();
             rolesForm();
+            delRoleItem();
+            editRoleItem();
         }
     };
 }();
 
-/**
- * 重置表单
- */
-function removeValue(type){
-    if(type == 'edit'){
-        $(".rolesEdit .modal-title").text("角色编辑")
-        $(".rolesEdit [name='save']").val('edit')
-    }else{
-        $(".rolesEdit .modal-title").text("角色新增")
-        $(".rolesEdit [name='save']").val('add');
-    }
-    $(".rolesEdit [name='id']").val('')
-    $(".rolesEdit [name='name']").val('')
-    $(".rolesEdit [name='description']").val('');
-    $(".rolesEdit .form-control-feedback").remove()
-    $(".rolesEdit div").removeClass("has-danger")
-    $(".rolesEdit div").removeClass("has-success")
-}
-
 jQuery(document).ready(function () {
-    /**
-     * 获取角色信息,并移除上一轮错误信息
-     */
-    $("#roles_list ").on("click", ".editRoleItem", function () {
-        removeValue('edit')
-        var id = $(this).attr("item");
-        if(id != ""){
-            request(
-                "getRoleItem",
-                'get',
-                {id:id},
-                function (result) {
-                    if(result.message){
-                        $("#role_edit_form [name='id']").val(result.data.id)
-                        $("#role_edit_form [name='name']").val(result.data.name)
-                        $("#role_edit_form [name='description']").val(result.data.description)
-                    }else{
-                        ToastrMsg(result.data,"error","topRight");
-                    }
-                })
-        }
-    })
-
-    /**
-     * 删除角色
-     */
-    $("#roles_list ").on("click", ".delRoleItem", function () {
-        blockUiOpen('#roles_list');
-        var self = $(this);
-        var id = self.attr("item");
-        if(id != ""){
-            request(
-                "delRoleItem",
-                'get',
-                {id:id},
-                function (result) {
-                    if(!result.message){
-                        self.parents("tr").remove();
-                        ToastrMsg(result.data,"success","topRight",'#roles_list');
-                    }else{
-                        ToastrMsg(result.data,"error","topRight",'#roles_list');
-                    }
-                })
-        }
-    })
-
     /**
      * 取消编辑时 重置表单初始值为 add 类型
      */
