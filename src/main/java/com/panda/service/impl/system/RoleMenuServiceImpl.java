@@ -75,9 +75,11 @@ public class RoleMenuServiceImpl extends AbstractServiceImpl<RoleMenu> implement
                             role_menu_id = item.get("role_menu_id").toString();
                     Integer status = Integer.valueOf(item.get("status").toString());
                     if (status > 0 && !role_menu_id.isEmpty()) {
-                        //编辑
+                        //编辑 由于使用了关联唯一组健，更新时，需要将 roleID 和menuId 带上
                         roleMenu.setId(role_menu_id);
+                        roleMenu.setMenuId(menu_id);
                         roleMenu.setStatus(status);
+                        roleMenu.setCreateTime(new Date());
                         roleMenuMapper.updateByPrimaryKeySelective(roleMenu);
                     } else {
                         //添加 将 parent_id 放到新数组 并去重

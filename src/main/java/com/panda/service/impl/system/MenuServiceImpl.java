@@ -127,6 +127,62 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
     }
 
     /**
+     * 获取当前管理员所拥有的菜单列表 嵌套数组 -- 供 left_aside 模板使用
+     * @param roleId
+     * @return
+     */
+    @Override
+    public List<Menu> selectHomeMenuList(String roleId){
+        Map<String, String> map = new HashMap<String, String>(3);
+        map.put("roleId", roleId);
+        map.put("status", "1");
+        map.put("parentId", "10000000-0000-0000-0000-200000000000");
+        //Jedis jedis = jedisPool.getResource();
+        List<Menu> menuList = null;
+        try {
+//            String cacheMenuList = "home_menu_list";
+//            byte[] byteMenuList = jedis.get(cacheMenuList.getBytes());
+//            if(byteMenuList != null){
+//            //缓存有效
+//                logger.info("------->"+cacheMenuList+" 获取缓存中的 menuList !");
+//                menuList = (ArrayList) SerializeUtil.unserialize(byteMenuList);
+//            }else{
+//                //缓存无效
+                menuList = menuMapper.selectManagerRoleMenuList(map);
+                if(menuList != null && menuList.size() > 0){
+                    for (Menu menu: menuList) {
+                        map.put("parentId",menu.getId());
+                        List<Menu> childList = menuMapper.selectManagerRoleMenuList(map);
+                        if(childList != null && childList.size() > 0){
+                            for(Menu child: childList){
+                                map.put("parentId",child.getId());
+                                List<Menu> lastChild = menuMapper.selectManagerRoleMenuList(map);
+                                if(lastChild != null && lastChild.size() > 0){
+                                    for (Menu item : lastChild){
+                                        userMenuRolePermission(item,map);
+                                    }
+                                    child.setChildMenuList(lastChild);
+                                }else{
+                                    userMenuRolePermission(child,map);
+                                }
+                            }
+                            menu.setChildMenuList(childList);
+                        }else{
+                            userMenuRolePermission(menu,map);
+                        }
+                    }
+//                     logger.info("------->"+cacheMenuList+" 创建 menuList 缓存数据 !");
+//                     jedis.setex(cacheMenuList.getBytes(), second ,SerializeUtil.serialize(menuList));
+//                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.info("------->selectManagerRoleMenuList"+e.getMessage());
+        }
+        return menuList;
+    }
+
+    /**
      * 追加 菜单权限 菜单URL 为空或者菜单有子级菜单时，不处理
      * @param menu
      * @param map

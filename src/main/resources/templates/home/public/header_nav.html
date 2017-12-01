@@ -8,57 +8,63 @@
         <div class="m-header__top">
             <div class="m-container m-container--responsive m-container--xxl m-container--full-height m-page__container">
                 <div class="m-stack m-stack--ver m-stack--desktop">
-                    <!-- logo -->
+                    <!-- LOGO -->
                     <div class="m-stack__item m-brand">
-                        <div class="m-stack m-stack--ver m-stack--general">
+                        <div class="m-stack m-stack--ver m-stack--general m-stack--inline">
                             <div class="m-stack__item m-stack__item--middle m-brand__logo">
                                 <a href="index.html" class="m-brand__logo-wrapper">
-                                    <img alt="" th:src="@{/index/base/img/logo_tea.png}" style="width: 180px;"/>
+                                    <img alt="" th:src="@{/index/base/img/logos2.png}" style="height: 44px;"/>
                                 </a>
                             </div>
-                        </div>
-                    </div>
-                    <!-- logo -->
-                    <div class="m-stack__item m-stack__item--middle">
-                        <!-- Menu -->
-                        <div class="m-stack__item m-stack__item--middle m-stack__item--fluid">
-                            <div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-dark m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-dark m-aside-header-menu-mobile--submenu-skin-dark "  >
-                                <ul class="m-menu__nav  m-menu__nav--submenu-arrow ">
-                                    <li class="m-menu__item  m-menu__item--submenu m-menu__item--rel m-menu__item--hover">
-                                        <a  href="/index" class="m-menu__link m-menu__toggle">
-                                            <span class="m-menu__link-text">
-                                                首页
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="m-menu__item  m-menu__item--submenu m-menu__item--rel">
-                                        <a  href="#" class="m-menu__link m-menu__toggle">
-                                            <span class="m-menu__link-text">
-                                                产品展示
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="m-menu__item  m-menu__item--submenu" >
-                                        <a  href="/about" class="m-menu__link m-menu__toggle">
-                                            <span class="m-menu__link-text">
-                                                关于我们
-                                            </span>
-                                            <i class="m-menu__ver-arrow la la-angle-right"></i>
-                                        </a>
-                                    </li>
-                                    <li class="m-menu__item  m-menu__item--submenu" >
-                                        <a  href="/about" class="m-menu__link m-menu__toggle">
-                                            <span class="m-menu__link-text">
-                                                产品溯源
-                                            </span>
-                                            <i class="m-menu__ver-arrow la la-angle-right"></i>
-                                        </a>
-                                    </li>
-                                </ul>
+                            <div class="m-stack__item m-stack__item--middle m-brand__tools">
+                                <!-- 快捷菜单-->
+                                <a id="m_aside_header_menu_mobile_toggle" href="javascript:;" class="m-brand__icon m-brand__toggler m--visible-tablet-and-mobile-inline-block">
+                                    <span></span>
+                                </a>
+                                <!-- 快捷菜单-->
                             </div>
                         </div>
-                        <!-- Menu -->
                     </div>
+                    <!-- LOGO -->
+                    <!-- 菜单 -->
+                    <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav">
+                        <div class="m-container m-container--responsive m-container--xxl m-container--full-height m-page__container">
+                            <div class="m-stack m-stack--ver m-stack--desktop">
+                                <!-- 菜单列表 -->
+                                <div class="m-stack__item m-stack__item--middle m-stack__item--fluid">
+                                    <div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-dark m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-dark m-aside-header-menu-mobile--submenu-skin-dark ">
+                                        <ul class="m-menu__nav  m-menu__nav--submenu-arrow ">
+                                            <li class="m-menu__item m-menu__item--submenu m-menu__item--rel" th:each="menu,index:${menuList}" th:classappend="${index.first} ? 'm-menu__item--active'" th:attrappend="data-menu-submenu-toggle=${menu.childMenuList != null?'click':''}" aria-haspopup="true">
+                                                <a th:href="${menu.childMenuList == null}?${menu.url}" class="m-menu__link m-menu__toggle" >
+
+                                                    <span class="m-menu__link-text" th:text="${menu.name}"> 产品库 </span>
+                                                    <i class="m-menu__hor-arrow la la-angle-down" th:if="${menu.childMenuList != null}"></i>
+                                                    <i class="m-menu__ver-arrow la la-angle-right"></i>
+                                                </a>
+                                                <div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left">
+                                                    <span class="m-menu__arrow m-menu__arrow--adjust"></span>
+                                                    <ul class="m-menu__subnav">
+                                                        <li class="m-menu__item" th:each="child:${menu.childMenuList}"  aria-haspopup="true">
+                                                            <a th:href="${child.url}" class="m-menu__link ">
+                                                                <i class="m-menu__link-icon " th:classappend="${child.iconClass}"></i>
+                                                                <span class="m-menu__link-title">
+                                                                    <span class="m-menu__link-wrap">
+                                                                        <span class="m-menu__link-text" th:text="${child.name}"></span>
+                                                                    </span>
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- 菜单列表 -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 菜单 -->
                 </div>
             </div>
         </div>

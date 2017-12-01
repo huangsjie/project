@@ -50,9 +50,7 @@ var MenuPage = function () {
                     required: true
                 },
                 description: {
-                    required: true,
-                    minlength: 5,
-                    maxlength: 100
+                    nameCheck:true
                 }
             },
             invalidHandler: function(event, validator) {

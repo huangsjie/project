@@ -15,8 +15,18 @@
     <meta name="description" content="Latest updates and statistic charts"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <link th:href="@{/index/base/css/base.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/index/base/css/style.css}" rel="stylesheet" type="text/css"/>
+    <script th:src="@{/index/base/js/webfont.js}" type="text/javascript"></script>
+    <script>
+        WebFont.load({
+            google: {"families": ["Poppins:300,400,500,600,700", "Roboto:300,400,500,600,700"]},
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+    <link th:href="@{/index/base/css/vendors.bundle.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/index/base/css/style.bundle.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/index/base/css/jquery.bscslider.css}" rel="stylesheet" type="text/css"/>
     <link rel="shortcut icon" th:href="@{/index/base/img/favicon.png}"/>
 </head>
 <!-- end::head -->

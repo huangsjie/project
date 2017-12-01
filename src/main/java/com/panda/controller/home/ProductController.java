@@ -20,19 +20,21 @@ import java.util.List;
  * Time: 15:25
  */
 @Controller
-@RequestMapping(value = "/index")
-public class HomeController {
+@RequestMapping(value = "/index/product")
+public class ProductController {
 
     @Resource
     private MenuService menuService;
     private Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     /**
-     * 首页
+     * 商品
+     * @param request
+     * @param model
      * @return
      */
-    @RequestMapping(value = {"/","/main"},method = RequestMethod.GET)
-    public String main(HttpServletRequest request, Model model){
+    @RequestMapping(method = RequestMethod.GET)
+    public String proTrace(HttpServletRequest request, Model model){
         List<Menu> menuList = null;
         try {
             menuList = menuService.selectHomeMenuList("c716be42-78c2-4c80-8c88-25814b2e683b");
@@ -41,11 +43,6 @@ public class HomeController {
             e.printStackTrace();
             logger.error("------->selectManagerRoleMenuList"+e.getMessage());
         }
-        return "home/index/index";
-    }
-
-    @RequestMapping({"/thymel"})
-    public String thymeleaf(){
-        return "home/index/thymeleaf";
+        return "home/index/products";
     }
 }

@@ -368,7 +368,7 @@
             mobileZH: "请输入中国境内手机号码.",
             phoneZH: "请输入中文中国境内固定电话.",
             iconCheck: "正确的icon-class 格式为 'flaticon-xxx'. ",
-            urlCheck: "类型:(/system/**后台) (/home/**前台) (/wecaht/** 微信)",
+            urlCheck: "类型:(/system/**后台) (/index/**前台) (/wecaht/** 微信)",
             remote: "请解决这个问题.",
             url: "请输入一个有效的URL.",
             date: "请输入一个有效的日期.",
@@ -1417,7 +1417,7 @@
                 return this.optional( element ) || /^[flaticon-]+[a-zA-Z0-9-]+$/.test( value);
             },
             urlCheck: function(value, element){
-                return this.optional( element ) || /^[/system]+[/a-zA-Z]+$/.test( value) || /^[/home]+[/a-zA-Z]+$/.test( value) || /^[/wechat]+[/a-zA-Z]+$/.test( value);
+                return this.optional( element ) || /^((\/system\/|\/index\/|\/home\/|\/wechat\/|\/api\/)+[a-zA-Z/]+$)/.test(value);
             },
             // https://jqueryvalidation.org/url-method/
             url: function( value, element ) {

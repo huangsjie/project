@@ -35,4 +35,11 @@ public interface MenuService extends AbstractService<Menu>{
      * @return
      */
     List<Menu> selectMenuAndChildMenu(String menuId);
+
+    /**
+     * 查询前台普通用户菜单
+     * @param roleId
+     * @return
+     */
+    List<Menu> selectHomeMenuList(String roleId);
 }

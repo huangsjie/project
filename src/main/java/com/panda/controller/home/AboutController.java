@@ -1,5 +1,12 @@
 package com.panda.controller.home;
 
+/**
+ * Created with IDEA.
+ * User: Alan
+ * Date: 2017/12/1
+ * Time: 15:50
+ */
+
 import com.panda.model.system.Menu;
 import com.panda.service.system.MenuService;
 import org.slf4j.Logger;
@@ -20,19 +27,21 @@ import java.util.List;
  * Time: 15:25
  */
 @Controller
-@RequestMapping(value = "/index")
-public class HomeController {
+@RequestMapping(value = "/index/about")
+public class AboutController {
 
     @Resource
     private MenuService menuService;
     private Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     /**
-     * 首页
+     * 关于
+     * @param request
+     * @param model
      * @return
      */
-    @RequestMapping(value = {"/","/main"},method = RequestMethod.GET)
-    public String main(HttpServletRequest request, Model model){
+    @RequestMapping(method = RequestMethod.GET)
+    public String proTrace(HttpServletRequest request, Model model){
         List<Menu> menuList = null;
         try {
             menuList = menuService.selectHomeMenuList("c716be42-78c2-4c80-8c88-25814b2e683b");
@@ -41,11 +50,6 @@ public class HomeController {
             e.printStackTrace();
             logger.error("------->selectManagerRoleMenuList"+e.getMessage());
         }
-        return "home/index/index";
-    }
-
-    @RequestMapping({"/thymel"})
-    public String thymeleaf(){
-        return "home/index/thymeleaf";
+        return "home/index/products";
     }
 }

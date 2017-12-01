@@ -34,7 +34,7 @@ body {
   padding: 0px;
   font-size: 14px;
   font-weight: 300;
-  font-family: "Poppins";
+  font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif,"SimSun";
   -ms-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
@@ -5303,7 +5303,7 @@ body.m--skin-dark {
     display: block;
     margin: 0 0 10px 0;
     padding: 0;
-    font-family: "Roboto";
+    font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif,"SimSun";
     font-weight: 500; }
   .m-section h3.m-section__heading {
     font-size: 1.1rem; }
@@ -5419,7 +5419,7 @@ code {
   background: #ebedf2; }
 
 .btn {
-  font-family: "Poppins";
+  font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif,"SimSun";
   cursor: pointer; }
   .btn:focus {
     -webkit-box-shadow: none;
@@ -5454,7 +5454,7 @@ code {
     padding: 0.75rem 2rem;
     font-size: 1rem;
     font-weight: 400;
-    font-family: "Poppins"; }
+    font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif,"SimSun"; }
     .btn.m-btn--custom.btn-sm {
       padding: 0.5rem 1rem;
       font-size: 0.9rem; }
@@ -7529,19 +7529,19 @@ code {
           vertical-align: middle;
           font-size: 1.3rem;
           font-weight: 500;
-          font-family: "Roboto"; }
+          font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif,"SimSun"; }
           .m-portlet .m-portlet__head .m-portlet__head-caption .m-portlet__head-title .m-portlet__head-text small {
             display: inline-block;
             padding-left: 5px;
             font-size: 1rem;
             font-weight: 300;
-            font-family: "Roboto"; }
+            font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif,"SimSun"; }
           .m-portlet .m-portlet__head .m-portlet__head-caption .m-portlet__head-title .m-portlet__head-text .m-portlet__head-desc {
             margin-top: 0.4rem;
             display: block;
             font-size: 0.85rem;
             font-weight: 300;
-            font-family: "Roboto"; }
+            font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif,"SimSun"; }
     .m-portlet .m-portlet__head .m-portlet__head-tools {
       text-align: right;
       display: table-cell;
@@ -13961,7 +13961,7 @@ code {
   padding: 0;
   min-width: 125px;
   font-size: 1rem;
-  font-family: "Poppins";
+  font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif,"SimSun";
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   -ms-border-radius: 6px;
@@ -16358,7 +16358,7 @@ select.m-select2 {
 
 @media (min-width: 993px) {
   .m-header--fixed .m-body {
-    padding-top: 160px !important; }
+    padding-top: 90px !important; }
   .m-aside-left--fixed .m-body .m-wrapper {
     margin-left: 235px; }
   .m-page--fluid.m-aside-left--fixed .m-body .m-wrapper {
@@ -16392,7 +16392,7 @@ select.m-select2 {
   transition: all 0.3s ease;
   width: 235px;
   padding: 0px 30px 0px 0px;
-  background: #2c2d3a; }
+  background: rgba(44, 45, 58, 0); }
   .m-brand--hidden .m-brand {
     display: none; }
   .m-brand .m-brand__logo {
@@ -16613,7 +16613,7 @@ select.m-select2 {
   .m-brand {
     width: 100%;
     position: relative;
-    height: 90px !important;
+    height: 70px !important;
     z-index: 2; }
     .m-brand > .m-stack {
       width: 100% !important; }
@@ -16751,7 +16751,10 @@ select.m-select2 {
         transform: translateY(0); } }
 
 @media (max-width: 992px) {
-
+  .m-header {
+    height: 70px !important; }
+    .m-header .m-header__top {
+      height: 70px; }
     .m-header .m-page__wrapper {
       padding: 0; }
       .m-page--fluid .m-header .m-page__wrapper {
@@ -18019,9 +18022,9 @@ select.m-select2 {
   .m-header-menu.m-header-menu--skin-dark .m-menu__nav > .m-menu__item > .m-menu__link .m-menu__link-bullet.m-menu__link-bullet--line > span {
     background-color: #424456; }
   .m-header-menu.m-header-menu--skin-dark .m-menu__nav > .m-menu__item > .m-menu__link .m-menu__link-text {
-    color: #6c6e86; font-size: 18px;}
+    color: #6c6e86; font-size: 16px;}
   .m-header-menu.m-header-menu--skin-dark .m-menu__nav > .m-menu__item > .m-menu__link .m-menu__hor-arrow {
-    color: #47495b; font-size: 18px;}
+    color: #47495b; }
   .m-header-menu.m-header-menu--skin-dark .m-menu__nav > .m-menu__item.m-menu__item--active > .m-menu__link .m-menu__link-icon {
     color: #676a8a; }
   .m-header-menu.m-header-menu--skin-dark .m-menu__nav > .m-menu__item.m-menu__item--active > .m-menu__link .m-menu__link-bullet.m-menu__link-bullet--dot > span {
@@ -18627,7 +18630,7 @@ select.m-select2 {
           padding-left: 120px; }
   .m-header-menu.m-header-menu--skin-dark .m-menu__nav > .m-menu__item > .m-menu__heading .m-menu__link-text,
   .m-header-menu.m-header-menu--skin-dark .m-menu__nav > .m-menu__item > .m-menu__link .m-menu__link-text {
-    color: #868aa8; font-size: 18px;}
+    color: #868aa8; font-size: 16px}
   .m-header-menu.m-header-menu--skin-dark .m-menu__nav > .m-menu__item > .m-menu__heading .m-menu__link-icon,
   .m-header-menu.m-header-menu--skin-dark .m-menu__nav > .m-menu__item > .m-menu__link .m-menu__link-icon {
     color: #525672; }

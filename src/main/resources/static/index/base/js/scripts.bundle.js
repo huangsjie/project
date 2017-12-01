@@ -5469,12 +5469,12 @@ jQuery.fn.extend({
              * Handles offcanvas click scrollTop
              */
             handle: function() {
-                // var pos = $(window).scrollTop(); // current vertical position
-                // if (pos > scrollTop.options.offset) {
-                //     $("body").addClass('m-scroll-top--shown');
-                // } else {
-                //     $("body").removeClass('m-scroll-top--shown');
-                // }
+                var pos = $(window).scrollTop(); // current vertical position
+                if (pos > scrollTop.options.offset) {
+                    $("body").addClass('m-scroll-top--shown');
+                } else {
+                    $("body").removeClass('m-scroll-top--shown');
+                }
             },
 
             /**
@@ -5764,6 +5764,18 @@ var mLayout = function() {
             options.minimize.mobile = false;
         }
 
+        if (header.data('minimize') == 'minimize') {
+            options.minimize.desktop = {};
+            options.minimize.desktop.on = 'm-header--minimize-on';
+            options.minimize.desktop.off = 'm-header--minimize-off';
+        } else  if (header.data('minimize') == 'hide') {
+            options.minimize.desktop = {};
+            options.minimize.desktop.on = 'm-header--show';
+            options.minimize.desktop.off = 'm-header--hide';
+        } else {
+            options.minimize.desktop = false;
+        }
+
         if (header.data('minimize-offset')) {
             options.offset.desktop = header.data('minimize-offset');
         }
@@ -5931,7 +5943,7 @@ var mLayout = function() {
 
         qs.mQuicksearch({
             type: qs.data('search-type'), // quick search type
-            source: '/index',
+            source: 'http://keenthemes.com/metronic/preview/inc/api/quick_search.php',            
             spinner: 'm-spinner m-spinner--skin-light m-spinner--right',
 
             input: '#m_quicksearch_input',
