@@ -20,7 +20,7 @@ import java.util.List;
  * Time: 15:25
  */
 @Controller
-@RequestMapping(value = "/index")
+@RequestMapping(value =  {"/","/index"})
 public class HomeController {
 
     @Resource
