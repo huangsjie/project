@@ -14,7 +14,7 @@ public class MachinSet implements Serializable {
 
     private String dicTeaType;
 
-    private String dicTeaGra;
+    private String productId;
 
     private Integer temperature;
 
@@ -80,12 +80,12 @@ public class MachinSet implements Serializable {
         this.dicTeaType = dicTeaType;
     }
 
-    public String getDicTeaGra() {
-        return dicTeaGra;
+    public String getproductId() {
+        return productId;
     }
 
-    public void setDicTeaGra(String dicTeaGra) {
-        this.dicTeaGra = dicTeaGra;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public Integer getTemperature() {

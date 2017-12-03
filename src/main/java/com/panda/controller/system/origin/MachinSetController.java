@@ -57,15 +57,11 @@ public class MachinSetController {
         List<Dictionary> machinType = dictionaryService.selectDictionaryValueList("0b9ed538-29d6-11e5-965c-000c29d7a3a0");//加工类型
         List<Dictionary> teaArrt = dictionaryService.selectDictionaryValueList("31783870-956f-469f-b43e-9fefd905afca");//茶系
         List<Dictionary> machinProcess = dictionaryService.selectDictionaryValueList("1e12732d-246e-11e5-965c-000c29d7a3a0");//工序
-        List<Dictionary> teaType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");//品种
-        List<Dictionary> teaGrade = dictionaryService.selectDictionaryValueList("f63fe4f8-27ab-11e5-965c-000c29d7a3a0");//等级
-        List<Products> productsList = productsService.selectProductsList(map);
+        List<Products> productsList = productsService.selectProductsList(map);//产品
         model.addAttribute("machinType",machinType);
         model.addAttribute("teaArrt",teaArrt);
         model.addAttribute("machinProcess",machinProcess);
-        model.addAttribute("teaGrade",teaGrade);
         model.addAttribute("productsList",productsList);
-        model.addAttribute("teaType",teaType);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
         return "system/origin/getMachinSetList";
@@ -96,8 +92,8 @@ public class MachinSetController {
                 if (status.size() > 0 && status.get("dicMacPro") != ""){
                     query.put("dicMacPro",status.get("dicMacPro"));
                 }
-                if (status.size() > 0 && status.get("dicTeaGra") != ""){
-                    query.put("dicTeaGra",status.get("dicTeaGra"));
+                if (status.size() > 0 && status.get("productId") != ""){
+                    query.put("productId",status.get("productId"));
                 }
             }
             List<Map> machinSetList = machinSetService.selectMachinSetDataList(query);

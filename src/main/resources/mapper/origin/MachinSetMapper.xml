@@ -7,7 +7,7 @@
       <result column="dic_tea_attr" property="dicTeaAttr" jdbcType="VARCHAR" />
       <result column="dic_mac_pro" property="dicMacPro" jdbcType="VARCHAR" />
       <result column="dic_tea_type" property="dicTeaType" jdbcType="VARCHAR" />
-      <result column="dic_tea_gra" property="dicTeaGra" jdbcType="VARCHAR" />
+      <result column="product_id" property="productId" jdbcType="VARCHAR" />
       <result column="temperature" property="temperature" jdbcType="INTEGER" />
       <result column="humidity" property="humidity" jdbcType="INTEGER" />
       <result column="mac_loss" property="macLoss" jdbcType="INTEGER" />
@@ -22,7 +22,7 @@
       <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
     </resultMap>
     <sql id="Base_Column_List" >
-      id, dic_mac_type, dic_tea_attr, dic_mac_pro, dic_tea_type, dic_tea_gra, temperature,
+      id, dic_mac_type, dic_tea_attr, dic_mac_pro, dic_tea_type, product_id, temperature,
       humidity, mac_loss, begin_duration, end_duration, duration_type, status, description,
       create_id, create_time, modify_id, modify_time
     </sql>
@@ -38,14 +38,14 @@
     </delete>
     <insert id="insert" parameterType="com.panda.model.origin.MachinSet" >
       insert into e_machin_set (id, dic_mac_type, dic_tea_attr,
-      dic_mac_pro, dic_tea_type, dic_tea_gra,
+      dic_mac_pro, dic_tea_type, product_id,
       temperature, humidity, mac_loss,
       begin_duration, end_duration, duration_type,
       status, description, create_id,
       create_time, modify_id, modify_time
       )
       values (#{id,jdbcType=VARCHAR}, #{dicMacType,jdbcType=VARCHAR}, #{dicTeaAttr,jdbcType=VARCHAR},
-      #{dicMacPro,jdbcType=VARCHAR}, #{dicTeaType,jdbcType=VARCHAR}, #{dicTeaGra,jdbcType=VARCHAR},
+      #{dicMacPro,jdbcType=VARCHAR}, #{dicTeaType,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR},
       #{temperature,jdbcType=INTEGER}, #{humidity,jdbcType=INTEGER}, #{macLoss,jdbcType=INTEGER},
       #{beginDuration,jdbcType=INTEGER}, #{endDuration,jdbcType=INTEGER}, #{durationType,jdbcType=INTEGER},
       #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR},
@@ -70,8 +70,8 @@
         <if test="dicTeaType != null" >
           dic_tea_type,
         </if>
-        <if test="dicTeaGra != null" >
-          dic_tea_gra,
+        <if test="productId != null" >
+          product_id,
         </if>
         <if test="temperature != null" >
           temperature,
@@ -126,8 +126,8 @@
         <if test="dicTeaType != null" >
           #{dicTeaType,jdbcType=VARCHAR},
         </if>
-        <if test="dicTeaGra != null" >
-          #{dicTeaGra,jdbcType=VARCHAR},
+        <if test="productId != null" >
+          #{productId,jdbcType=VARCHAR},
         </if>
         <if test="temperature != null" >
           #{temperature,jdbcType=INTEGER},
@@ -182,8 +182,8 @@
         <if test="dicTeaType != null" >
           dic_tea_type = #{dicTeaType,jdbcType=VARCHAR},
         </if>
-        <if test="dicTeaGra != null" >
-          dic_tea_gra = #{dicTeaGra,jdbcType=VARCHAR},
+        <if test="productId != null" >
+          product_id = #{productId,jdbcType=VARCHAR},
         </if>
         <if test="temperature != null" >
           temperature = #{temperature,jdbcType=INTEGER},
@@ -230,7 +230,7 @@
       dic_tea_attr = #{dicTeaAttr,jdbcType=VARCHAR},
       dic_mac_pro = #{dicMacPro,jdbcType=VARCHAR},
       dic_tea_type = #{dicTeaType,jdbcType=VARCHAR},
-      dic_tea_gra = #{dicTeaGra,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=VARCHAR},
       temperature = #{temperature,jdbcType=INTEGER},
       humidity = #{humidity,jdbcType=INTEGER},
       mac_loss = #{macLoss,jdbcType=INTEGER},
@@ -260,17 +260,16 @@
     SELECT
         m.id, m.dic_mac_type dicMacType, m.dic_tea_attr dicTeaAttr,
         m.dic_mac_pro dicMacPro, m.dic_tea_type dicTeaType,
-        m.dic_tea_gra dicTeaGra, m.status, m.temperature, m.humidity,
+        m.product_id productId, m.status, m.temperature, m.humidity,
         m.mac_loss, m.begin_duration, m.end_duration, m.duration_type,
         m.create_time, d. name macTypeName, d1. name teaAttrName,
-        d2. name macProName, d3. name teaTypeName, d4. name teaGraName
+        d2. name macProName, d3. name productName
     FROM
         e_machin_set m
         LEFT JOIN s_dictionary d ON m.dic_mac_type = d.id
         LEFT JOIN s_dictionary d1 ON m.dic_tea_attr = d1.id
         LEFT JOIN s_dictionary d2 ON m.dic_mac_pro = d2.id
-        LEFT JOIN s_dictionary d3 ON m.dic_tea_type = d3.id
-        LEFT JOIN s_dictionary d4 ON m.dic_tea_gra = d4.id
+        LEFT JOIN c_products d3 ON m.product_id = d3.id
     WHERE
         1 = 1
         <if test="dicMacType != null and dicMacType != ''">
@@ -285,8 +284,8 @@
         <if test="dicTeaType != null and dicTeaType != ''">
           AND m.dic_tea_type = #{dicTeaType}
         </if>
-        <if test="dicTeaGra != null and dicTeaGra != ''">
-          AND m.dic_tea_gra = #{dicTeaGra}
+        <if test="productId != null and productId != ''">
+          AND m.product_id = #{productId}
         </if>
         <if test="status != null and status != ''">
           AND m.status = #{status}
@@ -300,7 +299,7 @@
     SELECT
         m.id, m.dic_mac_type dicMacType, m.dic_tea_attr dicTeaAttr,
         m.dic_mac_pro dicMacPro, m.dic_tea_type dicTeaType,
-        m.dic_tea_gra dicTeaGra, m.status, m.temperature, m.humidity,
+        m.product_id productId, m.status, m.temperature, m.humidity,
         m.mac_loss, m.begin_duration, m.end_duration, m.duration_type,
         m.create_time, d. name macTypeName, d1. name teaAttrName,
         d2. name macProName, d3. name teaTypeName, d4. name teaGraName
@@ -310,7 +309,7 @@
         LEFT JOIN s_dictionary d1 ON m.dic_tea_attr = d1.id
         LEFT JOIN s_dictionary d2 ON m.dic_mac_pro = d2.id
         LEFT JOIN s_dictionary d3 ON m.dic_tea_type = d3.id
-        LEFT JOIN s_dictionary d4 ON m.dic_tea_gra = d4.id
+        LEFT JOIN s_dictionary d4 ON m.product_id = d4.id
     WHERE
         1 = 1
         AND m.id = #{id}

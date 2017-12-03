@@ -39,6 +39,10 @@ var MachinSet = function () {
                     return row.rowIndex+1;
                 }
             },{
+                field: "productName",
+                title: "产品名称",
+                width: 100
+            },{
                 field: "macTypeName",
                 title: "类型",
                 width: 60
@@ -50,12 +54,7 @@ var MachinSet = function () {
                 field: "macProName",
                 title: "工序",
                 width: 60
-            }, {
-                field: "teaTypeName",
-                title: "品种",
-                overflow: 'hide',
-                width: 60
-            }, {
+            },{
                 field: "mac_loss",
                 title: "损耗",
                 width: 60,
@@ -102,6 +101,12 @@ var MachinSet = function () {
         }
         var datatable = $('.machin_set_list').mDatatable(option);
         var query = datatable.getDataSourceQuery();
+        $('#productId').on('change', function () {
+            var query = datatable.getDataSourceQuery();
+            query.productId = $(this).val();
+            datatable.setDataSourceQuery(query);
+            datatable.load();
+        }).val(typeof query.productId !== 'undefined' ? query.productId : '');
         $('#m_form_search').on('keyup', function (e) {
             var query = datatable.getDataSourceQuery();
             query.generalSearch = $(this).val().toLowerCase();
@@ -130,14 +135,6 @@ var MachinSet = function () {
         $('.datatableRoload').on('click', function () {
             location.reload()
         });
-
-        // $('#dicTeaGra').on('change', function () {
-        //     var query = datatable.getDataSourceQuery();
-        //     query.dicTeaGra = $(this).val();
-        //     datatable.setDataSourceQuery(query);
-        //     datatable.load();
-        // }).val(typeof query.dicTeaGra !== 'undefined' ? query.dicTeaGra : '');
-
         $('.select_selectpicker').selectpicker();
     };
 
@@ -170,7 +167,7 @@ var MachinSet = function () {
                         if(result.message){
                             blockUiClose('.machinSetEditModal .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
-
+                            location.reload()
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }
@@ -198,8 +195,8 @@ var MachinSet = function () {
                             $(".machinSetEditModal [name='dicMacType']").val(result.data.dicMacType)
                             $(".machinSetEditModal [name='dicTeaAttr']").val(result.data.dicTeaAttr)
                             $(".machinSetEditModal [name='dicMacPro']").val(result.data.dicMacPro)
-                            $(".machinSetEditModal [name='dicTeaType']").val(result.data.dicTeaType)
-                            $(".machinSetEditModal [name='durationType']").val(result.data.durationType)
+                            $(".machinSetEditModal [name='productId']").val(result.data.productId)
+                            $(".machinSetEditModal [name='durationType'][value='"+result.data.durationType+"']").click()
                             $(".machinSetEditModal [name='beginDuration']").val(result.data.beginDuration)
                             $(".machinSetEditModal [name='endDuration']").val(result.data.endDuration)
                             $(".machinSetEditModal [name='temperature']").val(result.data.temperature)
@@ -258,8 +255,7 @@ var MachinSet = function () {
         $(".machinSetEditModal [name='dicMacType']").val("")
         $(".machinSetEditModal [name='dicTeaAttr']").val("")
         $(".machinSetEditModal [name='dicMacPro']").val("")
-        $(".machinSetEditModal [name='dicTeaType']").val("")
-        $(".machinSetEditModal [name='durationType']").val("")
+        $(".machinSetEditModal [name='productId']").val("")
         $(".machinSetEditModal [name='beginDuration']").val("")
         $(".machinSetEditModal [name='endDuration']").val("")
         $(".machinSetEditModal [name='temperature']").val("")

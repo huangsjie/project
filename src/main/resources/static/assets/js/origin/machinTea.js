@@ -165,9 +165,9 @@ var MachinTea = function () {
                     $("#machin_tea_edit_form").serialize(),
                     function(result){
                         if(result.message){
-                            blockUiClose('.MachinTeaEditModal .modal-content',1,".close-parent",0);
+                            blockUiClose('.machinTeaEditModal .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
-
+                            location.reload()
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }
@@ -189,22 +189,21 @@ var MachinTea = function () {
                     'get',
                     {id:id},
                     function (result) {
-                        console.log(result)
                         if(result.message){
-                            $(".MachinTeaEditModal [name='id']").val(result.data.id)
-                            $(".MachinTeaEditModal [name='dicMacType']").val(result.data.dicMacType)
-                            $(".MachinTeaEditModal [name='dicTeaAttr']").val(result.data.dicTeaAttr)
-                            $(".MachinTeaEditModal [name='dicMacPro']").val(result.data.dicMacPro)
-                            $(".MachinTeaEditModal [name='dicTeaType']").val(result.data.dicTeaType)
-                            $(".MachinTeaEditModal [name='durationType']").val(result.data.durationType)
-                            $(".MachinTeaEditModal [name='beginDuration']").val(result.data.beginDuration)
-                            $(".MachinTeaEditModal [name='endDuration']").val(result.data.endDuration)
-                            $(".MachinTeaEditModal [name='temperature']").val(result.data.temperature)
-                            $(".MachinTeaEditModal [name='humidity']").val(result.data.humidity)
-                            $(".MachinTeaEditModal [name='macLoss']").val(result.data.macLoss)
-                            $(".MachinTeaEditModal [name='description']").val(result.data.description)
-                            $(".MachinTeaEditModal [name='status']").val(result.data.status)
-                            $(".MachinTeaEditModal [name='processBatchId']").val(result.data.processBatchId)
+                            $("#machin_tea_edit_form [name='id']").val(result.data.id)
+                            $("#machin_tea_edit_form [name='dicMacType']").val(result.data.dicMacType)
+                            $("#machin_tea_edit_form [name='dicTeaAttr']").val(result.data.dicTeaAttr)
+                            $("#machin_tea_edit_form [name='dicMacPro']").val(result.data.dicMacPro)
+                            $("#machin_tea_edit_form [name='dicTeaType']").val(result.data.dicTeaType)
+                            $("#machin_tea_edit_form [name='durationType'][value='"+result.data.durationType+"']").click()
+                            $("#machin_tea_edit_form [name='beginDuration']").val(result.data.beginDuration)
+                            $("#machin_tea_edit_form [name='endDuration']").val(result.data.endDuration)
+                            $("#machin_tea_edit_form [name='temperature']").val(result.data.temperature)
+                            $("#machin_tea_edit_form [name='humidity']").val(result.data.humidity)
+                            $("#machin_tea_edit_form [name='macLoss']").val(result.data.macLoss)
+                            $("#machin_tea_edit_form [name='description']").val(result.data.description)
+                            $("#machin_tea_edit_form [name='status']").val(result.data.status)
+                            $("#machin_tea_edit_form [name='processBatchId']").val(result.data.processBatchId)
                             if(result.data.status == 1){
                                 $('.status_switch').bootstrapSwitch('state',true);
                             }else{
@@ -246,37 +245,38 @@ var MachinTea = function () {
      */
     var removeValue = function(type){
         if(type == 'edit'){
-            $(".MachinTeaEditModal .modal-title").text("编辑记录")
-            $(".MachinTeaEditModal [name='save']").val('edit')
+            console.log(type)
+            $(".machinTeaEditModal .modal-title").text("编辑记录")
+            $(".machinTeaEditModal [name='save']").val('edit')
         }else{
-            $(".MachinTeaEditModal .modal-title").text("新增记录")
-            $(".MachinTeaEditModal [name='save']").val('add');
+            console.log(type)
+            $(".machinTeaEditModal .modal-title").text("新增记录")
+            $(".machinTeaEditModal [name='save']").val('add');
         }
-        $(".MachinTeaEditModal [name='id']").val("")
-        $(".MachinTeaEditModal [name='dicMacType']").val("")
-        $(".MachinTeaEditModal [name='dicTeaAttr']").val("")
-        $(".MachinTeaEditModal [name='dicMacPro']").val("")
-        $(".MachinTeaEditModal [name='dicTeaType']").val("")
-        $(".MachinTeaEditModal [name='durationType']").val("")
-        $(".MachinTeaEditModal [name='beginDuration']").val("")
-        $(".MachinTeaEditModal [name='endDuration']").val("")
-        $(".MachinTeaEditModal [name='temperature']").val("")
-        $(".MachinTeaEditModal [name='humidity']").val("")
-        $(".MachinTeaEditModal [name='macLoss']").val("")
-        $(".MachinTeaEditModal [name='description']").val("")
-        $(".MachinTeaEditModal [name='status']").val(2)
-        $(".MachinTeaEditModal [name='processBatchId']").val("")
+        $(".machinTeaEditModal [name='id']").val("")
+        $(".machinTeaEditModal [name='dicMacType']").val("")
+        $(".machinTeaEditModal [name='dicTeaAttr']").val("")
+        $(".machinTeaEditModal [name='dicMacPro']").val("")
+        $(".machinTeaEditModal [name='dicTeaType']").val("")
+        $(".machinTeaEditModal [name='beginDuration']").val("")
+        $(".machinTeaEditModal [name='endDuration']").val("")
+        $(".machinTeaEditModal [name='temperature']").val("")
+        $(".machinTeaEditModal [name='humidity']").val("")
+        $(".machinTeaEditModal [name='macLoss']").val("")
+        $(".machinTeaEditModal [name='description']").val("")
+        $(".machinTeaEditModal [name='status']").val(2)
+        $(".machinTeaEditModal [name='processBatchId']").val("")
         $('.status_switch').bootstrapSwitch('state',false);
-        $(".MachinTeaEditModal .form-control-feedback").remove()
-        $(".MachinTeaEditModal div").removeClass("has-danger")
-        $(".MachinTeaEditModal div").removeClass("has-success")
+        $(".machinTeaEditModal .form-control-feedback").remove()
+        $(".machinTeaEditModal div").removeClass("has-danger")
+        $(".machinTeaEditModal div").removeClass("has-success")
     }
 
     /**
      * 新增重置表单初始值
      */
     var addMachinTeaItem = function () {
-        $(".addMachinTeaItem").on('click',function(){
+        $(".addmachinTeaItem").on('click',function(){
             removeValue('add')
         })
     }
