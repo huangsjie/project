@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-12-03 18:17:55
+Date: 2017-12-03 23:21:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -257,7 +257,7 @@ CREATE TABLE `e_machin_tea` (
   `dic_mac_pro` varchar(36) NOT NULL COMMENT '工序ID',
   `dic_tea_type` varchar(36) DEFAULT NULL COMMENT '材料品种（茶叶）',
   `product_id` varchar(36) DEFAULT NULL COMMENT '等级-(目前存的是产品类型)',
-  `process_batch_id` varchar(36) DEFAULT NULL,
+  `process_batch_id` varchar(36) DEFAULT NULL COMMENT '批次号',
   `temperature` int(3) DEFAULT NULL COMMENT '温度',
   `humidity` int(2) DEFAULT NULL COMMENT '湿度',
   `mac_loss` int(2) DEFAULT NULL COMMENT '损耗',
@@ -271,7 +271,8 @@ CREATE TABLE `e_machin_tea` (
   `modify_id` varchar(36) DEFAULT NULL COMMENT '修改人',
   `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`) USING BTREE
+  UNIQUE KEY `id` (`id`) USING BTREE,
+  UNIQUE KEY `process_batch_id` (`process_batch_id`,`dic_mac_type`,`dic_mac_pro`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
