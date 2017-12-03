@@ -302,6 +302,7 @@ var MachinTea = function () {
                 $(".dicMacPro").addClass("has-danger");
                 return false;
             }
+            $(".machinTeaEditModal div").removeClass("has-danger")
             blockUiOpen('#modalBloukUi');
             request(
                 "getMachinSetData",
@@ -318,6 +319,8 @@ var MachinTea = function () {
                         $("#machin_tea_edit_form [name='macLoss']").val(result.data.mac_loss)
                         $("#machin_tea_edit_form [name='description']").val(result.data.description)
                         $("#machin_tea_edit_form [name='status']").val(result.data.status)
+                        $("#machin_tea_edit_form [name='beginTime']").val(result.data.beginTime)
+                        $("#machin_tea_edit_form [name='endTime']").val(result.data.endTime)
                         blockUiClose('#modalBloukUi',0,".close-parent",0);
                     }else{
                         ToastrMsg(result.data,"error","topRight",'#modalBloukUi');
@@ -363,7 +366,8 @@ var MachinTea = function () {
 jQuery(document).ready(function () {
     $('.status_switch').bootstrapSwitch({
         onText:'自动',
-        offText:'手动'
+        offText:'手动',
+        handleWidth:'60'
     });
     MachinTea.init();
     $('.status_switch').on('switchChange.bootstrapSwitch', function (event,state) {

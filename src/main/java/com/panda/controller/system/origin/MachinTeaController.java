@@ -9,6 +9,7 @@ import com.panda.service.commodity.ProductsService;
 import com.panda.service.origin.MachinTeaService;
 import com.panda.service.origin.ProcessBatchService;
 import com.panda.service.system.DictionaryService;
+import com.panda.util.DateUtil;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
 import org.apache.shiro.SecurityUtils;
@@ -151,6 +152,20 @@ public class MachinTeaController {
                 query.put("processBatchId",processBatchId);
                 Map machinSet = processBatchService.selectProcessBatchBundMachinSetData(query);
                 if (machinSet != null && machinSet.size() > 0){
+                    //1分，2时，3天
+                    int durationType = machinSet.get("duration_type")==null ? 0 :(Integer) machinSet.get("duration_type");
+                    int begin_time   = machinSet.get("begin_duration")==null ? 0 :(Integer) machinSet.get("begin_duration");
+                    int end_time     = machinSet.get("end_duration")==null ? 0 :(Integer) machinSet.get("begin_duration");
+                    if (end_time > begin_time){
+                        machinSet.put("endTime",DateUtil.nowTimeAddMinuteOrHourOrDay(new Date(),durationType,end_time));
+                        machinSet.put("beginTime",DateUtil.nowTimeAddMinuteOrHourOrDay(new Date(),durationType,begin_time));
+                    }else if (begin_time == end_time){
+                        machinSet.put("beginTime",DateUtil.nowTimeAddMinuteOrHourOrDay(new Date(),0,0));
+                        machinSet.put("endTime",DateUtil.nowTimeAddMinuteOrHourOrDay(new Date(),durationType,end_time));
+                    }else{
+                        machinSet.put("endTime",DateUtil.nowTimeAddMinuteOrHourOrDay(new Date(),durationType,begin_time));
+                        machinSet.put("beginTime",DateUtil.nowTimeAddMinuteOrHourOrDay(new Date(),durationType,end_time));
+                    }
                     message = true;
                     data    = machinSet;
                 }else{
@@ -197,6 +212,8 @@ public class MachinTeaController {
 
     /**
      * 保存和编辑加工设置数据
+     * 注意新增时 数据库使用了联合唯一索引,防止重复添加操作工序
+     * alter ignore table e_machin_tea add unique index(process_batch_id, dic_mac_type, dic_mac_pro)
      * @param request
      * @param machinTea
      * @param save
@@ -234,7 +251,7 @@ public class MachinTeaController {
             }
         }catch (Exception e){
             e.printStackTrace();
-            data  = ResultStateUtil.ERROR_DATABASE_OPERATION;
+            data  = ResultStateUtil.ERROR_DATABASE_OPERATION+"或工序重复.";
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
