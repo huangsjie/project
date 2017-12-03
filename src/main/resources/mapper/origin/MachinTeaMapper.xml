@@ -12,9 +12,9 @@
     <result column="temperature" jdbcType="INTEGER" property="temperature" />
     <result column="humidity" jdbcType="INTEGER" property="humidity" />
     <result column="mac_loss" jdbcType="INTEGER" property="macLoss" />
-    <result column="begin_duration" jdbcType="INTEGER" property="beginDuration" />
-    <result column="end_duration" jdbcType="INTEGER" property="endDuration" />
-    <result column="duration_type" jdbcType="INTEGER" property="durationType" />
+    <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="machin_status" jdbcType="INTEGER" property="machinStatus" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="create_id" jdbcType="VARCHAR" property="createId" />
@@ -24,8 +24,8 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, dic_mac_type, dic_tea_attr, dic_mac_pro, dic_tea_type, product_id, process_batch_id, 
-    temperature, humidity, mac_loss, begin_duration, end_duration, duration_type, status, 
-    description, create_id, create_time, modify_id, modify_time
+    temperature, humidity, mac_loss, begin_time, end_time, machin_status, status, description, 
+    create_id, create_time, modify_id, modify_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -41,15 +41,15 @@
     insert into e_machin_tea (id, dic_mac_type, dic_tea_attr, 
       dic_mac_pro, dic_tea_type, product_id, 
       process_batch_id, temperature, humidity, 
-      mac_loss, begin_duration, end_duration, 
-      duration_type, status, description, 
+      mac_loss, begin_time, end_time, 
+      machin_status, status, description, 
       create_id, create_time, modify_id, 
       modify_time)
     values (#{id,jdbcType=VARCHAR}, #{dicMacType,jdbcType=VARCHAR}, #{dicTeaAttr,jdbcType=VARCHAR}, 
       #{dicMacPro,jdbcType=VARCHAR}, #{dicTeaType,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, 
       #{processBatchId,jdbcType=VARCHAR}, #{temperature,jdbcType=INTEGER}, #{humidity,jdbcType=INTEGER}, 
-      #{macLoss,jdbcType=INTEGER}, #{beginDuration,jdbcType=INTEGER}, #{endDuration,jdbcType=INTEGER}, 
-      #{durationType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
+      #{macLoss,jdbcType=INTEGER}, #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{machinStatus,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
       #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=TIMESTAMP})
   </insert>
@@ -86,14 +86,14 @@
       <if test="macLoss != null">
         mac_loss,
       </if>
-      <if test="beginDuration != null">
-        begin_duration,
+      <if test="beginTime != null">
+        begin_time,
       </if>
-      <if test="endDuration != null">
-        end_duration,
+      <if test="endTime != null">
+        end_time,
       </if>
-      <if test="durationType != null">
-        duration_type,
+      <if test="machinStatus != null">
+        machin_status,
       </if>
       <if test="status != null">
         status,
@@ -145,14 +145,14 @@
       <if test="macLoss != null">
         #{macLoss,jdbcType=INTEGER},
       </if>
-      <if test="beginDuration != null">
-        #{beginDuration,jdbcType=INTEGER},
+      <if test="beginTime != null">
+        #{beginTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="endDuration != null">
-        #{endDuration,jdbcType=INTEGER},
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="durationType != null">
-        #{durationType,jdbcType=INTEGER},
+      <if test="machinStatus != null">
+        #{machinStatus,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -204,14 +204,14 @@
       <if test="macLoss != null">
         mac_loss = #{macLoss,jdbcType=INTEGER},
       </if>
-      <if test="beginDuration != null">
-        begin_duration = #{beginDuration,jdbcType=INTEGER},
+      <if test="beginTime != null">
+        begin_time = #{beginTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="endDuration != null">
-        end_duration = #{endDuration,jdbcType=INTEGER},
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="durationType != null">
-        duration_type = #{durationType,jdbcType=INTEGER},
+      <if test="machinStatus != null">
+        machin_status = #{machinStatus,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
@@ -245,9 +245,9 @@
       temperature = #{temperature,jdbcType=INTEGER},
       humidity = #{humidity,jdbcType=INTEGER},
       mac_loss = #{macLoss,jdbcType=INTEGER},
-      begin_duration = #{beginDuration,jdbcType=INTEGER},
-      end_duration = #{endDuration,jdbcType=INTEGER},
-      duration_type = #{durationType,jdbcType=INTEGER},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      machin_status = #{machinStatus,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR},
       create_id = #{createId,jdbcType=VARCHAR},
@@ -256,7 +256,6 @@
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-
   <!-- 查询所有的设置记录返回 List列表 无入参 -->
   <select id="selectAll" resultMap="BaseResultMap">
     select
@@ -267,12 +266,12 @@
   <!-- 查询所有的设置记录返回 List列表 无入参 -->
 
   <!-- 查询所有的设置记录返回 List列表 -->
-  <select id="selectMachinTeaDataList" resultType="map" parameterType="map">
+  <select id="selectMachinTeaDataList" parameterType="map" resultType="map">
     SELECT
     m.id, m.dic_mac_type dicMacType, m.dic_tea_attr dicTeaAttr,
     m.dic_mac_pro dicMacPro, m.dic_tea_type dicTeaType,
     m.process_batch_id processBatchId, m.product_id productId,m.status, m.temperature, m.humidity,
-    m.mac_loss, m.begin_duration, m.end_duration, m.duration_type,
+    m.mac_loss, m.begin_time, m.end_time, m.machin_status,
     m.create_time, d.name macTypeName, d1.name teaAttrName,
     d2.name macProName, d3.name teaTypeName, p.batch_number batchNumber,r.name productName
     FROM
@@ -311,12 +310,12 @@
   <!-- 查询所有的设置记录返回 List列表 -->
 
   <!-- 查询一条设置记录 -->
-  <select id="selectMachinTeaDataByOne" resultType="map" parameterType="map">
+  <select id="selectMachinTeaDataByOne" parameterType="map" resultType="map">
     SELECT
     m.id, m.dic_mac_type dicMacType, m.dic_tea_attr dicTeaAttr,
     m.dic_mac_pro dicMacPro, m.dic_tea_type dicTeaType,
     m.process_batch_id processBatchId, m.product_id productId,m.status, m.temperature, m.humidity,
-    m.mac_loss, m.begin_duration, m.end_duration, m.duration_type,
+    m.mac_loss, m.begin_time, m.end_time, m.machin_status,
     m.create_time, d. name macTypeName, d1. name teaAttrName,
     d2. name macProName, d3. name teaTypeName, p. batch_number batchNumber,r.name productName
     FROM

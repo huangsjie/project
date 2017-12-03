@@ -3,7 +3,7 @@ package com.panda.model.origin;
 import java.io.Serializable;
 import java.util.Date;
 
-public class MachinTea implements Serializable {
+public class MachinTea implements Serializable{
     private String id;
 
     private String dicMacType;
@@ -24,11 +24,11 @@ public class MachinTea implements Serializable {
 
     private Integer macLoss;
 
-    private Integer beginDuration;
+    private Date beginTime;
 
-    private Integer endDuration;
+    private Date endTime;
 
-    private Integer durationType;
+    private Integer machinStatus;
 
     private Integer status;
 
@@ -122,28 +122,28 @@ public class MachinTea implements Serializable {
         this.macLoss = macLoss;
     }
 
-    public Integer getBeginDuration() {
-        return beginDuration;
+    public Date getBeginTime() {
+        return beginTime;
     }
 
-    public void setBeginDuration(Integer beginDuration) {
-        this.beginDuration = beginDuration;
+    public void setBeginTime(Date beginTime) {
+        this.beginTime = beginTime;
     }
 
-    public Integer getEndDuration() {
-        return endDuration;
+    public Date getEndTime() {
+        return endTime;
     }
 
-    public void setEndDuration(Integer endDuration) {
-        this.endDuration = endDuration;
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
-    public Integer getDurationType() {
-        return durationType;
+    public Integer getMachinStatus() {
+        return machinStatus;
     }
 
-    public void setDurationType(Integer durationType) {
-        this.durationType = durationType;
+    public void setMachinStatus(Integer machinStatus) {
+        this.machinStatus = machinStatus;
     }
 
     public Integer getStatus() {

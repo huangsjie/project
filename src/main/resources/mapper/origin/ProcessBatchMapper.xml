@@ -169,4 +169,24 @@
     ORDER BY p.create_time ASC
   </select>
 
+  <select id="selectProcessBatchBundMachinSetData" parameterType="map" resultType="map">
+    SELECT l.*,d. name macTypeName, d1. name teaAttrName,
+            d2. name macProName, d3. name teaTypeName, d4. name productName
+      FROM (
+        SELECT
+            me.*
+        FROM
+            e_process_batch p , e_machin_set me
+        WHERE
+            p.id = #{processBatchId}
+            AND p.product_id = me.product_id
+            AND me.dic_mac_pro = #{dicMacPro}
+            AND me.dic_mac_type = #{dicMacType}
+    )l
+    LEFT JOIN s_dictionary d ON l.dic_mac_type = d.id
+    LEFT JOIN s_dictionary d1 ON l.dic_tea_attr = d1.id
+    LEFT JOIN s_dictionary d2 ON l.dic_mac_pro = d2.id
+    LEFT JOIN s_dictionary d3 ON l.dic_tea_type = d3.id
+    LEFT JOIN c_products d4 ON l.product_id = d4.id
+  </select>
   </mapper>

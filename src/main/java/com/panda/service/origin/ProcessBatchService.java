@@ -14,4 +14,11 @@ public interface ProcessBatchService extends AbstractService<ProcessBatch> {
      * @return
      */
     List<Map> selectProcessBatchList(Map map);
+
+    /**
+     * 获取加工批次绑定的产品和加工流程
+     * @param map
+     * @return
+     */
+    Map selectProcessBatchBundMachinSetData(Map map);
 }

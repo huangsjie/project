@@ -132,7 +132,7 @@
     from c_products
     where 1 = 1
   </select>
-
+  <!-- 获取产品信息列表 -->
   <select id="selectProductsList" resultMap="BaseResultMap" parameterType="map">
     select
     <include refid="Base_Column_List" />
@@ -142,5 +142,5 @@
       and status = #{status}
     </if>
   </select>
-
+  <!-- 获取产品信息列表 -->
 </mapper>

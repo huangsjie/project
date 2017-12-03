@@ -146,6 +146,7 @@ var MachinSet = function () {
     var machinSetEditForm = function () {
         $( "#machin_set_edit_form" ).validate({
             rules: {
+                productId: {required: true},
                 dicMacType: {required: true},
                 dicTeaAttr: {required: true},
                 dicMacPro: { required: true},
@@ -196,6 +197,7 @@ var MachinSet = function () {
                             $(".machinSetEditModal [name='dicTeaAttr']").val(result.data.dicTeaAttr)
                             $(".machinSetEditModal [name='dicMacPro']").val(result.data.dicMacPro)
                             $(".machinSetEditModal [name='productId']").val(result.data.productId)
+                            $(".machinSetEditModal [name='dicTeaType']").val(result.data.dicTeaType)
                             $(".machinSetEditModal [name='durationType'][value='"+result.data.durationType+"']").click()
                             $(".machinSetEditModal [name='beginDuration']").val(result.data.beginDuration)
                             $(".machinSetEditModal [name='endDuration']").val(result.data.endDuration)
@@ -245,10 +247,10 @@ var MachinSet = function () {
      */
     var removeValue = function(type){
         if(type == 'edit'){
-            $(".machinSetEditModal .modal-title").text("编辑记录")
+            $(".machinSetEditModal .modal-title").text("编辑工序")
             $(".machinSetEditModal [name='save']").val('edit')
         }else{
-            $(".machinSetEditModal .modal-title").text("新增记录")
+            $(".machinSetEditModal .modal-title").text("新增工序")
             $(".machinSetEditModal [name='save']").val('add');
         }
         $(".machinSetEditModal [name='id']").val("")

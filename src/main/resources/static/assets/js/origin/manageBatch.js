@@ -75,7 +75,7 @@ var manageBatch = function () {
         $( "#manage_batch_edit_form" ).validate({
             rules: {
                 teaGardenId:{required: true,},
-                batchNumber:{required: true,},
+                batchNumber:{required: true,account: true},
             },
             submitHandler: function (form){
                 blockUiOpen('.manageBatchEdit .modal-content');

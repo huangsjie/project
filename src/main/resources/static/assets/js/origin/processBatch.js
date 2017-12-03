@@ -77,7 +77,7 @@ var processBatch = function () {
         $( "#process_batch_edit_form" ).validate({
             rules: {
                 manageBatchId:{required: true,},
-                batchNumber:{required: true,},
+                batchNumber:{required: true,account: true},
             },
 
             submitHandler: function (form){

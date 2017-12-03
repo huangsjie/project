@@ -263,13 +263,14 @@
         m.product_id productId, m.status, m.temperature, m.humidity,
         m.mac_loss, m.begin_duration, m.end_duration, m.duration_type,
         m.create_time, d. name macTypeName, d1. name teaAttrName,
-        d2. name macProName, d3. name productName
+        d2. name macProName, d3. name teaTypeName, d4. name productName
     FROM
         e_machin_set m
         LEFT JOIN s_dictionary d ON m.dic_mac_type = d.id
         LEFT JOIN s_dictionary d1 ON m.dic_tea_attr = d1.id
         LEFT JOIN s_dictionary d2 ON m.dic_mac_pro = d2.id
-        LEFT JOIN c_products d3 ON m.product_id = d3.id
+        LEFT JOIN s_dictionary d3 ON m.dic_tea_type = d3.id
+        LEFT JOIN c_products d4 ON m.product_id = d4.id
     WHERE
         1 = 1
         <if test="dicMacType != null and dicMacType != ''">
@@ -301,15 +302,10 @@
         m.dic_mac_pro dicMacPro, m.dic_tea_type dicTeaType,
         m.product_id productId, m.status, m.temperature, m.humidity,
         m.mac_loss, m.begin_duration, m.end_duration, m.duration_type,
-        m.create_time, d. name macTypeName, d1. name teaAttrName,
-        d2. name macProName, d3. name teaTypeName, d4. name teaGraName
+        m.create_time
     FROM
         e_machin_set m
-        LEFT JOIN s_dictionary d ON m.dic_mac_type = d.id
-        LEFT JOIN s_dictionary d1 ON m.dic_tea_attr = d1.id
-        LEFT JOIN s_dictionary d2 ON m.dic_mac_pro = d2.id
-        LEFT JOIN s_dictionary d3 ON m.dic_tea_type = d3.id
-        LEFT JOIN s_dictionary d4 ON m.product_id = d4.id
+
     WHERE
         1 = 1
         AND m.id = #{id}

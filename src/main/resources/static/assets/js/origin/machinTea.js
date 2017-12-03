@@ -75,11 +75,11 @@ var MachinTea = function () {
                     return row.humidity+" %RH";
                 }
             },{
-                field: "status",
+                field: "machinStatus",
                 title: "状态",
                 width: 60,
                 template: function (row) {
-                    return '<span class="m-badge ' + status[row.status].class + ' m-badge--wide">' + status[row.status].title + '</span>';
+                    return '<span class="m-badge ' + status[row.machin_status].class + ' m-badge--wide">' + status[row.machin_status].title + '</span>';
                 }
             },{
                 field: "create_time",
@@ -146,12 +146,13 @@ var MachinTea = function () {
     var MachinTeaEditForm = function () {
         $( "#machin_tea_edit_form" ).validate({
             rules: {
+                processBatchId: {required: true},
                 dicMacType: {required: true},
                 dicTeaAttr: {required: true},
                 dicMacPro: { required: true},
-                durationType: {required: true},
-                beginDuration: {digits:true,maxlength:2},
-                endDuration: {required: true,digits:true,maxlength:2},
+                machinStatus: {required: true},
+                beginTime: {required:true},
+                endTime: {required: true},
                 temperature: {digits:true,maxlength:3},
                 humidity: {digits:true,maxlength:2},
                 macLoss: {digits:true,maxlength:2},
@@ -165,7 +166,7 @@ var MachinTea = function () {
                     $("#machin_tea_edit_form").serialize(),
                     function(result){
                         if(result.message){
-                            blockUiClose('.machinTeaEditModal .modal-content',1,".close-parent",0);
+                            blockUiClose('#machin_tea_edit_form .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
                             location.reload()
                         }else{
@@ -195,9 +196,9 @@ var MachinTea = function () {
                             $("#machin_tea_edit_form [name='dicTeaAttr']").val(result.data.dicTeaAttr)
                             $("#machin_tea_edit_form [name='dicMacPro']").val(result.data.dicMacPro)
                             $("#machin_tea_edit_form [name='dicTeaType']").val(result.data.dicTeaType)
-                            $("#machin_tea_edit_form [name='durationType'][value='"+result.data.durationType+"']").click()
-                            $("#machin_tea_edit_form [name='beginDuration']").val(result.data.beginDuration)
-                            $("#machin_tea_edit_form [name='endDuration']").val(result.data.endDuration)
+                            $("#machin_tea_edit_form [name='machinStatus'][value='"+result.data.machinStatus+"']").click()
+                            $("#machin_tea_edit_form [name='beginTime']").val(result.data.beginTime)
+                            $("#machin_tea_edit_form [name='endTime']").val(result.data.endTime)
                             $("#machin_tea_edit_form [name='temperature']").val(result.data.temperature)
                             $("#machin_tea_edit_form [name='humidity']").val(result.data.humidity)
                             $("#machin_tea_edit_form [name='macLoss']").val(result.data.macLoss)
@@ -246,11 +247,11 @@ var MachinTea = function () {
     var removeValue = function(type){
         if(type == 'edit'){
             console.log(type)
-            $(".machinTeaEditModal .modal-title").text("编辑记录")
+            $(".machinTeaEditModal .modal-title").text("编辑加工记录")
             $(".machinTeaEditModal [name='save']").val('edit')
         }else{
             console.log(type)
-            $(".machinTeaEditModal .modal-title").text("新增记录")
+            $(".machinTeaEditModal .modal-title").text("新增加工记录")
             $(".machinTeaEditModal [name='save']").val('add');
         }
         $(".machinTeaEditModal [name='id']").val("")
@@ -258,8 +259,8 @@ var MachinTea = function () {
         $(".machinTeaEditModal [name='dicTeaAttr']").val("")
         $(".machinTeaEditModal [name='dicMacPro']").val("")
         $(".machinTeaEditModal [name='dicTeaType']").val("")
-        $(".machinTeaEditModal [name='beginDuration']").val("")
-        $(".machinTeaEditModal [name='endDuration']").val("")
+        $(".machinTeaEditModal [name='beginTime']").val("")
+        $(".machinTeaEditModal [name='endTime']").val("")
         $(".machinTeaEditModal [name='temperature']").val("")
         $(".machinTeaEditModal [name='humidity']").val("")
         $(".machinTeaEditModal [name='macLoss']").val("")
@@ -282,25 +283,67 @@ var MachinTea = function () {
     }
 
     /**
+     * 获取加工设置数据
+     */
+    var getMachinSetData = function () {
+        $(".machinTeaEditModal .getMachinSetData").on("change",function () {
+            var dicMacPro = $(".machinTeaEditModal #dicMacPro").val(),//加工工序
+                dicMacType = $(".machinTeaEditModal #dicMacType").val(),//加工类型
+                processBatchId = $(".machinTeaEditModal #processBatchId").val();//加工批次Id
+            if(processBatchId == ""){
+                $(".processBatchId").addClass("has-danger");
+                return false;
+            }
+            if(dicMacType == ""){
+                $(".dicMacType").addClass("has-danger");
+                return false;
+            }
+            if(dicMacPro == ""){
+                $(".dicMacPro").addClass("has-danger");
+                return false;
+            }
+            blockUiOpen('#modalBloukUi');
+            request(
+                "getMachinSetData",
+                'get',
+                {dicMacPro:dicMacPro,dicMacType:dicMacType,processBatchId:processBatchId},
+                function (result) {
+                    if(result.message){
+                        $("#machin_tea_edit_form [name='dicTeaAttr']").val(result.data.dic_tea_attr)
+                        $("#machin_tea_edit_form [name='dicTeaType']").val(result.data.dic_tea_type)
+                        $("#machin_tea_edit_form [name='beginTime']").val(result.data.beginTime)
+                        $("#machin_tea_edit_form [name='endTime']").val(result.data.endTime)
+                        $("#machin_tea_edit_form [name='temperature']").val(result.data.temperature)
+                        $("#machin_tea_edit_form [name='humidity']").val(result.data.humidity)
+                        $("#machin_tea_edit_form [name='macLoss']").val(result.data.mac_loss)
+                        $("#machin_tea_edit_form [name='description']").val(result.data.description)
+                        $("#machin_tea_edit_form [name='status']").val(result.data.status)
+                        blockUiClose('#modalBloukUi',0,".close-parent",0);
+                    }else{
+                        ToastrMsg(result.data,"error","topRight",'#modalBloukUi');
+                    }
+                })
+        })
+    }
+
+    /**
      * bootstrap datetimepicker 插件
      * 输入时间请先了解单个参数
      */
     var datetimepickerSelect = function () {
-        $('.datetimepicker_select').datetimepicker({
+        $('.beginTime').datetimepicker({
             todayHighlight: false,
             autoclose: true,
-            startView: 4,
-            minView: 4,
             sideBySide: false,
-            pickerPosition: 'bottom-left',
-            format: 'yyyy'
+            pickerPosition: 'top-right',
+            format: 'yyyy-mm-dd hh:mm:ss'
         });
 
-        $('.begin_time').datetimepicker({
+        $('.endTime').datetimepicker({
             todayHighlight: false,
             autoclose: true,
             sideBySide: false,
-            pickerPosition: 'top-left',
+            pickerPosition: 'top-right',
             format: 'yyyy-mm-dd hh:mm:ss'
         });
     }
@@ -312,11 +355,16 @@ var MachinTea = function () {
             MachinTeaEditForm();
             addMachinTeaItem();
             delMachinTeaItem();
+            getMachinSetData();
+            datetimepickerSelect();
         }
     };
 }();
 jQuery(document).ready(function () {
-    $('.status_switch').bootstrapSwitch();
+    $('.status_switch').bootstrapSwitch({
+        onText:'自动',
+        offText:'手动'
+    });
     MachinTea.init();
     $('.status_switch').on('switchChange.bootstrapSwitch', function (event,state) {
         if(state==true){

@@ -13,14 +13,19 @@ import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -40,13 +45,23 @@ public class MachinTeaController {
     private MachinTeaService machinTeaService;
 
     @Resource
-    private ProductsService productsService;
-
-    @Resource
     private ProcessBatchService processBatchService;
 
     private static boolean message = false;
     private static Object  data    = null;
+
+    /**
+     * bootstart  date 注解 格式化页面上传过来的 String 日期
+     * @param request
+     * @param binder
+     * @throws
+     */
+    @InitBinder
+    protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        CustomDateEditor dateEditor = new CustomDateEditor(fmt, true);
+        binder.registerCustomEditor(Date.class, dateEditor);
+    }
 
     /**
      * 获取加工设置数据
@@ -115,6 +130,42 @@ public class MachinTeaController {
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
+
+    /**
+     * 获取加工批次绑定的产品和加工流程
+     * @param dicMacPro
+     * @param dicMacType
+     * @param processBatchId
+     * @return
+     */
+    @RequestMapping(value = "/getMachinSetData", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getMachinSetData(String dicMacPro, String dicMacType, String processBatchId){
+        message = false;
+        data    = null;
+        try {
+            if (!dicMacPro.isEmpty() && !dicMacType.isEmpty() && !processBatchId.isEmpty()){
+                Map query = new HashMap();
+                query.put("dicMacPro",dicMacPro);
+                query.put("dicMacType",dicMacType);
+                query.put("processBatchId",processBatchId);
+                Map machinSet = processBatchService.selectProcessBatchBundMachinSetData(query);
+                if (machinSet != null && machinSet.size() > 0){
+                    message = true;
+                    data    = machinSet;
+                }else{
+                    data    = "未设置的产品组合.";
+                }
+            }else{
+                data    = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            data    = ResultStateUtil.ERROR_QUERY+", 未设置的组合";
+        }
+        return ResultMsgUtil.getResultMsg(message,data);
+    }
+
 
     /**
      * Ajax 获取当前编辑项的内容

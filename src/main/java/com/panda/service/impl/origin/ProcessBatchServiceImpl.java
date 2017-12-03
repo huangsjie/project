@@ -31,4 +31,13 @@ public class ProcessBatchServiceImpl extends AbstractServiceImpl<ProcessBatch> i
         return processBatchMapper.selectProcessBatchList(map);
     }
 
+    /**
+     * 获取加工批次绑定的产品和加工流程
+     * @param map
+     * @return
+     */
+    @Override
+    public Map selectProcessBatchBundMachinSetData(Map map){
+        return processBatchMapper.selectProcessBatchBundMachinSetData(map);
+    }
 }
