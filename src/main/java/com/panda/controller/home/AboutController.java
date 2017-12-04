@@ -50,6 +50,6 @@ public class AboutController {
             e.printStackTrace();
             logger.error("------->selectManagerRoleMenuList"+e.getMessage());
         }
-        return "home/index/products";
+        return "home/index/about";
     }
 }
