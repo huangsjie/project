@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.panda.mapper.origin.QualityMapper" >
+  <resultMap id="BaseResultMap" type="com.panda.model.origin.Quality" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="sampling_id" property="samplingId" jdbcType="VARCHAR" />
+    <result column="process_batch_id" property="processBatchId" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="sampling_number" property="samplingNumber" jdbcType="INTEGER" />
+    <result column="sampling_time" property="samplingTime" jdbcType="TIMESTAMP" />
+    <result column="machin_status" property="machinStatus" jdbcType="TIMESTAMP" />
+    <result column="machin_end" property="machinEnd" jdbcType="TIMESTAMP" />
+    <result column="dic_tea_grade" property="dicTeaGrade" jdbcType="VARCHAR" />
+    <result column="dic_quality_type" property="dicQualityType" jdbcType="VARCHAR" />
+    <result column="verify_quality" property="verifyQuality" jdbcType="INTEGER" />
+    <result column="verify_user" property="verifyUser" jdbcType="VARCHAR" />
+    <result column="verify_time" property="verifyTime" jdbcType="TIMESTAMP" />
+    <result column="quality_status" property="qualityStatus" jdbcType="INTEGER" />
+    <result column="quality_user" property="qualityUser" jdbcType="VARCHAR" />
+    <result column="quality_time" property="qualityTime" jdbcType="TIMESTAMP" />
+    <result column="net_content" property="netContent" jdbcType="VARCHAR" />
+    <result column="tea_crumble" property="teaCrumble" jdbcType="VARCHAR" />
+    <result column="water_content" property="waterContent" jdbcType="VARCHAR" />
+    <result column="quality_cable" property="qualityCable" jdbcType="VARCHAR" />
+    <result column="quality_color_lustre" property="qualityColorLustre" jdbcType="VARCHAR" />
+    <result column="quality_cleanliness" property="qualityCleanliness" jdbcType="VARCHAR" />
+    <result column="quality_aroma" property="qualityAroma" jdbcType="VARCHAR" />
+    <result column="quality_taste" property="qualityTaste" jdbcType="VARCHAR" />
+    <result column="quality_colour" property="qualityColour" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_id" property="modifyId" jdbcType="VARCHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sampling_id, process_batch_id, product_id, sampling_number, sampling_time, machin_status, 
+    machin_end, dic_tea_grade, dic_quality_type, verify_quality, verify_user, verify_time, 
+    quality_status, quality_user, quality_time, net_content, tea_crumble, water_content, 
+    quality_cable, quality_color_lustre, quality_cleanliness, quality_aroma, quality_taste, 
+    quality_colour, create_id, create_time, modify_id, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from e_quality
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from e_quality
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.panda.model.origin.Quality" >
+    insert into e_quality (id, sampling_id, process_batch_id, 
+      product_id, sampling_number, sampling_time, 
+      machin_status, machin_end, dic_tea_grade, 
+      dic_quality_type, verify_quality, verify_user, 
+      verify_time, quality_status, quality_user, 
+      quality_time, net_content, tea_crumble, 
+      water_content, quality_cable, quality_color_lustre, 
+      quality_cleanliness, quality_aroma, quality_taste, 
+      quality_colour, create_id, create_time, 
+      modify_id, modify_time)
+    values (#{id,jdbcType=VARCHAR}, #{samplingId,jdbcType=VARCHAR}, #{processBatchId,jdbcType=VARCHAR}, 
+      #{productId,jdbcType=VARCHAR}, #{samplingNumber,jdbcType=INTEGER}, #{samplingTime,jdbcType=TIMESTAMP}, 
+      #{machinStatus,jdbcType=TIMESTAMP}, #{machinEnd,jdbcType=TIMESTAMP}, #{dicTeaGrade,jdbcType=VARCHAR}, 
+      #{dicQualityType,jdbcType=VARCHAR}, #{verifyQuality,jdbcType=INTEGER}, #{verifyUser,jdbcType=VARCHAR}, 
+      #{verifyTime,jdbcType=TIMESTAMP}, #{qualityStatus,jdbcType=INTEGER}, #{qualityUser,jdbcType=VARCHAR}, 
+      #{qualityTime,jdbcType=TIMESTAMP}, #{netContent,jdbcType=VARCHAR}, #{teaCrumble,jdbcType=VARCHAR}, 
+      #{waterContent,jdbcType=VARCHAR}, #{qualityCable,jdbcType=VARCHAR}, #{qualityColorLustre,jdbcType=VARCHAR}, 
+      #{qualityCleanliness,jdbcType=VARCHAR}, #{qualityAroma,jdbcType=VARCHAR}, #{qualityTaste,jdbcType=VARCHAR}, 
+      #{qualityColour,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.panda.model.origin.Quality" >
+    insert into e_quality
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="samplingId != null" >
+        sampling_id,
+      </if>
+      <if test="processBatchId != null" >
+        process_batch_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="samplingNumber != null" >
+        sampling_number,
+      </if>
+      <if test="samplingTime != null" >
+        sampling_time,
+      </if>
+      <if test="machinStatus != null" >
+        machin_status,
+      </if>
+      <if test="machinEnd != null" >
+        machin_end,
+      </if>
+      <if test="dicTeaGrade != null" >
+        dic_tea_grade,
+      </if>
+      <if test="dicQualityType != null" >
+        dic_quality_type,
+      </if>
+      <if test="verifyQuality != null" >
+        verify_quality,
+      </if>
+      <if test="verifyUser != null" >
+        verify_user,
+      </if>
+      <if test="verifyTime != null" >
+        verify_time,
+      </if>
+      <if test="qualityStatus != null" >
+        quality_status,
+      </if>
+      <if test="qualityUser != null" >
+        quality_user,
+      </if>
+      <if test="qualityTime != null" >
+        quality_time,
+      </if>
+      <if test="netContent != null" >
+        net_content,
+      </if>
+      <if test="teaCrumble != null" >
+        tea_crumble,
+      </if>
+      <if test="waterContent != null" >
+        water_content,
+      </if>
+      <if test="qualityCable != null" >
+        quality_cable,
+      </if>
+      <if test="qualityColorLustre != null" >
+        quality_color_lustre,
+      </if>
+      <if test="qualityCleanliness != null" >
+        quality_cleanliness,
+      </if>
+      <if test="qualityAroma != null" >
+        quality_aroma,
+      </if>
+      <if test="qualityTaste != null" >
+        quality_taste,
+      </if>
+      <if test="qualityColour != null" >
+        quality_colour,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyId != null" >
+        modify_id,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="samplingId != null" >
+        #{samplingId,jdbcType=VARCHAR},
+      </if>
+      <if test="processBatchId != null" >
+        #{processBatchId,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="samplingNumber != null" >
+        #{samplingNumber,jdbcType=INTEGER},
+      </if>
+      <if test="samplingTime != null" >
+        #{samplingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="machinStatus != null" >
+        #{machinStatus,jdbcType=TIMESTAMP},
+      </if>
+      <if test="machinEnd != null" >
+        #{machinEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dicTeaGrade != null" >
+        #{dicTeaGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="dicQualityType != null" >
+        #{dicQualityType,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyQuality != null" >
+        #{verifyQuality,jdbcType=INTEGER},
+      </if>
+      <if test="verifyUser != null" >
+        #{verifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyTime != null" >
+        #{verifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qualityStatus != null" >
+        #{qualityStatus,jdbcType=INTEGER},
+      </if>
+      <if test="qualityUser != null" >
+        #{qualityUser,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityTime != null" >
+        #{qualityTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="netContent != null" >
+        #{netContent,jdbcType=VARCHAR},
+      </if>
+      <if test="teaCrumble != null" >
+        #{teaCrumble,jdbcType=VARCHAR},
+      </if>
+      <if test="waterContent != null" >
+        #{waterContent,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityCable != null" >
+        #{qualityCable,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityColorLustre != null" >
+        #{qualityColorLustre,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityCleanliness != null" >
+        #{qualityCleanliness,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityAroma != null" >
+        #{qualityAroma,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityTaste != null" >
+        #{qualityTaste,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityColour != null" >
+        #{qualityColour,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyId != null" >
+        #{modifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.panda.model.origin.Quality" >
+    update e_quality
+    <set >
+      <if test="samplingId != null" >
+        sampling_id = #{samplingId,jdbcType=VARCHAR},
+      </if>
+      <if test="processBatchId != null" >
+        process_batch_id = #{processBatchId,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="samplingNumber != null" >
+        sampling_number = #{samplingNumber,jdbcType=INTEGER},
+      </if>
+      <if test="samplingTime != null" >
+        sampling_time = #{samplingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="machinStatus != null" >
+        machin_status = #{machinStatus,jdbcType=TIMESTAMP},
+      </if>
+      <if test="machinEnd != null" >
+        machin_end = #{machinEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dicTeaGrade != null" >
+        dic_tea_grade = #{dicTeaGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="dicQualityType != null" >
+        dic_quality_type = #{dicQualityType,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyQuality != null" >
+        verify_quality = #{verifyQuality,jdbcType=INTEGER},
+      </if>
+      <if test="verifyUser != null" >
+        verify_user = #{verifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyTime != null" >
+        verify_time = #{verifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qualityStatus != null" >
+        quality_status = #{qualityStatus,jdbcType=INTEGER},
+      </if>
+      <if test="qualityUser != null" >
+        quality_user = #{qualityUser,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityTime != null" >
+        quality_time = #{qualityTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="netContent != null" >
+        net_content = #{netContent,jdbcType=VARCHAR},
+      </if>
+      <if test="teaCrumble != null" >
+        tea_crumble = #{teaCrumble,jdbcType=VARCHAR},
+      </if>
+      <if test="waterContent != null" >
+        water_content = #{waterContent,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityCable != null" >
+        quality_cable = #{qualityCable,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityColorLustre != null" >
+        quality_color_lustre = #{qualityColorLustre,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityCleanliness != null" >
+        quality_cleanliness = #{qualityCleanliness,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityAroma != null" >
+        quality_aroma = #{qualityAroma,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityTaste != null" >
+        quality_taste = #{qualityTaste,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityColour != null" >
+        quality_colour = #{qualityColour,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyId != null" >
+        modify_id = #{modifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.panda.model.origin.Quality" >
+    update e_quality
+    set sampling_id = #{samplingId,jdbcType=VARCHAR},
+      process_batch_id = #{processBatchId,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=VARCHAR},
+      sampling_number = #{samplingNumber,jdbcType=INTEGER},
+      sampling_time = #{samplingTime,jdbcType=TIMESTAMP},
+      machin_status = #{machinStatus,jdbcType=TIMESTAMP},
+      machin_end = #{machinEnd,jdbcType=TIMESTAMP},
+      dic_tea_grade = #{dicTeaGrade,jdbcType=VARCHAR},
+      dic_quality_type = #{dicQualityType,jdbcType=VARCHAR},
+      verify_quality = #{verifyQuality,jdbcType=INTEGER},
+      verify_user = #{verifyUser,jdbcType=VARCHAR},
+      verify_time = #{verifyTime,jdbcType=TIMESTAMP},
+      quality_status = #{qualityStatus,jdbcType=INTEGER},
+      quality_user = #{qualityUser,jdbcType=VARCHAR},
+      quality_time = #{qualityTime,jdbcType=TIMESTAMP},
+      net_content = #{netContent,jdbcType=VARCHAR},
+      tea_crumble = #{teaCrumble,jdbcType=VARCHAR},
+      water_content = #{waterContent,jdbcType=VARCHAR},
+      quality_cable = #{qualityCable,jdbcType=VARCHAR},
+      quality_color_lustre = #{qualityColorLustre,jdbcType=VARCHAR},
+      quality_cleanliness = #{qualityCleanliness,jdbcType=VARCHAR},
+      quality_aroma = #{qualityAroma,jdbcType=VARCHAR},
+      quality_taste = #{qualityTaste,jdbcType=VARCHAR},
+      quality_colour = #{qualityColour,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_id = #{modifyId,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

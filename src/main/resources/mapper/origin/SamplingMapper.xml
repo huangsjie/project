@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.panda.mapper.origin.SamplingMapper" >
+  <resultMap id="BaseResultMap" type="com.panda.model.origin.Sampling" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="process_batch_id" property="processBatchId" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="sampling_number" property="samplingNumber" jdbcType="INTEGER" />
+    <result column="sampling_time" property="samplingTime" jdbcType="TIMESTAMP" />
+    <result column="machin_status" property="machinStatus" jdbcType="TIMESTAMP" />
+    <result column="machin_end" property="machinEnd" jdbcType="TIMESTAMP" />
+    <result column="dic_tea_grade" property="dicTeaGrade" jdbcType="VARCHAR" />
+    <result column="operator_id" property="operatorId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_id" property="modifyId" jdbcType="VARCHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, process_batch_id, product_id, order_no, sampling_number, sampling_time, machin_status, 
+    machin_end, dic_tea_grade, operator_id, status, description, create_id, create_time, 
+    modify_id, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from e_sampling
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from e_sampling
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.panda.model.origin.Sampling" >
+    insert into e_sampling (id, process_batch_id, product_id, 
+      order_no, sampling_number, sampling_time, 
+      machin_status, machin_end, dic_tea_grade, 
+      operator_id, status, description, 
+      create_id, create_time, modify_id, 
+      modify_time)
+    values (#{id,jdbcType=VARCHAR}, #{processBatchId,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, 
+      #{orderNo,jdbcType=VARCHAR}, #{samplingNumber,jdbcType=INTEGER}, #{samplingTime,jdbcType=TIMESTAMP}, 
+      #{machinStatus,jdbcType=TIMESTAMP}, #{machinEnd,jdbcType=TIMESTAMP}, #{dicTeaGrade,jdbcType=VARCHAR}, 
+      #{operatorId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
+      #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.panda.model.origin.Sampling" >
+    insert into e_sampling
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="processBatchId != null" >
+        process_batch_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="samplingNumber != null" >
+        sampling_number,
+      </if>
+      <if test="samplingTime != null" >
+        sampling_time,
+      </if>
+      <if test="machinStatus != null" >
+        machin_status,
+      </if>
+      <if test="machinEnd != null" >
+        machin_end,
+      </if>
+      <if test="dicTeaGrade != null" >
+        dic_tea_grade,
+      </if>
+      <if test="operatorId != null" >
+        operator_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyId != null" >
+        modify_id,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="processBatchId != null" >
+        #{processBatchId,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="samplingNumber != null" >
+        #{samplingNumber,jdbcType=INTEGER},
+      </if>
+      <if test="samplingTime != null" >
+        #{samplingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="machinStatus != null" >
+        #{machinStatus,jdbcType=TIMESTAMP},
+      </if>
+      <if test="machinEnd != null" >
+        #{machinEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dicTeaGrade != null" >
+        #{dicTeaGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyId != null" >
+        #{modifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.panda.model.origin.Sampling" >
+    update e_sampling
+    <set >
+      <if test="processBatchId != null" >
+        process_batch_id = #{processBatchId,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="samplingNumber != null" >
+        sampling_number = #{samplingNumber,jdbcType=INTEGER},
+      </if>
+      <if test="samplingTime != null" >
+        sampling_time = #{samplingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="machinStatus != null" >
+        machin_status = #{machinStatus,jdbcType=TIMESTAMP},
+      </if>
+      <if test="machinEnd != null" >
+        machin_end = #{machinEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dicTeaGrade != null" >
+        dic_tea_grade = #{dicTeaGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        operator_id = #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyId != null" >
+        modify_id = #{modifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.panda.model.origin.Sampling" >
+    update e_sampling
+    set process_batch_id = #{processBatchId,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      sampling_number = #{samplingNumber,jdbcType=INTEGER},
+      sampling_time = #{samplingTime,jdbcType=TIMESTAMP},
+      machin_status = #{machinStatus,jdbcType=TIMESTAMP},
+      machin_end = #{machinEnd,jdbcType=TIMESTAMP},
+      dic_tea_grade = #{dicTeaGrade,jdbcType=VARCHAR},
+      operator_id = #{operatorId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_id = #{modifyId,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

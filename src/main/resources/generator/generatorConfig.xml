@@ -34,7 +34,9 @@
         <!-- 存放位置 -->
 
         <!-- 数据表 -->
-        <table tableName="e_machin_tea" domainObjectName="MachinTea" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="e_origin_img" domainObjectName="OriginImg" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="e_quality" domainObjectName="Quality" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="e_sampling" domainObjectName="Sampling" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
         <!-- 数据表 -->
     </context>
     <!-- tea
