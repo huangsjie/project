@@ -28,4 +28,11 @@ public interface MachinTeaService extends AbstractService<MachinTea> {
      * @return
      */
     Map selectMachinTeaDataByOne(String id);
+
+    /**
+     * 根据加工批次号 获取该批次所用时间和产品名称
+     * @param processBatchId
+     * @return
+     */
+    Map selectMachinTimeAndMachinProduct(String processBatchId);
 }

@@ -7,23 +7,30 @@ import com.panda.model.origin.Sampling;
 import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
 import com.panda.service.commodity.ProductsService;
+import com.panda.service.origin.MachinTeaService;
 import com.panda.service.origin.ProcessBatchService;
 import com.panda.service.origin.SamplingService;
 import com.panda.service.system.DictionaryService;
+import com.panda.util.CreateBatchNoUtil;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -48,10 +55,26 @@ public class SamplingController {
     private ProductsService productsService;
 
     @Resource
+    private MachinTeaService machinTeaService;
+
+    @Resource
     private ProcessBatchService processBatchService;
 
     private static boolean message = false;
     private static Object  data    = null;
+
+    /**
+     * bootstart  date 注解 格式化页面上传过来的 String 日期
+     * @param request
+     * @param binder
+     * @throws
+     */
+    @InitBinder
+    protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        CustomDateEditor dateEditor = new CustomDateEditor(fmt, true);
+        binder.registerCustomEditor(Date.class, dateEditor);
+    }
 
     /**
      * 获取 取样列表
@@ -90,17 +113,14 @@ public class SamplingController {
                 String jsonStr = StringEscapeUtil.unescapeHtml(datatable);
                 Map params = JSON.parseObject(jsonStr,Map.class);
                 Map status = JSON.parseObject(params.get("query").toString(),Map.class);
-                if (status.size() > 0 && status.get("status") != ""){
-                    query.put("status",status.get("status"));
+                if (status.size() > 0 && status.get("productId") != ""){
+                    query.put("productId",status.get("productId"));
                 }
-                if (status.size() > 0 && status.get("createYear") != ""){
-                    query.put("createYear",status.get("createYear"));
+                if (status.size() > 0 && status.get("processBatchId") != ""){
+                    query.put("processBatchId",status.get("processBatchId"));
                 }
-                if (status.size() > 0 && status.get("farmType") != ""){
-                    query.put("farmType",status.get("farmType"));
-                }
-                if (status.size() > 0 && status.get("gardenType") != ""){
-                    query.put("gardenType",status.get("gardenType"));
+                if (status.size() > 0 && status.get("dicTeaGrade") != ""){
+                    query.put("dicTeaGrade",status.get("dicTeaGrade"));
                 }
             }
             List<Map> sampList = samplingService.selectSamplingDataList(query);
@@ -140,6 +160,38 @@ public class SamplingController {
                 e.printStackTrace();
                 data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
             }
+        }
+        return ResultMsgUtil.getResultMsg(message,data);
+    }
+
+    /**
+     * 新增取样记录 -- 获取选中的加工批次对应的加工信息和产品名称
+     * @param request
+     * @param processBatchId
+     * @return
+     */
+    @RequestMapping(value = "/getMachinTeaData")
+    @ResponseBody
+    public Object getMachinTeaData(HttpServletRequest request,String processBatchId){
+        message = false;
+        data    = null;
+        try {
+            if (!processBatchId.isEmpty()){
+                Map map = machinTeaService.selectMachinTimeAndMachinProduct(processBatchId);
+                if (map != null && map.size() > 0){
+                    map.put("orderNo","QY"+ CreateBatchNoUtil.createBatchNo());
+                    map.put("samplingTime",new Date());
+                    message = true;
+                    data    = map;
+                }else{
+                    data    = "未获取到该批次的加工数据.";
+                }
+            }else{
+                data = ResultStateUtil.ERROR_PARAMETER_NO_TCOMPATIBLE;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            data    = ResultStateUtil.ERROR_QUERY;
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }

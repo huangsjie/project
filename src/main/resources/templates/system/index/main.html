@@ -15,81 +15,89 @@
         <div th:replace="~{system/public/left_aside :: left_aside}"></div>
         <!-- END: Left Aside -->
         <div class="m-grid__item m-grid__item--fluid m-wrapper">
-            <!-- BEGIN: Subheader -->
-            <div th:replace="~{system/public/subheader :: subheader}"></div>
-            <!-- END: Subheader -->
             <!--BEGIN: Main Portlet-->
             <div class="m-content">
-                <div class="m-portlet">
+                <div class="m-portlet m-portlet--mobile">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text">
+                                    进度总览
+                                    <small>
+                                    </small>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
                     <div class="m-portlet__body  m-portlet__body--no-padding">
                         <div class="row m-row--no-padding m-row--col-separator-xl">
-                            <div class="col-xl-4">
-                                <!--begin:: Widgets/Stats2-1 -->
-                                <div class="m-widget1">
-                                    <div class="m-widget1__item">
-                                        <div class="row m-row--no-padding align-items-center">
-                                            <div class="col">
-                                                <h3 class="m-widget1__title">
-                                                    Member Profit
-                                                </h3>
-                                                <span class="m-widget1__desc">
-															Awerage Weekly Profit
-														</span>
-                                            </div>
-                                            <div class="col m--align-right">
-														<span class="m-widget1__number m--font-brand">
-															+$17,800
-														</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="m-widget1__item">
-                                        <div class="row m-row--no-padding align-items-center">
-                                            <div class="col">
-                                                <h3 class="m-widget1__title">
-                                                    Orders
-                                                </h3>
-                                                <span class="m-widget1__desc">
-															Weekly Customer Orders
-														</span>
-                                            </div>
-                                            <div class="col m--align-right">
-														<span class="m-widget1__number m--font-danger">
-															+1,800
-														</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="m-widget1__item">
-                                        <div class="row m-row--no-padding align-items-center">
-                                            <div class="col">
-                                                <h3 class="m-widget1__title">
-                                                    Issue Reports
-                                                </h3>
-                                                <span class="m-widget1__desc">
-															System bugs and issues
-														</span>
-                                            </div>
-                                            <div class="col m--align-right">
-														<span class="m-widget1__number m--font-success">
-															-27,49%
-														</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--end:: Widgets/Stats2-1 -->
-                            </div>
-                            <div class="col-xl-4">
+                            <!--<div class="col-xl-4">-->
+                                <!--&lt;!&ndash;begin:: Widgets/Stats2-1 &ndash;&gt;-->
+                                <!--<div class="m-widget1">-->
+                                    <!--<div class="m-widget1__item">-->
+                                        <!--<div class="row m-row&#45;&#45;no-padding align-items-center">-->
+                                            <!--<div class="col">-->
+                                                <!--<h3 class="m-widget1__title">-->
+                                                    <!--Member Profit-->
+                                                <!--</h3>-->
+                                                <!--<span class="m-widget1__desc">-->
+                                                    <!--Awerage Weekly Profit-->
+                                                <!--</span>-->
+                                            <!--</div>-->
+                                            <!--<div class="col m&#45;&#45;align-right">-->
+                                                <!--<span class="m-widget1__number m&#45;&#45;font-brand">-->
+                                                    <!--+$17,800-->
+                                                <!--</span>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="m-widget1__item">-->
+                                        <!--<div class="row m-row&#45;&#45;no-padding align-items-center">-->
+                                            <!--<div class="col">-->
+                                                <!--<h3 class="m-widget1__title">-->
+                                                    <!--Orders-->
+                                                <!--</h3>-->
+                                                <!--<span class="m-widget1__desc">-->
+                                                    <!--Weekly Customer Orders-->
+                                                <!--</span>-->
+                                            <!--</div>-->
+                                            <!--<div class="col m&#45;&#45;align-right">-->
+                                                <!--<span class="m-widget1__number m&#45;&#45;font-danger">-->
+                                                    <!--+1,800-->
+                                                <!--</span>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="m-widget1__item">-->
+                                        <!--<div class="row m-row&#45;&#45;no-padding align-items-center">-->
+                                            <!--<div class="col">-->
+                                                <!--<h3 class="m-widget1__title">-->
+                                                    <!--Issue Reports-->
+                                                <!--</h3>-->
+                                                <!--<span class="m-widget1__desc">-->
+                                                    <!--System bugs and issues-->
+                                                <!--</span>-->
+                                            <!--</div>-->
+                                            <!--<div class="col m&#45;&#45;align-right">-->
+                                                <!--<span class="m-widget1__number m&#45;&#45;font-success">-->
+                                                    <!-- -27,49%-->
+                                                <!--</span>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--&lt;!&ndash;end:: Widgets/Stats2-1 &ndash;&gt;-->
+                            <!--</div>-->
+                            <div class="col-xl-6">
                                 <!--begin:: Widgets/Daily Sales-->
                                 <div class="m-widget14">
                                     <div class="m-widget14__header m--margin-bottom-30">
                                         <h3 class="m-widget14__title">
-                                            Daily Sales
+                                            订单统计
                                         </h3>
                                         <span class="m-widget14__desc">
-													Check out each collumn for more details
-												</span>
+                                            最近十五天的门店订单统计
+                                        </span>
                                     </div>
                                     <div class="m-widget14__chart" style="height:120px;">
                                         <canvas  id="m_chart_daily_sales"></canvas>
@@ -97,16 +105,16 @@
                                 </div>
                                 <!--end:: Widgets/Daily Sales-->
                             </div>
-                            <div class="col-xl-4">
+                            <div class="col-xl-6">
                                 <!--begin:: Widgets/Profit Share-->
                                 <div class="m-widget14">
                                     <div class="m-widget14__header">
                                         <h3 class="m-widget14__title">
-                                            Profit Share
+                                            加工进度
                                         </h3>
                                         <span class="m-widget14__desc">
-													Profit Share between customers
-												</span>
+                                            当前加工中产品占比率
+                                        </span>
                                     </div>
                                     <div class="row  align-items-center">
                                         <div class="col">
@@ -121,20 +129,20 @@
                                                 <div class="m-widget14__legend">
                                                     <span class="m-widget14__legend-bullet m--bg-accent"></span>
                                                     <span class="m-widget14__legend-text">
-																37% Sport Tickets
-															</span>
+                                                        37% 红茶
+                                                    </span>
                                                 </div>
                                                 <div class="m-widget14__legend">
                                                     <span class="m-widget14__legend-bullet m--bg-warning"></span>
                                                     <span class="m-widget14__legend-text">
-																47% Business Events
-															</span>
+                                                        47% 绿茶
+                                                    </span>
                                                 </div>
                                                 <div class="m-widget14__legend">
                                                     <span class="m-widget14__legend-bullet m--bg-brand"></span>
                                                     <span class="m-widget14__legend-text">
-																19% Others
-															</span>
+                                                        19% 其它
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
