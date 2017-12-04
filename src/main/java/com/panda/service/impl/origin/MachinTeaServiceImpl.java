@@ -48,4 +48,14 @@ public class MachinTeaServiceImpl extends AbstractServiceImpl<MachinTea> impleme
     public Map selectMachinTeaDataByOne(String id) {
         return machinTeaMapper.selectMachinTeaDataByOne(id);
     }
+
+    /**
+     * 根据加工批次号 获取该批次所用时间和产品名称
+     * @param processBatchId
+     * @return
+     */
+    @Override
+    public Map selectMachinTimeAndMachinProduct(String processBatchId){
+        return machinTeaMapper.selectMachinTimeAndMachinProduct(processBatchId);
+    }
 }

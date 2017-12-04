@@ -225,7 +225,8 @@
   <!-- 获取取样记录 -->
   <select id="selectSamplingDataList" resultType="map" parameterType="map">
     SELECT
-        p.name,pb.batch_number,d.name dicName,s.*
+        p.name,pb.batch_number,d.name dicName,s.process_batch_id processBatchId,s.dic_tea_grade dicTeaGrade,
+        s.product_id productId,s.order_no,s.create_time,s.sampling_base,s.id
     FROM
         e_sampling s
         LEFT JOIN c_products p ON s.product_id = p.id

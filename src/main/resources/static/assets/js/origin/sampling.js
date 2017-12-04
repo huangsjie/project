@@ -1,7 +1,6 @@
 var Sampling = function () {
     var actionsTemplate = $("#actionsTemplate").html();
     var samplingShow = function () {
-        console.log("11111111");
         var option = {
             data: {
                 type: 'remote',
@@ -33,7 +32,7 @@ var Sampling = function () {
                 {field: "batch_number", title: "加工批次", width: 120},
                 {field: "dicName", title: "等级", width: 60},
                 {field: "order_no", title: "取样号", width: 120},
-                {field: "sampling_number", title: "取样基数", width: 60},
+                {field: "sampling_base", title: "取样基数", width: 60},
                 {field: "create_time", title: "创建时间", sortable: 'asc', width: 150},
                 {
                     field: "Actions",
@@ -58,26 +57,26 @@ var Sampling = function () {
             datatable.load();
         }).val(query.generalSearch);
 
-        $('#m_form_tea_grade_level').on('change', function () {
+        $('#productId').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.tea_grade = $(this).val().toLowerCase();
+            query.productId = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.tea_grade !== 'undefined' ? query.tea_grade : '');
+        }).val(typeof query.productId !== 'undefined' ? query.productId : '');
 
-        $('#m_form_sampling_type').on('change', function () {
+        $('#processBatchId').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.garden_type = $(this).val().toLowerCase();
+            query.processBatchId = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.garden_type !== 'undefined' ? query.garden_type : '');
+        }).val(typeof query.processBatchId !== 'undefined' ? query.processBatchId : '');
 
-        $('#cultivarType').on('change', function () {
+        $('#dicTeaGrade').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.cultivar_id = $(this).val();
+            query.dicTeaGrade = $(this).val();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.cultivar_id !== 'undefined' ? query.cultivar_id : '');
+        }).val(typeof query.dicTeaGrade !== 'undefined' ? query.dicTeaGrade : '');
         $('.datatableRoload').on('click', function () {
             location.reload()
         });
@@ -103,15 +102,15 @@ var Sampling = function () {
             },
 
             submitHandler: function (form){
-                blockUiOpen('.SamplingEdit .modal-content');
+                blockUiOpen('.samplingEditModal .modal-content');
                 request(
-                    "saveSampling",
+                    "saveOrUpdateSampling",
                     "post",
                     $("#sampling_edit_form").serialize(),
                     function(result){
                         if(result.message){
                             removeValue('add');
-                            blockUiClose('.SamplingEdit .modal-content',1,".close-parent",0);
+                            blockUiClose('.samplingEditModal .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
                             ;
                         }else{
@@ -129,18 +128,18 @@ var Sampling = function () {
      */
     var removeValue = function(type){
         if(type == 'edit'){
-            $(".SamplingEdit .modal-title").text("茶园编辑")
-            $(".SamplingEdit [name='save']").val('edit')
+            $(".samplingEditModal .modal-title").text("取样编辑")
+            $(".samplingEditModal [name='save']").val('edit')
         }else{
-            $(".SamplingEdit .modal-title").text("茶园新增")
-            $(".SamplingEdit [name='save']").val('add');
+            $(".samplingEditModal .modal-title").text("取样新增")
+            $(".samplingEditModal [name='save']").val('add');
         }
-        $(".SamplingEdit [name='id']").val('')
-        $(".SamplingEdit [name='name']").val('')
-        $(".SamplingEdit [name='description']").val('');
-        $(".SamplingEdit .form-control-feedback").remove()
-        $(".SamplingEdit div").removeClass("has-danger")
-        $(".SamplingEdit div").removeClass("has-success")
+        $(".samplingEditModal [name='id']").val('')
+        $(".samplingEditModal [name='name']").val('')
+        $(".samplingEditModal [name='description']").val('');
+        $(".samplingEditModal .form-control-feedback").remove()
+        $(".samplingEditModal div").removeClass("has-danger")
+        $(".samplingEditModal div").removeClass("has-success")
     }
 
     /**
@@ -183,9 +182,35 @@ var Sampling = function () {
         })
     }
 
+    var getMachinTeaData = function(){
+        $(".samplingEditModal .processBatchId").on("change",function () {
+            var processBatchId = $(".samplingEditModal .processBatchId").val();
+            blockUiOpen('.samplingEditModal .modal-content');
+            request(
+                "getMachinTeaData",
+                'get',
+                {processBatchId:processBatchId},
+                function (result) {
+                    if(result.message){
+                        $(".samplingEditModal #productId").val(result.data.productName);
+                        $(".samplingEditModal [name='productId']").val(result.data.productId);
+                        $(".samplingEditModal #machinStatus").val(result.data.machinStatus);
+                        $(".samplingEditModal [name='machinStatus']").val(result.data.machinStatus);
+                        $(".samplingEditModal #machinEnd").val(result.data.machinEnd);
+                        $(".samplingEditModal [name='machinEnd']").val(result.data.machinEnd);
+                        $(".samplingEditModal [name='orderNo']").val(result.data.orderNo);
+                        $(".samplingEditModal [name='samplingTime']").val(result.data.samplingTime);
+                        blockUiClose('.samplingEditModal .modal-content',0,".close-parent",0);
+                    }else{
+                        ToastrMsg(result.data,"error","topRight",'.samplingEditModal .modal-content');
+                    }
+                })
+        })
+    }
+
 
     /**
-     * 删除角色
+     * 删除
      */
     var delSamplingItem = function () {
         $("#sampling_list ").on("click", ".delSamplingItem", function () {
@@ -209,17 +234,32 @@ var Sampling = function () {
         })
     }
 
+    /**
+     * bootstrap datetimepicker 插件
+     * 输入时间请先了解单个参数
+     */
+    var datetimepickerSelect = function () {
+        $('.samplingTime').datetimepicker({
+            todayHighlight: false,
+            autoclose: true,
+            sideBySide: false,
+            pickerPosition: 'button-left',
+            format: 'yyyy-mm-dd hh:mm:ss'
+        });
+    }
+
     return {
         init: function () {
             samplingShow();
             addSampling();
-            editSamplingItem()
-            delSamplingItem()
+            getMachinTeaData();
+            editSamplingItem();
+            delSamplingItem();
             SamplingInfoForm();
+            datetimepickerSelect();
         }
     };
 }();
 jQuery(document).ready(function () {
-    console.log(123)
     Sampling.init();
 });

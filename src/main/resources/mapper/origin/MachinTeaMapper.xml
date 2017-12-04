@@ -331,4 +331,15 @@
     AND m.id = #{id}
   </select>
   <!-- 查询一条设置记录 -->
+  <!-- 根据加工批次号 获取该批次所用时间和产品名称 -->
+  <select id="selectMachinTimeAndMachinProduct" parameterType="java.lang.String" resultType="map">
+    SELECT
+        min(begin_time) machinStatus ,MAX(end_time) machinEnd, p.id productId, p.name productName
+    FROM
+        e_machin_tea mt
+        LEFT JOIN c_products p ON mt.product_id = p.id
+    WHERE
+        mt.process_batch_id = #{processBatchId} GROUP BY product_id
+  </select>
+  <!-- 根据加工批次号 获取该批次所用时间和产品名称 -->
 </mapper>
