@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-12-03 23:21:01
+Date: 2017-12-04 18:28:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -306,27 +306,31 @@ CREATE TABLE `e_manage_batch` (
 INSERT INTO `e_manage_batch` VALUES ('225a6caa-43db-41ff-a9d2-56e03186eb94', 'GLXST000001', '8893e29b-d37b-11e7-b5d6-24fd52935962', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-30 09:27:46', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-30 09:27:46', '1');
 
 -- ----------------------------
--- Table structure for e_processing_step_info
+-- Table structure for e_origin_img
 -- ----------------------------
-DROP TABLE IF EXISTS `e_processing_step_info`;
-CREATE TABLE `e_processing_step_info` (
-  `id` varchar(36) NOT NULL DEFAULT '' COMMENT '自增id',
-  `cultivar_id` varchar(36) NOT NULL COMMENT '品种ID',
-  `create_id` varchar(36) NOT NULL COMMENT '创建人',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `modify_id` varchar(36) DEFAULT NULL COMMENT '修改人',
-  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+DROP TABLE IF EXISTS `e_origin_img`;
+CREATE TABLE `e_origin_img` (
+  `id` varchar(36) NOT NULL,
+  `relation_id` varchar(36) NOT NULL COMMENT '关联的ID',
+  `relation_type` varchar(36) DEFAULT NULL,
+  `sort_id` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `name` varchar(50) NOT NULL COMMENT '原始名称',
+  `img_type` varchar(30) NOT NULL COMMENT '图片类型(格式)',
+  `img_url` varchar(200) NOT NULL COMMENT '路径',
+  `resolution` varchar(50) NOT NULL COMMENT '分辨率',
+  `show_type` int(11) NOT NULL DEFAULT '0' COMMENT '类型-竖屏1,横屏2,无0',
+  `size` varchar(50) NOT NULL COMMENT '尺寸',
   `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
-  `description` varchar(300) DEFAULT NULL COMMENT '备注',
-  `step_id` varchar(36) NOT NULL COMMENT '工序ID',
-  `operator_id` varchar(36) NOT NULL COMMENT '操作人',
-  `begin_time` datetime NOT NULL COMMENT '开始时间',
-  `end_time` datetime NOT NULL COMMENT '结束时间',
-  PRIMARY KEY (`id`)
+  `source` varchar(50) DEFAULT NULL COMMENT '来源',
+  `description` varchar(300) DEFAULT NULL COMMENT '描述',
+  `create_id` varchar(36) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `index_commodity_id` (`relation_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of e_processing_step_info
+-- Records of e_origin_img
 -- ----------------------------
 
 -- ----------------------------
@@ -356,79 +360,74 @@ INSERT INTO `e_process_batch` VALUES ('74897c22-ef43-49ac-b0be-668aed0012cf', 'J
 INSERT INTO `e_process_batch` VALUES ('297e490d-66c9-40d4-bd55-f05e55d72e67', '是的风格', '225a6caa-43db-41ff-a9d2-56e03186eb94', 'dc081d33-ee9d-4126-bcd5-9133ae82caf5', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-03 11:56:26', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-03 11:56:26', '1');
 
 -- ----------------------------
--- Table structure for e_quality_control_list
+-- Table structure for e_quality
 -- ----------------------------
-DROP TABLE IF EXISTS `e_quality_control_list`;
-CREATE TABLE `e_quality_control_list` (
+DROP TABLE IF EXISTS `e_quality`;
+CREATE TABLE `e_quality` (
   `id` varchar(36) NOT NULL DEFAULT '' COMMENT '自增id',
   `sampling_id` varchar(36) NOT NULL COMMENT '取样ID',
-  `check_status` int(10) NOT NULL COMMENT '检验状态',
-  `check_time` datetime NOT NULL COMMENT '检验时间',
-  `operator_id` varchar(36) NOT NULL COMMENT '检验人',
-  `re_check_status` int(10) DEFAULT NULL COMMENT '复核状态',
-  `re_check_ussr` varchar(10) DEFAULT NULL COMMENT '复核人',
-  `re_check_time` datetime DEFAULT NULL COMMENT '复核时间',
+  `process_batch_id` varchar(36) DEFAULT NULL COMMENT '加工批次ID',
+  `product_id` varchar(36) DEFAULT NULL COMMENT '产品ID',
+  `sampling_number` int(10) DEFAULT NULL COMMENT '取样基数',
+  `sampling_time` datetime DEFAULT NULL COMMENT '取样时间',
+  `machin_status` datetime DEFAULT NULL COMMENT '生产开始时间',
+  `machin_end` datetime DEFAULT NULL COMMENT '生产结束时间',
+  `dic_tea_grade` varchar(36) DEFAULT NULL COMMENT '等级',
+  `dic_quality_type` varchar(36) DEFAULT NULL COMMENT '质检类型(字典)',
+  `verify_quality` int(1) DEFAULT NULL COMMENT '质检审核(复检)',
+  `verify_user` varchar(36) DEFAULT NULL COMMENT '复检员',
+  `verify_time` datetime DEFAULT NULL COMMENT '复检时间',
+  `quality_status` int(1) NOT NULL DEFAULT '0' COMMENT '质检状态 1合格，2不合格',
+  `quality_user` varchar(36) DEFAULT NULL COMMENT '质检员',
+  `quality_time` datetime DEFAULT NULL COMMENT '质检时间',
+  `net_content` varchar(50) DEFAULT NULL COMMENT '净重（净含量）',
+  `tea_crumble` varchar(50) DEFAULT NULL COMMENT '碎末(茶叶灰)',
+  `water_content` varchar(50) DEFAULT NULL COMMENT '水份量(含水量)',
+  `quality_cable` varchar(100) DEFAULT NULL COMMENT '外形-条索',
+  `quality_color_lustre` varchar(100) DEFAULT NULL COMMENT '外形-色泽',
+  `quality_cleanliness` varchar(100) DEFAULT NULL COMMENT '外形-净度',
+  `quality_aroma` varchar(100) DEFAULT NULL COMMENT '内质-香气',
+  `quality_taste` varchar(100) DEFAULT NULL COMMENT '内质-滋味(口感)',
+  `quality_colour` varchar(100) DEFAULT NULL COMMENT '内质-汤色',
   `create_id` varchar(36) NOT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_id` varchar(36) DEFAULT NULL COMMENT '修改人',
   `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
-  `description` varchar(300) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of e_quality_control_list
+-- Records of e_quality
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for e_sampling_list
+-- Table structure for e_sampling
 -- ----------------------------
-DROP TABLE IF EXISTS `e_sampling_list`;
-CREATE TABLE `e_sampling_list` (
+DROP TABLE IF EXISTS `e_sampling`;
+CREATE TABLE `e_sampling` (
   `id` varchar(36) NOT NULL DEFAULT '' COMMENT '自增id',
-  `order_no` varchar(36) NOT NULL COMMENT '取样单号',
+  `process_batch_id` varchar(36) DEFAULT NULL COMMENT '加工批次ID',
   `product_id` varchar(36) NOT NULL COMMENT '产品ID',
-  `sampling_number` float(10,2) NOT NULL COMMENT '取样基数',
+  `order_no` varchar(36) NOT NULL COMMENT '取样单号',
+  `sampling_number` int(10) NOT NULL COMMENT '取样数量',
   `sampling_time` datetime NOT NULL COMMENT '取样时间',
+  `machin_status` datetime DEFAULT NULL COMMENT '生产开始时间',
+  `machin_end` datetime DEFAULT NULL COMMENT '生产结束时间',
+  `dic_tea_grade` varchar(36) DEFAULT NULL COMMENT '等级(目标等级)',
   `operator_id` varchar(36) NOT NULL COMMENT '操作人',
+  `sampling_base` int(11) NOT NULL DEFAULT '0' COMMENT '取样基数',
+  `description` varchar(300) DEFAULT NULL COMMENT '备注',
   `create_id` varchar(36) NOT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_id` varchar(36) DEFAULT NULL COMMENT '修改人',
   `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
-  `description` varchar(300) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of e_sampling_list
+-- Records of e_sampling
 -- ----------------------------
-
--- ----------------------------
--- Table structure for e_stock_list
--- ----------------------------
-DROP TABLE IF EXISTS `e_stock_list`;
-CREATE TABLE `e_stock_list` (
-  `id` varchar(36) NOT NULL DEFAULT '' COMMENT '自增id',
-  `cultivar_id` varchar(100) DEFAULT NULL COMMENT '品种ID',
-  `warehouse_id` varchar(36) NOT NULL COMMENT '仓库ID',
-  `create_id` varchar(36) NOT NULL COMMENT '创建人',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `modify_id` varchar(36) DEFAULT NULL COMMENT '修改人',
-  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
-  `description` varchar(300) DEFAULT NULL COMMENT '备注',
-  `stock_number` float(10,2) NOT NULL COMMENT '出库数量',
-  `stock_time` datetime NOT NULL COMMENT '出库时间',
-  `operator_id` varchar(36) NOT NULL COMMENT '操作人',
-  `stock_object_id` varchar(36) NOT NULL COMMENT '出库对象',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of e_stock_list
--- ----------------------------
+INSERT INTO `e_sampling` VALUES ('5c79bda3-d8ca-11e7-8c51-38d547b81379', '04265198-d591-11e7-bbd8-38d547b81379', 'dc081d33-ee9d-4126-bcd5-9133ae82caf5', 'QY2017120416', '2', '2017-12-04 16:09:01', '2017-12-04 16:13:21', '2017-12-04 16:13:23', 'b1c94b1c-67e4-4e45-a516-0976fb142a81', 'Morgan', '1', '阿斯蒂芬', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-04 16:13:44', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-04 16:13:47');
 
 -- ----------------------------
 -- Table structure for e_tea_garden
@@ -651,7 +650,7 @@ INSERT INTO `s_menu` VALUES ('5af24cc1-0a73-4f28-8972-dae2f138c1a8', '3', 'b4a12
 INSERT INTO `s_menu` VALUES ('5d2f2a0d-9326-4026-b338-c03bf6e255db', '12', '10000000-0000-0000-0000-100000000000', '包装管理', '/system/packing/list', null, 'flaticon-bag', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:11:43', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:41:50', '产品包装信息等');
 INSERT INTO `s_menu` VALUES ('67416840-6b15-473b-80fc-bbf1b28dfac5', '1', '21136dca-a230-4902-b370-73cedbfd37d1', '清洁记录', '/system/clear/list', null, 'flaticon-clear', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:20:59', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:20:59', '设备清洁记录');
 INSERT INTO `s_menu` VALUES ('68522995-30dc-4fb0-97d8-7468e6af4853', '2', '10000000-0000-0000-0000-200000000000', '产品库', '/index/products', null, 'flaticon-products', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-01 12:44:45', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-01 15:48:04', '商品展示产品库');
-INSERT INTO `s_menu` VALUES ('6fc0d40a-ca6e-4c19-8d24-485d5a61ea50', '1', 'f5baa02f-7e39-421f-a7dd-c8ee4773966b', '质检记录', '/system/process/list', null, 'flaticon-process', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:17:01', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:17:01', '质检记录管理');
+INSERT INTO `s_menu` VALUES ('6fc0d40a-ca6e-4c19-8d24-485d5a61ea50', '1', 'f5baa02f-7e39-421f-a7dd-c8ee4773966b', '质检记录', '/system/quality/list', null, 'flaticon-process', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:17:01', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-04 11:40:34', '质检记录管理');
 INSERT INTO `s_menu` VALUES ('76849bfe-dfd4-476c-b2f8-11072c25ceb8', '1', 'b4a121a8-5e4d-41f8-b4a0-672eebb0a74d', '茶园信息', '/system/origin/teaGarden', '1', 'flaticon-list-3', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:41:46', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 23:40:03', '茶园信息管理');
 INSERT INTO `s_menu` VALUES ('91d81894-dca3-4738-a408-77d23108a710', '0', 'dd6448d3-ade1-40c3-9043-a77c3036f829', '产品管理', '/system/products/list', null, 'flaticon-products', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-29 22:34:12', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-30 00:00:58', '商品库存管理');
 INSERT INTO `s_menu` VALUES ('96e55b56-ab35-4774-a248-14a683a932e7', '2', '33fb6e82-2b8b-48fb-af3c-fb886049ca77', '加工批次', '/system/processBatch/list', null, 'flaticon-mac-b', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 21:54:07', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-29 00:23:30', '加工批次加工批次');
@@ -1056,6 +1055,23 @@ INSERT INTO `s_role_menu` VALUES ('ee14142c-83f7-4361-ac20-73da7cfe3a28', 'f8692
 INSERT INTO `s_role_menu` VALUES ('ef14f211-3a20-419c-82dc-ac014f6bc189', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'b17105b9-8da9-47b7-a4b1-7dbcfa60d250', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-01 14:37:52');
 INSERT INTO `s_role_menu` VALUES ('f9cad055-3f05-49fe-b321-e33bdbb4e939', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '0de2c731-9dd6-4a95-8fef-0fa88b625c98', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:08:07');
 INSERT INTO `s_role_menu` VALUES ('ffb36530-8fa3-4f63-a96a-f3e47ca6ab92', '257ae84e-d86a-11e6-ba64-d8490bd28593', '4bcab523-1174-11e5-a9de-000c29d7a3a0', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 12:49:27');
+
+-- ----------------------------
+-- Table structure for s_system_log
+-- ----------------------------
+DROP TABLE IF EXISTS `s_system_log`;
+CREATE TABLE `s_system_log` (
+  `id` varchar(36) NOT NULL,
+  `log_time` date DEFAULT NULL COMMENT '发生时间',
+  `error_type` varchar(50) DEFAULT NULL COMMENT '错误类型',
+  `error_desc` text COMMENT '错误描述',
+  `stauts` int(11) DEFAULT NULL COMMENT '处理状态',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Records of s_system_log
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for s_users

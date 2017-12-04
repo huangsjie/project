@@ -25,7 +25,7 @@ public class Sampling implements Serializable {
 
     private String operatorId;
 
-    private Integer status;
+    private Integer samplingBase;
 
     private String description;
 
@@ -117,12 +117,12 @@ public class Sampling implements Serializable {
         this.operatorId = operatorId;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Integer getSamplingBase() {
+        return samplingBase;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setSamplingBase(Integer samplingBase) {
+        this.samplingBase = samplingBase;
     }
 
     public String getDescription() {

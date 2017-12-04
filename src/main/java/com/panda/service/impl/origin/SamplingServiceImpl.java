@@ -8,6 +8,8 @@ import com.panda.util.abs.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IDEA.
@@ -24,5 +26,15 @@ public class SamplingServiceImpl extends AbstractServiceImpl<Sampling> implement
     @Override
     protected AbstractMapper<Sampling> getAbstractMapper() {
         return samplingMapper;
+    }
+
+    /**
+     * 获取取样记录
+     * @param map
+     * @return
+     */
+    @Override
+    public List<Map> selectSamplingDataList(Map map){
+        return samplingMapper.selectSamplingDataList(map);
     }
 }

@@ -12,7 +12,7 @@
     <result column="machin_end" property="machinEnd" jdbcType="TIMESTAMP" />
     <result column="dic_tea_grade" property="dicTeaGrade" jdbcType="VARCHAR" />
     <result column="operator_id" property="operatorId" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="sampling_base" property="samplingBase" jdbcType="INTEGER" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="create_id" property="createId" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -21,7 +21,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     id, process_batch_id, product_id, order_no, sampling_number, sampling_time, machin_status, 
-    machin_end, dic_tea_grade, operator_id, status, description, create_id, create_time, 
+    machin_end, dic_tea_grade, operator_id, sampling_base, description, create_id, create_time,
     modify_id, modify_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -38,13 +38,13 @@
     insert into e_sampling (id, process_batch_id, product_id, 
       order_no, sampling_number, sampling_time, 
       machin_status, machin_end, dic_tea_grade, 
-      operator_id, status, description, 
+      operator_id, sampling_base, description,
       create_id, create_time, modify_id, 
       modify_time)
     values (#{id,jdbcType=VARCHAR}, #{processBatchId,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, 
       #{orderNo,jdbcType=VARCHAR}, #{samplingNumber,jdbcType=INTEGER}, #{samplingTime,jdbcType=TIMESTAMP}, 
       #{machinStatus,jdbcType=TIMESTAMP}, #{machinEnd,jdbcType=TIMESTAMP}, #{dicTeaGrade,jdbcType=VARCHAR}, 
-      #{operatorId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
+      #{operatorId,jdbcType=VARCHAR}, #{samplingBase,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR},
       #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=TIMESTAMP})
   </insert>
@@ -81,8 +81,8 @@
       <if test="operatorId != null" >
         operator_id,
       </if>
-      <if test="status != null" >
-        status,
+      <if test="samplingBase != null" >
+        sampling_base,
       </if>
       <if test="description != null" >
         description,
@@ -131,8 +131,8 @@
       <if test="operatorId != null" >
         #{operatorId,jdbcType=VARCHAR},
       </if>
-      <if test="status != null" >
-        #{status,jdbcType=INTEGER},
+      <if test="samplingBase != null" >
+        #{samplingBase,jdbcType=INTEGER},
       </if>
       <if test="description != null" >
         #{description,jdbcType=VARCHAR},
@@ -181,8 +181,8 @@
       <if test="operatorId != null" >
         operator_id = #{operatorId,jdbcType=VARCHAR},
       </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
+      <if test="samplingBase != null" >
+        sampling_base = #{samplingBase,jdbcType=INTEGER},
       </if>
       <if test="description != null" >
         description = #{description,jdbcType=VARCHAR},
@@ -213,7 +213,7 @@
       machin_end = #{machinEnd,jdbcType=TIMESTAMP},
       dic_tea_grade = #{dicTeaGrade,jdbcType=VARCHAR},
       operator_id = #{operatorId,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER},
+      sampling_base = #{samplingBase,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR},
       create_id = #{createId,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -221,4 +221,27 @@
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <!-- 获取取样记录 -->
+  <select id="selectSamplingDataList" resultType="map" parameterType="map">
+    SELECT
+        p.name,pb.batch_number,d.name dicName,s.*
+    FROM
+        e_sampling s
+        LEFT JOIN c_products p ON s.product_id = p.id
+        LEFT JOIN e_process_batch pb on s.process_batch_id = pb.id
+        LEFT JOIN s_dictionary d ON s.dic_tea_grade = d.id
+    WHERE
+        1 = 1
+    <if test="productId != null and productId != ''">
+      and s.product_id = #{productId}
+    </if>
+    <if test="dicTeaGrade != null and dicTeaGrade != ''">
+      and s.dic_tea_grade = #{dicTeaGrade}
+    </if>
+    <if test="processBatchId != null and processBatchId != ''">
+      and s.process_batch_id = #{processBatchId}
+    </if>
+    ORDER BY s.create_time DESC
+  </select>
 </mapper>
