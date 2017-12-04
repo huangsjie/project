@@ -28,7 +28,6 @@ public class ProductsController {
     private static boolean message = false;
     private static Object  data    = null;
 
-
     /**
      * 获取产品
      * @param request

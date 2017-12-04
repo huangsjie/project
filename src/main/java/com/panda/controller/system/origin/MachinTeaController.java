@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSON;
 import com.panda.model.origin.MachinTea;
 import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
-import com.panda.service.commodity.ProductsService;
 import com.panda.service.origin.MachinTeaService;
 import com.panda.service.origin.ProcessBatchService;
 import com.panda.service.system.DictionaryService;
@@ -169,10 +168,10 @@ public class MachinTeaController {
                     message = true;
                     data    = machinSet;
                 }else{
-                    data    = "未设置的产品组合.";
+                    data    = "加工批次 或 加工设置 未绑定对应的产品或未设置对应的工序.";
                 }
             }else{
-                data    = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
+            data    = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
             }
         }catch (Exception e){
             e.printStackTrace();
