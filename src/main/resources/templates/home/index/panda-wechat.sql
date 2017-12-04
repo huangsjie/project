@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-12-04 18:28:31
+Date: 2017-12-05 00:09:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -257,7 +257,7 @@ CREATE TABLE `e_machin_tea` (
   `dic_mac_pro` varchar(36) NOT NULL COMMENT '工序ID',
   `dic_tea_type` varchar(36) DEFAULT NULL COMMENT '材料品种（茶叶）',
   `product_id` varchar(36) DEFAULT NULL COMMENT '等级-(目前存的是产品类型)',
-  `process_batch_id` varchar(36) DEFAULT NULL COMMENT '批次号',
+  `process_batch_id` varchar(36) DEFAULT NULL COMMENT '加工批次号',
   `temperature` int(3) DEFAULT NULL COMMENT '温度',
   `humidity` int(2) DEFAULT NULL COMMENT '湿度',
   `mac_loss` int(2) DEFAULT NULL COMMENT '损耗',
@@ -278,9 +278,9 @@ CREATE TABLE `e_machin_tea` (
 -- ----------------------------
 -- Records of e_machin_tea
 -- ----------------------------
-INSERT INTO `e_machin_tea` VALUES ('41d53d04-275d-4857-824e-665e1e8f569b', '4dc6f1b2-5bbb-4324-9d74-b318dab9e8a3', '8a3e0d08-ca66-48b7-9924-b98d98fd193d', '16595d6b-b5f0-4b49-970d-2c26c691e66a', 'cc32f7fc-24d6-471a-a5d5-05962737468a', '5e0fb4f9-2b27-4c44-9e4a-71ae602dcebd', '8dd86c54-d5a5-11e7-bbd8-38d547b81379', '12', '32', '12', '2017-12-03 18:13:12', '2017-12-03 18:13:42', '1', '1', '富商大贾', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-03 11:55:36', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-03 11:55:36');
-INSERT INTO `e_machin_tea` VALUES ('55601ed9-d4c4-11e7-89ed-38d547b81379', '5382c8cc-27ad-4b2e-8842-b1d194403753', '4c23ef06-e0b5-49ae-947b-bb1ff3af9118', '9ea19fba-8765-48f7-8a8a-b5ea412bda2e', 'cc32f7fc-24d6-471a-a5d5-05962737468a', '3a235d7d-b242-4ede-862d-ef0ccee122a6', '8dd86c54-d5a5-11e7-bbd8-38d547b81379', '80', '32', '8', '2017-12-01 18:13:16', '2017-12-03 18:13:45', '2', '2', '加工步骤-杀青2', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-29 13:15:37', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-29 13:15:37');
-INSERT INTO `e_machin_tea` VALUES ('577fb690-d4c4-11e7-89ed-38d547b81379', '5382c8cc-27ad-4b2e-8842-b1d194403753', 'c416d2c1-10b1-4ce7-9666-d5e18c79a584', '8aa97837-a152-49be-98b8-47a11c3b1de4', 'e9ce4ae0-2c4e-4563-9292-ee7fe182fe4e', '5e0fb4f9-2b27-4c44-9e4a-71ae602dcebd', '9333b038-d5a5-11e7-bbd8-38d547b81379', '90', '45', '15', '2017-12-02 18:13:21', '2017-12-03 18:13:48', '3', '1', '加工步骤-杀青3', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-29 13:15:41', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-29 13:15:41');
+INSERT INTO `e_machin_tea` VALUES ('41d53d04-275d-4857-824e-665e1e8f569b', '4dc6f1b2-5bbb-4324-9d74-b318dab9e8a3', '8a3e0d08-ca66-48b7-9924-b98d98fd193d', '16595d6b-b5f0-4b49-970d-2c26c691e66a', 'cc32f7fc-24d6-471a-a5d5-05962737468a', '5e0fb4f9-2b27-4c44-9e4a-71ae602dcebd', '8dd86c54-d5a5-11e7-bbd8-38d547b81379', '12', '32', '12', '2017-12-03 18:13:12', '2017-12-03 19:13:42', '1', '1', '富商大贾', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-03 11:55:36', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-03 11:55:36');
+INSERT INTO `e_machin_tea` VALUES ('55601ed9-d4c4-11e7-89ed-38d547b81379', '5382c8cc-27ad-4b2e-8842-b1d194403753', '4c23ef06-e0b5-49ae-947b-bb1ff3af9118', '9ea19fba-8765-48f7-8a8a-b5ea412bda2e', 'cc32f7fc-24d6-471a-a5d5-05962737468a', '5e0fb4f9-2b27-4c44-9e4a-71ae602dcebd', '8dd86c54-d5a5-11e7-bbd8-38d547b81379', '80', '32', '8', '2017-12-01 18:13:16', '2017-12-03 18:13:45', '2', '2', '加工步骤-杀青2', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-29 13:15:37', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-29 13:15:37');
+INSERT INTO `e_machin_tea` VALUES ('577fb690-d4c4-11e7-89ed-38d547b81379', '5382c8cc-27ad-4b2e-8842-b1d194403753', 'c416d2c1-10b1-4ce7-9666-d5e18c79a584', '8aa97837-a152-49be-98b8-47a11c3b1de4', 'e9ce4ae0-2c4e-4563-9292-ee7fe182fe4e', '5e0fb4f9-2b27-4c44-9e4a-71ae602dcebd', '8dd86c54-d5a5-11e7-bbd8-38d547b81379', '90', '45', '15', '2017-12-02 18:13:21', '2017-12-03 18:13:48', '3', '1', '加工步骤-杀青3', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-29 13:15:41', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-29 13:15:41');
 INSERT INTO `e_machin_tea` VALUES ('e802bfa2-d4ae-11e7-89ed-38d547b81379', '4dc6f1b2-5bbb-4324-9d74-b318dab9e8a3', '4c23ef06-e0b5-49ae-947b-bb1ff3af9118', '16595d6b-b5f0-4b49-970d-2c26c691e66a', 'cc32f7fc-24d6-471a-a5d5-05962737468a', '3a235d7d-b242-4ede-862d-ef0ccee122a6', '04265198-d591-11e7-bbd8-38d547b81379', '13', '69', '50', '2017-11-30 18:13:25', '2017-12-03 18:13:51', '2', '3', '加工步骤-杀青4', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-29 10:43:04', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-29 10:43:09');
 INSERT INTO `e_machin_tea` VALUES ('eff69752-7dcd-4226-a0ca-7b84d3e7430e', '4dc6f1b2-5bbb-4324-9d74-b318dab9e8a3', 'e6cd00da-fb86-45c4-a0d5-766f781eacc8', 'c307d686-7dce-4b2f-9efb-16fbeb348de6', 'cc32f7fc-24d6-471a-a5d5-05962737468a', 'dc081d33-ee9d-4126-bcd5-9133ae82caf5', '9333b038-d5a5-11e7-bbd8-38d547b81379', '90', '8', '20', '2017-11-17 18:13:31', '2017-12-03 18:13:53', '1', '1', '成品黑茶最后一次烘干1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-29 17:04:39', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-29 17:04:39');
 
