@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-12-05 00:09:11
+Date: 2017-12-06 00:16:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -366,13 +366,6 @@ DROP TABLE IF EXISTS `e_quality`;
 CREATE TABLE `e_quality` (
   `id` varchar(36) NOT NULL DEFAULT '' COMMENT '自增id',
   `sampling_id` varchar(36) NOT NULL COMMENT '取样ID',
-  `process_batch_id` varchar(36) DEFAULT NULL COMMENT '加工批次ID',
-  `product_id` varchar(36) DEFAULT NULL COMMENT '产品ID',
-  `sampling_number` int(10) DEFAULT NULL COMMENT '取样基数',
-  `sampling_time` datetime DEFAULT NULL COMMENT '取样时间',
-  `machin_status` datetime DEFAULT NULL COMMENT '生产开始时间',
-  `machin_end` datetime DEFAULT NULL COMMENT '生产结束时间',
-  `dic_tea_grade` varchar(36) DEFAULT NULL COMMENT '等级',
   `dic_quality_type` varchar(36) DEFAULT NULL COMMENT '质检类型(字典)',
   `verify_quality` int(1) DEFAULT NULL COMMENT '质检审核(复检)',
   `verify_user` varchar(36) DEFAULT NULL COMMENT '复检员',
@@ -399,6 +392,7 @@ CREATE TABLE `e_quality` (
 -- ----------------------------
 -- Records of e_quality
 -- ----------------------------
+INSERT INTO `e_quality` VALUES ('5c79bda3-d8ca-11e7-8c51-38d547b81379', '5c79bda3-d8ca-11e7-8c51-38d547b81379', '1301e136-8d75-4e05-9fa3-06cbdcad1eea', null, null, null, '0', null, null, null, null, null, null, null, null, null, null, null, '', null, null, null);
 
 -- ----------------------------
 -- Table structure for e_sampling
@@ -409,13 +403,13 @@ CREATE TABLE `e_sampling` (
   `process_batch_id` varchar(36) DEFAULT NULL COMMENT '加工批次ID',
   `product_id` varchar(36) NOT NULL COMMENT '产品ID',
   `order_no` varchar(36) NOT NULL COMMENT '取样单号',
-  `sampling_number` int(10) NOT NULL COMMENT '取样数量',
+  `sampling_number` int(5) NOT NULL COMMENT '取样数量',
   `sampling_time` datetime NOT NULL COMMENT '取样时间',
   `machin_status` datetime DEFAULT NULL COMMENT '生产开始时间',
   `machin_end` datetime DEFAULT NULL COMMENT '生产结束时间',
   `dic_tea_grade` varchar(36) DEFAULT NULL COMMENT '等级(目标等级)',
   `operator_id` varchar(36) NOT NULL COMMENT '操作人',
-  `sampling_base` int(11) NOT NULL DEFAULT '0' COMMENT '取样基数',
+  `sampling_base` int(5) NOT NULL DEFAULT '0' COMMENT '取样基数',
   `description` varchar(300) DEFAULT NULL COMMENT '备注',
   `create_id` varchar(36) NOT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
@@ -428,6 +422,8 @@ CREATE TABLE `e_sampling` (
 -- Records of e_sampling
 -- ----------------------------
 INSERT INTO `e_sampling` VALUES ('5c79bda3-d8ca-11e7-8c51-38d547b81379', '04265198-d591-11e7-bbd8-38d547b81379', 'dc081d33-ee9d-4126-bcd5-9133ae82caf5', 'QY2017120416', '2', '2017-12-04 16:09:01', '2017-12-04 16:13:21', '2017-12-04 16:13:23', 'b1c94b1c-67e4-4e45-a516-0976fb142a81', 'Morgan', '1', '阿斯蒂芬', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-04 16:13:44', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-04 16:13:47');
+INSERT INTO `e_sampling` VALUES ('b289528b-77ca-4bde-b697-e4c4b5318d05', '04265198-d591-11e7-bbd8-38d547b81379', '3a235d7d-b242-4ede-862d-ef0ccee122a6', 'QY20171205228615', '2', '2017-12-05 22:44:36', '2017-11-30 18:13:25', '2017-12-03 18:13:51', '0fb92203-be20-4705-87e8-ae6862a91743', '你好啊', '12', '撒大声地', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-05 22:44:54', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-05 22:44:54');
+INSERT INTO `e_sampling` VALUES ('eebcdb93-4504-47b1-84b7-4632a5970fc2', '04265198-d591-11e7-bbd8-38d547b81379', '3a235d7d-b242-4ede-862d-ef0ccee122a6', 'QY20171205228815', '1', '2017-12-05 22:44:22', '2017-11-30 18:13:25', '2017-12-03 18:13:51', '65bac923-24d4-4a61-b933-ca3bd1fae8ae', '我', '12', '', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-05 22:44:29', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-05 22:44:29');
 
 -- ----------------------------
 -- Table structure for e_tea_garden

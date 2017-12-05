@@ -8,6 +8,8 @@ import com.panda.util.abs.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IDEA.
@@ -24,5 +26,15 @@ public class QualityServiceImpl extends AbstractServiceImpl<Quality> implements 
     @Override
     protected AbstractMapper<Quality> getAbstractMapper() {
         return qualityMapper;
+    }
+
+    /**
+     * 获取质检列表
+     * @param map
+     * @return
+     */
+    @Override
+    public List<Map> selectQualityDataList(Map map){
+        return qualityMapper.selectQualityDataList(map);
     }
 }

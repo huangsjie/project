@@ -3,6 +3,9 @@ package com.panda.service.origin;
 import com.panda.model.origin.Quality;
 import com.panda.util.abs.AbstractService;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created with IDEA.
  * User: Alan
@@ -10,4 +13,11 @@ import com.panda.util.abs.AbstractService;
  * Time: 15:15
  */
 public interface QualityService extends AbstractService<Quality> {
+
+    /**
+     * 获取质检列表
+     * @param map
+     * @return
+     */
+    List<Map> selectQualityDataList(Map map);
 }

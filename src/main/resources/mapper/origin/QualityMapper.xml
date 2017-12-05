@@ -374,4 +374,8 @@
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectQualityDataList" parameterType="map" resultType="map">
+    
+  </select>
 </mapper>
