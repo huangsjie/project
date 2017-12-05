@@ -258,4 +258,13 @@
     </if>
     ORDER BY tg.create_time ASC
   </select>
+
+  <!-- 根据茶园ID获取批次号信息-->
+  <select id="selectTeaGardenBatch" parameterType="java.lang.String" resultType="map">
+    SELECT * FROM e_manage_batch where
+    tea_garden_id = #{teaGardenId} GROUP BY id
+  </select>
+
+
+
 </mapper>

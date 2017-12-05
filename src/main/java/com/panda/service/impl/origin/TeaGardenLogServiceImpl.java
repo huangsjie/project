@@ -29,4 +29,11 @@ public class TeaGardenLogServiceImpl extends AbstractServiceImpl<TeaGardenLog> i
     public List<TeaGardenLog> selectTeaGardenLogList(Map map) {
         return teaGardenLogMapper.selectTeaGardenLogList(map);
     }
+
+
+    @Override
+    public Map selectByPrimaryKey1(String id){
+        return teaGardenLogMapper.selectByPrimaryKey1(id);
+    }
+
 }

@@ -129,6 +129,9 @@ var TeaGardenManage = function () {
                 farmTypeId: {
                     required: true
                 },
+                cultivarId: {
+                    required: true
+                },
                 farmDesc: {
                     required: true,
                     nameCheck:true
@@ -174,8 +177,10 @@ var TeaGardenManage = function () {
                     {id:id},
                     function (result) {
                         if(result.message){
+
                             $(".teaGardenLogEdit [name='id']").val(result.data.id)
                             $(".teaGardenLogEdit [name='teaGardenId']").val(result.data.teaGardenId)
+                            $(".teaGardenLogEdit #cultivarId").html("<option value=\"\"> 全部</option>")
                             $(".teaGardenLogEdit [name='farmTypeId']").val(result.data.farmTypeId)
                             $(".teaGardenLogEdit [name='farmDesc']").val(result.data.farmDesc)
                             $(".teaGardenLogEdit [name='operatorId']").val(result.data.operatorId)
@@ -188,8 +193,35 @@ var TeaGardenManage = function () {
             }
         })
     }
+
+    var getTeaGardenBatch = function(){
+        $("#teaGardenId").on("change",function () {
+            var teaGardenId = $(".teaGardenLogEdit .teaGardenId").val(),html = "";
+            blockUiOpen('.teaGardenLogEdit .modal-content');
+            request(
+                "getTeaGardenBatch",
+                'get',
+                {teaGardenId:teaGardenId},
+                function (result) {
+                    if(result.message){
+                        console.log(result.data);
+                        if (result.data.length > 0){
+                            $.each(result.data, function (i, n) {
+                                html += "<option value="+n.id+"> "+n.batch_number+" </option>";
+                            });
+                        }
+                        $("#cultivarId").html(html);
+                        blockUiClose('.teaGardenLogEdit .modal-content',0,".close-parent",0);
+                    }else{
+                        $("#cultivarId").html("<option value=\"\"> 全部 </option>");
+                        ToastrMsg(result.data,"error","topRight",'.teaGardenLogEdit .modal-content');
+                    }
+                })
+        })
+    }
+
     /**
-     * 删除角色
+     * 删除
      */
     var delTeaGardenItem = function () {
         $("#tea_garden_manage_list ").on("click", ".delTeaGardenLogItem", function () {
@@ -273,6 +305,7 @@ var TeaGardenManage = function () {
             datetimepickerSelect();
             delTeaGardenItem();
             addTeaGardenLog();
+            getTeaGardenBatch();
         }
     };
 }();

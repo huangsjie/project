@@ -13,4 +13,6 @@ public interface TeaGardenLogMapper extends AbstractMapper<TeaGardenLog> {
      * @return
      */
     List<TeaGardenLog> selectTeaGardenLogList(Map map);
+
+    Map selectByPrimaryKey1(String id);
 }

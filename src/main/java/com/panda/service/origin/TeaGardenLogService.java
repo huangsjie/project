@@ -13,4 +13,7 @@ public interface TeaGardenLogService extends AbstractService<TeaGardenLog> {
      * @return
      */
     List<TeaGardenLog> selectTeaGardenLogList(Map map);
+
+   //
+    Map  selectByPrimaryKey1(String id);
 }

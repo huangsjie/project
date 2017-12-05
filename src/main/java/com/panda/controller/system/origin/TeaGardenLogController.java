@@ -177,7 +177,7 @@ public class TeaGardenLogController {
                 teaGardenLog.setCreateTime(new Date());
                 teaGardenLog.setModifyId(user.getId());
                 teaGardenLog.setModifyTime(new Date());
-                teaGardenLog.setCultivarId(UUID.randomUUID().toString());
+                //teaGardenLog.setCultivarId(UUID.randomUUID().toString());
                 teaGardenLog.setStatus(1);
                 int insert = teaGardenLogService.insertSelective(teaGardenLog);
                 if(insert > 0){
@@ -223,4 +223,37 @@ public class TeaGardenLogController {
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
+
+
+    /**
+     * 根据茶园ID获取批次号
+     * @param request
+     * @param teaGardenId
+     * @return
+     */
+    @RequestMapping(value = "/getTeaGardenBatch")
+    @ResponseBody
+    public Object getTeaGardenBatch(HttpServletRequest request,String teaGardenId){
+        message = false;
+        data    = null;
+        try {
+            if (!teaGardenId.isEmpty()){
+                List<Map> map = teaGardenService.selectTeaGardenBatch(teaGardenId);
+                if (map != null && map.size() > 0){
+                    message = true;
+                    data    = map;
+                }else{
+                    data    = "未获取到该批次的数据.";
+                }
+            }else{
+                data = ResultStateUtil.ERROR_PARAMETER_NO_TCOMPATIBLE;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            data    = ResultStateUtil.ERROR_QUERY;
+        }
+        return ResultMsgUtil.getResultMsg(message,data);
+    }
+
+
 }

@@ -21,4 +21,11 @@ public interface TeaGardenMapper extends AbstractMapper<TeaGarden> {
      */
     List<Map> selectTeaGardenNameAndId(Map map);
 
+    /**
+     * 根据茶园ID获取对应批次号信息
+     * @param teaGardenId
+     * @return
+     */
+    List<Map> selectTeaGardenBatch(String teaGardenId);
+
 }
