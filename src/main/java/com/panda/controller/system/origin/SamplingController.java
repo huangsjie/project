@@ -149,7 +149,7 @@ public class SamplingController {
         data    = null;
         if (!id.isEmpty()){
             try {
-                Sampling sampling = samplingService.selectByPrimaryKey(id);
+                Map sampling = samplingService.selectByPrimaryKeyAndProductName(id);
                 if(sampling != null){
                     message = true;
                     data = sampling;

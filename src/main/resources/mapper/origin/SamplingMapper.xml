@@ -245,4 +245,21 @@
     </if>
     ORDER BY s.create_time DESC
   </select>
+  <!-- 获取取样记录 -->
+
+  <!-- 获取取样记录和产品名称信息 -->
+  <select id="selectByPrimaryKeyAndProductName" resultType="map" parameterType="java.lang.String">
+    SELECT
+      s.id, s.process_batch_id processBatchId, s.product_id productId,
+      s.order_no orderNo, s.sampling_number samplingNumber, s.sampling_time samplingTime,
+      s.machin_status machinStatus, s.machin_end machinEnd, s.dic_tea_grade dicTeaGrade,
+      s.operator_id operatorId, s.sampling_base samplingBase, s.description description,
+      s.create_id createId, s.create_time createTime, s.modify_id modifyId, s.modify_time modifyTime,
+      p.name productName
+    FROM
+        e_sampling s
+        LEFT JOIN c_products p ON s.product_id = p.id
+        where s.id = #{id}
+  </select>
+  <!-- 获取取样记录和产品名称信息 -->
 </mapper>

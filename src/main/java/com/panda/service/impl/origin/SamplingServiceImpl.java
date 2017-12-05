@@ -37,4 +37,14 @@ public class SamplingServiceImpl extends AbstractServiceImpl<Sampling> implement
     public List<Map> selectSamplingDataList(Map map){
         return samplingMapper.selectSamplingDataList(map);
     }
+
+    /**
+     * 获取取样记录和产品名称信息
+     * @param id
+     * @return
+     */
+    @Override
+    public Map selectByPrimaryKeyAndProductName(String id){
+        return samplingMapper.selectByPrimaryKeyAndProductName(id);
+    }
 }

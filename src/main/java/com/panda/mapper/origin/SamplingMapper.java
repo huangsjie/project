@@ -15,4 +15,11 @@ public interface SamplingMapper extends AbstractMapper<Sampling> {
      */
     List<Map> selectSamplingDataList(Map map);
 
+    /**
+     * 获取取样记录和产品名称信息
+     * @param id
+     * @return
+     */
+    Map selectByPrimaryKeyAndProductName(String id);
+
 }

@@ -90,15 +90,12 @@ var Sampling = function () {
     var SamplingInfoForm = function () {
         $( "#sampling_edit_form" ).validate({
             rules: {
-                name: {
-                    required: true,
-                    nameCheck:true
-                },
-                teaGrade:{required: true,},
-                gardenType:{required: true,},
-                area:{required: true,},
-                acreage:{required: true,},
-                ageLimit:{required: true,number:true},
+                processBatchId: {required: true},// nameCheck:true
+                samplingBase:{required: true,digits:true,maxlength:3},
+                samplingNumber:{required: true,digits:true,maxlength:3},
+                operatorId:{required: true, nameCheck:true},
+                orderNo:{required: true,alphanumerical:true},
+                samplingTime:{required: true,date:true}
             },
 
             submitHandler: function (form){
@@ -112,11 +109,10 @@ var Sampling = function () {
                             removeValue('add');
                             blockUiClose('.samplingEditModal .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
-                            ;
+                            location.reload();
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }
-
                     }
                 )
             }
@@ -134,10 +130,22 @@ var Sampling = function () {
             $(".samplingEditModal .modal-title").text("取样新增")
             $(".samplingEditModal [name='save']").val('add');
         }
-        $(".samplingEditModal [name='id']").val('')
-        $(".samplingEditModal [name='name']").val('')
+        $(".samplingEditModal [name='id']").val('');
+        $(".samplingEditModal [name='name']").val('');
+        $(".samplingEditModal [name='dicTeaGrade']").val('');
+        $(".samplingEditModal #productId").val('');
+        $(".samplingEditModal [name='productId']").val('');
+        $(".samplingEditModal #machinStatus").val('');
+        $(".samplingEditModal [name='machinStatus']").val('');
+        $(".samplingEditModal #machinEnd").val('');
+        $(".samplingEditModal [name='machinEnd']").val('');
+        $(".samplingEditModal [name='orderNo']").val('');
+        $(".samplingEditModal [name='samplingTime']").val('');
         $(".samplingEditModal [name='description']").val('');
-        $(".samplingEditModal .form-control-feedback").remove()
+        $(".samplingEditModal [name='samplingBase']").val('');
+        $(".samplingEditModal [name='samplingNumber']").val('');
+        $(".samplingEditModal [name='operatorId']").val('');
+        $(".samplingEditModal .form-control-feedback").remove();
         $(".samplingEditModal div").removeClass("has-danger")
         $(".samplingEditModal div").removeClass("has-success")
     }
@@ -165,15 +173,27 @@ var Sampling = function () {
                     {id:id},
                     function (result) {
                         if(result.message){
-                            $("#sampling_edit_form [name='id']").val(result.data.id)
-                            $("#sampling_edit_form [name='name']").val(result.data.name)
-                            $("#sampling_edit_form [name='teaGrade']").val(result.data.teaGrade)
-                            $("#sampling_edit_form [name='gardenType']").val(result.data.gardenType)
-                            $("#sampling_edit_form [name='area']").val(result.data.area)
-                            $("#sampling_edit_form [name='acreage']").val(result.data.acreage)
-                            $("#sampling_edit_form [name='ageLimit']").val(result.data.ageLimit)
-                            $("#sampling_edit_form [name='sortId']").val(result.data.sortId)
-                            $("#sampling_edit_form [name='description']").val(result.data.description)
+                            console.log(result);
+                            //showMachinTeaData(result.data.processBatchId,'.samplingEditModal .modal-content')
+                            $(".samplingEditModal #productId").val(result.data.productName);
+                            $(".samplingEditModal [name='productId']").val(result.data.productId);
+                            $(".samplingEditModal #machinStatus").val(result.data.machinStatus);
+                            $(".samplingEditModal [name='machinStatus']").val(result.data.machinStatus);
+                            $(".samplingEditModal #machinEnd").val(result.data.machinEnd);
+                            $(".samplingEditModal [name='machinEnd']").val(result.data.machinEnd);
+                            $(".samplingEditModal [name='processBatchId']").val(result.data.processBatchId);
+                            $(".samplingEditModal [name='orderNo']").val(result.data.orderNo);
+                            $(".samplingEditModal [name='samplingTime']").val(result.data.samplingTime);
+
+                            $(".samplingEditModal [name='id']").val(result.data.id)
+                            $(".samplingEditModal [name='name']").val(result.data.name)
+                            $(".samplingEditModal [name='teaGrade']").val(result.data.teaGrade)
+                            $(".samplingEditModal [name='dicTeaGrade']").val(result.data.dicTeaGrade)
+                            $(".samplingEditModal [name='samplingTime']").val(result.data.samplingTime)
+                            $(".samplingEditModal [name='samplingNumber']").val(result.data.samplingNumber)
+                            $(".samplingEditModal [name='samplingBase']").val(result.data.samplingBase)
+                            $(".samplingEditModal [name='operatorId']").val(result.data.operatorId)
+                            $(".samplingEditModal [name='description']").val(result.data.description)
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }
@@ -182,29 +202,14 @@ var Sampling = function () {
         })
     }
 
+    /**
+     * 触发茶叶加工明文信息
+     */
     var getMachinTeaData = function(){
         $(".samplingEditModal .processBatchId").on("change",function () {
             var processBatchId = $(".samplingEditModal .processBatchId").val();
             blockUiOpen('.samplingEditModal .modal-content');
-            request(
-                "getMachinTeaData",
-                'get',
-                {processBatchId:processBatchId},
-                function (result) {
-                    if(result.message){
-                        $(".samplingEditModal #productId").val(result.data.productName);
-                        $(".samplingEditModal [name='productId']").val(result.data.productId);
-                        $(".samplingEditModal #machinStatus").val(result.data.machinStatus);
-                        $(".samplingEditModal [name='machinStatus']").val(result.data.machinStatus);
-                        $(".samplingEditModal #machinEnd").val(result.data.machinEnd);
-                        $(".samplingEditModal [name='machinEnd']").val(result.data.machinEnd);
-                        $(".samplingEditModal [name='orderNo']").val(result.data.orderNo);
-                        $(".samplingEditModal [name='samplingTime']").val(result.data.samplingTime);
-                        blockUiClose('.samplingEditModal .modal-content',0,".close-parent",0);
-                    }else{
-                        ToastrMsg(result.data,"error","topRight",'.samplingEditModal .modal-content');
-                    }
-                })
+            showMachinTeaData(processBatchId,'.samplingEditModal .modal-content')
         })
     }
 
@@ -232,6 +237,31 @@ var Sampling = function () {
                     })
             }
         })
+    }
+    /**
+     * 显示茶叶加工明文信息
+     */
+    var showMachinTeaData = function (processBatchId,closeBlockAttr) {
+        request(
+            "getMachinTeaData",
+            'get',
+            {processBatchId:processBatchId},
+            function (result) {
+                if(result.message){
+                    $(".samplingEditModal #productId").val(result.data.productName);
+                    $(".samplingEditModal [name='productId']").val(result.data.productId);
+                    $(".samplingEditModal #machinStatus").val(result.data.machinStatus);
+                    $(".samplingEditModal [name='machinStatus']").val(result.data.machinStatus);
+                    $(".samplingEditModal #machinEnd").val(result.data.machinEnd);
+                    $(".samplingEditModal [name='machinEnd']").val(result.data.machinEnd);
+                    $(".samplingEditModal [name='orderNo']").val(result.data.orderNo);
+                    $(".samplingEditModal [name='samplingTime']").val(result.data.samplingTime);
+                    blockUiClose(closeBlockAttr,0,".close-parent",0);
+                }else{
+                    removeValue('add');
+                    ToastrMsg(result.data,"danger","topRight",closeBlockAttr);
+                }
+            })
     }
 
     /**

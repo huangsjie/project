@@ -6,7 +6,7 @@ var TeaGarden = function () {
                 type: 'remote',
                 source: {
                     read: {
-                        url: '/system/origin/getTeaGardenDataList'
+                        url: 'getTeaGardenDataList'
                     }
                 },
                 pageSize: 10,

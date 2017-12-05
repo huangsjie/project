@@ -20,4 +20,11 @@ public interface SamplingService extends AbstractService<Sampling> {
      * @return
      */
     List<Map> selectSamplingDataList(Map map);
+
+    /**
+     * 获取取样记录和产品名称信息
+     * @param id
+     * @return
+     */
+    Map selectByPrimaryKeyAndProductName(String id);
 }
