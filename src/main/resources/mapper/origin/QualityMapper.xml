@@ -351,4 +351,34 @@
     LEFT JOIN e_process_batch pb ON bs.processBatchId = pb.id
   </select>
   <!-- 查询质检记录 -->
+  <!-- 查询单条质检记录 -->
+  <select id="selectQualityDataMap" resultType="map" parameterType="java.lang.String">
+    select q.id qid,
+      q.sampling_id,
+      q.dic_tea_grade,
+      q.dic_quality_type,
+      q.verify_quality,
+      q.verify_user,
+      q.verify_time,
+      q.quality_status,
+      q.quality_user,
+      q.quality_time,
+      q.net_content,
+      q.tea_crumble,
+      q.water_content,
+      q.quality_cable,
+      q.quality_color_lustre,
+      q.quality_cleanliness,
+      q.quality_aroma,
+      q.quality_taste,
+      q.quality_colour,
+      q.description,
+      q.create_id,
+      q.create_time,
+      q.modify_id,
+      q.modify_time
+    from e_quality q
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <!-- 查询单条质检记录 -->
 </mapper>

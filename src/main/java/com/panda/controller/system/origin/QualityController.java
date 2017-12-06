@@ -184,10 +184,16 @@ public class QualityController {
         data    = null;
         if (!id.isEmpty()){
             try {
-                Quality quality = qualityService.selectByPrimaryKey(id);
-                if(quality != null){
-                    message = true;
-                    data = quality;
+                Map quality = qualityService.selectQualityDataMap(id);
+                if(quality != null && quality.size() > 0){
+                    Map sampling = samplingService.selectByPrimaryKeyAndProductName(quality.get("sampling_id").toString());
+                    if (sampling != null && sampling.size() >0){
+                        quality.putAll(sampling);
+                        message = true;
+                        data = quality;
+                    }else{
+                        data = ResultStateUtil.ERROR_DATABASE_OPERATION;
+                    }
                 }else{
                     data = ResultStateUtil.ERROR_QUERY;
                 }
@@ -215,6 +221,8 @@ public class QualityController {
         data    = null;
         try{
             if(!quality.getId().isEmpty() && save.equals("edit")){
+                quality.setModifyId(user.getId());
+                quality.setModifyTime(new Date());
                 int i = qualityService.updateByPrimaryKeySelective(quality);
                 if(i > 0){
                     message = true;

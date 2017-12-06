@@ -20,4 +20,11 @@ public interface QualityService extends AbstractService<Quality> {
      * @return
      */
     List<Map> selectQualityDataList(Map map);
+
+    /**
+     * 获取单条质检记录
+     * @param id
+     * @return
+     */
+    Map selectQualityDataMap(String id);
 }

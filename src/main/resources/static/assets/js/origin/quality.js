@@ -117,9 +117,9 @@ var Quality = function () {
                 dicTeaGrade:{required: true},
                 qualityTime:{required: true,date:true},
                 verifyTime:{required: true,date:true},
-                netContent:{required: true,digits:true,maxlength:2},
-                teaCrumble:{required: true,digits:true,maxlength:2},
-                waterContent:{required: true,digits:true,maxlength:2},
+                netContent:{required: true},
+                teaCrumble:{required: true},
+                waterContent:{required: true},
             },
 
             submitHandler: function (form){
@@ -130,10 +130,9 @@ var Quality = function () {
                     $("#quality_edit_form").serialize(),
                     function(result){
                         if(result.message){
-                            removeValue('add');
                             blockUiClose('.qualityEditModal .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
-                            location.reload();
+                            location.reload()
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }
@@ -150,7 +149,7 @@ var Quality = function () {
         if(type == 'edit'){
             $(".qualityEditModal .modal-title").text("质检编辑");
             $(".qualityEditModal [name='save']").val('edit');
-            $(".qualityEditModal #samplingId").attr("disabled",true)
+            //$(".qualityEditModal #samplingId").attr("disabled",true)
             $(".qualityEditModal .qualityCheck input").attr("disabled",true);
             $(".qualityEditModal .verifyCheck").removeClass("m--hide");
             $(".qualityEditModal [name='verifyQuality']").attr("disabled",false);
@@ -167,20 +166,32 @@ var Quality = function () {
             $(".qualityEditModal [name='verifyTime']").attr("disabled",true);
         }
         $(".qualityEditModal [name='id']").val('');
-        $(".qualityEditModal [name='name']").val('');
-
-        $(".qualityEditModal #productId").val('');
-        $(".qualityEditModal [name='productId']").val('');
+        $(".qualityEditModal #productName").val('');
         $(".qualityEditModal #machinStatus").val('');
-        $(".qualityEditModal [name='machinStatus']").val('');
         $(".qualityEditModal #machinEnd").val('');
-        $(".qualityEditModal [name='machinEnd']").val('');
-        $(".qualityEditModal [name='orderNo']").val('');
-        $(".qualityEditModal [name='QualityTime']").val('');
+        $(".qualityEditModal #samplingBase").val('');
+        $(".qualityEditModal #samplingNumber").val('');
+        $(".qualityEditModal #samplingTime").val('');
+        $(".qualityEditModal #operatorId").val('');
+        $(".qualityEditModal [name='qualityAroma']").val('');
+        $(".qualityEditModal [name='qualityTaste']").val('');
+        $(".qualityEditModal [name='qualityColour']").val('');
         $(".qualityEditModal [name='description']").val('');
-        $(".qualityEditModal [name='QualityBase']").val('');
-        $(".qualityEditModal [name='QualityNumber']").val('');
-        $(".qualityEditModal [name='operatorId']").val('');
+        $(".qualityEditModal [name='qualityCable']").val('');
+        $(".qualityEditModal [name='qualityColorLustre']").val('');
+        $(".qualityEditModal [name='qualityCleanliness']").val('');
+        $(".qualityEditModal [name='dicQualityType']").val('');
+        $(".qualityEditModal [name='samplingId']").val('');
+        $(".qualityEditModal [name='dicTeaGrade']").val('');
+        $(".qualityEditModal [name='netContent']").val('');
+        $(".qualityEditModal [name='teaCrumble']").val('');
+        $(".qualityEditModal [name='waterContent']").val('');
+        $(".qualityEditModal [name='qualityStatus']").attr("checked",false);//单选-质检
+        $(".qualityEditModal [name='qualityUser']").val('');
+        $(".qualityEditModal [name='qualityTime']").val('');
+        $(".qualityEditModal [name='verifyQuality']").attr("checked",false);//单选-质检
+        $(".qualityEditModal [name='verifyUser']").val('');
+        $(".qualityEditModal [name='verifyTime']").val('');
         $(".qualityEditModal .form-control-feedback").remove();
         $(".qualityEditModal div").removeClass("has-danger")
         $(".qualityEditModal div").removeClass("has-success")
@@ -196,7 +207,7 @@ var Quality = function () {
     }
 
     /**
-     * 获取角色信息,并移除上一轮错误信息
+     * 获取信息,并移除上一轮错误信息
      */
     var editQualityItem = function () {
         $("#quality_list").on("click", ".editQualityItem", function () {
@@ -209,26 +220,34 @@ var Quality = function () {
                     {id:id},
                     function (result) {
                         if(result.message){
-                            //showMachinTeaData(result.data.processBatchId,'.qualityEditModal .modal-content')
-                            $(".qualityEditModal #productId").val(result.data.productName);
-                            $(".qualityEditModal [name='productId']").val(result.data.productId);
+                            console.log(result.data)
+                            $(".qualityEditModal [name='id']").val(result.data.qid);
+                            $(".qualityEditModal #productName").val(result.data.productName);
                             $(".qualityEditModal #machinStatus").val(result.data.machinStatus);
-                            $(".qualityEditModal [name='machinStatus']").val(result.data.machinStatus);
                             $(".qualityEditModal #machinEnd").val(result.data.machinEnd);
-                            $(".qualityEditModal [name='machinEnd']").val(result.data.machinEnd);
-                            $(".qualityEditModal [name='processBatchId']").val(result.data.processBatchId);
-                            $(".qualityEditModal [name='orderNo']").val(result.data.orderNo);
-                            $(".qualityEditModal [name='QualityTime']").val(result.data.QualityTime);
-
-                            $(".qualityEditModal [name='id']").val(result.data.id)
-                            $(".qualityEditModal [name='name']").val(result.data.name)
-                            $(".qualityEditModal [name='teaGrade']").val(result.data.teaGrade)
-                            $(".qualityEditModal [name='dicTeaGrade']").val(result.data.dicTeaGrade)
-                            $(".qualityEditModal [name='QualityTime']").val(result.data.QualityTime)
-                            $(".qualityEditModal [name='QualityNumber']").val(result.data.QualityNumber)
-                            $(".qualityEditModal [name='QualityBase']").val(result.data.QualityBase)
-                            $(".qualityEditModal [name='operatorId']").val(result.data.operatorId)
-                            $(".qualityEditModal [name='description']").val(result.data.description)
+                            $(".qualityEditModal #samplingBase").val(result.data.samplingBase);
+                            $(".qualityEditModal #samplingNumber").val(result.data.samplingNumber);
+                            $(".qualityEditModal #samplingTime").val(result.data.samplingTime);
+                            $(".qualityEditModal #operatorId").val(result.data.operatorId);
+                            $(".qualityEditModal [name='dicTeaGrade']").val(result.data.dic_tea_grade);
+                            $(".qualityEditModal [name='qualityAroma']").val(result.data.quality_aroma);
+                            $(".qualityEditModal [name='qualityTaste']").val(result.data.quality_taste);
+                            $(".qualityEditModal [name='qualityColour']").val(result.data.quality_colour);
+                            $(".qualityEditModal [name='description']").val(result.data.description);
+                            $(".qualityEditModal [name='qualityCable']").val(result.data.quality_cable);
+                            $(".qualityEditModal [name='qualityColorLustre']").val(result.data.quality_color_lustre);
+                            $(".qualityEditModal [name='qualityCleanliness']").val(result.data.quality_cleanliness);
+                            $(".qualityEditModal [name='dicQualityType']").val(result.data.dic_quality_type);
+                            $(".qualityEditModal [name='samplingId']").val(result.data.sampling_id);
+                            $(".qualityEditModal [name='netContent']").val(result.data.net_content);
+                            $(".qualityEditModal [name='teaCrumble']").val(result.data.tea_crumble);
+                            $(".qualityEditModal [name='waterContent']").val(result.data.water_content);
+                            $(".qualityEditModal [name='qualityStatus'][value='"+result.data.quality_status+"']").click();//单选-质检
+                            $(".qualityEditModal [name='verifyQuality'][value='"+result.data.verify_quality+"']").click();//单选-质检
+                            $(".qualityEditModal [name='qualityUser']").val(result.data.quality_user);
+                            $(".qualityEditModal [name='qualityTime']").val(result.data.quality_time);
+                            $(".qualityEditModal [name='verifyUser']").val(result.data.verify_user);
+                            $(".qualityEditModal [name='verifyTime']").val(result.data.verify_time);
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }

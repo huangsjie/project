@@ -37,4 +37,14 @@ public class QualityServiceImpl extends AbstractServiceImpl<Quality> implements 
     public List<Map> selectQualityDataList(Map map){
         return qualityMapper.selectQualityDataList(map);
     }
+
+    /**
+     * 获取单条质检记录
+     * @param id
+     * @return
+     */
+    @Override
+    public Map selectQualityDataMap(String id){
+        return qualityMapper.selectQualityDataMap(id);
+    }
 }
