@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-12-06 00:16:16
+Date: 2017-12-06 18:27:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -306,6 +306,27 @@ CREATE TABLE `e_manage_batch` (
 INSERT INTO `e_manage_batch` VALUES ('225a6caa-43db-41ff-a9d2-56e03186eb94', 'GLXST000001', '8893e29b-d37b-11e7-b5d6-24fd52935962', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-30 09:27:46', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-30 09:27:46', '1');
 
 -- ----------------------------
+-- Table structure for e_origin_batch
+-- ----------------------------
+DROP TABLE IF EXISTS `e_origin_batch`;
+CREATE TABLE `e_origin_batch` (
+  `id` varchar(36) NOT NULL DEFAULT '' COMMENT '自增id',
+  `origin_set_id` varchar(36) NOT NULL COMMENT '溯源设置表ID',
+  `origin_info_id` varchar(36) NOT NULL COMMENT '溯源信息ID',
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
+  `description` varchar(300) DEFAULT NULL COMMENT '备注',
+  `create_id` varchar(36) NOT NULL COMMENT '仓库位置',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `modify_id` varchar(36) NOT NULL COMMENT '修改人',
+  `modify_time` datetime NOT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of e_origin_batch
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for e_origin_img
 -- ----------------------------
 DROP TABLE IF EXISTS `e_origin_img`;
@@ -331,6 +352,44 @@ CREATE TABLE `e_origin_img` (
 
 -- ----------------------------
 -- Records of e_origin_img
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for e_origin_info
+-- ----------------------------
+DROP TABLE IF EXISTS `e_origin_info`;
+CREATE TABLE `e_origin_info` (
+  `id` int(36) NOT NULL,
+  `title` varchar(200) NOT NULL COMMENT '标题',
+  `dic_origin_type` varchar(36) NOT NULL COMMENT '溯源类型',
+  `content` text NOT NULL COMMENT '内容',
+  `thumbnail` varchar(200) NOT NULL COMMENT '缩略图',
+  `status` int(1) NOT NULL COMMENT '状态',
+  `sort_id` int(1) NOT NULL COMMENT '排序ID',
+  `description` varchar(200) NOT NULL COMMENT '简介',
+  `origin_batch` varchar(36) NOT NULL COMMENT '溯源批次号',
+  `create_id` varchar(36) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `modify_id` varchar(36) NOT NULL,
+  `modify_time` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of e_origin_info
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for e_origin_set
+-- ----------------------------
+DROP TABLE IF EXISTS `e_origin_set`;
+CREATE TABLE `e_origin_set` (
+  `id` varchar(36) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of e_origin_set
 -- ----------------------------
 
 -- ----------------------------
@@ -366,13 +425,14 @@ DROP TABLE IF EXISTS `e_quality`;
 CREATE TABLE `e_quality` (
   `id` varchar(36) NOT NULL DEFAULT '' COMMENT '自增id',
   `sampling_id` varchar(36) NOT NULL COMMENT '取样ID',
-  `dic_quality_type` varchar(36) DEFAULT NULL COMMENT '质检类型(字典)',
-  `verify_quality` int(1) DEFAULT NULL COMMENT '质检审核(复检)',
+  `dic_tea_grade` varchar(36) NOT NULL COMMENT '茶叶等级',
+  `dic_quality_type` varchar(36) NOT NULL COMMENT '质检类型(字典)',
+  `verify_quality` int(1) DEFAULT '0' COMMENT '质检审核(复检)0未复检， 1,合格，2不合格',
   `verify_user` varchar(36) DEFAULT NULL COMMENT '复检员',
   `verify_time` datetime DEFAULT NULL COMMENT '复检时间',
-  `quality_status` int(1) NOT NULL DEFAULT '0' COMMENT '质检状态 1合格，2不合格',
-  `quality_user` varchar(36) DEFAULT NULL COMMENT '质检员',
-  `quality_time` datetime DEFAULT NULL COMMENT '质检时间',
+  `quality_status` int(1) NOT NULL DEFAULT '0' COMMENT '质检状态,0未检， 1合格，2不合格',
+  `quality_user` varchar(36) NOT NULL COMMENT '质检员',
+  `quality_time` datetime NOT NULL COMMENT '质检时间',
   `net_content` varchar(50) DEFAULT NULL COMMENT '净重（净含量）',
   `tea_crumble` varchar(50) DEFAULT NULL COMMENT '碎末(茶叶灰)',
   `water_content` varchar(50) DEFAULT NULL COMMENT '水份量(含水量)',
@@ -382,17 +442,19 @@ CREATE TABLE `e_quality` (
   `quality_aroma` varchar(100) DEFAULT NULL COMMENT '内质-香气',
   `quality_taste` varchar(100) DEFAULT NULL COMMENT '内质-滋味(口感)',
   `quality_colour` varchar(100) DEFAULT NULL COMMENT '内质-汤色',
+  `description` varchar(200) DEFAULT NULL,
   `create_id` varchar(36) NOT NULL COMMENT '创建人',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `modify_id` varchar(36) DEFAULT NULL COMMENT '修改人',
-  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `modify_id` varchar(36) NOT NULL COMMENT '修改人',
+  `modify_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of e_quality
 -- ----------------------------
-INSERT INTO `e_quality` VALUES ('5c79bda3-d8ca-11e7-8c51-38d547b81379', '5c79bda3-d8ca-11e7-8c51-38d547b81379', '1301e136-8d75-4e05-9fa3-06cbdcad1eea', null, null, null, '0', null, null, null, null, null, null, null, null, null, null, null, '', null, null, null);
+INSERT INTO `e_quality` VALUES ('06f9e0cc-e096-466d-91a0-20eca01cced1', '5c79bda3-d8ca-11e7-8c51-38d547b81379', '74125ba6-0ec1-4286-b9c2-f56d95fe4ac4', '1301e136-8d75-4e05-9fa3-06cbdcad1eea', '2', '狐疑的', '2017-12-06 16:31:54', '1', '湿度', '2017-12-06 15:12:09', '1', '2', '3', '1', '2', '3', '4', '5', '6', '阿斯蒂芬', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-06 15:25:38', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-06 17:08:50');
+INSERT INTO `e_quality` VALUES ('c09728df-da61-11e7-a489-38d547b81379', '5c79bda3-d8ca-11e7-8c51-38d547b81379', '74125ba6-0ec1-4286-b9c2-f56d95fe4ac4', '1301e136-8d75-4e05-9fa3-06cbdcad1eea', '1', 'sdf', '2017-12-06 16:31:54', '1', 'Alan', '2017-12-05 09:49:38', '1', '2', '3', '1', '2', '3', '4', '5', '6', '阿斯蒂芬', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-06 09:51:24', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-06 17:08:00');
 
 -- ----------------------------
 -- Table structure for e_sampling
@@ -485,27 +547,6 @@ INSERT INTO `e_tea_garden_log` VALUES ('b90c7f48-d37e-11e7-b5d6-24fd52935962', '
 INSERT INTO `e_tea_garden_log` VALUES ('dfd71c53-d403-11e7-99a0-38d547b81379', '8893e29b-d37b-11e7-b5d6-24fd52935962', 'd687763c-2a2e-41a7-b57d-71e9caebf579', '张师傅说茶树长虫了', 'de639eec-dd97-497a-953d-7246247aec95', '2017-11-27 22:25:37', '2017-11-27 22:25:39', '张师傅', '1', '阿斯顿发生', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 14:17:57', 'b90c7f48-d37e-11e7-b5d6-24fd52935962', '2017-11-28 14:17:57');
 INSERT INTO `e_tea_garden_log` VALUES ('e109fb5b-d403-11e7-99a0-38d547b81379', '249a802b-d37c-11e7-b5d6-24fd52935962', 'd5bbd9b5-91c4-48c2-b5f8-0c7328f8902f', '李师傅今天在除草', 'de639eec-dd97-497a-953d-7246247aec95', '2017-11-27 22:25:37', '2017-11-27 22:25:39', '李师傅', '1', '阿斯顿发生', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 14:17:59', 'b90c7f48-d37e-11e7-b5d6-24fd52935962', '2017-11-28 14:17:59');
 INSERT INTO `e_tea_garden_log` VALUES ('e31b19dd-d403-11e7-99a0-38d547b81379', '249a802b-d37c-11e7-b5d6-24fd52935962', '5fe37095-7d9a-4235-914f-cf0c6f1e592a', '隔壁老王今天不见了', 'de639eec-dd97-497a-953d-7246247aec95', '2017-11-27 22:25:37', '2017-11-27 22:25:39', '隔壁老王', '1', '阿斯顿发生', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-28 14:18:03', 'b90c7f48-d37e-11e7-b5d6-24fd52935962', '2017-11-28 14:18:03');
-
--- ----------------------------
--- Table structure for e_warehouse
--- ----------------------------
-DROP TABLE IF EXISTS `e_warehouse`;
-CREATE TABLE `e_warehouse` (
-  `id` varchar(36) NOT NULL DEFAULT '' COMMENT '自增id',
-  `name` varchar(50) NOT NULL COMMENT '农事名称',
-  `create_id` varchar(36) NOT NULL COMMENT '创建人',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `modify_id` varchar(36) DEFAULT NULL COMMENT '修改人',
-  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
-  `description` varchar(300) DEFAULT NULL COMMENT '备注',
-  `area` varchar(100) DEFAULT NULL COMMENT '仓库位置',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of e_warehouse
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for s_dictionary
@@ -653,6 +694,7 @@ INSERT INTO `s_menu` VALUES ('96e55b56-ab35-4774-a248-14a683a932e7', '2', '33fb6
 INSERT INTO `s_menu` VALUES ('97ea6edb-1178-11e5-a9de-000c29d7a3a0', '9', '10000000-0000-0000-0000-100000000000', '财务管理', '/system/demand/index', '1', 'flaticon-coins', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '财务结算中心');
 INSERT INTO `s_menu` VALUES ('b17105b9-8da9-47b7-a4b1-7dbcfa60d250', '1', '68522995-30dc-4fb0-97d8-7468e6af4853', '产品二级', '/index/products/list', null, 'flaticon-location', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-01 14:37:52', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-01 15:48:13', '产品二级');
 INSERT INTO `s_menu` VALUES ('b4a121a8-5e4d-41f8-b4a0-672eebb0a74d', '4', '10000000-0000-0000-0000-100000000000', '茶园管理', '/system/origin/teaGarden', '1', 'flaticon-tea-cup', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-20 20:31:29', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-23 23:40:26', '茶园管理模块');
+INSERT INTO `s_menu` VALUES ('baf74d02-a7fa-41cf-a7c6-d1e5da805701', '3', '0bc54201-f2e3-4585-a9c7-bb5d9b44e26d', '溯源批次', '/system/originBatch/list', null, 'flaticon-orginb', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-06 17:45:53', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-06 17:45:53', '按批次生成溯源编号,提供溯源使用');
 INSERT INTO `s_menu` VALUES ('c3538d54-8e09-11e6-b311-005056812bf6', '10', '10000000-0000-0000-0000-100000000000', '物流管理', '/system/operation/index', '1', 'flaticon-truck', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '跨境物流管理');
 INSERT INTO `s_menu` VALUES ('caf65c04-beed-11e7-959c-38d547b81379', '1', '0B6D1F77-BAEC-4CFA-8D19-E1C4ECE995B9', '菜单管理', '/system/menu/list', '1', 'flaticon-app', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-10-21 17:38:06', '菜单信息管理');
 INSERT INTO `s_menu` VALUES ('ce43305b-a658-4e8c-b864-10b6ee797429', '1', '5d2f2a0d-9326-4026-b338-c03bf6e255db', '包材管理', '/system/packageMaterial/list', null, 'flaticon-mate', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:13:42', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:13:42', '包材材料管理');
@@ -1003,6 +1045,7 @@ INSERT INTO `s_role_menu` VALUES ('7cc3fdfb-cf40-11e7-ad32-38d547b81379', '0C03F
 INSERT INTO `s_role_menu` VALUES ('7cc42f97-cf40-11e7-ad32-38d547b81379', '0C03F6B6-8CC4-4826-8A51-149990861BE3', 'b4a121a8-5e4d-41f8-b4a0-672eebb0a74d', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-22 12:49:13');
 INSERT INTO `s_role_menu` VALUES ('85b47219-4e92-48cf-b57a-1c73ac6b1e05', '257ae84e-d86a-11e6-ba64-d8490bd28593', 'd2aad1f2-4230-4aee-a1f1-91a6a6c5db40', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-30 00:02:22');
 INSERT INTO `s_role_menu` VALUES ('87b72623-a691-4405-97b2-2a4cd03b7b65', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'df1a659b-180f-4fd2-abb0-b42c7db62714', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:03:25');
+INSERT INTO `s_role_menu` VALUES ('88fcdad2-b707-40da-9132-0c0dfc6be15f', 'f8692cd2-e801-11e4-8fee-40167e64eefd', 'baf74d02-a7fa-41cf-a7c6-d1e5da805701', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-06 17:45:53');
 INSERT INTO `s_role_menu` VALUES ('8b1bc67a-34c2-422d-9574-b236371ddfa6', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '2d42e55d-5e6a-4b92-ba22-5c188c0d13d2', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-24 00:18:24');
 INSERT INTO `s_role_menu` VALUES ('8dff7a2b-aa7d-48de-b074-f9837b690d20', 'f8692cd2-e801-11e4-8fee-40167e64eefd', '43d5b520-eafe-4f7f-a846-4fba12c9ffab', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-12-01 12:47:14');
 INSERT INTO `s_role_menu` VALUES ('9c0e2b38-4c38-4195-a08d-db287ff6df00', '257ae84e-d86a-11e6-ba64-d8490bd28593', '6fc0d40a-ca6e-4c19-8d24-485d5a61ea50', '1', '0f1443aa-eade-410d-b8bf-74ebfa914ca4', '2017-11-30 00:02:22');
