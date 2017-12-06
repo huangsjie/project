@@ -141,6 +141,14 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
+  <!-- 查询所有的设置记录返回 List列表 无入参 -->
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from e_process_batch
+    where 1 = 1
+  </select>
+  <!-- 查询所有的设置记录返回 List列表 无入参 -->
 
   <select id="selectProcessBatchList" resultType="map" parameterType="map">
     SELECT

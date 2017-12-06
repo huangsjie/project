@@ -209,4 +209,13 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <!-- 查询所有的设置记录返回 List列表 无入参 -->
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from e_origin_img
+    where 1 = 1
+  </select>
+  <!-- 查询所有的设置记录返回 List列表 无入参 -->
 </mapper>

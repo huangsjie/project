@@ -2,12 +2,14 @@ package com.panda.controller.system.origin;
 
 import com.alibaba.citrus.util.StringEscapeUtil;
 import com.alibaba.fastjson.JSON;
+import com.panda.model.commodity.Products;
 import com.panda.model.origin.Quality;
 import com.panda.model.origin.Sampling;
-import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
+import com.panda.service.commodity.ProductsService;
+import com.panda.service.origin.ProcessBatchService;
 import com.panda.service.origin.QualityService;
-import com.panda.service.system.DictionaryService;
+import com.panda.service.origin.SamplingService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
 import org.apache.shiro.SecurityUtils;
@@ -42,10 +44,16 @@ public class QualityController {
     private static final Logger logger = LoggerFactory.getLogger(QualityController.class);
 
     @Resource
-    private DictionaryService dictionaryService;
+    private QualityService qualityService;
 
     @Resource
-    private QualityService qualityService;
+    private SamplingService samplingService;
+
+    @Resource
+    private ProcessBatchService processBatchService;
+
+    @Resource
+    private ProductsService productsService;
 
     private static boolean message = false;
     private static Object  data    = null;
@@ -71,14 +79,14 @@ public class QualityController {
     @RequiresPermissions("quality:view")//权限管理;
     public String getQualityList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        List<Dictionary> statusType = dictionaryService.selectDictionaryValueList("ba259a75-f5a7-4897-949f-1c90b7958b35");
-        List<Dictionary> teaGardenLevel = dictionaryService.selectDictionaryValueList("f63fe4f8-27ab-11e5-965c-000c29d7a3a0");
-        List<Dictionary> gardenType = dictionaryService.selectDictionaryValueList("4031b009-b799-4bf0-add0-c7069900bed3");
-        List<Dictionary> cultivarType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");
-        model.addAttribute("statusType",statusType);
-        model.addAttribute("teaGardenLevel",teaGardenLevel);
-        model.addAttribute("cultivarType",cultivarType);
-        model.addAttribute("gardenType",gardenType);
+        Map map = new HashMap();
+        map.put("status",1);
+        List<Map> processBatchList = processBatchService.selectProcessBatchList(map); //加工批次号
+        List<Products> productsList = productsService.selectProductsList(map); //产品名称
+        List<Sampling> samplingList = samplingService.selectAll();//取样单号
+        model.addAttribute("productsList",productsList);
+        model.addAttribute("samplingList",samplingList);
+        model.addAttribute("processBatchList",processBatchList);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
         return "system/origin/getQualityList";
@@ -89,9 +97,9 @@ public class QualityController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/getSamplingDataList",method = RequestMethod.POST)
+    @RequestMapping(value = "/getQualityDataList",method = RequestMethod.POST)
     @ResponseBody
-    public Object getSamplingDataList(HttpServletRequest request,String datatable){
+    public Object getQualityDataList(HttpServletRequest request,String datatable){
         message = false;
         data    = null;
         try {
@@ -106,8 +114,8 @@ public class QualityController {
                 if (status.size() > 0 && status.get("processBatchId") != ""){
                     query.put("processBatchId",status.get("processBatchId"));
                 }
-                if (status.size() > 0 && status.get("dicTeaGrade") != ""){
-                    query.put("dicTeaGrade",status.get("dicTeaGrade"));
+                if (status.size() > 0 && status.get("samplingId") != ""){
+                    query.put("samplingId",status.get("samplingId"));
                 }
             }
             List<Map> qualityList = qualityService.selectQualityDataList(query);

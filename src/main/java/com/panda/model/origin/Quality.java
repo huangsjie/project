@@ -9,20 +9,6 @@ public class Quality implements Serializable {
 
     private String samplingId;
 
-    private String processBatchId;
-
-    private String productId;
-
-    private Integer samplingNumber;
-
-    private Date samplingTime;
-
-    private Date machinStatus;
-
-    private Date machinEnd;
-
-    private String dicTeaGrade;
-
     private String dicQualityType;
 
     private Integer verifyQuality;
@@ -77,62 +63,6 @@ public class Quality implements Serializable {
 
     public void setSamplingId(String samplingId) {
         this.samplingId = samplingId;
-    }
-
-    public String getProcessBatchId() {
-        return processBatchId;
-    }
-
-    public void setProcessBatchId(String processBatchId) {
-        this.processBatchId = processBatchId;
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public Integer getSamplingNumber() {
-        return samplingNumber;
-    }
-
-    public void setSamplingNumber(Integer samplingNumber) {
-        this.samplingNumber = samplingNumber;
-    }
-
-    public Date getSamplingTime() {
-        return samplingTime;
-    }
-
-    public void setSamplingTime(Date samplingTime) {
-        this.samplingTime = samplingTime;
-    }
-
-    public Date getMachinStatus() {
-        return machinStatus;
-    }
-
-    public void setMachinStatus(Date machinStatus) {
-        this.machinStatus = machinStatus;
-    }
-
-    public Date getMachinEnd() {
-        return machinEnd;
-    }
-
-    public void setMachinEnd(Date machinEnd) {
-        this.machinEnd = machinEnd;
-    }
-
-    public String getDicTeaGrade() {
-        return dicTeaGrade;
-    }
-
-    public void setDicTeaGrade(String dicTeaGrade) {
-        this.dicTeaGrade = dicTeaGrade;
     }
 
     public String getDicQualityType() {
