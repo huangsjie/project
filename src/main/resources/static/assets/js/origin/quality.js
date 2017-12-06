@@ -107,14 +107,19 @@ var Quality = function () {
      * 新增与编辑
      */
     var QualityInfoForm = function () {
-        $( "#Quality_edit_form" ).validate({
+        $( "#quality_edit_form" ).validate({
             rules: {
-                processBatchId: {required: true},// nameCheck:true
-                QualityBase:{required: true,digits:true,maxlength:3},
-                QualityNumber:{required: true,digits:true,maxlength:3},
-                operatorId:{required: true, nameCheck:true},
-                orderNo:{required: true,alphanumerical:true},
-                QualityTime:{required: true,date:true}
+                samplingId: {required: true},// nameCheck:true
+                attestation:{required: true},
+                // QualityNumber:{required: true,digits:true,maxlength:3},alphanumerical:true
+                qualityUser:{required: true, nameCheck:true},
+                verifyUser:{required: true, nameCheck:true},
+                dicTeaGrade:{required: true},
+                qualityTime:{required: true,date:true},
+                verifyTime:{required: true,date:true},
+                netContent:{required: true,digits:true,maxlength:2},
+                teaCrumble:{required: true,digits:true,maxlength:2},
+                waterContent:{required: true,digits:true,maxlength:2},
             },
 
             submitHandler: function (form){
@@ -122,7 +127,7 @@ var Quality = function () {
                 request(
                     "saveOrUpdateQuality",
                     "post",
-                    $("#Quality_edit_form").serialize(),
+                    $("#quality_edit_form").serialize(),
                     function(result){
                         if(result.message){
                             removeValue('add');
@@ -143,15 +148,27 @@ var Quality = function () {
      */
     var removeValue = function(type){
         if(type == 'edit'){
-            $(".qualityEditModal .modal-title").text("质检编辑")
-            $(".qualityEditModal [name='save']").val('edit')
+            $(".qualityEditModal .modal-title").text("质检编辑");
+            $(".qualityEditModal [name='save']").val('edit');
+            $(".qualityEditModal #samplingId").attr("disabled",true)
+            $(".qualityEditModal .qualityCheck input").attr("disabled",true);
+            $(".qualityEditModal .verifyCheck").removeClass("m--hide");
+            $(".qualityEditModal [name='verifyQuality']").attr("disabled",false);
+            $(".qualityEditModal [name='verifyUser']").attr("disabled",false);
+            $(".qualityEditModal [name='verifyTime']").attr("disabled",false);
         }else{
-            $(".qualityEditModal .modal-title").text("质检新增")
+            $(".qualityEditModal .modal-title").text("质检新增");
             $(".qualityEditModal [name='save']").val('add');
+            $(".qualityEditModal #samplingId").attr("disabled",false);
+            $(".qualityEditModal .qualityCheck input").attr("disabled",false);
+            $(".qualityEditModal .verifyCheck").addClass("m--hide");
+            $(".qualityEditModal [name='verifyQuality']").attr("disabled",true);
+            $(".qualityEditModal [name='verifyUser']").attr("disabled",true);
+            $(".qualityEditModal [name='verifyTime']").attr("disabled",true);
         }
         $(".qualityEditModal [name='id']").val('');
         $(".qualityEditModal [name='name']").val('');
-        $(".qualityEditModal [name='dicTeaGrade']").val('');
+
         $(".qualityEditModal #productId").val('');
         $(".qualityEditModal [name='productId']").val('');
         $(".qualityEditModal #machinStatus").val('');
@@ -192,7 +209,6 @@ var Quality = function () {
                     {id:id},
                     function (result) {
                         if(result.message){
-                            console.log(result);
                             //showMachinTeaData(result.data.processBatchId,'.qualityEditModal .modal-content')
                             $(".qualityEditModal #productId").val(result.data.productName);
                             $(".qualityEditModal [name='productId']").val(result.data.productId);
@@ -222,13 +238,13 @@ var Quality = function () {
     }
 
     /**
-     * 触发茶叶加工明文信息
+     * 触发取样单号,获取取样数据
      */
-    var getMachinTeaData = function(){
-        $(".qualityEditModal .processBatchId").on("change",function () {
-            var processBatchId = $(".qualityEditModal .processBatchId").val();
+    var getSamplingData = function(){
+        $(".qualityEditModal .samplingId").on("change",function () {
+            var samplingId = $(".qualityEditModal .samplingId").val();
             blockUiOpen('.qualityEditModal .modal-content');
-            showMachinTeaData(processBatchId,'.qualityEditModal .modal-content')
+            showSamplingData(samplingId,'.qualityEditModal .modal-content')
         })
     }
 
@@ -260,21 +276,20 @@ var Quality = function () {
     /**
      * 显示茶叶加工明文信息
      */
-    var showMachinTeaData = function (processBatchId,closeBlockAttr) {
+    var showSamplingData = function (samplingId,closeBlockAttr) {
         request(
-            "getMachinTeaData",
+            "getSamplingData",
             'get',
-            {processBatchId:processBatchId},
+            {samplingId:samplingId},
             function (result) {
                 if(result.message){
-                    $(".qualityEditModal #productId").val(result.data.productName);
-                    $(".qualityEditModal [name='productId']").val(result.data.productId);
+                    $(".qualityEditModal #productName").val(result.data.productName);
                     $(".qualityEditModal #machinStatus").val(result.data.machinStatus);
-                    $(".qualityEditModal [name='machinStatus']").val(result.data.machinStatus);
                     $(".qualityEditModal #machinEnd").val(result.data.machinEnd);
-                    $(".qualityEditModal [name='machinEnd']").val(result.data.machinEnd);
-                    $(".qualityEditModal [name='orderNo']").val(result.data.orderNo);
-                    $(".qualityEditModal [name='QualityTime']").val(result.data.QualityTime);
+                    $(".qualityEditModal #samplingBase").val(result.data.samplingBase);
+                    $(".qualityEditModal #samplingNumber").val(result.data.samplingNumber);
+                    $(".qualityEditModal #samplingTime").val(result.data.samplingTime);
+                    $(".qualityEditModal #operatorId").val(result.data.operatorId);
                     blockUiClose(closeBlockAttr,0,".close-parent",0);
                 }else{
                     removeValue('add');
@@ -288,7 +303,9 @@ var Quality = function () {
      * 输入时间请先了解单个参数
      */
     var datetimepickerSelect = function () {
-        $('.QualityTime').datetimepicker({
+        $('.datetimeInput').datetimepicker({
+            //endDate:new Date(),
+            startDate:new Date(),
             todayHighlight: false,
             autoclose: true,
             sideBySide: false,
@@ -301,7 +318,7 @@ var Quality = function () {
         init: function () {
             QualityShow();
             addQuality();
-            getMachinTeaData();
+            getSamplingData();
             editQualityItem();
             delQualityItem();
             QualityInfoForm();

@@ -5,11 +5,13 @@ import com.alibaba.fastjson.JSON;
 import com.panda.model.commodity.Products;
 import com.panda.model.origin.Quality;
 import com.panda.model.origin.Sampling;
+import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
 import com.panda.service.commodity.ProductsService;
 import com.panda.service.origin.ProcessBatchService;
 import com.panda.service.origin.QualityService;
 import com.panda.service.origin.SamplingService;
+import com.panda.service.system.DictionaryService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
 import org.apache.shiro.SecurityUtils;
@@ -50,6 +52,9 @@ public class QualityController {
     private SamplingService samplingService;
 
     @Resource
+    private DictionaryService dictionaryService;
+
+    @Resource
     private ProcessBatchService processBatchService;
 
     @Resource
@@ -81,9 +86,13 @@ public class QualityController {
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         Map map = new HashMap();
         map.put("status",1);
+        List<Dictionary> attestation = dictionaryService.selectDictionaryValueList("68d6888f-2b91-11e5-965c-000c29d7a3a0");//质检类型
+        List<Dictionary> teaGrade = dictionaryService.selectDictionaryValueList("f63fe4f8-27ab-11e5-965c-000c29d7a3a0");//质检等级
         List<Map> processBatchList = processBatchService.selectProcessBatchList(map); //加工批次号
         List<Products> productsList = productsService.selectProductsList(map); //产品名称
         List<Sampling> samplingList = samplingService.selectAll();//取样单号
+        model.addAttribute("teaGrade",teaGrade);
+        model.addAttribute("attestation",attestation);
         model.addAttribute("productsList",productsList);
         model.addAttribute("samplingList",samplingList);
         model.addAttribute("processBatchList",processBatchList);
@@ -130,6 +139,37 @@ public class QualityController {
         return ResultMsgUtil.getResultMsg(message,data);
     }
 
+    /**
+     * 新增质检记录 -- 获取选中的取样单号对应数据
+     * @param request
+     * @param samplingId
+     * @return
+     */
+    @RequestMapping(value = "/getSamplingData")
+    @ResponseBody
+    public Object getSamplingData(HttpServletRequest request,String samplingId){
+        message = false;
+        data    = null;
+        try {
+            if (!samplingId.isEmpty()){
+                Map sampling = samplingService.selectByPrimaryKeyAndProductName(samplingId);
+                if (sampling != null){
+                    message = true;
+                    data    = sampling;
+                }else{
+                    data    = "未获取到取样记录.";
+                }
+            }else{
+                data = ResultStateUtil.ERROR_PARAMETER_NO_TCOMPATIBLE;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            data    = ResultStateUtil.ERROR_QUERY;
+        }
+        return ResultMsgUtil.getResultMsg(message,data);
+    }
+
+
 
     /**
      * Ajax 获取当前编辑项的内容
@@ -167,9 +207,9 @@ public class QualityController {
      * @param save
      * @return
      */
-    @RequestMapping(value = "/saveOrUpdateSampling",method = RequestMethod.POST)
+    @RequestMapping(value = "/saveOrUpdateQuality",method = RequestMethod.POST)
     @ResponseBody
-    public Object saveOrUpdateSampling(HttpServletRequest request, Quality quality , String save){
+    public Object saveOrUpdateQuality(HttpServletRequest request, Quality quality , String save){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         message = false;
         data    = null;

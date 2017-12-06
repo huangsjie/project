@@ -3,11 +3,12 @@ package com.panda.model.origin;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Quality implements Serializable {
-
+public class Quality implements Serializable{
     private String id;
 
     private String samplingId;
+
+    private String dicTeaGrade;
 
     private String dicQualityType;
 
@@ -41,6 +42,8 @@ public class Quality implements Serializable {
 
     private String qualityColour;
 
+    private String description;
+
     private String createId;
 
     private Date createTime;
@@ -63,6 +66,14 @@ public class Quality implements Serializable {
 
     public void setSamplingId(String samplingId) {
         this.samplingId = samplingId;
+    }
+
+    public String getDicTeaGrade() {
+        return dicTeaGrade;
+    }
+
+    public void setDicTeaGrade(String dicTeaGrade) {
+        this.dicTeaGrade = dicTeaGrade;
     }
 
     public String getDicQualityType() {
@@ -191,6 +202,14 @@ public class Quality implements Serializable {
 
     public void setQualityColour(String qualityColour) {
         this.qualityColour = qualityColour;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getCreateId() {

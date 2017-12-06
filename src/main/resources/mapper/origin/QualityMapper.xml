@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.panda.model.origin.Quality">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="sampling_id" jdbcType="VARCHAR" property="samplingId" />
+    <result column="dic_tea_grade" jdbcType="VARCHAR" property="dicTeaGrade" />
     <result column="dic_quality_type" jdbcType="VARCHAR" property="dicQualityType" />
     <result column="verify_quality" jdbcType="INTEGER" property="verifyQuality" />
     <result column="verify_user" jdbcType="VARCHAR" property="verifyUser" />
@@ -20,16 +21,17 @@
     <result column="quality_aroma" jdbcType="VARCHAR" property="qualityAroma" />
     <result column="quality_taste" jdbcType="VARCHAR" property="qualityTaste" />
     <result column="quality_colour" jdbcType="VARCHAR" property="qualityColour" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="create_id" jdbcType="VARCHAR" property="createId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="modify_id" jdbcType="VARCHAR" property="modifyId" />
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, sampling_id, dic_quality_type, verify_quality, verify_user, verify_time, quality_status, 
-    quality_user, quality_time, net_content, tea_crumble, water_content, quality_cable, 
-    quality_color_lustre, quality_cleanliness, quality_aroma, quality_taste, quality_colour, 
-    create_id, create_time, modify_id, modify_time
+    id, sampling_id, dic_tea_grade, dic_quality_type, verify_quality, verify_user, verify_time, 
+    quality_status, quality_user, quality_time, net_content, tea_crumble, water_content, 
+    quality_cable, quality_color_lustre, quality_cleanliness, quality_aroma, quality_taste, 
+    quality_colour, description, create_id, create_time, modify_id, modify_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -42,22 +44,24 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.panda.model.origin.Quality">
-    insert into e_quality (id, sampling_id, dic_quality_type, 
-      verify_quality, verify_user, verify_time, 
-      quality_status, quality_user, quality_time, 
-      net_content, tea_crumble, water_content, 
-      quality_cable, quality_color_lustre, quality_cleanliness, 
-      quality_aroma, quality_taste, quality_colour, 
-      create_id, create_time, modify_id, 
-      modify_time)
-    values (#{id,jdbcType=VARCHAR}, #{samplingId,jdbcType=VARCHAR}, #{dicQualityType,jdbcType=VARCHAR}, 
-      #{verifyQuality,jdbcType=INTEGER}, #{verifyUser,jdbcType=VARCHAR}, #{verifyTime,jdbcType=TIMESTAMP}, 
-      #{qualityStatus,jdbcType=INTEGER}, #{qualityUser,jdbcType=VARCHAR}, #{qualityTime,jdbcType=TIMESTAMP}, 
-      #{netContent,jdbcType=VARCHAR}, #{teaCrumble,jdbcType=VARCHAR}, #{waterContent,jdbcType=VARCHAR}, 
-      #{qualityCable,jdbcType=VARCHAR}, #{qualityColorLustre,jdbcType=VARCHAR}, #{qualityCleanliness,jdbcType=VARCHAR}, 
-      #{qualityAroma,jdbcType=VARCHAR}, #{qualityTaste,jdbcType=VARCHAR}, #{qualityColour,jdbcType=VARCHAR}, 
-      #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR}, 
-      #{modifyTime,jdbcType=TIMESTAMP})
+    insert into e_quality (id, sampling_id, dic_tea_grade, 
+      dic_quality_type, verify_quality, verify_user, 
+      verify_time, quality_status, quality_user, 
+      quality_time, net_content, tea_crumble, 
+      water_content, quality_cable, quality_color_lustre, 
+      quality_cleanliness, quality_aroma, quality_taste, 
+      quality_colour, description, create_id, 
+      create_time, modify_id, modify_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{samplingId,jdbcType=VARCHAR}, #{dicTeaGrade,jdbcType=VARCHAR}, 
+      #{dicQualityType,jdbcType=VARCHAR}, #{verifyQuality,jdbcType=INTEGER}, #{verifyUser,jdbcType=VARCHAR}, 
+      #{verifyTime,jdbcType=TIMESTAMP}, #{qualityStatus,jdbcType=INTEGER}, #{qualityUser,jdbcType=VARCHAR}, 
+      #{qualityTime,jdbcType=TIMESTAMP}, #{netContent,jdbcType=VARCHAR}, #{teaCrumble,jdbcType=VARCHAR}, 
+      #{waterContent,jdbcType=VARCHAR}, #{qualityCable,jdbcType=VARCHAR}, #{qualityColorLustre,jdbcType=VARCHAR}, 
+      #{qualityCleanliness,jdbcType=VARCHAR}, #{qualityAroma,jdbcType=VARCHAR}, #{qualityTaste,jdbcType=VARCHAR}, 
+      #{qualityColour,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.panda.model.origin.Quality">
     insert into e_quality
@@ -67,6 +71,9 @@
       </if>
       <if test="samplingId != null">
         sampling_id,
+      </if>
+      <if test="dicTeaGrade != null">
+        dic_tea_grade,
       </if>
       <if test="dicQualityType != null">
         dic_quality_type,
@@ -116,6 +123,9 @@
       <if test="qualityColour != null">
         quality_colour,
       </if>
+      <if test="description != null">
+        description,
+      </if>
       <if test="createId != null">
         create_id,
       </if>
@@ -135,6 +145,9 @@
       </if>
       <if test="samplingId != null">
         #{samplingId,jdbcType=VARCHAR},
+      </if>
+      <if test="dicTeaGrade != null">
+        #{dicTeaGrade,jdbcType=VARCHAR},
       </if>
       <if test="dicQualityType != null">
         #{dicQualityType,jdbcType=VARCHAR},
@@ -184,6 +197,9 @@
       <if test="qualityColour != null">
         #{qualityColour,jdbcType=VARCHAR},
       </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
       <if test="createId != null">
         #{createId,jdbcType=VARCHAR},
       </if>
@@ -203,6 +219,9 @@
     <set>
       <if test="samplingId != null">
         sampling_id = #{samplingId,jdbcType=VARCHAR},
+      </if>
+      <if test="dicTeaGrade != null">
+        dic_tea_grade = #{dicTeaGrade,jdbcType=VARCHAR},
       </if>
       <if test="dicQualityType != null">
         dic_quality_type = #{dicQualityType,jdbcType=VARCHAR},
@@ -252,6 +271,9 @@
       <if test="qualityColour != null">
         quality_colour = #{qualityColour,jdbcType=VARCHAR},
       </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
       <if test="createId != null">
         create_id = #{createId,jdbcType=VARCHAR},
       </if>
@@ -270,6 +292,7 @@
   <update id="updateByPrimaryKey" parameterType="com.panda.model.origin.Quality">
     update e_quality
     set sampling_id = #{samplingId,jdbcType=VARCHAR},
+      dic_tea_grade = #{dicTeaGrade,jdbcType=VARCHAR},
       dic_quality_type = #{dicQualityType,jdbcType=VARCHAR},
       verify_quality = #{verifyQuality,jdbcType=INTEGER},
       verify_user = #{verifyUser,jdbcType=VARCHAR},
@@ -286,6 +309,7 @@
       quality_aroma = #{qualityAroma,jdbcType=VARCHAR},
       quality_taste = #{qualityTaste,jdbcType=VARCHAR},
       quality_colour = #{qualityColour,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
       create_id = #{createId,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       modify_id = #{modifyId,jdbcType=VARCHAR},

@@ -8,7 +8,7 @@
 <!--begin::Modal-->
 <div class="modal fade qualityEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true" th:fragment="qualityEdit">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xbg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"></h5>
@@ -18,129 +18,253 @@
                     </span>
                 </button>
             </div>
-            <form class="m-form m-form--state m-form--fit m-form--label-align-right" id="sampling_edit_form" novalidate="novalidate">
+            <form class="m-form m-form--state m-form--fit m-form--label-align-right" id="quality_edit_form" novalidate="novalidate">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <input type="hidden" name="id" value="">
                             <input type="hidden" name="save" value="edit">
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-4 col-sm-12">
-                                    加工批次  <span style="color: red">*</span>
-                                </label>
-                                <div class="col-lg-8 col-md-9 col-sm-12">
-                                    <select class="form-control processBatchId" name="processBatchId" id="processBatchId">
-                                        <option value=""> 选择 </option>
-                                        <option th:each="item:${processBatchList}" th:value="${item.id}" th:text="${item.batch_number}"></option>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <select class="form-control samplingId" name="samplingId" id="samplingId">
+                                        <option value=""> 取样单号 </option>
+                                        <option th:each="item:${samplingList}" th:value="${item.id}" th:text="${item.orderNo}"></option>
                                     </select>
                                     <span class="m-form__help"></span>
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-4 col-sm-12">
-                                    产品名称  <span style="color: red">*</span>
-                                </label>
-                                <div class="col-lg-8 col-md-9 col-sm-12">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control m-input" id="productId" value="" placeholder="产品名称" disabled>
-                                    </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <select class="form-control dicQualityType" name="dicQualityType" id="dicQualityType">
+                                        <option value=""> 质检类型 </option>
+                                        <option th:each="item:${attestation}" th:value="${item.id}" th:text="${item.name}"></option>
+                                    </select>
                                     <span class="m-form__help"></span>
                                 </div>
-                                <input type="hidden" name="productId" value="">
                             </div>
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-4 col-sm-12">
-                                    取样单号  <span style="color: red">*</span>
-                                </label>
-                                <div class="col-lg-8 col-md-9 col-sm-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="input-group">
-                                        <input type="text" class="form-control m-input" name="orderNo" value="" placeholder="取样单号">
+                                        <input type="text" class="form-control m-input" id="productName" placeholder="产品名称" disabled>
                                     </div>
                                     <span class="m-form__help"></span>
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-4 col-sm-12">
-                                    取样基数  <span style="color: red">*</span>
-                                </label>
-                                <div class="col-lg-8 col-md-9 col-sm-12">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control m-input" name="samplingBase" value="" placeholder="取样基数">
-                                    </div>
-                                    <span class="m-form__help"></span>
-                                </div>
-                            </div>
-                            <div class="form-group m-form__group row">
-                                <div class="col-lg-12 col-md-9 col-sm-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="input-group m-input-group">
-                                    <span class="input-group-btn">
-                                        <input type="text" class="form-control beginTime" id="machinStatus" placeholder="加工开始时间" disabled>
-                                        <input type="hidden" name="machinStatus" value="">
-                                    </span>
-                                        <span class="input-group-addon">
-                                        至
-                                    </span>
-                                        <span class="input-group-btn">
-                                        <input type="text" class="form-control endTime" id="machinEnd" placeholder="加工结束时间" disabled>
-                                        <input type="hidden" name="machinEnd" value="">
-                                    </span>
+                                        <input type="text" class="form-control m-input" id="samplingBase" placeholder="取样基数-单份重量" disabled>
+                                        <span class="input-group-addon" id="basic-addon1">
+                                            单份/g
+                                        </span>
                                     </div>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control beginTime" id="machinStatus" placeholder="加工开始时间" disabled>
+                                    </div>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control endTime" id="machinEnd" placeholder="加工结束时间" disabled>
+                                    </div>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <input type="text" class="form-control " name="qualityCable" placeholder="外形-条索"/>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <input type="text" class="form-control " name="qualityColorLustre" placeholder="外形-色泽" />
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <input type="text" class="form-control " name="qualityCleanliness" placeholder="外形-净度" />
                                     <span class="m-form__help"></span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-4 col-sm-12">
-                                    等级
-                                </label>
-                                <div class="col-lg-8 col-md-9 col-sm-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
                                     <select class="form-control" name="dicTeaGrade" id="dicTeaGrade">
-                                        <option value=""> 等级</option>
-                                        <option th:each="item:${grade}" th:value="${item.id}" th:text="${item.name}"></option>
+                                        <option value=""> 质检等级</option>
+                                        <option th:each="item:${teaGrade}" th:value="${item.id}" th:text="${item.name}"></option>
                                     </select>
                                     <span class="m-form__help"></span>
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-4 col-sm-12">
-                                    取样日期  <span style="color: red">*</span>
-                                </label>
-                                <div class="col-lg-8 col-md-9 col-sm-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="input-group">
-                                        <input type="text" class="form-control m-input samplingTime" name="samplingTime" value="" placeholder="取样日期">
+                                        <input type="text" class="form-control m-input" id="samplingTime" placeholder="取样日期" disabled>
                                     </div>
                                     <span class="m-form__help"></span>
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-4 col-sm-12">
-                                    取样数量  <span style="color: red">*</span>
-                                </label>
-                                <div class="col-lg-8 col-md-9 col-sm-12">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control m-input" name="samplingNumber" value="" placeholder="取样数量">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="input-group m-input-group">
+                                        <input type="text" class="form-control m-input" id="samplingNumber" placeholder="份数" disabled>
+                                        <span class="input-group-addon" >
+                                            份/n
+                                        </span>
                                     </div>
                                     <span class="m-form__help"></span>
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-4 col-sm-12">
-                                    取样人  <span style="color: red">*</span>
-                                </label>
-                                <div class="col-lg-8 col-md-9 col-sm-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="input-group">
-                                        <input type="text" class="form-control m-input" name="operatorId" value="" placeholder="取样人">
+                                        <input type="text" class="form-control m-input" id="operatorId" placeholder="取样人" disabled>
                                     </div>
                                     <span class="m-form__help"></span>
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-4 col-sm-12">
-                                    备注
-                                </label>
-                                <div class="col-lg-8 col-md-9 col-sm-12">
-                                    <textarea class="form-control m-input" name="description" placeholder="备注" style="resize: none;height: 92px"></textarea>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <input type="text" class="form-control " name="qualityQroma" placeholder="内质-香气" />
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <input type="text" class="form-control " name="qualityTaste" placeholder="内质-滋味(口感)" />
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <input type="text" class="form-control " name="qualityColour" placeholder="内质-汤色" />
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <textarea class="form-control m-input" name="description" placeholder="备注" style="resize: none;height: 93px"></textarea>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group m-form__group row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="input-group m-input-group">
+                                        <input type="text" class="form-control m-input" name="netContent" placeholder="净含量(g)">
+                                        <span class="input-group-addon">
+                                            净量/g
+                                        </span>
+                                    </div>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="input-group m-input-group">
+                                        <input type="text" class="form-control m-input" name="teaCrumble" placeholder="碎末茶(%)">
+                                        <span class="input-group-addon">
+                                            占比%
+                                        </span>
+                                    </div>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="input-group m-input-group">
+                                        <input type="text" class="form-control m-input" name="waterContent" placeholder="水份量(%)">
+                                        <span class="input-group-addon">
+                                            占比%
+                                        </span>
+                                    </div>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row qualityCheck">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="m-radio-inline">
+                                        <label class="m-radio m-radio--state-warning">
+                                            <input type="radio" name="qualityStatus" value="0" checked data-skin="dark" data-toggle="m-tooltip" data-placement="top" title=""  data-original-title="(未检)">
+                                            未检
+                                            <span></span>
+                                        </label>
+                                        <label class="m-radio m-radio--state-success">
+                                            <input type="radio" name="qualityStatus" value="1" data-skin="dark" data-toggle="m-tooltip" data-placement="top" title=""  data-original-title="(质检合格)">
+                                            合格
+                                            <span></span>
+                                        </label>
+                                        <label class="m-radio m-radio--state-danger">
+                                            <input type="radio" name="qualityStatus" value="2" data-skin="dark" data-toggle="m-tooltip" data-placement="top" title=""  data-original-title="(质检不合格)">
+                                            不合格
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row qualityCheck">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control m-input" name="qualityUser" placeholder="质检人">
+                                    </div>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row qualityCheck">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control m-input datetimeInput" name="qualityTime" placeholder="质检时间">
+                                    </div>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row verifyCheck">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="m-radio-inline">
+                                        <label class="m-radio m-radio--state-warning">
+                                            <input type="radio" name="verifyQuality" value="0" checked data-skin="dark" data-toggle="m-tooltip" data-placement="top" title=""  data-original-title="(未复检)">
+                                            未检
+                                            <span></span>
+                                        </label>
+                                        <label class="m-radio m-radio--state-success">
+                                            <input type="radio" name="verifyQuality" value="1" data-skin="dark" data-toggle="m-tooltip" data-placement="top" title=""  data-original-title="(复检合格)">
+                                            合格
+                                            <span></span>
+                                        </label>
+                                        <label class="m-radio m-radio--state-danger">
+                                            <input type="radio" name="verifyQuality" value="2" data-skin="dark" data-toggle="m-tooltip" data-placement="top" title=""  data-original-title="(复检不合格)">
+                                            不合格
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row verifyCheck">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control m-input" name="verifyUser" placeholder="复检人">
+                                    </div>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row verifyCheck">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control m-input datetimeInput" name="verifyTime" placeholder="复检时间">
+                                    </div>
                                     <span class="m-form__help"></span>
                                 </div>
                             </div>
@@ -148,11 +272,17 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-skin="dark" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="质检记录新增时,请谨慎填写,保存后将不可修改关键信息.">
+                        帮助
+                    </button>
                     <button type="button" class="btn btn-secondary close-parent" data-dismiss="modal">
                         关闭
                     </button>
                     <button type="submit" shiro:hasPermission="sampling:submit" class="btn btn-accent">
                         确定
+                    </button>
+                    <button type="reset" class="btn btn-warning reset-btn">
+                        重置
                     </button>
                 </div>
             </form>
