@@ -10,6 +10,7 @@ import com.panda.model.system.Users;
 import com.panda.service.origin.ManageBatchService;
 import com.panda.service.origin.TeaGardenService;
 import com.panda.service.system.DictionaryService;
+import com.panda.util.CreateBatchNoUtil;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
 import org.apache.shiro.SecurityUtils;
@@ -203,6 +204,16 @@ public class ManageBatchController {
         return ResultMsgUtil.getResultMsg(message,data);
     }
 
+    /**
+     * 自动生成批次号
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/getMsuData",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getMsuData(HttpServletRequest request){
+        return ResultMsgUtil.getResultMsg(true,"GLPC"+ CreateBatchNoUtil.createBatchNo());
+    }
 
 
 }

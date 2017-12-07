@@ -126,6 +126,7 @@ var Sampling = function () {
         if(type == 'edit'){
             $(".samplingEditModal .modal-title").text("取样编辑")
             $(".samplingEditModal [name='save']").val('edit')
+
         }else{
             $(".samplingEditModal .modal-title").text("取样新增")
             $(".samplingEditModal [name='save']").val('add');

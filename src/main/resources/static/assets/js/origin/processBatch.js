@@ -191,6 +191,25 @@ var processBatch = function () {
         })
     }
 
+    /**
+     * 获取加工批次数据
+     */
+    var getMsuData = function () {
+        $(".processBatchEdit .la-hand-o-up").on("click",function () {
+            request(
+                "getMsuData",
+                'get',
+                {},
+                function (result) {
+                    if(result.message){
+                        $("#batchNumber").val(result.data)
+                    }else{
+                        ToastrMsg('获取失败,请稍后再试.',"error","topRight",'#modalBloukUi');
+                    }
+                })
+        })
+    }
+
     return {
         init: function () {
             addProcessBatch();
@@ -198,6 +217,7 @@ var processBatch = function () {
             delProcessBatchItem();
             processBatchShow();
             processBatchForm();
+            getMsuData();
         }
     };
 }();
