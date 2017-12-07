@@ -10,8 +10,6 @@ public class OriginBatch implements Serializable{
 
     private String originSetId;
 
-    private String originInfoId;
-
     private Integer status;
 
     private String description;
@@ -46,14 +44,6 @@ public class OriginBatch implements Serializable{
 
     public void setOriginSetId(String originSetId) {
         this.originSetId = originSetId;
-    }
-
-    public String getOriginInfoId() {
-        return originInfoId;
-    }
-
-    public void setOriginInfoId(String originInfoId) {
-        this.originInfoId = originInfoId;
     }
 
     public Integer getStatus() {
