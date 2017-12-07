@@ -21,4 +21,11 @@ public interface OriginBatchService extends AbstractService<OriginBatch> {
      * @return
      */
     List<Map> selectOriginBatchDataList(Map map);
+
+    /**
+     * 查询溯源批次
+     * @param map
+     * @return
+     */
+    List<OriginBatch> selectBatchList(Map map);
 }

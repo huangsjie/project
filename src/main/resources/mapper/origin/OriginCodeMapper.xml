@@ -6,11 +6,15 @@
     <result column="origin_batch_id" jdbcType="VARCHAR" property="originBatchId" />
     <result column="prefix_val" jdbcType="VARCHAR" property="prefixVal" />
     <result column="origin_code" jdbcType="VARCHAR" property="originCode" />
+    <result column="create_status" jdbcType="INTEGER" property="createStatus" />
     <result column="create_id" jdbcType="VARCHAR" property="createId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_id" jdbcType="VARCHAR" property="modifyId" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, origin_batch_id, prefix_val, origin_code, create_id, create_time
+    id, origin_batch_id, prefix_val, origin_code, create_status, create_id, create_time, 
+    modify_id, modify_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -24,10 +28,12 @@
   </delete>
   <insert id="insert" parameterType="com.panda.model.origin.OriginCode">
     insert into e_origin_code (id, origin_batch_id, prefix_val, 
-      origin_code, create_id, create_time
+      origin_code, create_status, create_id, 
+      create_time, modify_id, modify_time
       )
     values (#{id,jdbcType=VARCHAR}, #{originBatchId,jdbcType=VARCHAR}, #{prefixVal,jdbcType=VARCHAR}, 
-      #{originCode,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      #{originCode,jdbcType=VARCHAR}, #{createStatus,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.panda.model.origin.OriginCode">
@@ -45,11 +51,20 @@
       <if test="originCode != null">
         origin_code,
       </if>
+      <if test="createStatus != null">
+        create_status,
+      </if>
       <if test="createId != null">
         create_id,
       </if>
       <if test="createTime != null">
         create_time,
+      </if>
+      <if test="modifyId != null">
+        modify_id,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -65,11 +80,20 @@
       <if test="originCode != null">
         #{originCode,jdbcType=VARCHAR},
       </if>
+      <if test="createStatus != null">
+        #{createStatus,jdbcType=INTEGER},
+      </if>
       <if test="createId != null">
         #{createId,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyId != null">
+        #{modifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -85,11 +109,20 @@
       <if test="originCode != null">
         origin_code = #{originCode,jdbcType=VARCHAR},
       </if>
+      <if test="createStatus != null">
+        create_status = #{createStatus,jdbcType=INTEGER},
+      </if>
       <if test="createId != null">
         create_id = #{createId,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyId != null">
+        modify_id = #{modifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -99,8 +132,16 @@
     set origin_batch_id = #{originBatchId,jdbcType=VARCHAR},
       prefix_val = #{prefixVal,jdbcType=VARCHAR},
       origin_code = #{originCode,jdbcType=VARCHAR},
+      create_status = #{createStatus,jdbcType=INTEGER},
       create_id = #{createId,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_id = #{modifyId,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectOriginCodeDataList" parameterType="map" resultType="map">
+    SELECT * FROM e_origin_code WHere 1 = 1
+  </select>
+
 </mapper>

@@ -1,4 +1,4 @@
-var OriginBatch = function () {
+var originCode = function () {
     var actionsTemplate = $("#actionsTemplate").html();
     var status = {
         0: {'title': '未生成', 'class': ' m-badge--warning'},
@@ -7,13 +7,14 @@ var OriginBatch = function () {
     /**
      * 获取列表数据
      */
-    var getOriginBatchDataList = function () {
+    var getOriginCodeDataList = function () {
+        console.log(1)
         var option = {
             data: {
                 type: 'remote',
                 source: {
                     read: {
-                        url: 'getOriginBatchDataList'
+                        url: 'getoriginCodeDataList'
                     }
                 },
                 pageSize: 10,
@@ -117,16 +118,16 @@ var OriginBatch = function () {
      * 新增与编辑表单验证
      * 加工设置
      */
-    var OriginBatchEditForm = function () {
+    var originCodeEditForm = function () {
         $( "#origin_batch_form" ).validate({
             rules: {
                 batchNum: {required: true,alphanumerical:true},
                 description: {nameCheck:true,maxlength:200}
             },
             submitHandler: function (form){
-                blockUiOpen('.originBatchEditModal .modal-content');
+                blockUiOpen('.originCodeEditModal .modal-content');
                 request(
-                    "saveOrUpdateOriginBatch",
+                    "saveOrUpdateoriginCode",
                     "post",
                     $("#origin_batch_form").serialize(),
                     function(result){
@@ -142,53 +143,17 @@ var OriginBatch = function () {
             }
         });
     }
-    /**
-     * 生成溯源码
-     */
-    var createCodeForm = function () {
-        $("#origin_batch_list").on('click',".createOriginCode",function () {
-            var id = $(this).attr("item");
-            if(id != ""){
-                $(".createOriginCodeModal [name='originBatchId']").val(id);
-            }else{
-                ToastrMsg("获取批次编码错误！","error","topRight");
-            }
-        })
 
-        $( "#createCodeForm" ).validate({
-            rules: {
-                prefixVal: {required: true,alphanumerical:true,maxlength:3},
-                createNum: {required: true,digits:true,maxlength:3}
-            },
-            submitHandler: function (form){
-                blockUiOpen('#createCodeForm .modal-content');
-                request(
-                    "createCode",
-                    "post",
-                    $("#createCodeForm").serialize(),
-                    function(result){
-                        if(result.message){
-                            blockUiClose('#origin_batch_form .modal-content',1,".close-parent",0);
-                            ToastrMsg(result.data,"success","topRight");
-                            location.reload()
-                        }else{
-                            ToastrMsg(result.data,"error","topRight");
-                        }
-                    }
-                )
-            }
-        });
-    }
     /**
      * 获取所编辑的数据
      */
-    var editOriginBatchItem = function () {
-        $("#origin_batch_list").on("click", ".editOriginBatchItem", function () {
+    var editOriginCodeItem = function () {
+        $("#origin_batch_list").on("click", ".editOriginCodeItem", function () {
             removeValue('edit')
             var id = $(this).attr("item");
             if(id != ""){
                 request(
-                    "editOriginBatchItem",
+                    "editOriginCodeItem",
                     'get',
                     {id:id},
                     function (result) {
@@ -206,14 +171,14 @@ var OriginBatch = function () {
     /**
      * 删除单条数据
      */
-    var delOriginBatchItem = function () {
-        $("#origin_batch_list").on("click", ".delOriginBatchItem", function () {
-            blockUiOpen('#origin_batch_list');
+    var delOriginCodeItem = function () {
+        $("#origin_batch_list").on("click", ".delOriginCodeItem", function () {
+            blockUiOpen('#origin_code_list');
             var self = $(this);
             var id = self.attr("item");
             if(id != ""){
                 request(
-                    "delOriginBatchItem",
+                    "delOriginCodeItem",
                     'post',
                     {id:id},
                     function (result) {
@@ -232,64 +197,42 @@ var OriginBatch = function () {
      */
     var removeValue = function(type){
         if(type == 'edit'){
-            $(".originBatchEditModal .modal-title").text("编辑")
-            $(".originBatchEditModal [name='save']").val('edit')
-            $(".originBatchEditModal [name='batchNum']").attr("disabled",true)
+            $(".originCodeEditModal .modal-title").text("编辑")
+            $(".originCodeEditModal [name='save']").val('edit')
+            $(".originCodeEditModal [name='batchNum']").attr("disabled",true)
         }else{
-            $(".originBatchEditModal .modal-title").text("新增")
-            $(".originBatchEditModal [name='save']").val('add');
-            $(".originBatchEditModal [name='batchNum']").attr("disabled",false);
+            $(".originCodeEditModal .modal-title").text("新增")
+            $(".originCodeEditModal [name='save']").val('add');
+            $(".originCodeEditModal [name='batchNum']").attr("disabled",false);
         }
-        $(".originBatchEditModal [name='id']").val("")
-        $(".originBatchEditModal [name='batchNum']").val("")
-        $(".originBatchEditModal [name='description']").val("")
-        $(".originBatchEditModal .form-control-feedback").remove()
-        $(".originBatchEditModal div").removeClass("has-danger")
-        $(".originBatchEditModal div").removeClass("has-success")
+        $(".originCodeEditModal [name='id']").val("")
+        $(".originCodeEditModal [name='batchNum']").val("")
+        $(".originCodeEditModal [name='description']").val("")
+        $(".originCodeEditModal .form-control-feedback").remove()
+        $(".originCodeEditModal div").removeClass("has-danger")
+        $(".originCodeEditModal div").removeClass("has-success")
     }
 
     /**
      * 新增重置表单初始值
      */
-    var addOriginBatchItem = function () {
-        $(".addOriginBatchItem").on('click',function(){
+    var addOriginCodeItem = function () {
+        $(".addOriginCodeItem").on('click',function(){
             removeValue('add')
         })
     }
 
-    /**
-     * 获取加工设置数据
-     */
-    var getMsuData = function () {
-        $(".originBatchEditModal .la-hand-o-up").on("click",function () {
-            var save = $(".originBatchEditModal [name='save']").val();
-            if (save == 'add'){
-                request(
-                    "getMsuData",
-                    'get',
-                    {},
-                    function (result) {
-                        if(result.message){
-                            $("#batchNum").val(result.data)
-                        }else{
-                            ToastrMsg('获取失败,请稍后再试.',"error","topRight",'#modalBloukUi');
-                        }
-                    })
-            }
-        })
-    }
     return {
         init: function () {
-            getOriginBatchDataList();
-            editOriginBatchItem();
-            OriginBatchEditForm();
-            addOriginBatchItem();
-            delOriginBatchItem();
-            getMsuData();
-            createCodeForm();
+            getOriginCodeDataList();
+            editOriginCodeItem();
+            originCodeEditForm();
+            addOriginCodeItem();
+            delOriginCodeItem();
         }
     };
 }();
 jQuery(document).ready(function () {
-    OriginBatch.init();
+    console.log("log")
+    originCode.init();
 });

@@ -38,4 +38,14 @@ public class OriginBatchServiceImpl extends AbstractServiceImpl<OriginBatch> imp
     public List<Map> selectOriginBatchDataList(Map map){
         return originBatchMapper.selectOriginBatchDataList(map);
     }
+
+    /**
+     * 查询溯源批次
+     * @param map
+     * @return
+     */
+    @Override
+    public List<OriginBatch> selectBatchList(Map map){
+        return originBatchMapper.selectBatchList(map);
+    }
 }

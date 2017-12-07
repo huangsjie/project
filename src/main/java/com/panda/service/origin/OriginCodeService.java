@@ -3,6 +3,9 @@ package com.panda.service.origin;
 import com.panda.model.origin.OriginCode;
 import com.panda.util.abs.AbstractService;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created with IDEA.
  *
@@ -11,4 +14,19 @@ import com.panda.util.abs.AbstractService;
  * Time: 10:53
  */
 public interface OriginCodeService extends AbstractService<OriginCode> {
+
+    /**
+     * 获取溯源码
+     * @param map
+     * @return
+     */
+    List<Map> selectOriginCodeDataList(Map map);
+
+    /**
+     * 批量生成溯源码
+     * @param prefixVal
+     * @param createNum
+     * @return
+     */
+    Integer createOriginCodeList(String originBatchId,String prefixVal,Integer createNum);
 }

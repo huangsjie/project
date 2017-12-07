@@ -2,9 +2,8 @@ package com.panda.controller.system.origin;
 
 import com.alibaba.citrus.util.StringEscapeUtil;
 import com.alibaba.fastjson.JSON;
-import com.panda.model.commodity.Products;
 import com.panda.model.origin.OriginBatch;
-import com.panda.model.system.Dictionary;
+import com.panda.model.origin.OriginCode;
 import com.panda.model.system.Users;
 import com.panda.service.commodity.ProductsService;
 import com.panda.service.origin.OriginBatchService;
@@ -30,23 +29,23 @@ import java.util.*;
  *
  * @AUTH: Alan
  * Date: 2017/12/7
- * Time: 11:01
+ * Time: 22:31
  */
 @Controller
-@RequestMapping("/system/originBatch")
-public class OriginBatchController {
+@RequestMapping(value = "/system/originCode")
+public class OriginCodeController {
 
     @Resource
     private OriginBatchService originBatchService;
-
-    @Resource
-    private OriginCodeService originCodeService;
 
     @Resource
     private ProductsService productsService;
 
     @Resource
     private DictionaryService dictionaryService;
+
+    @Resource
+    private OriginCodeService originCodeService;
     private static boolean message = false;
     private static Object  data    = null;
 
@@ -57,12 +56,16 @@ public class OriginBatchController {
      * @return
      */
     @RequestMapping(value = "/list",method= RequestMethod.GET)
-    @RequiresPermissions("originBatch:view")//权限管理;
-    public String getOriginBatchList(HttpServletRequest request, Model model){
+    @RequiresPermissions("originCode:view")//权限管理;
+    public String getOriginCodeList(HttpServletRequest request, Model model){
+        Map query = new HashMap();
+        query.put("status",1);
+        List<OriginBatch> batchList = originBatchService.selectBatchList(query);
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("batchList",batchList);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
-        return "system/origin/getOriginBatchList";
+        return "system/origin/getOriginCodeList";
     }
 
     /**
@@ -70,9 +73,9 @@ public class OriginBatchController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/getOriginBatchDataList",method = RequestMethod.POST)
+    @RequestMapping(value = "/getOriginCodeDataList",method = RequestMethod.POST)
     @ResponseBody
-    public Object getOriginBatchDataList(HttpServletRequest request,String datatable){
+    public Object getOriginCodeDataList(HttpServletRequest request,String datatable){
         message = false;
         data    = null;
         try {
@@ -94,7 +97,7 @@ public class OriginBatchController {
                     query.put("productId",status.get("productId"));
                 }
             }
-            List<Map> originBatchList = originBatchService.selectOriginBatchDataList(query);
+            List<Map> originBatchList = originCodeService.selectOriginCodeDataList(query);
             if(originBatchList.size() > 0){
                 message = true;
                 data = originBatchList;
@@ -112,17 +115,17 @@ public class OriginBatchController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/editOriginBatchItem", method = RequestMethod.GET)
+    @RequestMapping(value = "/editOriginCodeItem", method = RequestMethod.GET)
     @ResponseBody
-    public Object editOriginBatchItem(HttpServletRequest request,String id){
+    public Object editOriginCodeItem(HttpServletRequest request,String id){
         message = false;
         data    = null;
         if (!id.isEmpty()){
             try {
-                OriginBatch originBatch = originBatchService.selectByPrimaryKey(id);
-                if(originBatch != null){
+                OriginCode originCode = originCodeService.selectByPrimaryKey(id);
+                if(originCode != null){
                     message = true;
-                    data = originBatch;
+                    data = originCode;
                 }else{
                     data = ResultStateUtil.ERROR_QUERY;
                 }
@@ -137,21 +140,21 @@ public class OriginBatchController {
     /**
      * 保存和编辑数据
      * @param request
-     * @param originBatch
+     * @param originCode
      * @param save
      * @return
      */
-    @RequestMapping(value = "/saveOrUpdateOriginBatch",method = RequestMethod.POST)
+    @RequestMapping(value = "/saveOrUpdateOriginCode",method = RequestMethod.POST)
     @ResponseBody
-    public Object saveOrUpdateOriginBatch(HttpServletRequest request, OriginBatch originBatch , String save){
+    public Object saveOrUpdateOriginCode(HttpServletRequest request, OriginCode originCode , String save){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         message = false;
         data    = null;
         try{
-            if(!originBatch.getId().isEmpty() && save != null && save.equals("edit")){
-                originBatch.setModifyId(user.getId());
-                originBatch.setModifyTime(new Date());
-                int i = originBatchService.updateByPrimaryKeySelective(originBatch);
+            if(!originCode.getId().isEmpty() && save != null && save.equals("edit")){
+                originCode.setModifyId(user.getId());
+                originCode.setModifyTime(new Date());
+                int i = originCodeService.updateByPrimaryKeySelective(originCode);
                 if(i > 0){
                     message = true;
                     data    = ResultStateUtil.SUCCESS_UPDATE;
@@ -159,10 +162,10 @@ public class OriginBatchController {
                     data    = ResultStateUtil.FAIL_UPDATE;
                 }
             }else if(save.equals("add")) {
-                originBatch.setId(UUID.randomUUID().toString());
-                originBatch.setCreateId(user.getId());
-                originBatch.setCreateTime(new Date());
-                int insert = originBatchService.insertSelective(originBatch);
+                originCode.setId(UUID.randomUUID().toString());
+                originCode.setCreateId(user.getId());
+                originCode.setCreateTime(new Date());
+                int insert = originCodeService.insertSelective(originCode);
                 if(insert > 0){
                     message = true;
                     data    = ResultStateUtil.SUCCESS_ADD;
@@ -176,50 +179,6 @@ public class OriginBatchController {
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
-    /**
-     * 获取编码
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/getMsuData",method = RequestMethod.GET)
-    @ResponseBody
-    public Object getMsuData(HttpServletRequest request){
-        return ResultMsgUtil.getResultMsg(true,"MSU"+ CreateBatchNoUtil.createBatchNo());
-    }
-
-    /**
-     * 批量生成 溯源码
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/createCode",method = RequestMethod.POST)
-    @ResponseBody
-    public Object createCode(HttpServletRequest request,String originBatchId,String prefixVal,Integer createNum){
-        message = false;
-        data    = null;
-        if (!originBatchId.isEmpty() && !prefixVal.isEmpty() && createNum > 0){
-            Integer status = originCodeService.createOriginCodeList(originBatchId,prefixVal,createNum);
-            switch (status){
-                case 200:
-                    OriginBatch originBatch = new OriginBatch();
-                    originBatch.setId(originBatchId);
-                    originBatch.setStatus(1);
-                    message = true;
-                    data = ResultStateUtil.SUCCESS_BINDING;
-                    originBatchService.updateByPrimaryKey(originBatch);
-                    break;
-                case 101:
-                    data = ResultStateUtil.CODE_OUT_TIME;
-                    break;
-                default:
-                    data = ResultStateUtil.CODE_OUT_TIME;
-                    break;
-            }
-        }else{
-            data = ResultStateUtil.ERROR_PARAMETER_NO_TCOMPATIBLE;
-        }
-        return ResultMsgUtil.getResultMsg(message,data);
-    }
 
     /**
      * 刪除
@@ -227,14 +186,14 @@ public class OriginBatchController {
      * @param id
      * @return
      */
-    @RequestMapping(value="/delOriginBatchItem",method = RequestMethod.POST)
+    @RequestMapping(value="/delOriginCodeItem",method = RequestMethod.GET)
     @ResponseBody
-    public Object delOriginBatchItem(HttpServletRequest request ,String id){
+    public Object delOriginCodeItem(HttpServletRequest request ,String id){
         message = false;
         data    = null;
         try{
             if (!id.isEmpty()){
-                int i = originBatchService.deleteByPrimaryKey(id);
+                int i = originCodeService.deleteByPrimaryKey(id);
                 if(i > 0){
                     message = true;
                     data = ResultStateUtil.SUCCESS_DELETE;

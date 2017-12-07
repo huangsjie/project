@@ -3,7 +3,7 @@ package com.panda.model.origin;
 import java.io.Serializable;
 import java.util.Date;
 
-public class OriginCode implements Serializable {
+public class OriginCode implements Serializable{
     private String id;
 
     private String originBatchId;
@@ -12,9 +12,15 @@ public class OriginCode implements Serializable {
 
     private String originCode;
 
+    private Integer createStatus;
+
     private String createId;
 
     private Date createTime;
+
+    private String modifyId;
+
+    private Date modifyTime;
 
     public String getId() {
         return id;
@@ -48,6 +54,14 @@ public class OriginCode implements Serializable {
         this.originCode = originCode;
     }
 
+    public Integer getCreateStatus() {
+        return createStatus;
+    }
+
+    public void setCreateStatus(Integer createStatus) {
+        this.createStatus = createStatus;
+    }
+
     public String getCreateId() {
         return createId;
     }
@@ -62,5 +76,21 @@ public class OriginCode implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getModifyId() {
+        return modifyId;
+    }
+
+    public void setModifyId(String modifyId) {
+        this.modifyId = modifyId;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
     }
 }

@@ -140,22 +140,42 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
   
-  <select id="selectOriginBatchDataList" resultType="map" parameterType="map">
-  SELECT
-	ob.id,ob.status,ob.batch_num,os.origin_set_name,COUNT(os.id) codeNum, COUNT(oc1.id) createStatus,ob.create_time
-  FROM
-      e_origin_batch ob
-      LEFT JOIN e_origin_set os ON ob.origin_set_id = os.id
-      LEFT JOIN e_origin_code oc ON ob.id = oc.origin_batch_id
-      LEFT JOIN e_origin_code oc1 ON ob.id = oc.origin_batch_id AND oc1.create_status = 1
-  WHERE
-      1 = 1
+  <select id="selectBatchList" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from e_origin_batch
+    where 1 = 1
     <if test="originSetId != null and originSetId != ''">
-      AND ob.origin_set_id = #{originSetId}
+      AND origin_set_id = #{originSetId}
     </if>
     <if test="status != null and status != ''">
-      AND ob.status = #{status}
+      AND status = #{status}
     </if>
-    ORDER BY ob.create_time DESC
   </select>
+  
+  <select id="selectOriginBatchDataList" resultType="map" parameterType="map">
+    SELECT o.*,
+      CASE WHEN ISNULL(oc.id) THEN 0 ELSE COUNT(oc.id) END codeNum,
+      CASE WHEN ISNULL(oc1.id) THEN 0 ELSE COUNT(oc1.id) END createStatus
+      FROM (
+        SELECT
+        ob.id,ob.status,ob.batch_num,os.origin_set_name,ob.create_time
+        FROM
+        e_origin_batch ob
+        LEFT JOIN e_origin_set os ON ob.origin_set_id = os.id
+        WHERE
+        1 = 1
+        <if test="originSetId != null and originSetId != ''">
+          AND ob.origin_set_id = #{originSetId}
+        </if>
+        <if test="status != null and status != ''">
+          AND ob.status = #{status}
+        </if>
+    )o
+    LEFT JOIN e_origin_code oc ON o.id = oc.origin_batch_id
+    LEFT JOIN e_origin_code oc1 ON o.id = oc.origin_batch_id AND oc1.create_status = 1
+    GROUP BY o.id
+    ORDER BY o.create_time DESC
+  </select>
+
 </mapper>
