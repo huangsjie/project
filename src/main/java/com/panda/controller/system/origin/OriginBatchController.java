@@ -3,12 +3,13 @@ package com.panda.controller.system.origin;
 import com.alibaba.citrus.util.StringEscapeUtil;
 import com.alibaba.fastjson.JSON;
 import com.panda.model.commodity.Products;
-import com.panda.model.origin.MachinSet;
+import com.panda.model.origin.OriginBatch;
 import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
 import com.panda.service.commodity.ProductsService;
-import com.panda.service.origin.MachinSetService;
+import com.panda.service.origin.OriginBatchService;
 import com.panda.service.system.DictionaryService;
+import com.panda.util.CreateBatchNoUtil;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
 import org.apache.shiro.SecurityUtils;
@@ -35,7 +36,7 @@ import java.util.*;
 public class OriginBatchController {
 
     @Resource
-    private MachinSetService machinSetService;
+    private OriginBatchService originBatchService;
 
     @Resource
     private ProductsService productsService;
@@ -52,26 +53,12 @@ public class OriginBatchController {
      * @return
      */
     @RequestMapping(value = "/list",method= RequestMethod.GET)
-    @RequiresPermissions("machinSet:view")//权限管理;
-    public String getMachinSetList(HttpServletRequest request, Model model){
+    @RequiresPermissions("originBatch:view")//权限管理;
+    public String getOriginBatchList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        Map map = new HashMap();
-        map.put("status",1);
-        List<Dictionary> machinType = dictionaryService.selectDictionaryValueList("0b9ed538-29d6-11e5-965c-000c29d7a3a0");//加工类型
-        List<Dictionary> teaArrt = dictionaryService.selectDictionaryValueList("31783870-956f-469f-b43e-9fefd905afca");//茶系
-        List<Dictionary> machinProcess = dictionaryService.selectDictionaryValueList("1e12732d-246e-11e5-965c-000c29d7a3a0");//工序
-        List<Dictionary> teaType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");//品种
-        //List<Dictionary> teaGrade = dictionaryService.selectDictionaryValueList("f63fe4f8-27ab-11e5-965c-000c29d7a3a0");//等级
-        List<Products> productsList = productsService.selectProductsList(map);//产品
-        model.addAttribute("machinType",machinType);
-        model.addAttribute("teaArrt",teaArrt);
-        model.addAttribute("machinProcess",machinProcess);
-        //model.addAttribute("teaGrade",teaGrade);
-        model.addAttribute("productsList",productsList);
-        model.addAttribute("teaType",teaType);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
-        return "system/origin/getMachinSetList";
+        return "system/origin/getOriginBatchList";
     }
 
     /**
@@ -79,9 +66,9 @@ public class OriginBatchController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/getMachinSetDataList",method = RequestMethod.POST)
+    @RequestMapping(value = "/getOriginBatchDataList",method = RequestMethod.POST)
     @ResponseBody
-    public Object getMachinSetDataList(HttpServletRequest request,String datatable){
+    public Object getOriginBatchDataList(HttpServletRequest request,String datatable){
         message = false;
         data    = null;
         try {
@@ -103,10 +90,10 @@ public class OriginBatchController {
                     query.put("productId",status.get("productId"));
                 }
             }
-            List<Map> machinSetList = machinSetService.selectMachinSetDataList(query);
-            if(machinSetList.size() > 0){
+            List<Map> originBatchList = originBatchService.selectOriginBatchDataList(query);
+            if(originBatchList.size() > 0){
                 message = true;
-                data = machinSetList;
+                data = originBatchList;
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -121,17 +108,17 @@ public class OriginBatchController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/editMachinSetItem", method = RequestMethod.GET)
+    @RequestMapping(value = "/editOriginBatchItem", method = RequestMethod.GET)
     @ResponseBody
-    public Object editMachinSetItem(HttpServletRequest request,String id){
+    public Object editOriginBatchItem(HttpServletRequest request,String id){
         message = false;
         data    = null;
         if (!id.isEmpty()){
             try {
-                MachinSet machinSet = machinSetService.selectByPrimaryKey(id);
-                if(machinSet != null){
+                OriginBatch originBatch = originBatchService.selectByPrimaryKey(id);
+                if(originBatch != null){
                     message = true;
-                    data = machinSet;
+                    data = originBatch;
                 }else{
                     data = ResultStateUtil.ERROR_QUERY;
                 }
@@ -146,19 +133,21 @@ public class OriginBatchController {
     /**
      * 保存和编辑数据
      * @param request
-     * @param machinSet
+     * @param originBatch
      * @param save
      * @return
      */
-    @RequestMapping(value = "/saveOrUpdateMachinSet",method = RequestMethod.POST)
+    @RequestMapping(value = "/saveOrUpdateOriginBatch",method = RequestMethod.POST)
     @ResponseBody
-    public Object saveOrUpdateMachinSet(HttpServletRequest request, MachinSet machinSet , String save){
+    public Object saveOrUpdateOriginBatch(HttpServletRequest request, OriginBatch originBatch , String save){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         message = false;
         data    = null;
         try{
-            if(!machinSet.getId().isEmpty() && save != null && save.equals("edit")){
-                int i = machinSetService.updateByPrimaryKeySelective(machinSet);
+            if(!originBatch.getId().isEmpty() && save != null && save.equals("edit")){
+                originBatch.setModifyId(user.getId());
+                originBatch.setModifyTime(new Date());
+                int i = originBatchService.updateByPrimaryKeySelective(originBatch);
                 if(i > 0){
                     message = true;
                     data    = ResultStateUtil.SUCCESS_UPDATE;
@@ -166,13 +155,10 @@ public class OriginBatchController {
                     data    = ResultStateUtil.FAIL_UPDATE;
                 }
             }else if(save.equals("add")) {
-                machinSet.setId(UUID.randomUUID().toString());
-                machinSet.setCreateId(user.getId());
-                machinSet.setCreateTime(new Date());
-                machinSet.setModifyId(user.getId());
-                machinSet.setModifyTime(new Date());
-                machinSet.setStatus(1);
-                int insert = machinSetService.insertSelective(machinSet);
+                originBatch.setId(UUID.randomUUID().toString());
+                originBatch.setCreateId(user.getId());
+                originBatch.setCreateTime(new Date());
+                int insert = originBatchService.insertSelective(originBatch);
                 if(insert > 0){
                     message = true;
                     data    = ResultStateUtil.SUCCESS_ADD;
@@ -186,21 +172,30 @@ public class OriginBatchController {
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
-
+    /**
+     * 新增取样记录 -- 获取选中的加工批次对应的加工信息和产品名称
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/getMsuData",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getMsuData(HttpServletRequest request){
+        return ResultMsgUtil.getResultMsg(true,"MSU"+ CreateBatchNoUtil.createBatchNo());
+    }
     /**
      * 刪除
      * @param request
      * @param id
      * @return
      */
-    @RequestMapping(value="/delMachinSetItem",method = RequestMethod.GET)
+    @RequestMapping(value="/delOriginBatchItem",method = RequestMethod.GET)
     @ResponseBody
-    public Object delMachinSetItem(HttpServletRequest request ,String id){
+    public Object delOriginBatchItem(HttpServletRequest request ,String id){
         message = false;
         data    = null;
         try{
             if (!id.isEmpty()){
-                int i = machinSetService.deleteByPrimaryKey(id);
+                int i = originBatchService.deleteByPrimaryKey(id);
                 if(i > 0){
                     message = true;
                     data = ResultStateUtil.SUCCESS_DELETE;

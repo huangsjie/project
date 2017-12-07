@@ -139,4 +139,23 @@
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select id="selectOriginBatchDataList" resultType="map" parameterType="map">
+  SELECT
+	ob.id,ob.status,ob.batch_num,os.origin_set_name,COUNT(os.id) codeNum, COUNT(oc1.id) createStatus,ob.create_time
+  FROM
+      e_origin_batch ob
+      LEFT JOIN e_origin_set os ON ob.origin_set_id = os.id
+      LEFT JOIN e_origin_code oc ON ob.id = oc.origin_batch_id
+      LEFT JOIN e_origin_code oc1 ON ob.id = oc.origin_batch_id AND oc1.create_status = 1
+  WHERE
+      1 = 1
+    <if test="originSetId != null and originSetId != ''">
+      AND ob.origin_set_id = #{originSetId}
+    </if>
+    <if test="status != null and status != ''">
+      AND ob.status = #{status}
+    </if>
+    ORDER BY ob.create_time DESC
+  </select>
 </mapper>

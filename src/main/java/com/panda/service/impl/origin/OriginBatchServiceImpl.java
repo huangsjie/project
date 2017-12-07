@@ -8,6 +8,8 @@ import com.panda.util.abs.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IDEA.
@@ -25,5 +27,15 @@ public class OriginBatchServiceImpl extends AbstractServiceImpl<OriginBatch> imp
     @Override
     protected AbstractMapper<OriginBatch> getAbstractMapper() {
         return originBatchMapper;
+    }
+
+    /**
+     * 查询溯源批次数据
+     * @param map
+     * @return
+     */
+    @Override
+    public List<Map> selectOriginBatchDataList(Map map){
+        return originBatchMapper.selectOriginBatchDataList(map);
     }
 }
