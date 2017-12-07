@@ -213,7 +213,7 @@ var TeaGardenManage = function () {
                         $("#cultivarId").html(html);
                         blockUiClose('.teaGardenLogEdit .modal-content',0,".close-parent",0);
                     }else{
-                        $("#cultivarId").html("<option value=\"\"> 全部 </option>");
+                        $("#cultivarId").html('');
                         ToastrMsg(result.data,"error","topRight",'.teaGardenLogEdit .modal-content');
                     }
                 })
@@ -252,6 +252,8 @@ var TeaGardenManage = function () {
         if(type == 'edit'){
             $(".teaGardenLogEdit .modal-title").text("编辑记录")
             $(".teaGardenLogEdit [name='save']").val('edit')
+            $("#teaGardenId").attr("disabled",true);
+            $("#cultivarId").attr("disabled",true);
         }else{
             $(".teaGardenLogEdit .modal-title").text("新增记录")
             $(".teaGardenLogEdit [name='save']").val('add');
