@@ -2,9 +2,8 @@ package com.panda.controller.system.origin;
 
 import com.alibaba.citrus.util.StringEscapeUtil;
 import com.alibaba.fastjson.JSON;
-import com.panda.model.commodity.Products;
+import com.panda.controller.system.index.ExportFileController;
 import com.panda.model.origin.OriginBatch;
-import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
 import com.panda.service.commodity.ProductsService;
 import com.panda.service.origin.OriginBatchService;
@@ -15,6 +14,7 @@ import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -44,6 +45,9 @@ public class OriginBatchController {
 
     @Resource
     private ProductsService productsService;
+
+    @Autowired
+    private ExportFileController exportFileController;
 
     @Resource
     private DictionaryService dictionaryService;
@@ -222,6 +226,26 @@ public class OriginBatchController {
             data = ResultStateUtil.ERROR_PARAMETER_NO_TCOMPATIBLE;
         }
         return ResultMsgUtil.getResultMsg(message,data);
+    }
+
+    /**
+     * 导出溯源码
+     */
+    @RequestMapping(value = "/exportOriginCode",method = RequestMethod.GET)
+    @RequiresPermissions("originBatch:export")//权限管理;
+    public void exportOriginCode(HttpServletRequest request, HttpServletResponse response, String originBatchId){
+        try {
+            if (!originBatchId.isEmpty()){
+                Map query = new HashMap();
+                query.put("originBatchId",originBatchId);
+                List<Map> originBatchList = originCodeService.selectOriginCodeDataList(query);
+                if (originBatchList.size() > 0){
+                    exportFileController.exportFileIndex(request,response,originBatchList,"第 "+originBatchList.get(0).get("batchNum")+" 批次溯源码","excel");
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**

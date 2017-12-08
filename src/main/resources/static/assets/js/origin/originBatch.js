@@ -2,7 +2,8 @@ var OriginBatch = function () {
     var actionsTemplate = $("#actionsTemplate").html();
     var status = {
         0: {'title': '未生成', 'class': ' m-badge--warning'},
-        1: {'title': '已生成', 'class': ' m-badge--success'}
+        1: {'title': '已生成', 'class': ' m-badge--success'},
+        'show': {0: 'm--hide', 1: 'm--show'}
     };
     /**
      * 获取列表数据
@@ -70,7 +71,8 @@ var OriginBatch = function () {
                         sortable: false,
                         overflow: 'visible',
                         template: function (row) {
-                            return actionsTemplate.replace(/#rowId#/g, row.id);
+                            var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
+                            return actionsTemplate.replace(/#rowId#/g, row.id).replace(/#dropup#/g, dropup).replace(/#show#/g, status.show[row.status]);
                         }
                     }]
         }
@@ -179,6 +181,21 @@ var OriginBatch = function () {
             }
         });
     }
+    // /**
+    //  * 导出溯源码
+    //  */
+    // var exportOriginCode = function () {
+    //     $(".origin_batch_list").on("click",".exportOriginCode",function () {
+    //         //blockUiOpen('#origin_batch_list');
+    //         var self = $(this);
+    //         var id = self.attr("item");
+    //         if (id != ""){
+    //             console.log(id)
+    //             window.location.href="exportOriginCode?originBatchId="+id;
+    //         }
+    //     })
+    // }
+
     /**
      * 获取所编辑的数据
      */
@@ -287,6 +304,7 @@ var OriginBatch = function () {
             delOriginBatchItem();
             getMsuData();
             createCodeForm();
+            //exportOriginCode();
         }
     };
 }();

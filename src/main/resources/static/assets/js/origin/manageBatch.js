@@ -39,7 +39,7 @@ var manageBatch = function () {
                     overflow: 'visible',
                     template: function (row) {
                         var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
-                        return actionsTemplate.replace(/#rowId#/g, row.id).replace(/#dropup#/g, dropup);
+                        return actionsTemplate.replace(/#rowId#/g, row.id);
                     }
                 }]
         }
@@ -68,7 +68,7 @@ var manageBatch = function () {
 
 
     /**
-     * 茶园信息表单验证
+     * 表单验证
      * 新增与编辑
      */
     var manageBatchForm = function () {
@@ -121,7 +121,7 @@ var manageBatch = function () {
     }
 
     /**
-     * 新增茶园信息
+     * 新增
      */
     var addManageBatch = function () {
         $(".addManageBatch").on('click',function(){
@@ -130,7 +130,7 @@ var manageBatch = function () {
     }
 
     /**
-     * 获取角色信息,并移除上一轮错误信息
+     * 获取信息,并移除上一轮错误信息
      */
     var editManageBatchItem = function () {
         $("#manage_batch_list").on("click", ".editManageBatchItem", function () {
@@ -187,7 +187,7 @@ var manageBatch = function () {
     }
 
     /**
-     * 获取加工设置数据
+     * 获取数据
      */
     var getMsuData = function () {
         $(".manageBatchEdit .la-hand-o-up").on("click",function () {
