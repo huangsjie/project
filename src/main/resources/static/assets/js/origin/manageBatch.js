@@ -39,7 +39,7 @@ var manageBatch = function () {
                     overflow: 'visible',
                     template: function (row) {
                         var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
-                        return actionsTemplate.replace(/#rowId#/g, row.id);
+                        return actionsTemplate.replace(/#rowId#/g, row.id).replace(/#dropup#/g, dropup);
                     }
                 }]
         }

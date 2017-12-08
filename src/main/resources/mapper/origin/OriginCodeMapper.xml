@@ -141,7 +141,19 @@
   </update>
   
   <select id="selectOriginCodeDataList" parameterType="map" resultType="map">
-    SELECT * FROM e_origin_code WHere 1 = 1
+    SELECT
+        oc.id,oc.prefix_val prefixVal,oc.origin_code originCode,oc.create_status createStatus,
+        oc.create_time createTime,ob.batch_num batchNum,oc.origin_batch_id originBatchId
+    FROM
+        e_origin_code oc, e_origin_batch ob
+    WHERE
+        1 = 1
+        AND oc.origin_batch_id = ob.id
+        AND ob.status = 1
+        <if test="originBatchId != null and originBatchId != ''">
+          AND oc.origin_batch_id = #{originBatchId}
+        </if>
+    ORDER BY oc.create_time DESC
   </select>
 
 </mapper>

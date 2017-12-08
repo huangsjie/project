@@ -164,7 +164,7 @@ var OriginBatch = function () {
                 blockUiOpen('#createCodeForm .modal-content');
                 request(
                     "createCode",
-                    "post",
+                    "POST",
                     $("#createCodeForm").serialize(),
                     function(result){
                         if(result.message){

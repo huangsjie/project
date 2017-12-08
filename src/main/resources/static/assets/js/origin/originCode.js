@@ -1,14 +1,13 @@
 var originCode = function () {
     var actionsTemplate = $("#actionsTemplate").html();
     var status = {
-        0: {'title': '未生成', 'class': ' m-badge--warning'},
-        1: {'title': '已生成', 'class': ' m-badge--success'}
+        0: {'title': '未使用', 'class': ' m-badge--warning'},
+        1: {'title': '已使用', 'class': ' m-badge--success'}
     };
     /**
      * 获取列表数据
      */
     var getOriginCodeDataList = function () {
-        console.log(1)
         var option = {
             data: {
                 type: 'remote',
@@ -36,35 +35,28 @@ var originCode = function () {
                         return row.rowIndex + 1;
                         }
                     },{
-                        field: "origin_batch_id",
+                        field: "batchNum",
                         title: "溯源批次",
-                        width: 120
-                    }
-                    /*,{
-                        field: "origin_set_name",
-                        title: "溯源组",
-                        width: 60
-                    }*/
-                    , {
-                        field: "create_status",
-                        title: "编码生成", width: 60,
+
+                    },{
+                        field: "prefixVal",
+                        title: "前缀",
+
+                    },{
+                        field: "originCode",
+                        title: "溯源码",
+
+                    },{
+                        field: "createStatus",
+                        title: "状态",
+                        sortable: 'desc',
                         template: function (row) {
-                            return '<span class="m-badge ' + status[row.create_status].class + ' m-badge--wide">' + status[row.create_status].title + '</span>';
+                            return '<span class="m-badge ' + status[row.createStatus].class + ' m-badge--wide">' + status[row.createStatus].title + '</span>';
                         }
                     }, {
-                        field: "create_time",
+                        field: "createTime",
                         title: "创建时间",
-                        width: 150,
                         sortable: 'desc'
-                    },{
-                        field: "Actions",
-                        width: 150,
-                        title: "操作",
-                        sortable: false,
-                        overflow: 'visible',
-                        template: function (row) {
-                            return actionsTemplate.replace(/#rowId#/g, row.id);
-                        }
                     }]
         }
         var datatable = $('.origin_code_list').mDatatable(option);
@@ -206,6 +198,5 @@ var originCode = function () {
     };
 }();
 jQuery(document).ready(function () {
-    console.log("log")
     originCode.init();
 });

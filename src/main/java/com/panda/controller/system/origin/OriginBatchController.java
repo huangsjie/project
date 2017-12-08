@@ -195,6 +195,7 @@ public class OriginBatchController {
     @RequestMapping(value = "/createCode",method = RequestMethod.POST)
     @ResponseBody
     public Object createCode(HttpServletRequest request,String originBatchId,String prefixVal,Integer createNum){
+        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         message = false;
         data    = null;
         if (!originBatchId.isEmpty() && !prefixVal.isEmpty() && createNum > 0){
@@ -203,10 +204,12 @@ public class OriginBatchController {
                 case 200:
                     OriginBatch originBatch = new OriginBatch();
                     originBatch.setId(originBatchId);
+                    originBatch.setModifyId(user.getId());
+                    originBatch.setModifyTime(new Date());
                     originBatch.setStatus(1);
                     message = true;
                     data = ResultStateUtil.SUCCESS_BINDING;
-                    originBatchService.updateByPrimaryKey(originBatch);
+                    originBatchService.updateByPrimaryKeySelective(originBatch);
                     break;
                 case 101:
                     data = ResultStateUtil.CODE_OUT_TIME;
