@@ -21,7 +21,10 @@ var MachinTea = function () {
                 saveState: {
                     cookie: true,
                     webstorage: true
-                }
+                },
+                serverPaging: false,
+                serverFiltering: false,
+                serverSorting: false
             },
             layout: {
                 theme: 'default', // datatable theme

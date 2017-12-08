@@ -14,7 +14,7 @@ var originCode = function () {
                 type: 'remote',
                 source: {
                     read: {
-                        url: 'getoriginCodeDataList'
+                        url: 'getOriginCodeDataList'
                     }
                 },
                 pageSize: 10,
@@ -36,7 +36,7 @@ var originCode = function () {
                         return row.rowIndex + 1;
                         }
                     },{
-                        field: "batch_num",
+                        field: "origin_batch_id",
                         title: "溯源批次",
                         width: 120
                     }
@@ -46,19 +46,11 @@ var originCode = function () {
                         width: 60
                     }*/
                     , {
-                    field: "status",
-                    title: "编码生成", width: 60,
-                    template: function (row) {
-                        return '<span class="m-badge ' + status[row.status].class + ' m-badge--wide">' + status[row.status].title + '</span>';
-                    }
-                }, {
-                        field: "codeNum",
-                        title: "生成数量",
-                        width: 60
-                    }, {
-                        field: "createStatus",
-                        title: "使用数量",
-                        width: 60
+                        field: "create_status",
+                        title: "编码生成", width: 60,
+                        template: function (row) {
+                            return '<span class="m-badge ' + status[row.create_status].class + ' m-badge--wide">' + status[row.create_status].title + '</span>';
+                        }
                     }, {
                         field: "create_time",
                         title: "创建时间",
@@ -75,14 +67,14 @@ var originCode = function () {
                         }
                     }]
         }
-        var datatable = $('.origin_batch_list').mDatatable(option);
+        var datatable = $('.origin_code_list').mDatatable(option);
         var query = datatable.getDataSourceQuery();
-        $('#processBatchId').on('change', function () {
+        $('#originBatchId').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.processBatchId = $(this).val();
+            query.originBatchId = $(this).val();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.processBatchId !== 'undefined' ? query.processBatchId : '');
+        }).val(typeof query.originBatchId !== 'undefined' ? query.originBatchId : '');
 
         $('#m_form_search').on('keyup', function (e) {
             var query = datatable.getDataSourceQuery();
@@ -90,25 +82,6 @@ var originCode = function () {
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(query.generalSearch);
-        $('#dicMacType').on('change', function () {
-            var query = datatable.getDataSourceQuery();
-            query.dicMacType = $(this).val().toLowerCase();
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.dicMacType !== 'undefined' ? query.dicMacType : '');
-        $('#dicTeaAttr').on('change', function () {
-            var query = datatable.getDataSourceQuery();
-            query.dicTeaAttr = $(this).val();
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.dicTeaAttr !== 'undefined' ? query.dicTeaAttr : '');
-        $('#dicMacPro').on('change', function () {
-            var query = datatable.getDataSourceQuery();
-            query.dicMacPro = $(this).val();
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.dicMacPro !== 'undefined' ? query.dicMacPro : '');
-
         $('.datatableRoload').on('click', function () {
             location.reload()
         });
