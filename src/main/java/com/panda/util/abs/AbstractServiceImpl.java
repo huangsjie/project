@@ -50,4 +50,6 @@ public abstract class AbstractServiceImpl<T> implements AbstractService<T> {
         return getAbstractMapper().updateByPrimaryKeySelective(entity);
     }
 
+
+
 }

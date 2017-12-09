@@ -29,4 +29,12 @@ public interface OriginCodeService extends AbstractService<OriginCode> {
      * @return
      */
     Integer createOriginCodeList(String originBatchId,String prefixVal,Integer createNum);
+
+
+    /**
+     * 通过溯源码找到对应的批次号
+      * @param originCode
+     * @return
+     */
+    List<Map> selectOriginCodeByInfoList(String  originCode);
 }

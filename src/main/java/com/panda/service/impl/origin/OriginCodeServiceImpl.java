@@ -50,6 +50,17 @@ public class OriginCodeServiceImpl extends AbstractServiceImpl<OriginCode> imple
     }
 
     /**
+     * 通过溯源码找到对应的批次号
+     * @param originCode
+     * @return
+     */
+    @Override
+    public List<Map> selectOriginCodeByInfoList(String originCode){
+        return originCodeMapper.selectOriginCodeByInfoList(originCode);
+    }
+
+
+    /**
      * 批量生成溯源码
      * @param prefixVal
      * @param createNum

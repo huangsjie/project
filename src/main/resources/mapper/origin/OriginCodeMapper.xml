@@ -156,4 +156,20 @@
     ORDER BY oc.create_time DESC
   </select>
 
+  <select id="selectOriginCodeByInfoList" parameterType="java.lang.String" resultType="map">
+   SELECT oi.title,oi.content,oi.img_url,d.name,oi.create_time FROM (
+    SELECT
+        ob.id as id
+    FROM
+        e_origin_code oc,e_origin_batch ob
+    WHERE
+        1 = 1
+        AND oc.origin_code = #{originCode}
+      AND oc.origin_batch_id = ob.id
+    )a
+  LEFT JOIN e_origin_info as oi ON a.id = oi.origin_batch and oi.status = 1
+  LEFT JOIN s_dictionary as d on oi.dic_origin_type = d.id
+
+  </select>
+
 </mapper>
