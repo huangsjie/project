@@ -126,10 +126,12 @@ var Sampling = function () {
         if(type == 'edit'){
             $(".samplingEditModal .modal-title").text("取样编辑")
             $(".samplingEditModal [name='save']").val('edit')
+            $(".reset-btn").addClass("m--hide");
 
         }else{
             $(".samplingEditModal .modal-title").text("取样新增")
             $(".samplingEditModal [name='save']").val('add');
+            $(".reset-btn").removeClass("m--hide");
         }
         $(".samplingEditModal [name='id']").val('');
         $(".samplingEditModal [name='name']").val('');

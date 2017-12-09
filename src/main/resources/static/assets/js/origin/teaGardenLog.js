@@ -254,9 +254,11 @@ var TeaGardenManage = function () {
             $(".teaGardenLogEdit [name='save']").val('edit')
             $("#teaGardenId").attr("disabled",true);
             $("#cultivarId").attr("disabled",true);
+            $(".reset-btn").addClass("m--hide");
         }else{
             $(".teaGardenLogEdit .modal-title").text("新增记录")
             $(".teaGardenLogEdit [name='save']").val('add');
+            $(".reset-btn").removeClass("m--hide");
         }
         $(".teaGardenLogEdit [name='id']").val("")
         $(".teaGardenLogEdit [name='teaGardenId']").val("")

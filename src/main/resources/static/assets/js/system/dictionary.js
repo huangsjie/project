@@ -186,9 +186,11 @@ var Dictionary = function () {
         if(type == 'edit'){
             $(formAttrIbute + " .modal-title").text(modalTitle);
             $(formAttrIbute + " [name='save']").val('edit');
+            $(".reset-btn").addClass("m--hide");
         }else{
             $(formAttrIbute + " .modal-title").text(modalTitle);
             $(formAttrIbute + " [name='save']").val('add');
+            $(".reset-btn").removeClass("m--hide");
         }
         $(formAttrIbute + " [name='id']").val('')
         $(formAttrIbute + " [name='name']").val('')

@@ -134,9 +134,11 @@ var TeaGarden = function () {
         if(type == 'edit'){
             $(".teaGardenEdit .modal-title").text("茶园编辑")
             $(".teaGardenEdit [name='save']").val('edit')
+            $(".reset-btn").addClass("m--hide");
         }else{
             $(".teaGardenEdit .modal-title").text("茶园新增")
             $(".teaGardenEdit [name='save']").val('add');
+            $(".reset-btn").removeClass("m--hide");
         }
         $(".teaGardenEdit [name='id']").val('')
         $(".teaGardenEdit [name='name']").val('')

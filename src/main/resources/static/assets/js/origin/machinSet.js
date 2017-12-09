@@ -249,9 +249,11 @@ var MachinSet = function () {
         if(type == 'edit'){
             $(".machinSetEditModal .modal-title").text("编辑工序")
             $(".machinSetEditModal [name='save']").val('edit')
+            $(".reset-btn").addClass("m--hide");
         }else{
             $(".machinSetEditModal .modal-title").text("新增工序")
             $(".machinSetEditModal [name='save']").val('add');
+            $(".reset-btn").removeClass("m--hide");
         }
         $(".machinSetEditModal [name='id']").val("")
         $(".machinSetEditModal [name='dicMacType']").val("")

@@ -171,9 +171,11 @@ var Roles = function () {
         if(type == 'edit'){
             $(".rolesEdit .modal-title").text("角色编辑")
             $(".rolesEdit [name='save']").val('edit')
+            $(".reset-btn").addClass("m--hide");
         }else{
             $(".rolesEdit .modal-title").text("角色新增")
             $(".rolesEdit [name='save']").val('add');
+            $(".reset-btn").removeClass("m--hide");
         }
         $(".rolesEdit [name='id']").val('')
         $(".rolesEdit [name='name']").val('')

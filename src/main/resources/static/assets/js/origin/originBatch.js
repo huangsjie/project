@@ -3,7 +3,9 @@ var OriginBatch = function () {
     var status = {
         0: {'title': '未生成', 'class': ' m-badge--warning'},
         1: {'title': '已生成', 'class': ' m-badge--success'},
-        'show': {0: 'm--hide', 1: 'm--show'}
+        'export': {0: 'm--hide', 1: 'm--show'},
+        'create': {0: 'm--show', 1: 'm--hide'},
+        'change': {0: 'm--hide', 1: 'm--show'}
     };
     /**
      * 获取列表数据
@@ -72,7 +74,10 @@ var OriginBatch = function () {
                         overflow: 'visible',
                         template: function (row) {
                             var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
-                            return actionsTemplate.replace(/#rowId#/g, row.id).replace(/#dropup#/g, dropup).replace(/#show#/g, status.show[row.status]);
+                            return actionsTemplate.replace(/#rowId#/g, row.id)
+                                .replace(/#dropup#/g, dropup)
+                                .replace(/#export#/g, status.export[row.status])
+                                .replace(/#create#/g, status.create[row.status]);
                         }
                     }]
         }
@@ -251,9 +256,11 @@ var OriginBatch = function () {
         if(type == 'edit'){
             $(".originBatchEditModal .modal-title").text("编辑")
             $(".originBatchEditModal [name='save']").val('edit')
+            $(".reset-btn").addClass("m--hide");
             $(".originBatchEditModal [name='batchNum']").attr("disabled",true)
         }else{
             $(".originBatchEditModal .modal-title").text("新增")
+            $(".reset-btn").removeClass("m--hide");
             $(".originBatchEditModal [name='save']").val('add');
             $(".originBatchEditModal [name='batchNum']").attr("disabled",false);
         }

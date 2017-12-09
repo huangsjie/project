@@ -74,9 +74,9 @@
                         <i class="la la-ellipsis-h"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item createOriginCode" href="#" shiro:hasPermission="originBatch:submit" item="#rowId#" data-toggle="modal" data-target=".createOriginCodeModal"><i class="la la-terminal"></i> 生成溯源码</a>
-                        <a class="dropdown-item changeOriginCode" href="" shiro:hasPermission="originBatch:submit" item="#rowId#" data-toggle="modal"><i class="la la-leaf"></i> 批量应用</a>
-                        <a class="dropdown-item #show#" href="exportOriginCode?originBatchId=#rowId#" shiro:hasPermission="originBatch:export" item="#rowId#" download><i class="la la-print"></i> 导出溯源码</a>
+                        <a class="dropdown-item createOriginCode #create#" href="#" shiro:hasPermission="originBatch:submit" item="#rowId#" data-toggle="modal" data-target=".createOriginCodeModal"><i class="la la-terminal"></i> 生成溯源码</a>
+                        <a class="dropdown-item changeOriginCode #change#" href="" shiro:hasPermission="originBatch:submit" item="#rowId#" data-toggle="modal"><i class="la la-leaf"></i> 批量应用</a>
+                        <a class="dropdown-item #export#" href="exportOriginCode?originBatchId=#rowId#" shiro:hasPermission="originBatch:export" item="#rowId#" download><i class="la la-print"></i> 导出溯源码</a>
                     </div>
                 </div>
                 <!--<a href="" class="m-portlet__nav-link btn m-btn m-btn&#45;&#45;hover-accent m-btn&#45;&#45;icon m-btn&#45;&#45;icon-only m-btn&#45;&#45;pill createOriginCode" title=" " shiro:hasPermission="originBatch:submit" item="#rowId#" data-toggle="modal" data-target=".createOriginCodeModal">-->

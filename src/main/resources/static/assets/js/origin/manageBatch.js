@@ -106,9 +106,11 @@ var manageBatch = function () {
         if(type == 'edit'){
             $(".manageBatchEdit .modal-title").text("批次编辑")
             $(".manageBatchEdit [name='save']").val('edit')
+            $(".reset-btn").addClass("m--hide");
         }else{
             $(".manageBatchEdit .modal-title").text("批次新增")
             $(".manageBatchEdit [name='save']").val('add');
+            $(".reset-btn").removeClass("m--hide");
         }
         $(".manageBatchEdit [name='id']").val('')
         $(".manageBatchEdit [name='name']").val('')

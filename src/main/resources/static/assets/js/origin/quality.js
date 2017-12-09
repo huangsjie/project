@@ -155,6 +155,7 @@ var Quality = function () {
             $(".qualityEditModal [name='verifyQuality']").attr("disabled",false);
             $(".qualityEditModal [name='verifyUser']").attr("disabled",false);
             $(".qualityEditModal [name='verifyTime']").attr("disabled",false);
+            $(".reset-btn").addClass("m--hide");
         }else{
             $(".qualityEditModal .modal-title").text("质检新增");
             $(".qualityEditModal [name='save']").val('add');
@@ -164,6 +165,7 @@ var Quality = function () {
             $(".qualityEditModal [name='verifyQuality']").attr("disabled",true);
             $(".qualityEditModal [name='verifyUser']").attr("disabled",true);
             $(".qualityEditModal [name='verifyTime']").attr("disabled",true);
+            $(".reset-btn").removeClass("m--hide");
         }
         $(".qualityEditModal [name='id']").val('');
         $(".qualityEditModal #productName").val('');

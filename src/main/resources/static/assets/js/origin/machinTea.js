@@ -249,12 +249,12 @@ var MachinTea = function () {
      */
     var removeValue = function(type){
         if(type == 'edit'){
-            console.log(type)
             $(".machinTeaEditModal .modal-title").text("编辑加工记录")
             $(".machinTeaEditModal [name='save']").val('edit')
+            $(".reset-btn").addClass("m--hide");
         }else{
-            console.log(type)
             $(".machinTeaEditModal .modal-title").text("新增加工记录")
+            $(".reset-btn").removeClass("m--hide");
             $(".machinTeaEditModal [name='save']").val('add');
         }
         $(".machinTeaEditModal [name='id']").val("")

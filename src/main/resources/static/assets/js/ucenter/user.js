@@ -252,11 +252,13 @@ var User = function () {
             $(".userEdit [name='save']").val('edit')
             $("#user_edit_form [name='account']").attr("disabled",true)
             $("#user_edit_form [name='password']").attr("disabled",true)
+            $(".reset-btn").addClass("m--hide");
         }else{
             $(".user_nick_name").text("Jion Landry")
             $(".user_email").text("jionlandry@gmail.com")
             $(".userEdit .modal-title").text("用户新增")
             $(".userEdit [name='save']").val('add');
+            $(".reset-btn").removeClass("m--hide");
             $('#distpicker').distpicker({autoSelect: false});
             $("#user_edit_form [name='account']").attr("disabled",false)
             $("#user_edit_form [name='password']").attr("disabled",false)

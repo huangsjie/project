@@ -164,9 +164,11 @@ var originCode = function () {
         if(type == 'edit'){
             $(".originCodeEditModal .modal-title").text("编辑")
             $(".originCodeEditModal [name='save']").val('edit')
+            $(".reset-btn").addClass("m--hide");
             $(".originCodeEditModal [name='batchNum']").attr("disabled",true)
         }else{
             $(".originCodeEditModal .modal-title").text("新增")
+            $(".reset-btn").removeClass("m--hide");
             $(".originCodeEditModal [name='save']").val('add');
             $(".originCodeEditModal [name='batchNum']").attr("disabled",false);
         }

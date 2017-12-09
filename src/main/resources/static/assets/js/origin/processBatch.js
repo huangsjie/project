@@ -109,9 +109,11 @@ var processBatch = function () {
         if(type == 'edit'){
             $(".processBatchEdit .modal-title").text("批次编辑")
             $(".processBatchEdit [name='save']").val('edit')
+            $(".reset-btn").addClass("m--hide");
         }else{
             $(".processBatchEdit .modal-title").text("批次新增")
             $(".processBatchEdit [name='save']").val('add');
+            $(".reset-btn").removeClass("m--hide");
         }
         $(".processBatchEdit [name='id']").val('')
         $(".processBatchEdit [name='manageBatchId']").val('');
