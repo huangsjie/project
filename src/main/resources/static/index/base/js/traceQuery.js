@@ -1,4 +1,5 @@
-var traceQuery = function () {
+
+jQuery(document).ready(function () {
     $( "#origin_form" ).validate({
         rules: {
             originCode: {
@@ -6,14 +7,26 @@ var traceQuery = function () {
                 alphanumerical:true
             }
         },
+
         submitHandler: function (form){
-            form.submit();
+            ;
+            request(
+                "/index/traceQuery/proTraceAjax",
+                "post",
+                $("#origin_form").serialize(),
+                function(result){
+                    console.log(result);
+                    if(result.message){
+                        // blockUiClose('.originInfoEdit .modal-content',1,".close-parent",0);
+                        //ToastrMsg(result.data,"success","topRight");
+                        ;
+                    }else{
+                        ToastrMsg(result.data,"error","topRight");
+                    }
+                }
+            )
         }
     });
-    return {
-        init: function () {
-            traceQuery();
-        }
-    };
-}()
+
+});
 
