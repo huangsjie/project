@@ -11,16 +11,9 @@
         <div class="m-grid__item m-grid__item--fluid  m-grid m-grid--ver	m-container m-container--responsive m-container--xxl m-page__container">
             <div class="m-grid__item m-grid__item--fluid m-wrapper" >
                 <div  class="m-content">
-                    <div class="m-alert m-alert--outline alert alert-warning alert-dismissible fade show" th:if="${messave != null}" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-                        <strong>
-                            警告!
-                        </strong>
-                        <span th:text="${messave}"></span>
-                    </div>
                     <div class="col-sm-11 " style="margin:  0px auto; top: 50%; position: absolute;">
                         <div class=" col-sm-8 pull-right">
-                            <form class="m-form m-form--state m-form--fit m-form--label-align-right" id="origin_form" novalidate="novalidate">
+                            <form class="m-form m-form--state m-form--fit m-form--label-align-right" action="/index/traceQuery/proTrace" method="post" id="origin_form" novalidate="novalidate">
                                 <div class="modal-body">
                                     <div class="form-group m-form__group row">
                                         <div class="ccol-sm-10">
@@ -46,7 +39,7 @@
     <i class="la la-arrow-up"></i>
 </div>
 <script th:src="@{/index/base/js/jquery.min.js}" type="text/javascript"></script>
-<script th:src="@{/index/base/js/base.js}" type="text/javascript"></script>-->
+<script th:src="@{/index/base/js/base.js}" type="text/javascript"></script>
 <script th:src="@{/index/base/js/scripts.bundle.js}" type="text/javascript"></script>
 <script th:src="@{/index/base/js/jquery.slimscroll.js}" type="text/javascript"></script>
 <script th:src="@{/index/base/js/jquery-validation.js}" type="text/javascript"></script>

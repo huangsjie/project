@@ -103,11 +103,11 @@ public class ProTraceController {
         if (!originCode.isEmpty()){
             try {
                 List<Map> InfoList = originCodeService.selectOriginCodeByInfoList(originCode);
-                if(InfoList != null){
+                if( !InfoList.isEmpty() && InfoList.size() > 0 ){
                     message = true;
-                    data = InfoList;
+                    data = "";
                 }else{
-                    data = ResultStateUtil.ERROR_QUERY;
+                    data = "无效的溯源档案编号";
                 }
             }catch (Exception e){
                 e.printStackTrace();

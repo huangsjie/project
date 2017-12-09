@@ -9,7 +9,6 @@ jQuery(document).ready(function () {
         },
 
         submitHandler: function (form){
-            ;
             request(
                 "/index/traceQuery/proTraceAjax",
                 "post",
@@ -17,11 +16,9 @@ jQuery(document).ready(function () {
                 function(result){
                     console.log(result);
                     if(result.message){
-                        // blockUiClose('.originInfoEdit .modal-content',1,".close-parent",0);
-                        //ToastrMsg(result.data,"success","topRight");
-                        ;
+                        form.submit();
                     }else{
-                        ToastrMsg(result.data,"error","topRight");
+                        ToastrMsg(result.data,"warning","topRight");
                     }
                 }
             )
