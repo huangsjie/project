@@ -37,7 +37,7 @@
                                             <li class="m-menu__item m-menu__item--submenu m-menu__item--rel" th:each="menu,index:${menuList}" th:classappend="${index.first} ? 'm-menu__item--active'" th:attrappend="data-menu-submenu-toggle=${menu.childMenuList != null?'click':''}" aria-haspopup="true">
                                                 <a th:href="${menu.childMenuList == null}?${menu.url}" class="m-menu__link m-menu__toggle" >
 
-                                                    <span class="m-menu__link-text" th:text="${menu.name}"> 产品库 </span>
+                                                    <span class="m-menu__link-text" th:text="${menu.name}">  </span>
                                                     <i class="m-menu__hor-arrow la la-angle-down" th:if="${menu.childMenuList != null}"></i>
                                                     <i class="m-menu__ver-arrow la la-angle-right"></i>
                                                 </a>

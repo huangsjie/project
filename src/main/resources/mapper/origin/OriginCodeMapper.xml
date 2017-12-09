@@ -157,7 +157,7 @@
   </select>
 
   <select id="selectOriginCodeByInfoList" parameterType="java.lang.String" resultType="map">
-   SELECT oi.title,oi.content,oi.img_url,d.name,oi.create_time FROM (
+   SELECT oi.title,oi.content,oi.img_url,d.name,oi.create_time,oi.description FROM (
     SELECT
         ob.id as id
     FROM
