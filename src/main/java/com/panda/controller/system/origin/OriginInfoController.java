@@ -62,7 +62,9 @@ public class OriginInfoController {
     public String getMachinSetList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         List<OriginBatch> batchList = originBatchService.selectAll();//溯源批次
+        List<Dictionary> originInfoType = dictionaryService.selectDictionaryValueList("7dcd4ffe-3041-4ce7-ae5f-ac3ba811ff71");
         model.addAttribute("batchList",batchList);
+        model.addAttribute("originInfoType",originInfoType);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
         return "system/origin/getOriginInfoList";

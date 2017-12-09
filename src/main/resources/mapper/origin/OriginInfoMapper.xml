@@ -210,10 +210,27 @@
 
   <!-- 查询溯源信息 -->
   <select id="selectOriginInfoDataList" resultType="map" parameterType="map">
-    select
-    <include refid="Base_Column_List" />
-    from e_origin_info
-    where 1 = 1
+    SELECT a.*,d.name dicOriginName FROM (
+        select
+        oi.id, oi.title,oi.description,oi.sort_id sortId,oi.origin_batch originBatch,
+        oi.create_time createTime,oi.status,oi.dic_origin_type dicOriginType,
+        ob.batch_num batchNum
+        from e_origin_info oi,e_origin_batch ob
+        where
+          1 = 1
+          AND oi.origin_batch = ob.id
+          <if test="originBatchId != null and originBatchId != ''">
+            AND oi.origin_batch = #{originBatchId}
+          </if>
+          <if test="dicOriginType != null and dicOriginType != ''">
+            AND oi.dic_origin_type = #{dicOriginType}
+          </if>
+          <if test="status != null and status != ''">
+            AND oi.status = #{status}
+          </if>
+        ORDER BY oi.sort_id DESC
+    )a
+    LEFT JOIN s_dictionary d ON a.dicOriginType = d.id
   </select>
   <!-- 查询溯源信息 -->
 </mapper>

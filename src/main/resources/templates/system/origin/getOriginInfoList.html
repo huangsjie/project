@@ -40,7 +40,7 @@
                             <div class="row align-items-center">
                                 <div class="col-xl-8 order-2 order-xl-1">
                                     <div class="form-group m-form__group row align-items-center">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="m-form__group m-form__group--inline">
                                                 <div class="m-form__label">
                                                     <label style="width: 100px;">溯源批次:</label>
@@ -49,6 +49,20 @@
                                                     <select class="form-control m-bootstrap-select select_selectpicker" id="originBatchId" >
                                                         <option value=""> 全部 </option>
                                                         <option th:each="item:${batchList}" th:value="${item.id}" th:text="${item.batchNum}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="d-md-none m--margin-bottom-10"></div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="m-form__group m-form__group--inline">
+                                                <div class="m-form__label">
+                                                    <label style="width: 100px;">溯源批次:</label>
+                                                </div>
+                                                <div class="m-form__control">
+                                                    <select class="form-control m-bootstrap-select select_selectpicker" id="dicOriginType" >
+                                                        <option value=""> 全部 </option>
+                                                        <option th:each="item:${originInfoType}" th:value="${item.id}" th:text="${item.name}"></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -67,7 +81,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xl-4 order-1 order-xl-2 m--align-left">
-                                    <button type="button" class="btn btn-info addOriginCodeItem" shiro:hasPermission="originCode:add" data-toggle="modal" data-target=".OriginCodeEditModal">
+                                    <button type="button" class="btn btn-info addOriginInfoItem" shiro:hasPermission="originCode:add" data-toggle="modal" data-target=".originInfoEditModal">
                                         新增
                                     </button>
                                     <button type="button" class="btn btn-secondary datatableRoload">

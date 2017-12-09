@@ -29,8 +29,8 @@ var originInfo = function () {
                     return row.rowIndex+1;
                 }},
                 {field: "title", title: "标题", width: 150},
-                {field: "originBatch", title: "溯源批次", width: 100},
-                {field: "dicOriginType", title: "溯源类型", width: 60},
+                {field: "batchNum", title: "溯源批次", width: 100},
+                {field: "dicOriginName", title: "溯源类型", width: 60},
                 {field: "status", title: "状态", width: 60},
                 {field: "sortId", title: "排序", width: 60},
                 {field: "description", title: "摘要", width: 200},
@@ -77,10 +77,7 @@ var originInfo = function () {
     var originInfoInfoForm = function () {
         $( "#origin_info_edit_form" ).validate({
             rules: {
-                name: {
-                    required: true,
-                    nameCheck:true
-                },
+                name: { required: true, nameCheck:true },
                 teaGrade:{required: true,},
                 gardenType:{required: true,},
                 area:{required: true,},
@@ -96,7 +93,6 @@ var originInfo = function () {
                     $("#tea_garden_edit_form").serialize(),
                     function(result){
                         if(result.message){
-                            removeValue('add');
                             blockUiClose('.originInfoEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
                             ;
@@ -115,27 +111,27 @@ var originInfo = function () {
      */
     var removeValue = function(type){
         if(type == 'edit'){
-            $(".originInfoEdit .modal-title").text("茶园编辑")
-            $(".originInfoEdit [name='save']").val('edit')
-            $(".reset-btn").addClass("m--hide");
+            $(".originInfoEditModal .modal-title").text("编辑溯源信息")
+            $(".originInfoEditModal [name='save']").val('edit')
+            $(".originInfoEditModal .reset-btn").addClass("m--hide");
         }else{
-            $(".originInfoEdit .modal-title").text("茶园新增")
-            $(".originInfoEdit [name='save']").val('add');
-            $(".reset-btn").removeClass("m--hide");
+            $(".originInfoEditModal .modal-title").text("新增溯源信息")
+            $(".originInfoEditModal [name='save']").val('add');
+            $(".originInfoEditModal .reset-btn").removeClass("m--hide");
         }
-        $(".originInfoEdit [name='id']").val('')
-        $(".originInfoEdit [name='name']").val('')
-        $(".originInfoEdit [name='description']").val('');
-        $(".originInfoEdit .form-control-feedback").remove()
-        $(".originInfoEdit div").removeClass("has-danger")
-        $(".originInfoEdit div").removeClass("has-success")
+        $(".originInfoEditModal [name='id']").val('')
+        $(".originInfoEditModal [name='name']").val('')
+        $(".originInfoEditModal [name='description']").val('');
+        $(".originInfoEditModal .form-control-feedback").remove()
+        $(".originInfoEditModal div").removeClass("has-danger")
+        $(".originInfoEditModal div").removeClass("has-success")
     }
 
     /**
      * 新增
      */
     var addOriginInfo = function () {
-        $(".addOriginInfo").on('click',function(){
+        $(".addOriginInfoItem").on('click',function(){
             removeValue('add')
         })
     }
@@ -173,7 +169,7 @@ var originInfo = function () {
 
 
     /**
-     * 删除角色
+     * 删除
      */
     var delOriginInfoItem = function () {
         $("#origin_info_list ").on("click", ".delOriginInfoItem", function () {
