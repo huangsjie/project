@@ -1,10 +1,6 @@
 package com.panda.util.abs;
 
-import com.panda.model.system.PageRole;
-
 import java.util.List;
-import java.util.Map;
-
 /**
  * 抽象 mapper接口
  * Created with IDEA.
@@ -28,5 +24,4 @@ public interface AbstractMapper<T> {
     int updateByPrimaryKey(T entity);
 
     int updateByPrimaryKeySelective(T entity);
-
 }

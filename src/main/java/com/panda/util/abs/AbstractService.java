@@ -1,9 +1,6 @@
 package com.panda.util.abs;
 
-import com.panda.model.system.Dictionary;
-
 import java.util.List;
-import java.util.Map;
 
 /**
  * 抽象公共service
@@ -27,6 +24,4 @@ public interface AbstractService<T> {
     int updateByPrimaryKey(T entity);
 
     int updateByPrimaryKeySelective(T entity);
-
-
 }

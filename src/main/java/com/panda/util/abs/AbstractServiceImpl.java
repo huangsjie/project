@@ -1,7 +1,6 @@
 package com.panda.util.abs;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 抽象公共service实现
@@ -49,7 +48,4 @@ public abstract class AbstractServiceImpl<T> implements AbstractService<T> {
     public int updateByPrimaryKeySelective(T entity){
         return getAbstractMapper().updateByPrimaryKeySelective(entity);
     }
-
-
-
 }
