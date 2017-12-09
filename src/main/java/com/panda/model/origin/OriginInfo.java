@@ -3,12 +3,14 @@ package com.panda.model.origin;
 import java.io.Serializable;
 import java.util.Date;
 
-public class OriginInfo implements Serializable {
+public class OriginInfo implements Serializable{
     private String id;
 
     private String title;
 
     private String dicOriginType;
+
+    private String content;
 
     private String imgUrl;
 
@@ -27,8 +29,6 @@ public class OriginInfo implements Serializable {
     private String modifyId;
 
     private Date modifyTime;
-
-    private String content;
 
     public String getId() {
         return id;
@@ -52,6 +52,14 @@ public class OriginInfo implements Serializable {
 
     public void setDicOriginType(String dicOriginType) {
         this.dicOriginType = dicOriginType;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getImgUrl() {
@@ -124,13 +132,5 @@ public class OriginInfo implements Serializable {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 }

@@ -137,7 +137,7 @@ var originInfo = function () {
     }
 
     /**
-     * 获取角色信息,并移除上一轮错误信息
+     * 获取信息,并移除上一轮错误信息
      */
     var editOriginInfoItem = function () {
         $("#origin_info_list").on("click", ".editOriginInfoItem", function () {

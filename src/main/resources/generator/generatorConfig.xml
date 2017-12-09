@@ -5,7 +5,7 @@
 
 <generatorConfiguration>
     <!-- targetRuntime="MyBatis3" -->
-    <properties resource="application-libb.properties"/>
+    <properties resource="application-alan.properties"/>
     <context id="Mysql" targetRuntime="MyBatis3" defaultModelType="flat">
         <property name="beginningDelimiter" value="`"/>
         <property name="endingDelimiter" value="`"/>
@@ -35,7 +35,7 @@
 
         <!-- 数据表 -->
 
-        <table tableName="e_origin_code" domainObjectName="OriginCode" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="e_origin_info" domainObjectName="OriginInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
         <!-- 数据表 -->
     </context>
     <!-- tea

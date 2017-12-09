@@ -117,9 +117,9 @@ public class OriginInfoController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/editOriginInfoItem", method = RequestMethod.GET)
+    @RequestMapping(value = "/getOriginInfoItem", method = RequestMethod.GET)
     @ResponseBody
-    public Object editOriginInfoItem(HttpServletRequest request,String id){
+    public Object getOriginInfoItem(HttpServletRequest request,String id){
         message = false;
         data    = null;
         if (!id.isEmpty()){
