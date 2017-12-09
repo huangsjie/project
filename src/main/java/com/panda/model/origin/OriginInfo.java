@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class OriginInfo implements Serializable {
-    private Integer id;
+    private String id;
 
     private String title;
 
@@ -30,11 +30,11 @@ public class OriginInfo implements Serializable {
 
     private String content;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

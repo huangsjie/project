@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.panda.mapper.origin.OriginInfoMapper">
   <resultMap id="BaseResultMap" type="com.panda.model.origin.OriginInfo">
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="dic_origin_type" jdbcType="VARCHAR" property="dicOriginType" />
     <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
@@ -43,7 +43,7 @@
       description, origin_batch, create_id, 
       create_time, modify_id, modify_time, 
       content)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{dicOriginType,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{dicOriginType,jdbcType=VARCHAR},
       #{imgUrl,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{sortId,jdbcType=INTEGER}, 
       #{description,jdbcType=VARCHAR}, #{originBatch,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, 
@@ -94,7 +94,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=VARCHAR},
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
@@ -174,7 +174,7 @@
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.panda.model.origin.OriginInfo">
     update e_origin_info
@@ -190,7 +190,7 @@
       modify_id = #{modifyId,jdbcType=VARCHAR},
       modify_time = #{modifyTime,jdbcType=TIMESTAMP},
       content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.panda.model.origin.OriginInfo">
     update e_origin_info
@@ -205,6 +205,15 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       modify_id = #{modifyId,jdbcType=VARCHAR},
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <!-- 查询溯源信息 -->
+  <select id="selectOriginInfoDataList" resultType="map" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from e_origin_info
+    where 1 = 1
+  </select>
+  <!-- 查询溯源信息 -->
 </mapper>

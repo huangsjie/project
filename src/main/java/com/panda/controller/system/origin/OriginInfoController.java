@@ -4,10 +4,14 @@ import com.alibaba.citrus.util.StringEscapeUtil;
 import com.alibaba.fastjson.JSON;
 import com.panda.model.commodity.Products;
 import com.panda.model.origin.MachinSet;
+import com.panda.model.origin.OriginBatch;
+import com.panda.model.origin.OriginInfo;
 import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
 import com.panda.service.commodity.ProductsService;
 import com.panda.service.origin.MachinSetService;
+import com.panda.service.origin.OriginBatchService;
+import com.panda.service.origin.OriginInfoService;
 import com.panda.service.system.DictionaryService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
@@ -34,7 +38,10 @@ import java.util.*;
 @RequestMapping("/system/originInfo")
 public class OriginInfoController {
     @Resource
-    private MachinSetService machinSetService;
+    private OriginBatchService originBatchService;
+
+    @Resource
+    private OriginInfoService originInfoService;
 
     @Resource
     private ProductsService productsService;
@@ -51,26 +58,14 @@ public class OriginInfoController {
      * @return
      */
     @RequestMapping(value = "/list",method= RequestMethod.GET)
-    @RequiresPermissions("machinSet:view")//权限管理;
+    @RequiresPermissions("originInfo:view")//权限管理;
     public String getMachinSetList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        Map map = new HashMap();
-        map.put("status",1);
-        List<Dictionary> machinType = dictionaryService.selectDictionaryValueList("0b9ed538-29d6-11e5-965c-000c29d7a3a0");//加工类型
-        List<Dictionary> teaArrt = dictionaryService.selectDictionaryValueList("31783870-956f-469f-b43e-9fefd905afca");//茶系
-        List<Dictionary> machinProcess = dictionaryService.selectDictionaryValueList("1e12732d-246e-11e5-965c-000c29d7a3a0");//工序
-        List<Dictionary> teaType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");//品种
-        //List<Dictionary> teaGrade = dictionaryService.selectDictionaryValueList("f63fe4f8-27ab-11e5-965c-000c29d7a3a0");//等级
-        List<Products> productsList = productsService.selectProductsList(map);//产品
-        model.addAttribute("machinType",machinType);
-        model.addAttribute("teaArrt",teaArrt);
-        model.addAttribute("machinProcess",machinProcess);
-        //model.addAttribute("teaGrade",teaGrade);
-        model.addAttribute("productsList",productsList);
-        model.addAttribute("teaType",teaType);
+        List<OriginBatch> batchList = originBatchService.selectAll();//溯源批次
+        model.addAttribute("batchList",batchList);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
-        return "system/origin/getMachinSetList";
+        return "system/origin/getOriginInfoList";
     }
 
     /**
@@ -78,9 +73,9 @@ public class OriginInfoController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/getMachinSetDataList",method = RequestMethod.POST)
+    @RequestMapping(value = "/getOriginInfoDataList",method = RequestMethod.POST)
     @ResponseBody
-    public Object getMachinSetDataList(HttpServletRequest request,String datatable){
+    public Object getOriginInfoDataList(HttpServletRequest request,String datatable){
         message = false;
         data    = null;
         try {
@@ -102,10 +97,10 @@ public class OriginInfoController {
                     query.put("productId",status.get("productId"));
                 }
             }
-            List<Map> machinSetList = machinSetService.selectMachinSetDataList(query);
-            if(machinSetList.size() > 0){
+            List<Map> infoDataList = originInfoService.selectOriginInfoDataList(query);
+            if(infoDataList.size() > 0){
                 message = true;
-                data = machinSetList;
+                data = infoDataList;
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -120,17 +115,17 @@ public class OriginInfoController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/editMachinSetItem", method = RequestMethod.GET)
+    @RequestMapping(value = "/editOriginInfoItem", method = RequestMethod.GET)
     @ResponseBody
-    public Object editMachinSetItem(HttpServletRequest request,String id){
+    public Object editOriginInfoItem(HttpServletRequest request,String id){
         message = false;
         data    = null;
         if (!id.isEmpty()){
             try {
-                MachinSet machinSet = machinSetService.selectByPrimaryKey(id);
-                if(machinSet != null){
+                OriginInfo originInfo = originInfoService.selectByPrimaryKey(id);
+                if(originInfo != null){
                     message = true;
-                    data = machinSet;
+                    data = originInfo;
                 }else{
                     data = ResultStateUtil.ERROR_QUERY;
                 }
@@ -145,19 +140,19 @@ public class OriginInfoController {
     /**
      * 保存和编辑数据
      * @param request
-     * @param machinSet
+     * @param originInfo
      * @param save
      * @return
      */
-    @RequestMapping(value = "/saveOrUpdateMachinSet",method = RequestMethod.POST)
+    @RequestMapping(value = "/saveOrUpdateOriginInfo",method = RequestMethod.POST)
     @ResponseBody
-    public Object saveOrUpdateMachinSet(HttpServletRequest request, MachinSet machinSet , String save){
+    public Object saveOrUpdateMachinSet(HttpServletRequest request, OriginInfo originInfo , String save){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         message = false;
         data    = null;
         try{
-            if(!machinSet.getId().isEmpty() && save != null && save.equals("edit")){
-                int i = machinSetService.updateByPrimaryKeySelective(machinSet);
+            if(!originInfo.getId().isEmpty() && save != null && save.equals("edit")){
+                int i = originInfoService.updateByPrimaryKeySelective(originInfo);
                 if(i > 0){
                     message = true;
                     data    = ResultStateUtil.SUCCESS_UPDATE;
@@ -165,13 +160,13 @@ public class OriginInfoController {
                     data    = ResultStateUtil.FAIL_UPDATE;
                 }
             }else if(save.equals("add")) {
-                machinSet.setId(UUID.randomUUID().toString());
-                machinSet.setCreateId(user.getId());
-                machinSet.setCreateTime(new Date());
-                machinSet.setModifyId(user.getId());
-                machinSet.setModifyTime(new Date());
-                machinSet.setStatus(1);
-                int insert = machinSetService.insertSelective(machinSet);
+                originInfo.setId(UUID.randomUUID().toString());
+                originInfo.setCreateId(user.getId());
+                originInfo.setCreateTime(new Date());
+                originInfo.setModifyId(user.getId());
+                originInfo.setModifyTime(new Date());
+                originInfo.setStatus(1);
+                int insert = originInfoService.insertSelective(originInfo);
                 if(insert > 0){
                     message = true;
                     data    = ResultStateUtil.SUCCESS_ADD;
@@ -192,14 +187,14 @@ public class OriginInfoController {
      * @param id
      * @return
      */
-    @RequestMapping(value="/delMachinSetItem",method = RequestMethod.GET)
+    @RequestMapping(value="/delOriginInfoItem",method = RequestMethod.GET)
     @ResponseBody
-    public Object delMachinSetItem(HttpServletRequest request ,String id){
+    public Object delOriginInfoItem(HttpServletRequest request ,String id){
         message = false;
         data    = null;
         try{
             if (!id.isEmpty()){
-                int i = machinSetService.deleteByPrimaryKey(id);
+                int i = originInfoService.deleteByPrimaryKey(id);
                 if(i > 0){
                     message = true;
                     data = ResultStateUtil.SUCCESS_DELETE;
