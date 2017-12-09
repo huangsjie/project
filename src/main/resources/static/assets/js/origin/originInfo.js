@@ -1,5 +1,9 @@
 var originInfo = function () {
     var actionsTemplate = $("#actionsTemplate").html();
+    var status = {
+        0: {'title': '未使用', 'class': ' m-badge--warning'},
+        1: {'title': '已使用', 'class': ' m-badge--success'}
+    };
     var originInfoInfoShow = function () {
         var option = {
             data: {
@@ -25,15 +29,27 @@ var originInfo = function () {
             filterable: false,
             pagination: true,
             columns: [
-                {title: "#", width: 40, template: function (row) {
-                    return row.rowIndex+1;
-                }},
-                {field: "title", title: "标题", width: 150},
+                {
+                    title: "#",
+                    width: 10,
+                    template: function (row) {
+                        return row.rowIndex+1;
+                    }
+                },
+                {field: "title", title: "标题", width: 180},
                 {field: "batchNum", title: "溯源批次", width: 100},
                 {field: "dicOriginName", title: "溯源类型", width: 60},
-                {field: "status", title: "状态", width: 60},
-                {field: "sortId", title: "排序", width: 60},
+                {
+                    field: "status",
+                    title: "状态",
+                    width: 60,
+                    template: function (row) {
+                        return '<span class="m-badge ' + status[row.status].class + ' m-badge--wide">' + status[row.status].title + '</span>';
+                    }
+                },
+                {field: "sortId", title: "排序", width: 60,sortable: 'desc'},
                 {field: "description", title: "摘要", width: 200},
+                {field: "createTime", title: "创建时间", width: 150,sortable: 'desc'},
                 {
                     field: "Actions",
                     width: 100,
@@ -57,12 +73,12 @@ var originInfo = function () {
             datatable.load();
         }).val(query.generalSearch);
 
-        $('#originBatchId').on('change', function () {
+        $('#originBatch').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.originBatchId = $(this).val().toLowerCase();
+            query.originBatch = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.originBatchId !== 'undefined' ? query.originBatchId : '');
+        }).val(typeof query.originBatch !== 'undefined' ? query.originBatch : '');
         $('#dicOriginType').on('change', function () {
             var query = datatable.getDataSourceQuery();
             query.dicOriginType = $(this).val().toLowerCase();
@@ -85,19 +101,17 @@ var originInfo = function () {
             rules: {
                 originBatch: { required: true },
                 dicOriginType:{required: true,},
-
-                gardenType:{required: true,},
-                area:{required: true,},
-                acreage:{required: true,},
-                ageLimit:{required: true,number:true},
+                title:{required: true,nameCheck:true},
+                description:{required: true,},
+                content:{required: true,},
+                sortId:{required: true,digits:true}
             },
-
             submitHandler: function (form){
                 blockUiOpen('.originInfoEdit .modal-content');
                 request(
                     "saveOrUpdateOriginInfo",
                     "post",
-                    $("#tea_garden_edit_form").serialize(),
+                    $("#origin_info_edit_form").serialize(),
                     function(result){
                         if(result.message){
                             blockUiClose('.originInfoEdit .modal-content',1,".close-parent",0);
@@ -106,7 +120,6 @@ var originInfo = function () {
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }
-
                     }
                 )
             }

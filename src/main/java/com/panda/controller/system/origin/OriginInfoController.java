@@ -89,8 +89,8 @@ public class OriginInfoController {
                 if (status.size() > 0 && status.get("dicOriginType") != ""){
                     query.put("dicOriginType",status.get("dicOriginType"));
                 }
-                if (status.size() > 0 && status.get("originBatchId") != ""){
-                    query.put("originBatchId",status.get("originBatchId"));
+                if (status.size() > 0 && status.get("originBatch") != ""){
+                    query.put("originBatch",status.get("originBatch"));
                 }
             }
             List<Map> infoDataList = originInfoService.selectOriginInfoDataList(query);
@@ -148,6 +148,7 @@ public class OriginInfoController {
         data    = null;
         try{
             if(!originInfo.getId().isEmpty() && save != null && save.equals("edit")){
+                originInfo.setModifyTime(new Date());
                 int i = originInfoService.updateByPrimaryKeySelective(originInfo);
                 if(i > 0){
                     message = true;
