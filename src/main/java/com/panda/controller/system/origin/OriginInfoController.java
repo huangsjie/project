@@ -86,17 +86,11 @@ public class OriginInfoController {
                 String jsonStr = StringEscapeUtil.unescapeHtml(datatable);
                 Map params = JSON.parseObject(jsonStr,Map.class);
                 Map status = JSON.parseObject(params.get("query").toString(),Map.class);
-                if (status.size() > 0 && status.get("dicMacType") != ""){
-                    query.put("dicMacType",status.get("dicMacType"));
+                if (status.size() > 0 && status.get("dicOriginType") != ""){
+                    query.put("dicOriginType",status.get("dicOriginType"));
                 }
-                if (status.size() > 0 && status.get("dicTeaAttr") != ""){
-                    query.put("dicTeaAttr",status.get("dicTeaAttr"));
-                }
-                if (status.size() > 0 && status.get("dicMacPro") != ""){
-                    query.put("dicMacPro",status.get("dicMacPro"));
-                }
-                if (status.size() > 0 && status.get("productId") != ""){
-                    query.put("productId",status.get("productId"));
+                if (status.size() > 0 && status.get("originBatchId") != ""){
+                    query.put("originBatchId",status.get("originBatchId"));
                 }
             }
             List<Map> infoDataList = originInfoService.selectOriginInfoDataList(query);

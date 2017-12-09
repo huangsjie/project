@@ -77,6 +77,7 @@ var OriginBatch = function () {
                             return actionsTemplate.replace(/#rowId#/g, row.id)
                                 .replace(/#dropup#/g, dropup)
                                 .replace(/#export#/g, status.export[row.status])
+                                .replace(/#change#/g, status.export[row.status])
                                 .replace(/#create#/g, status.create[row.status]);
                         }
                     }]

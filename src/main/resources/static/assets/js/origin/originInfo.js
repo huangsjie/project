@@ -63,6 +63,12 @@ var originInfo = function () {
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(typeof query.originBatchId !== 'undefined' ? query.originBatchId : '');
+        $('#dicOriginType').on('change', function () {
+            var query = datatable.getDataSourceQuery();
+            query.dicOriginType = $(this).val().toLowerCase();
+            datatable.setDataSourceQuery(query);
+            datatable.load();
+        }).val(typeof query.dicOriginType !== 'undefined' ? query.dicOriginType : '');
         $('.datatableRoload').on('click', function () {
             location.reload()
         });
@@ -77,8 +83,9 @@ var originInfo = function () {
     var originInfoInfoForm = function () {
         $( "#origin_info_edit_form" ).validate({
             rules: {
-                name: { required: true, nameCheck:true },
-                teaGrade:{required: true,},
+                originBatch: { required: true },
+                dicOriginType:{required: true,},
+
                 gardenType:{required: true,},
                 area:{required: true,},
                 acreage:{required: true,},
@@ -119,9 +126,15 @@ var originInfo = function () {
             $(".originInfoEditModal [name='save']").val('add');
             $(".originInfoEditModal .reset-btn").removeClass("m--hide");
         }
-        $(".originInfoEditModal [name='id']").val('')
-        $(".originInfoEditModal [name='name']").val('')
-        $(".originInfoEditModal [name='description']").val('');
+        $("#origin_info_edit_form [name='id']").val("")
+        $("#origin_info_edit_form [name='title']").val("")
+        $("#origin_info_edit_form [name='description']").val("")
+        $("#origin_info_edit_form [name='originBatch']").val("")
+        $("#origin_info_edit_form [name='dicOriginType']").val("")
+        $("#origin_info_edit_form [name='status']").val("")
+        $("#origin_info_edit_form [name='sortId']").val("")
+        $("#origin_info_edit_form [name='content']").val("")
+        $('.status_switch').bootstrapSwitch('state',false);
         $(".originInfoEditModal .form-control-feedback").remove()
         $(".originInfoEditModal div").removeClass("has-danger")
         $(".originInfoEditModal div").removeClass("has-success")
@@ -150,15 +163,19 @@ var originInfo = function () {
                     {id:id},
                     function (result) {
                         if(result.message){
-                            $("#tea_garden_edit_form [name='id']").val(result.data.id)
-                            $("#tea_garden_edit_form [name='name']").val(result.data.name)
-                            $("#tea_garden_edit_form [name='teaGrade']").val(result.data.teaGrade)
-                            $("#tea_garden_edit_form [name='gardenType']").val(result.data.gardenType)
-                            $("#tea_garden_edit_form [name='area']").val(result.data.area)
-                            $("#tea_garden_edit_form [name='acreage']").val(result.data.acreage)
-                            $("#tea_garden_edit_form [name='ageLimit']").val(result.data.ageLimit)
-                            $("#tea_garden_edit_form [name='sortId']").val(result.data.sortId)
-                            $("#tea_garden_edit_form [name='description']").val(result.data.description)
+                            $("#origin_info_edit_form [name='id']").val(result.data.id)
+                            $("#origin_info_edit_form [name='title']").val(result.data.title)
+                            $("#origin_info_edit_form [name='content']").val(result.data.content)
+                            $("#origin_info_edit_form [name='description']").val(result.data.description)
+                            $("#origin_info_edit_form [name='originBatch']").val(result.data.originBatch)
+                            $("#origin_info_edit_form [name='dicOriginType']").val(result.data.dicOriginType)
+                            $("#origin_info_edit_form [name='status']").val(result.data.status)
+                            $("#origin_info_edit_form [name='sortId']").val(result.data.sortId)
+                            if(result.data.status == 1){
+                                $('.status_switch').bootstrapSwitch('state',true);
+                            }else{
+                                $('.status_switch').bootstrapSwitch('state',false);
+                            }
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }
@@ -205,4 +222,12 @@ var originInfo = function () {
 }();
 jQuery(document).ready(function () {
     originInfo.init();
+    $('.status_switch').bootstrapSwitch();
+    $('.status_switch').on('switchChange.bootstrapSwitch', function (event,state) {
+        if(state==true){
+            $(this).parents("div").find(".status_switch_parent").find("[name='status']").val(1)
+        }else{
+            $(this).parents("div").find(".status_switch_parent").find("[name='status']").val(2)
+        }
+    });
 });
