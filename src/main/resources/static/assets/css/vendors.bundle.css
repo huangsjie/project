@@ -11210,8 +11210,7 @@ select.selectpicker {
   position: relative;
   display: inline-block;
   vertical-align: top;
-  margin: 16px;
-  min-height: 100px; }
+   }
 
 .dropzone .dz-preview:hover {
   z-index: 1000; }
@@ -11299,8 +11298,6 @@ select.selectpicker {
 .dropzone .dz-preview .dz-image {
   border-radius: 20px;
   overflow: hidden;
-  width: 120px;
-  height: 120px;
   position: relative;
   display: block;
   z-index: 10; }

@@ -62,13 +62,13 @@ public class PhotoUploadUtil {
             Configuration cfg = new Configuration(Zone.zone2());
             Response response = new UploadManager(cfg).put(realName, getFilePath(filename), getUpToken());
             if (response.isOK()){
-                result.setSuccess(1);
+                result.setSuccess(true);
                 result.setUrl(basePath+getFilePath(filename));
                 result.setMessage(ResultStateUtil.SUCCESS_UPLOAD);
                 return result;
             }
         } catch (QiniuException e) {
-            result.setSuccess(0);
+            result.setSuccess(false);
             result.setMessage(e.getMessage());
             return result;
         }

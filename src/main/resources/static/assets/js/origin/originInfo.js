@@ -91,7 +91,6 @@ var originInfo = function () {
         $('.select_selectpicker').selectpicker();
     };
 
-
     /**
      * 茶园信息表单验证
      * 新增与编辑
@@ -147,6 +146,7 @@ var originInfo = function () {
         $("#origin_info_edit_form [name='status']").val("")
         $("#origin_info_edit_form [name='sortId']").val("")
         $("#origin_info_edit_form [name='content']").val("")
+        $(".upload_warp_left img").attr('src','/assets/img/bg/upload.png');
         $('.status_switch').bootstrapSwitch('state',false);
         $(".originInfoEditModal .form-control-feedback").remove()
         $(".originInfoEditModal div").removeClass("has-danger")

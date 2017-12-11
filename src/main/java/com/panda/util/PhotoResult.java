@@ -10,24 +10,24 @@ package com.panda.util;
  */
 public class PhotoResult {
 
-    private int success;    //成功标准 0失败 1成功
+    private boolean success;    //成功标准 0失败 1成功
     private String url;     //图片url
     private String message; //错误信息
 
     public PhotoResult() {
     }
 
-    public PhotoResult(int success, String url, String message) {
+    public PhotoResult(boolean success, String url, String message) {
         this.success = success;
         this.url = url;
         this.message = message;
     }
 
-    public int getSuccess() {
+    public boolean getSuccess() {
         return success;
     }
 
-    public void setSuccess(int success) {
+    public void setSuccess(boolean success) {
         this.success = success;
     }
 
