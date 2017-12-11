@@ -7,9 +7,10 @@ var DropzoneUploadFiles = function () {
                 thumbnailWidth: 256,
                 thumbnailHeight: 141,
                 paramName: "file",
+                addRemoveLinks:true,//是否有删除图片的功能
+                acceptedFiles: ".jpg,.jpeg,.png,.gif",
                 maxFiles: 1,
                 maxFilesize: 5, // MB
-                acceptedFiles: "image",
                 success: function(file, result) {
                     if (result.message){
                         $("#origin_info_edit_form [name='imgUrl']").val(result.data.url);

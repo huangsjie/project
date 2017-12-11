@@ -148,6 +148,7 @@ var originInfo = function () {
         $("#origin_info_edit_form [name='content']").val("")
         $(".upload_warp_left img").attr('src','/assets/img/bg/upload.png');
         $('.status_switch').bootstrapSwitch('state',false);
+        Dropzone.prototype.destroy();
         $(".originInfoEditModal .form-control-feedback").remove()
         $(".originInfoEditModal div").removeClass("has-danger")
         $(".originInfoEditModal div").removeClass("has-success")
