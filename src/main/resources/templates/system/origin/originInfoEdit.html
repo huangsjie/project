@@ -18,7 +18,7 @@
                     </span>
                 </button>
             </div>
-            <form class="m-form m-form--state m-form--fit m-form--label-align-right" id="origin_info_edit_form" novalidate="novalidate">
+            <form class="m-form m-form--state m-form--fit m-form--label-align-right" enctype="multipart/form-data" id="origin_info_edit_form" novalidate="novalidate">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-6">
@@ -97,9 +97,9 @@
                                 </label>
                                 <div class="col-lg-8 col-md-9 col-sm-12" style="height: 141px">
                                     <div class="upload_warp_left fileinput-new">
-                                        <img th:src="@{/assets/img/bg/upload.png}" style="margin-top: 40px" alt=""/>
+                                        <input type="file" name="files[]" id="demo-fileInput-4" multiple>
+                                        <!--<img th:src="@{/assets/img/bg/upload.png}" style="margin-top: 40px" alt=""/>-->
                                     </div>
-                                    <input type="file" name="pic1" id="picID" accept="image/gif,image/jpeg,image/x-png"/>
                                 </div>
                             </div>
                         </div>
