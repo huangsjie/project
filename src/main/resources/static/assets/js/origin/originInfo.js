@@ -146,9 +146,9 @@ var originInfo = function () {
         $("#origin_info_edit_form [name='status']").val("")
         $("#origin_info_edit_form [name='sortId']").val("")
         $("#origin_info_edit_form [name='content']").val("")
-        $(".upload_warp_left img").attr('src','/assets/img/bg/upload.png');
         $('.status_switch').bootstrapSwitch('state',false);
-        Dropzone.prototype.destroy();
+        $("#origin_info_edit_form .dz-message").show;
+        $("#origin_info_edit_form .dz-preview").remove();
         $(".originInfoEditModal .form-control-feedback").remove()
         $(".originInfoEditModal div").removeClass("has-danger")
         $(".originInfoEditModal div").removeClass("has-success")
@@ -176,6 +176,7 @@ var originInfo = function () {
                     'get',
                     {id:id},
                     function (result) {
+                        console.log(result)
                         if(result.message){
                             $("#origin_info_edit_form [name='id']").val(result.data.id)
                             $("#origin_info_edit_form [name='title']").val(result.data.title)
@@ -185,6 +186,7 @@ var originInfo = function () {
                             $("#origin_info_edit_form [name='dicOriginType']").val(result.data.dicOriginType)
                             $("#origin_info_edit_form [name='status']").val(result.data.status)
                             $("#origin_info_edit_form [name='sortId']").val(result.data.sortId)
+                            $("#origin_info_edit_form .m-dropzone__msg").html('<img src='+result.data.imgUrl+'>')
                             if(result.data.status == 1){
                                 $('.status_switch').bootstrapSwitch('state',true);
                             }else{
