@@ -38,13 +38,15 @@
                                         <div class="col-md-3">
                                             <div class="m-form__group m-form__group--inline">
                                                 <div class="m-form__label">
-                                                    <label style="width: 50px;">类型:</label>
+                                                    <label style="width: 50px;">年份:</label>
                                                 </div>
                                                 <div class="m-form__control">
-                                                    <select class="form-control m-bootstrap-select select_selectpicker" id="m_form_tea_garden_type" >
-                                                        <option value=""> 全部 </option>
-                                                        <option th:each="item:${gardenType}" th:value="${item.id}" th:text="${item.name}"> </option>
-                                                    </select>
+                                                    <div class='input-group date datetimepicker_select'>
+                                                        <input type='text' class="form-control m-input" name="plantYear" readonly value="" id="plantYear"/>
+                                                        <span class="input-group-addon">
+                                                            <i class="la la-calendar glyphicon-th"></i>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="d-md-none m--margin-bottom-10"></div>
@@ -55,23 +57,9 @@
                                                     <label style="width: 50px;">品种:</label>
                                                 </div>
                                                 <div class="m-form__control">
-                                                    <select class="form-control m-bootstrap-select select_selectpicker" id="cultivarType" >
+                                                    <select class="form-control m-bootstrap-select select_selectpicker" id="dicCultivarId" >
                                                         <option value=""> 全部 </option>
-                                                        <option th:each="item:${cultivarType}" th:value="${item.id}" th:text="${item.name}"> </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="d-md-none m--margin-bottom-10"></div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="m-form__group m-form__group--inline">
-                                                <div class="m-form__label">
-                                                    <label style="width: 50px;">等级:</label>
-                                                </div>
-                                                <div class="m-form__control">
-                                                    <select class="form-control m-bootstrap-select select_selectpicker" id="m_form_tea_grade_level" >
-                                                        <option value=""> 全部 </option>
-                                                        <option th:each="item:${teaGardenLevel}" th:value="${item.id}" th:text="${item.name}"> </option>
+                                                        <option th:each="item:${treeType}" th:value="${item.id}" th:text="${item.name}"> </option>
                                                     </select>
                                                 </div>
                                             </div>

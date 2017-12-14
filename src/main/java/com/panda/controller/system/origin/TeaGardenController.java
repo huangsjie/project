@@ -44,14 +44,8 @@ public class TeaGardenController {
     @RequiresPermissions("origin:view")//权限管理;
     public String getTeaGardenList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        List<Dictionary> statusType = dictionaryService.selectDictionaryValueList("ba259a75-f5a7-4897-949f-1c90b7958b35");
-        List<Dictionary> teaGardenLevel = dictionaryService.selectDictionaryValueList("f63fe4f8-27ab-11e5-965c-000c29d7a3a0");
-        List<Dictionary> gardenType = dictionaryService.selectDictionaryValueList("4031b009-b799-4bf0-add0-c7069900bed3");
-        List<Dictionary> cultivarType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");
-        model.addAttribute("statusType",statusType);
-        model.addAttribute("teaGardenLevel",teaGardenLevel);
-        model.addAttribute("cultivarType",cultivarType);
-        model.addAttribute("gardenType",gardenType);
+        List<Dictionary> treeType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");
+        model.addAttribute("treeType",treeType);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
         return "system/origin/getTeaGardenList";
@@ -73,14 +67,11 @@ public class TeaGardenController {
                 String jsonStr = StringEscapeUtil.unescapeHtml(datatable);
                 Map params = JSON.parseObject(jsonStr,Map.class);
                 Map status = JSON.parseObject(params.get("query").toString(),Map.class);
-                if (status.size() > 0 && status.get("tea_grade") != ""){
-                    query.put("tea_grade",status.get("tea_grade"));
+                if (status.size() > 0 && status.get("plantYear") != ""){
+                    query.put("plantYear",status.get("plantYear"));
                 }
-                if (status.size() > 0 && status.get("garden_type") != ""){
-                    query.put("garden_type",status.get("garden_type"));
-                }
-                if (status.size() > 0 && status.get("cultivar_id") != ""){
-                    query.put("cultivar_id",status.get("cultivar_id"));
+                if (status.size() > 0 && status.get("dicCultivarId") != ""){
+                    query.put("dicCultivarId",status.get("dicCultivarId"));
                 }
             }
 
@@ -152,7 +143,6 @@ public class TeaGardenController {
                 teaGarden.setCreateTime(new Date());
                 teaGarden.setModifyId(user.getId());
                 teaGarden.setModifyTime(new Date());
-                teaGarden.setCultivarId(UUID.randomUUID().toString());
                 teaGarden.setStatus(1);
 
                 int insert = teaGardenService.insertSelective(teaGarden);

@@ -26,16 +26,17 @@ var TeaGarden = function () {
             pagination: true,
             columns: [
                 {title: "#", width: 40, template: function (row) {
-                    return row.rowIndex+1;
-                }},
-                {field: "name", title: "名称", width: 100},
-                {field: "teaGradeName", title: "等级", width: 100},
-                {field: "gardenTypeName", title: "类型", width: 100},
-                {field: "area", title: "区域", width: 100},
+                    return row.rowIndex+1; }
+                },
+                {field: "plant_year", title: "栽培年份", width: 100,template: function (row) {
+                    return row.plant_year.substring(0,4); }
+                },
+                {field: "name_area", title: "区域名", width: 100},
+                {field: "area_code", title: "编号", width: 100},
                 {field: "acreage", title: "面积", width: 100},
                 {field: "age_limit", title: "树龄", width: 100},
-                {field: "cultivarName", title: "品种", width: 100},
-                {field: "teaIsName", title: "茶系", width: 100},
+                {field: "treeName", title: "茶树品种", width: 100},
+                {field: "principal", title: "负责人", width: 100},
                 {field: "create_time", title: "创建时间", sortable: 'asc', width: 150},
                 {
                     field: "Actions",

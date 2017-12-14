@@ -15801,7 +15801,15 @@ select.m-select2 {
     width: 100%;
     padding: 2rem 3rem; }
     .m-login.m-login--1 .m-login__aside .m-login__wrapper {
-      padding-top: 2rem; } }
+      padding-top: 2rem; }
+  .m-brand .m-brand__logo .m-brand__logo-wrapper img {
+    max-height: 50px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease; }
+}
 
 .m-login.m-login--2 {
   background-size: cover;
@@ -16407,7 +16415,7 @@ select.m-select2 {
         -o-transition: all 0.3s ease;
         transition: all 0.3s ease; }
       .m-header--minimize-on .m-brand .m-brand__logo .m-brand__logo-wrapper img {
-        max-height: 36px;
+        max-height: 50px;
         -webkit-transition: all 0.3s ease 0.3s;
         -moz-transition: all 0.3s ease 0.3s;
         -ms-transition: all 0.3s ease 0.3s;

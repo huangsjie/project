@@ -4,28 +4,33 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class TeaGarden implements Serializable{
-
     private String id;
 
-    private String name;
+    private String nameArea;
+
+    private String areaCode;
+
+    private Date plantYear;
+
+    private Integer ageLimit;
+
+    private Double acreage;
+
+    private String dicCultivarId;
+
+    private String elevation;
+
+    private String coordinate;
+
+    private String direction;
+
+    private String illumination;
 
     private Integer status;
 
-    private String area;
-
-    private String teaGrade;
-
-    private String teaIs;
-
-    private String ageLimit;
-
-    private String acreage;
-
-    private String gardenType;
-
-    private String cultivarId;
-
     private String description;
+
+    private String principal;
 
     private String createId;
 
@@ -43,12 +48,84 @@ public class TeaGarden implements Serializable{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNameArea() {
+        return nameArea;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameArea(String nameArea) {
+        this.nameArea = nameArea;
+    }
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
+
+    public Date getPlantYear() {
+        return plantYear;
+    }
+
+    public void setPlantYear(Date plantYear) {
+        this.plantYear = plantYear;
+    }
+
+    public Integer getAgeLimit() {
+        return ageLimit;
+    }
+
+    public void setAgeLimit(Integer ageLimit) {
+        this.ageLimit = ageLimit;
+    }
+
+    public Double getAcreage() {
+        return acreage;
+    }
+
+    public void setAcreage(Double acreage) {
+        this.acreage = acreage;
+    }
+
+    public String getDicCultivarId() {
+        return dicCultivarId;
+    }
+
+    public void setDicCultivarId(String dicCultivarId) {
+        this.dicCultivarId = dicCultivarId;
+    }
+
+    public String getElevation() {
+        return elevation;
+    }
+
+    public void setElevation(String elevation) {
+        this.elevation = elevation;
+    }
+
+    public String getCoordinate() {
+        return coordinate;
+    }
+
+    public void setCoordinate(String coordinate) {
+        this.coordinate = coordinate;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    public String getIllumination() {
+        return illumination;
+    }
+
+    public void setIllumination(String illumination) {
+        this.illumination = illumination;
     }
 
     public Integer getStatus() {
@@ -59,68 +136,20 @@ public class TeaGarden implements Serializable{
         this.status = status;
     }
 
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
-    public String getTeaGrade() {
-        return teaGrade;
-    }
-
-    public void setTeaGrade(String teaGrade) {
-        this.teaGrade = teaGrade;
-    }
-
-    public String getTeaIs() {
-        return teaIs;
-    }
-
-    public void setTeaIs(String teaIs) {
-        this.teaIs = teaIs;
-    }
-
-    public String getAgeLimit() {
-        return ageLimit;
-    }
-
-    public void setAgeLimit(String ageLimit) {
-        this.ageLimit = ageLimit;
-    }
-
-    public String getAcreage() {
-        return acreage;
-    }
-
-    public void setAcreage(String acreage) {
-        this.acreage = acreage;
-    }
-
-    public String getGardenType() {
-        return gardenType;
-    }
-
-    public void setGardenType(String gardenType) {
-        this.gardenType = gardenType;
-    }
-
-    public String getCultivarId() {
-        return cultivarId;
-    }
-
-    public void setCultivarId(String cultivarId) {
-        this.cultivarId = cultivarId;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
     }
 
     public String getCreateId() {

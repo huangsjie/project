@@ -1,244 +1,272 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.panda.mapper.origin.TeaGardenMapper" >
-  <resultMap id="BaseResultMap" type="com.panda.model.origin.TeaGarden" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="area" property="area" jdbcType="VARCHAR" />
-    <result column="tea_grade" property="teaGrade" jdbcType="VARCHAR" />
-    <result column="tea_is" property="teaIs" jdbcType="VARCHAR" />
-    <result column="age_limit" property="ageLimit" jdbcType="VARCHAR" />
-    <result column="garden_type" property="gardenType" jdbcType="VARCHAR" />
-    <result column="cultivar_id" property="cultivarId" jdbcType="VARCHAR" />
-    <result column="description" property="description" jdbcType="VARCHAR" />
-    <result column="create_id" property="createId" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="modify_id" property="modifyId" jdbcType="VARCHAR" />
-    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panda.mapper.origin.TeaGardenMapper">
+  <resultMap id="BaseResultMap" type="com.panda.model.origin.TeaGarden">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name_area" jdbcType="VARCHAR" property="nameArea" />
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+    <result column="plant_year" jdbcType="DATE" property="plantYear" />
+    <result column="age_limit" jdbcType="INTEGER" property="ageLimit" />
+    <result column="acreage" jdbcType="DOUBLE" property="acreage" />
+    <result column="dic_cultivar_id" jdbcType="VARCHAR" property="dicCultivarId" />
+    <result column="elevation" jdbcType="VARCHAR" property="elevation" />
+    <result column="coordinate" jdbcType="VARCHAR" property="coordinate" />
+    <result column="direction" jdbcType="VARCHAR" property="direction" />
+    <result column="illumination" jdbcType="VARCHAR" property="illumination" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="principal" jdbcType="VARCHAR" property="principal" />
+    <result column="create_id" jdbcType="VARCHAR" property="createId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_id" jdbcType="VARCHAR" property="modifyId" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
   </resultMap>
-    <sql id="Base_Column_List" >
-      id, name, status, area, tea_grade, tea_is, age_limit, acreage, garden_type, cultivar_id,
-      description, create_id, create_time, modify_id, modify_time
-    </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-      select
-      <include refid="Base_Column_List" />
-      from e_tea_garden
-      where id = #{id,jdbcType=VARCHAR}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-      delete from e_tea_garden
-      where id = #{id,jdbcType=VARCHAR}
-    </delete>
-    <insert id="insert" parameterType="com.panda.model.origin.TeaGarden" >
-      insert into e_tea_garden (id, name, status,
-      area, tea_grade, tea_is,
-      age_limit, acreage, garden_type,
-      cultivar_id, description, create_id,
+  <sql id="Base_Column_List">
+    id, name_area, area_code, plant_year, age_limit, acreage, dic_cultivar_id, elevation, 
+    coordinate, direction, illumination, status, description, principal, create_id, create_time, 
+    modify_id, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from e_tea_garden
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from e_tea_garden
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.panda.model.origin.TeaGarden">
+    insert into e_tea_garden (id, name_area, area_code, 
+      plant_year, age_limit, acreage, 
+      dic_cultivar_id, elevation, coordinate, 
+      direction, illumination, status, 
+      description, principal, create_id, 
       create_time, modify_id, modify_time
       )
-      values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
-      #{area,jdbcType=VARCHAR}, #{teaGrade,jdbcType=VARCHAR}, #{teaIs,jdbcType=VARCHAR},
-      #{ageLimit,jdbcType=VARCHAR}, #{acreage,jdbcType=CHAR}, #{gardenType,jdbcType=VARCHAR},
-      #{cultivarId,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR},
+    values (#{id,jdbcType=VARCHAR}, #{nameArea,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
+      #{plantYear,jdbcType=DATE}, #{ageLimit,jdbcType=INTEGER}, #{acreage,jdbcType=DOUBLE}, 
+      #{dicCultivarId,jdbcType=VARCHAR}, #{elevation,jdbcType=VARCHAR}, #{coordinate,jdbcType=VARCHAR}, 
+      #{direction,jdbcType=VARCHAR}, #{illumination,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{principal,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}
       )
-    </insert>
-    <insert id="insertSelective" parameterType="com.panda.model.origin.TeaGarden" >
-      insert into e_tea_garden
-      <trim prefix="(" suffix=")" suffixOverrides="," >
-        <if test="id != null" >
-          id,
-        </if>
-        <if test="name != null" >
-          name,
-        </if>
-        <if test="status != null" >
-          status,
-        </if>
-        <if test="area != null" >
-          area,
-        </if>
-        <if test="teaGrade != null" >
-          tea_grade,
-        </if>
-        <if test="teaIs != null" >
-          tea_is,
-        </if>
-        <if test="ageLimit != null" >
-          age_limit,
-        </if>
-        <if test="acreage != null" >
-          acreage,
-        </if>
-        <if test="gardenType != null" >
-          garden_type,
-        </if>
-        <if test="cultivarId != null" >
-          cultivar_id,
-        </if>
-        <if test="description != null" >
-          description,
-        </if>
-        <if test="createId != null" >
-          create_id,
-        </if>
-        <if test="createTime != null" >
-          create_time,
-        </if>
-        <if test="modifyId != null" >
-          modify_id,
-        </if>
-        <if test="modifyTime != null" >
-          modify_time,
-        </if>
-      </trim>
-      <trim prefix="values (" suffix=")" suffixOverrides="," >
-        <if test="id != null" >
-          #{id,jdbcType=VARCHAR},
-        </if>
-        <if test="name != null" >
-          #{name,jdbcType=VARCHAR},
-        </if>
-        <if test="status != null" >
-          #{status,jdbcType=INTEGER},
-        </if>
-        <if test="area != null" >
-          #{area,jdbcType=VARCHAR},
-        </if>
-        <if test="teaGrade != null" >
-          #{teaGrade,jdbcType=VARCHAR},
-        </if>
-        <if test="teaIs != null" >
-          #{teaIs,jdbcType=VARCHAR},
-        </if>
-        <if test="ageLimit != null" >
-          #{ageLimit,jdbcType=VARCHAR},
-        </if>
-        <if test="acreage != null" >
-          #{acreage,jdbcType=CHAR},
-        </if>
-        <if test="gardenType != null" >
-          #{gardenType,jdbcType=VARCHAR},
-        </if>
-        <if test="cultivarId != null" >
-          #{cultivarId,jdbcType=VARCHAR},
-        </if>
-        <if test="description != null" >
-          #{description,jdbcType=VARCHAR},
-        </if>
-        <if test="createId != null" >
-          #{createId,jdbcType=VARCHAR},
-        </if>
-        <if test="createTime != null" >
-          #{createTime,jdbcType=TIMESTAMP},
-        </if>
-        <if test="modifyId != null" >
-          #{modifyId,jdbcType=VARCHAR},
-        </if>
-        <if test="modifyTime != null" >
-          #{modifyTime,jdbcType=TIMESTAMP},
-        </if>
-      </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.panda.model.origin.TeaGarden" >
-      update e_tea_garden
-      <set >
-        <if test="name != null" >
-          name = #{name,jdbcType=VARCHAR},
-        </if>
-        <if test="status != null" >
-          status = #{status,jdbcType=INTEGER},
-        </if>
-        <if test="area != null" >
-          area = #{area,jdbcType=VARCHAR},
-        </if>
-        <if test="teaGrade != null" >
-          tea_grade = #{teaGrade,jdbcType=VARCHAR},
-        </if>
-        <if test="teaIs != null" >
-          tea_is = #{teaIs,jdbcType=VARCHAR},
-        </if>
-        <if test="ageLimit != null" >
-          age_limit = #{ageLimit,jdbcType=VARCHAR},
-        </if>
-        <if test="acreage != null" >
-          acreage = #{acreage,jdbcType=CHAR},
-        </if>
-        <if test="gardenType != null" >
-          garden_type = #{gardenType,jdbcType=VARCHAR},
-        </if>
-        <if test="cultivarId != null" >
-          cultivar_id = #{cultivarId,jdbcType=VARCHAR},
-        </if>
-        <if test="description != null" >
-          description = #{description,jdbcType=VARCHAR},
-        </if>
-        <if test="createId != null" >
-          create_id = #{createId,jdbcType=VARCHAR},
-        </if>
-        <if test="createTime != null" >
-          create_time = #{createTime,jdbcType=TIMESTAMP},
-        </if>
-        <if test="modifyId != null" >
-          modify_id = #{modifyId,jdbcType=VARCHAR},
-        </if>
-        <if test="modifyTime != null" >
-          modify_time = #{modifyTime,jdbcType=TIMESTAMP},
-        </if>
-      </set>
-      where id = #{id,jdbcType=VARCHAR}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.panda.model.origin.TeaGarden" >
+  </insert>
+  <insert id="insertSelective" parameterType="com.panda.model.origin.TeaGarden">
+    insert into e_tea_garden
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="nameArea != null">
+        name_area,
+      </if>
+      <if test="areaCode != null">
+        area_code,
+      </if>
+      <if test="plantYear != null">
+        plant_year,
+      </if>
+      <if test="ageLimit != null">
+        age_limit,
+      </if>
+      <if test="acreage != null">
+        acreage,
+      </if>
+      <if test="dicCultivarId != null">
+        dic_cultivar_id,
+      </if>
+      <if test="elevation != null">
+        elevation,
+      </if>
+      <if test="coordinate != null">
+        coordinate,
+      </if>
+      <if test="direction != null">
+        direction,
+      </if>
+      <if test="illumination != null">
+        illumination,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="principal != null">
+        principal,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyId != null">
+        modify_id,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="nameArea != null">
+        #{nameArea,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="plantYear != null">
+        #{plantYear,jdbcType=DATE},
+      </if>
+      <if test="ageLimit != null">
+        #{ageLimit,jdbcType=INTEGER},
+      </if>
+      <if test="acreage != null">
+        #{acreage,jdbcType=DOUBLE},
+      </if>
+      <if test="dicCultivarId != null">
+        #{dicCultivarId,jdbcType=VARCHAR},
+      </if>
+      <if test="elevation != null">
+        #{elevation,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinate != null">
+        #{coordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="direction != null">
+        #{direction,jdbcType=VARCHAR},
+      </if>
+      <if test="illumination != null">
+        #{illumination,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null">
+        #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyId != null">
+        #{modifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.panda.model.origin.TeaGarden">
     update e_tea_garden
-    set name = #{name,jdbcType=VARCHAR},
+    <set>
+      <if test="nameArea != null">
+        name_area = #{nameArea,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="plantYear != null">
+        plant_year = #{plantYear,jdbcType=DATE},
+      </if>
+      <if test="ageLimit != null">
+        age_limit = #{ageLimit,jdbcType=INTEGER},
+      </if>
+      <if test="acreage != null">
+        acreage = #{acreage,jdbcType=DOUBLE},
+      </if>
+      <if test="dicCultivarId != null">
+        dic_cultivar_id = #{dicCultivarId,jdbcType=VARCHAR},
+      </if>
+      <if test="elevation != null">
+        elevation = #{elevation,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinate != null">
+        coordinate = #{coordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="direction != null">
+        direction = #{direction,jdbcType=VARCHAR},
+      </if>
+      <if test="illumination != null">
+        illumination = #{illumination,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null">
+        principal = #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyId != null">
+        modify_id = #{modifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.panda.model.origin.TeaGarden">
+    update e_tea_garden
+    set name_area = #{nameArea,jdbcType=VARCHAR},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+      plant_year = #{plantYear,jdbcType=DATE},
+      age_limit = #{ageLimit,jdbcType=INTEGER},
+      acreage = #{acreage,jdbcType=DOUBLE},
+      dic_cultivar_id = #{dicCultivarId,jdbcType=VARCHAR},
+      elevation = #{elevation,jdbcType=VARCHAR},
+      coordinate = #{coordinate,jdbcType=VARCHAR},
+      direction = #{direction,jdbcType=VARCHAR},
+      illumination = #{illumination,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
-      area = #{area,jdbcType=VARCHAR},
-      tea_grade = #{teaGrade,jdbcType=VARCHAR},
-      tea_is = #{teaIs,jdbcType=VARCHAR},
-      age_limit = #{ageLimit,jdbcType=VARCHAR},
-      acreage = #{acreage,jdbcType=CHAR},
-      garden_type = #{gardenType,jdbcType=VARCHAR},
-      cultivar_id = #{cultivarId,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
+      principal = #{principal,jdbcType=VARCHAR},
       create_id = #{createId,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       modify_id = #{modifyId,jdbcType=VARCHAR},
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-
-  <select id="selectTeaGardenList" resultType="map" parameterType="map">
+  <select id="selectTeaGardenList" parameterType="map" resultType="map">
     select
-    tg.*,d.name teaGradeName ,d1.name gardenTypeName,d2.name cultivarName,d3.name teaIsName
+    tg.*,d.name treeName
     from e_tea_garden tg
-    LEFT JOIN s_dictionary as d on tg.tea_grade = d.id
-    LEFT JOIN s_dictionary as d1 on tg.garden_type = d1.id
-    LEFT JOIN s_dictionary as d2 on tg.cultivar_id = d2.id
-    LEFT JOIN s_dictionary as d3 on tg.tea_is = d3.id
+    LEFT JOIN s_dictionary as d on tg.dic_cultivar_id = d.id
     where 1 = 1
     <if test="status != null and status != ''">
       AND tg.status = #{status}
     </if>
-    <if test="teaIs != null and teaIs != ''">
-      AND tg.tea_is = #{teaIs}
+
+    <if test="dicCultivarId != null and dicCultivarId != ''">
+      AND tg.dic_cultivar_id = #{dicCultivarId}
     </if>
-    <if test="cultivarId != null and cultivarId != ''">
-      AND tg.cultivar_id = #{cultivarId}
-    </if>
-    <if test="teaGrade != null and teaGrade != ''">
-      AND tg.tea_grade = #{teaGrade}
-    </if>
-    <if test="gardenType != null and gardenType != ''">
-      AND tg.garden_type = #{gardenType}
+    <if test="plantYear != null and plantYear != ''">
+      AND tg.plant_year = #{plantYear}
     </if>
     ORDER BY tg.create_time ASC
   </select>
 
-  <select id="selectTeaGardenNameAndId" resultType="map" parameterType="map">
+  <select id="selectTeaGardenNameAndId" parameterType="map" resultType="map">
     SELECT
-    tg.id, tg.name
+    tg.id, tg.name_
     FROM e_tea_garden tg
     WHERE 1 = 1
     <if test="status != null and status != ''">
@@ -264,7 +292,4 @@
     SELECT * FROM e_manage_batch where
     tea_garden_id = #{teaGardenId} GROUP BY id
   </select>
-
-
-
 </mapper>
