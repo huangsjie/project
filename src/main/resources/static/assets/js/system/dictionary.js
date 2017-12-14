@@ -122,12 +122,12 @@ var Dictionary = function () {
         if(dictionaryList != ''){
             $.each(dictionaryList, function (i, n) {
                 if(n.id === parent){
-                    $("#dictionary_form [name='name']").val(n.name)
-                    $("#dictionary_form [name='value']").val(n.value)
-                    $("#dictionary_form [name='id']").val(n.id)
-                    $("#dictionary_form [name='sortId']").val(n.sortId)
-                    $('#dictionary_form [name="status"]').val(n.status)
-                    $("#dictionary_form [name='description']").val(n.description)
+                    $("#dictionary_form [name='name']").val(n.name);
+                    $("#dictionary_form [name='value']").val(n.value);
+                    $("#dictionary_form [name='id']").val(n.id);
+                    $("#dictionary_form [name='sortId']").val(n.sortId);
+                    $('#dictionary_form [name="status"]').val(n.status);
+                    $("#dictionary_form [name='description']").val(n.description);
                     if(n.status == 1){
                         $('#dictionary_form .status_switch').bootstrapSwitch('state',true);
                     }else{
@@ -160,12 +160,36 @@ var Dictionary = function () {
             if(id != ""){
                 request(
                     "delDictionaryItem",
-                    'get',
+                    'post',
                     {id:id},
                     function (result) {
                         if(result.message){
                             self.parents("tr").remove();
                             ToastrMsg(result.data,"success","topRight",".dictionary_data_list");
+                        }else{
+                            ToastrMsg(result.data,"warning","topRight");
+                        }
+                    })
+            }
+        })
+    }
+
+    /**
+     * 删除父级属性
+     */
+    var delParentDictionary = function () {
+        $(".delParentDictionary ").on("click", function () {
+            blockUiOpen('.dictionary_data_list');
+            var id = $("#dictionary_form [name='id']").val();
+            if(id != ""){
+                request(
+                    "delParentDictionary",
+                    'post',
+                    {id:id},
+                    function (result) {
+                        if(result.message){
+                            ToastrMsg(result.data,"success","topRight",".dictionary_data_list");
+                            location.reload()
                         }else{
                             ToastrMsg(result.data,"warning","topRight");
                         }
@@ -227,6 +251,7 @@ var Dictionary = function () {
             dictionaryForm();
             delDictionaryItem();
             dictionaryChildForm();
+            delParentDictionary();
             getDictionaryChildItem();
             getDictionaryValueListInfo();
         }

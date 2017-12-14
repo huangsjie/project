@@ -167,12 +167,12 @@ public class DictionaryController {
     }
 
     /**
-     * Ajax 删除字典信息 包含子级时，将全部删除
+     * Ajax 删除字典信息 仅子项
      * @param request
      * @param id
      * @return
      */
-    @RequestMapping(value = "/delDictionaryItem",method = RequestMethod.GET)
+    @RequestMapping(value = "/delDictionaryItem",method = RequestMethod.POST)
     @ResponseBody
     public Object delDictionaryItem(HttpServletRequest request, String id){
         message = false;
@@ -185,6 +185,42 @@ public class DictionaryController {
                     data = ResultStateUtil.SUCCESS_DELETE;
                 }else{
                     data = ResultStateUtil.ERROR_PARAMETER_NO_TCOMPATIBLE;
+                }
+            }else{
+                data = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            data    = ResultStateUtil.ERROR_DATABASE_OPERATION;
+        }
+        return ResultMsgUtil.getResultMsg(message,data);
+    }
+
+    /**
+     * Ajax 删除字典信息 包含子级时，将全部删除
+     * @param request
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/delParentDictionary",method = RequestMethod.POST)
+    @ResponseBody
+    public Object delParentDictionary(HttpServletRequest request, String id){
+        message = false;
+        data    = null;
+        try {
+            if (!id.isEmpty()){
+                int i= dictionaryService.delDictionaryParentAndChild(id);
+                switch (i){
+                    case 200:
+                        data = ResultStateUtil.SUCCESS_DELETE;
+                        message = true;
+                        break;
+                    case 101:
+                        data = ResultStateUtil.ERROR_DATABASE_OPERATION;
+                        break;
+                    default:
+                        data = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
+                        break;
                 }
             }else{
                 data = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;

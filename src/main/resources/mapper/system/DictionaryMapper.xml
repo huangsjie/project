@@ -216,4 +216,16 @@
     ORDER BY
         sort_id ASC
   </select>
+  
+  <delete id="delDictionaryParentAndChild" parameterType="java.lang.String">
+    delete
+    from s_dictionary
+        where id in(
+            select id from (
+                select id from s_dictionary where id = #{id}
+                union
+                select id from s_dictionary where parent_id  = #{id}
+            ) a where 1 =1
+        )
+  </delete>
 </mapper>

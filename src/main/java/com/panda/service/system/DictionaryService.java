@@ -33,4 +33,11 @@ public interface DictionaryService extends AbstractService<Dictionary>{
      * @return
      */
     String selectDictionaryGroupCountValueByParent(String parentId);
+
+    /**
+     * Ajax 删除字典信息 包含子级时，将全部删除
+     * @param id
+     * @return
+     */
+    Integer delDictionaryParentAndChild(String id);
 }

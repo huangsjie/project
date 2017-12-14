@@ -1,15 +1,22 @@
 package com.panda.service.impl.system;
 
+import com.panda.model.system.RoleMenu;
+import com.panda.model.system.Users;
 import com.panda.util.abs.AbstractMapper;
 import com.panda.util.abs.AbstractServiceImpl;
 import com.panda.mapper.system.DictionaryMapper;
 import com.panda.model.system.Dictionary;
 import com.panda.service.system.DictionaryService;
+import org.apache.shiro.SecurityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IDEA.
@@ -20,6 +27,8 @@ import java.util.Map;
  */
 @Service
 public class DictionaryServiceImpl extends AbstractServiceImpl<Dictionary> implements DictionaryService{
+
+    private static final Logger logger = LoggerFactory.getLogger(DictionaryServiceImpl.class);
 
     @Resource
     private DictionaryMapper dictionaryMapper;
@@ -58,4 +67,27 @@ public class DictionaryServiceImpl extends AbstractServiceImpl<Dictionary> imple
         return dictionaryMapper.selectDictionaryGroupCountValueByParent(parentId);
     }
 
+    /**
+     * Ajax 删除字典信息 包含子级时，将全部删除
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = {Exception.class})
+    public Integer delDictionaryParentAndChild(String id){
+        Integer resultStatus = 0;
+        try {
+            if (!id.isEmpty()) {
+                int i = dictionaryMapper.delDictionaryParentAndChild(id);
+                if (i > 0){
+                    resultStatus = 200;
+                }
+            }
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            resultStatus = 101;
+        }
+        return resultStatus;
+    }
 }
