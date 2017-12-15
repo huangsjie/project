@@ -102,6 +102,8 @@ var TeaGarden = function () {
                 teaGrade:{required: true,},
                 gardenType:{required: true,},
                 area:{required: true,},
+                areaCode:{required: true,nameCheck:true},
+                plantYear:{required: true,number:true},
                 acreage:{required: true,},
                 ageLimit:{required: true,number:true},
             },
@@ -181,6 +183,8 @@ var TeaGarden = function () {
                             $("#tea_garden_edit_form [name='ageLimit']").val(result.data.ageLimit)
                             $("#tea_garden_edit_form [name='sortId']").val(result.data.sortId)
                             $("#tea_garden_edit_form [name='description']").val(result.data.description)
+                            $("#tea_garden_edit_form [name='areaCode']").val(result.data.areaCode)
+                            $("#tea_garden_edit_form [name='plantYear']").val(result.data.plantYear)
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }

@@ -144,6 +144,8 @@ public class TeaGardenController {
                 teaGarden.setModifyId(user.getId());
                 teaGarden.setModifyTime(new Date());
                 teaGarden.setStatus(1);
+                teaGarden.setPrincipal(user.getId());
+                teaGarden.setDicCultivarId(user.getId());
 
                 int insert = teaGardenService.insertSelective(teaGarden);
                 if(insert > 0){
