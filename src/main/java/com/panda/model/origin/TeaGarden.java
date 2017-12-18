@@ -10,7 +10,7 @@ public class TeaGarden implements Serializable{
 
     private String areaCode;
 
-    private Date plantYear;
+    private String plantYear;
 
     private Integer ageLimit;
 
@@ -64,11 +64,11 @@ public class TeaGarden implements Serializable{
         this.areaCode = areaCode;
     }
 
-    public Date getPlantYear() {
+    public String getPlantYear() {
         return plantYear;
     }
 
-    public void setPlantYear(Date plantYear) {
+    public void setPlantYear(String plantYear) {
         this.plantYear = plantYear;
     }
 

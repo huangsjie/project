@@ -95,16 +95,17 @@ var TeaGarden = function () {
     var teaGardenInfoForm = function () {
         $( "#tea_garden_edit_form" ).validate({
             rules: {
-                name: {
+                name_area: {
                     required: true,
                     nameCheck:true
                 },
                 teaGrade:{required: true,},
                 gardenType:{required: true,},
-                area:{required: true,},
                 areaCode:{required: true,nameCheck:true},
                 plantYear:{required: true,number:true},
                 acreage:{required: true,},
+                dicCultivarId:{required: true,},
+                principal:{required: true,},
                 ageLimit:{required: true,number:true},
             },
 
@@ -175,10 +176,9 @@ var TeaGarden = function () {
                     function (result) {
                         if(result.message){
                             $("#tea_garden_edit_form [name='id']").val(result.data.id)
-                            $("#tea_garden_edit_form [name='name']").val(result.data.name)
-                            $("#tea_garden_edit_form [name='teaGrade']").val(result.data.teaGrade)
-                            $("#tea_garden_edit_form [name='gardenType']").val(result.data.gardenType)
-                            $("#tea_garden_edit_form [name='area']").val(result.data.area)
+                            $("#tea_garden_edit_form [name='nameArea']").val(result.data.nameArea)
+                            $("#tea_garden_edit_form [name='dicCultivarId']").val(result.data.dicCultivarId)
+                            $("#tea_garden_edit_form [name='principal']").val(result.data.principal)
                             $("#tea_garden_edit_form [name='acreage']").val(result.data.acreage)
                             $("#tea_garden_edit_form [name='ageLimit']").val(result.data.ageLimit)
                             $("#tea_garden_edit_form [name='sortId']").val(result.data.sortId)

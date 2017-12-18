@@ -5,7 +5,7 @@
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="name_area" jdbcType="VARCHAR" property="nameArea" />
     <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
-    <result column="plant_year" jdbcType="DATE" property="plantYear" />
+    <result column="plant_year" jdbcType="VARCHAR" property="plantYear" />
     <result column="age_limit" jdbcType="INTEGER" property="ageLimit" />
     <result column="acreage" jdbcType="DOUBLE" property="acreage" />
     <result column="dic_cultivar_id" jdbcType="VARCHAR" property="dicCultivarId" />
@@ -177,7 +177,7 @@
         area_code = #{areaCode,jdbcType=VARCHAR},
       </if>
       <if test="plantYear != null">
-        plant_year = #{plantYear,jdbcType=DATE},
+        plant_year = #{plantYear,jdbcType=VARCHAR},
       </if>
       <if test="ageLimit != null">
         age_limit = #{ageLimit,jdbcType=INTEGER},
@@ -228,7 +228,7 @@
     update e_tea_garden
     set name_area = #{nameArea,jdbcType=VARCHAR},
       area_code = #{areaCode,jdbcType=VARCHAR},
-      plant_year = #{plantYear,jdbcType=DATE},
+      plant_year = #{plantYear,jdbcType=VARCHAR},
       age_limit = #{ageLimit,jdbcType=INTEGER},
       acreage = #{acreage,jdbcType=DOUBLE},
       dic_cultivar_id = #{dicCultivarId,jdbcType=VARCHAR},
