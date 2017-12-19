@@ -6,7 +6,7 @@ var processBatch = function () {
                 type: 'remote',
                 source: {
                     read: {
-                        url: '/system/processBatch/getProcessBatchDataList'
+                        url: 'getProcessBatchDataList'
                     }
                 },
                 pageSize: 10,
@@ -28,8 +28,8 @@ var processBatch = function () {
                 {title: "#", width: 40, template: function (row) {
                     return row.rowIndex+1;
                 }},
-                {field: "batch_number", title: "加工批次号", width: 100},
-                {field: "manageBatchNumber", title: "管理批次号", width: 100},
+                {field: "batch_number", title: "加工批次号", width: 150},
+                {field: "manageBatchNumber", title: "管理批次号", width: 150},
                 {field: "productName", title: "产品名称", width: 150},
                 {field: "create_time", title: "创建时间", sortable: 'asc', width: 150},
                 {
@@ -57,13 +57,6 @@ var processBatch = function () {
         $('.datatableRoload').on('click', function () {
             location.reload()
         });
-        /*$('#m_form_tea_garden').on('change', function () {
-            var query = datatable.getDataSourceQuery();
-            query.tea_garden_id = $(this).val().toLowerCase();
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.tea_garden_id !== 'undefined' ? query.tea_garden_id : '');*/
-
 
         $('.select_selectpicker').selectpicker();
     };
@@ -77,9 +70,8 @@ var processBatch = function () {
         $( "#process_batch_edit_form" ).validate({
             rules: {
                 manageBatchId:{required: true,},
-                batchNumber:{required: true,account: true},
+                batchNumber:{required: true,optionalCheck: true},
             },
-
             submitHandler: function (form){
                 blockUiOpen('.processBatchEdit .modal-content');
                 request(
@@ -116,9 +108,9 @@ var processBatch = function () {
             $(".reset-btn").removeClass("m--hide");
         }
         $(".processBatchEdit [name='id']").val('')
-        $(".processBatchEdit [name='manageBatchId']").val('');
-        $(".processBatchEdit [name='productId']").val('');
-        $(".processBatchEdit [name='batchNumber']").val('');
+        $(".processBatchEdit [name='manageBatchId']").val('').attr("disabled",false);
+        $(".processBatchEdit [name='productId']").val('').attr("disabled",false);
+        $(".processBatchEdit [name='batchNumber']").val('').attr("disabled",false);
         $(".processBatchEdit .form-control-feedback").remove()
         $('.status_switch').bootstrapSwitch('state',false);
         $(".processBatchEdit div").removeClass("has-danger")
@@ -148,12 +140,11 @@ var processBatch = function () {
                     {id:id},
                     function (result) {
                         if(result.message){
-                            console.log(result.data)
                             $(".processBatchEdit [name='id']").val(result.data.id)
-                            $(".processBatchEdit [name='batchNumber']").val(result.data.batchNumber)
-                            $(".processBatchEdit [name='manageBatchId']").val(result.data.manageBatchId)
+                            $(".processBatchEdit [name='batchNumber']").val(result.data.batchNumber).attr("disabled",true);
+                            $(".processBatchEdit [name='manageBatchId']").val(result.data.manageBatchId).attr("disabled",true);
                             $(".processBatchEdit [name='status']").val(result.data.status)
-                            $(".processBatchEdit [name='productId']").val(result.data.productId);
+                            $(".processBatchEdit [name='productId']").val(result.data.productId).attr("disabled",true);
                             if(result.data.status == 1){
                                 $('.status_switch').bootstrapSwitch('state',true);
                             }else{
@@ -198,17 +189,28 @@ var processBatch = function () {
      */
     var getMsuData = function () {
         $(".processBatchEdit .la-hand-o-up").on("click",function () {
-            request(
-                "getMsuData",
-                'get',
-                {},
-                function (result) {
-                    if(result.message){
-                        $("#batchNumber").val(result.data)
-                    }else{
-                        ToastrMsg('获取失败,请稍后再试.',"error","topRight",'#modalBloukUi');
-                    }
-                })
+            var manageBatchId = $("#manageBatchId option:selected").val(),
+                managerbatch  = $("#manageBatchId option:selected").text().split("-"),
+                save    = $(".processBatchEdit [name='save']").val();
+            if (manageBatchId != "" && save == "add"){
+                request(
+                    "getMsuData",
+                    'get',
+                    {},
+                    function (result) {
+                        if(result.message){
+                            $("#batchNumber").val(managerbatch[0]+"-"+managerbatch[1]+"-"+result.data)
+                        }else{
+                            ToastrMsg('获取失败,请稍后再试.',"error","topRight",'#modalBloukUi');
+                        }
+                    })
+            }else{
+                if (save == "edit"){
+                    return false;
+                }else {
+                    ToastrMsg("请选择管理批次.", "warning", "topRight", '#manage_batch_list');
+                }
+            }
         })
     }
 

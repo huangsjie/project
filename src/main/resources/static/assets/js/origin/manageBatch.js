@@ -103,7 +103,7 @@ var manageBatch = function () {
      */
     var removeValue = function(type){
         if(type == 'edit'){
-            $(".manageBatchEdit .modal-title").text("批次编辑")
+            $(".manageBatchEdit .modal-title").text("批次编辑").attr("disabled",true)
             $(".manageBatchEdit [name='save']").val('edit')
             $(".reset-btn").addClass("m--hide");
         }else{
@@ -112,7 +112,8 @@ var manageBatch = function () {
             $(".reset-btn").removeClass("m--hide");
         }
         $(".manageBatchEdit [name='id']").val('')
-        $(".manageBatchEdit [name='name']").val('')
+        $(".manageBatchEdit [name='batchNumber']").val("").attr("disabled",false);
+        $(".manageBatchEdit [name='teaGardenId']").val('').attr("disabled",false);
         $(".manageBatchEdit [name='description']").val('');
         $('.status_switch').bootstrapSwitch('state',false);
         $(".manageBatchEdit [name='status']").val("")
@@ -145,8 +146,8 @@ var manageBatch = function () {
                     function (result) {
                         if(result.message){
                             $("#manage_batch_edit_form [name='id']").val(result.data.id)
-                            $("#manage_batch_edit_form [name='batchNumber']").val(result.data.batchNumber)
-                            $("#manage_batch_edit_form [name='teaGardenId']").val(result.data.teaGardenId)
+                            $("#manage_batch_edit_form [name='batchNumber']").val(result.data.batchNumber).attr("disabled",true);
+                            $("#manage_batch_edit_form [name='teaGardenId']").val(result.data.teaGardenId).attr("disabled",true);
                             $("#manage_batch_edit_form [name='status']").val(result.data.status)
                             if(result.data.status == 1){
                                 $('.status_switch').bootstrapSwitch('state',true);
@@ -192,8 +193,9 @@ var manageBatch = function () {
      */
     var getMsuData = function () {
         $(".manageBatchEdit .la-hand-o-up").on("click",function () {
-            var treeGar = $(".manageBatchEdit .teaGardenId").val();
-            if (treeGar != ""){
+            var treeGar = $(".manageBatchEdit .teaGardenId").val(),
+                save    = $(".manageBatchEdit [name='save']").val();
+            if (treeGar != "" && save == "add"){
                 var tree_attr = $(".teaGardenId  option:selected").attr("tree_attr"),
                     area_code = $(".teaGardenId  option:selected").attr("area_code");
                 request(
@@ -208,7 +210,11 @@ var manageBatch = function () {
                         }
                     })
             }else{
-                ToastrMsg("请选择茶园信息.","warning","topRight",'#manage_batch_list');
+                if (save == "edit"){
+                    return false;
+                }else{
+                    ToastrMsg("请选择茶园信息.","warning","topRight",'#manage_batch_list');
+                }
             }
         })
     }

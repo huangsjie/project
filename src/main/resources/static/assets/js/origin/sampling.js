@@ -262,7 +262,7 @@ var Sampling = function () {
                     blockUiClose(closeBlockAttr,0,".close-parent",0);
                 }else{
                     removeValue('add');
-                    ToastrMsg(result.data,"danger","topRight",closeBlockAttr);
+                    ToastrMsg(result.data,"error","topRight",closeBlockAttr);
                 }
             })
     }

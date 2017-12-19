@@ -3,6 +3,7 @@ package com.panda.controller.system.origin;
 import com.alibaba.citrus.util.StringEscapeUtil;
 import com.alibaba.fastjson.JSON;
 import com.panda.model.commodity.Products;
+import com.panda.model.origin.ManageBatch;
 import com.panda.model.origin.ProcessBatch;
 import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
@@ -18,6 +19,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,13 +42,13 @@ public class ProcessBatchController {
     private DictionaryService dictionaryService;
 
     @Resource
-    private TeaGardenService teaGardenService;
-
-    @Resource
     private ProductsService productsService;
 
     @Resource
     private ManageBatchService manageBatchService;
+
+    @Autowired
+    private ManageBatchController manageBatchController;
 
     private static boolean message = false;
     private static Object  data    = null;
@@ -223,9 +225,7 @@ public class ProcessBatchController {
     @RequestMapping(value = "/getMsuData",method = RequestMethod.GET)
     @ResponseBody
     public Object getMsuData(HttpServletRequest request){
-        return ResultMsgUtil.getResultMsg(true,"JGPC"+ CreateBatchNoUtil.createBatchNo());
+        return manageBatchController.getMsuData(request);
     }
-
-
 
 }

@@ -198,7 +198,7 @@ public class ManageBatchController {
     @RequestMapping(value = "/getMsuData",method = RequestMethod.GET)
     @ResponseBody
     public Object getMsuData(HttpServletRequest request){
-        return ResultMsgUtil.getResultMsg(true,CreateBatchNoUtil.createBatchNo().substring(6));
+        return ResultMsgUtil.getResultMsg(true,CreateBatchNoUtil.createBatchNo().substring(7));
     }
 
 
