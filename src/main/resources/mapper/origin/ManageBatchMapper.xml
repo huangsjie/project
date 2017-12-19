@@ -149,7 +149,7 @@
   </select> -->
 
   <select id="selectManageBatchList" resultType="map" parameterType="map">
-    SELECT mb.*,tg.name gardenName
+    SELECT mb.*,tg.name_area gardenName
     FROM e_manage_batch mb
     LEFT JOIN e_tea_garden as tg on mb.tea_garden_id = tg.id
     where 1 = 1

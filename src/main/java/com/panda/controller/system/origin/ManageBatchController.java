@@ -4,8 +4,6 @@ import com.alibaba.citrus.util.StringEscapeUtil;
 import com.alibaba.fastjson.JSON;
 import com.panda.controller.system.index.IndexController;
 import com.panda.model.origin.ManageBatch;
-import com.panda.model.origin.TeaGarden;
-import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
 import com.panda.service.origin.ManageBatchService;
 import com.panda.service.origin.TeaGardenService;
@@ -48,11 +46,9 @@ public class ManageBatchController {
     @RequiresPermissions("manageBatch:view")//权限管理;
     public String getManageBatchList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        List<Dictionary> statusType = dictionaryService.selectDictionaryValueList("ba259a75-f5a7-4897-949f-1c90b7958b35");
         Map query = new HashMap();
         query.put("status","1");
         List<Map> teaGardens = teaGardenService.selectTeaGardenList(query);
-        model.addAttribute("statusType",statusType);
         model.addAttribute("teaGardens",teaGardens);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
@@ -76,15 +72,10 @@ public class ManageBatchController {
                 String jsonStr = StringEscapeUtil.unescapeHtml(datatable);
                 Map params = JSON.parseObject(jsonStr,Map.class);
                 Map status = JSON.parseObject(params.get("query").toString(),Map.class);
-                /*if (status.size() > 0 && status.get("status") != ""){
-                    query.put("status",status.get("status"));
-                }*/
                 if (status.size() > 0 && status.get("tea_garden_id") != ""){
                     query.put("tea_garden_id",status.get("tea_garden_id"));
                 }
-
             }
-
             List<Map> manageBatchList = manageBatchService.selectManageBatchList(query);
             if(manageBatchList.size() > 0){
                 message = true;
@@ -125,8 +116,6 @@ public class ManageBatchController {
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
-
-
     /**
      * 保存
      * @param request
@@ -156,7 +145,6 @@ public class ManageBatchController {
                 manageBatch.setModifyId(user.getId());
                 manageBatch.setModifyTime(new Date());
                 manageBatch.setStatus(1);
-
                 int insert = manageBatchService.insertSelective(manageBatch);
                 if(insert > 0){
                     message = true;
@@ -165,13 +153,11 @@ public class ManageBatchController {
                     data    = ResultStateUtil.FAIL_ADD;
                 }
             }
-
         }catch (Exception e){
             e.printStackTrace();
             data  = ResultStateUtil.ERROR_DATABASE_OPERATION;
         }
         return ResultMsgUtil.getResultMsg(message,data);
-
     }
 
     /**
@@ -212,7 +198,7 @@ public class ManageBatchController {
     @RequestMapping(value = "/getMsuData",method = RequestMethod.GET)
     @ResponseBody
     public Object getMsuData(HttpServletRequest request){
-        return ResultMsgUtil.getResultMsg(true,"GLPC"+ CreateBatchNoUtil.createBatchNo());
+        return ResultMsgUtil.getResultMsg(true,CreateBatchNoUtil.createBatchNo().substring(6));
     }
 
 

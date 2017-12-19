@@ -269,7 +269,7 @@
   </update>
   <select id="selectTeaGardenList" parameterType="map" resultType="map">
     select
-    tg.*,d.name treeName
+    tg.*,d.name treeName, d.value treeAttr
     from e_tea_garden tg
     LEFT JOIN s_dictionary as d on tg.dic_cultivar_id = d.id
     where 1 = 1

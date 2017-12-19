@@ -26,12 +26,12 @@
                     <input type="hidden" name="parentId" value="">
                     <div class="form-group m-form__group row">
                         <label class="col-form-label col-lg-3 col-sm-12">
-                            茶园  <span style="color: red">*</span>
+                            茶园信息  <span style="color: red">*</span>
                         </label>
                         <div class="col-lg-8 col-md-9 col-sm-12">
                             <select class="form-control teaGardenId" name="teaGardenId">
                                 <option value=""> 选择 </option>
-                                <option th:each="item:${teaGardens}" th:value="${item.id}" th:text="${item.name}"></option>
+                                <option th:each="item:${teaGardens}" th:value="${item.id}" th:text="${item.name_area}" th:attrappend="tree_attr=${item.treeAttr},area_code=${item.area_code}"></option>
                             </select>
                             <span class="m-form__help"></span>
                         </div>

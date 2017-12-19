@@ -6,7 +6,7 @@ var manageBatch = function () {
                 type: 'remote',
                 source: {
                     read: {
-                        url: '/system/manageBatch/getManageBatchDataList'
+                        url: 'getManageBatchDataList'
                     }
                 },
                 pageSize: 10,
@@ -28,8 +28,8 @@ var manageBatch = function () {
                 {title: "#", width: 40, template: function (row) {
                     return row.rowIndex+1;
                 }},
-                {field: "batch_number", title: "批次号", width: 100},
-                {field: "gardenName", title: "茶园名称", width: 100},
+                {field: "batch_number", title: "批次号", width: 150},
+                {field: "gardenName", title: "茶园名称", width: 150},
                 {field: "create_time", title: "创建时间", sortable: 'asc', width: 150},
                 {
                     field: "Actions",
@@ -75,7 +75,7 @@ var manageBatch = function () {
         $( "#manage_batch_edit_form" ).validate({
             rules: {
                 teaGardenId:{required: true,},
-                batchNumber:{required: true,account: true},
+                batchNumber:{required: true,optionalCheck: true},
             },
             submitHandler: function (form){
                 blockUiOpen('.manageBatchEdit .modal-content');
@@ -88,11 +88,10 @@ var manageBatch = function () {
                             removeValue('add');
                             blockUiClose('.manageBatchEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
-
+                            location.reload()
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }
-
                     }
                 )
             }
@@ -193,17 +192,24 @@ var manageBatch = function () {
      */
     var getMsuData = function () {
         $(".manageBatchEdit .la-hand-o-up").on("click",function () {
-            request(
-                "getMsuData",
-                'get',
-                {},
-                function (result) {
-                    if(result.message){
-                        $("#batchNumber").val(result.data)
-                    }else{
-                        ToastrMsg('获取失败,请稍后再试.',"error","topRight",'#modalBloukUi');
-                    }
-                })
+            var treeGar = $(".manageBatchEdit .teaGardenId").val();
+            if (treeGar != ""){
+                var tree_attr = $(".teaGardenId  option:selected").attr("tree_attr"),
+                    area_code = $(".teaGardenId  option:selected").attr("area_code");
+                request(
+                    "getMsuData",
+                    'get',
+                    {},
+                    function (result) {
+                        if(result.message){
+                            $("#batchNumber").val(area_code+"-"+tree_attr+"-"+result.data)
+                        }else{
+                            ToastrMsg('获取失败,请稍后再试.',"warning","topRight",'#modalBloukUi');
+                        }
+                    })
+            }else{
+                ToastrMsg("请选择茶园信息.","warning","topRight",'#manage_batch_list');
+            }
         })
     }
 

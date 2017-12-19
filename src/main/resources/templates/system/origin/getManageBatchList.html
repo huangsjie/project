@@ -33,22 +33,8 @@
                         <!--begin: Search Form -->
                         <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
                             <div class="row align-items-center">
-                                <div class="col-xl-10 order-2 order-xl-1">
+                                <div class="col-xl-8 order-1 order-xl-1">
                                     <div class="form-group m-form__group row align-items-center">
-                                       <!-- <div class="col-md-3">
-                                            <div class="m-form__group m-form__group--inline">
-                                                <div class="m-form__label">
-                                                    <label style="width: 50px;">类型:</label>
-                                                </div>
-                                                <div class="m-form__control">
-                                                    <select class="form-control m-bootstrap-select select_selectpicker" id="m_form_status_type" >
-                                                        <option value=""> 全部 </option>
-                                                        <option th:each="item:${statusType}" th:value="${item.id}" th:text="${item.name}"> </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="d-md-none m--margin-bottom-10"></div>
-                                        </div>-->
                                         <div class="col-md-3">
                                             <div class="m-form__group m-form__group--inline">
                                                 <div class="m-form__label">
@@ -57,7 +43,7 @@
                                                 <div class="m-form__control">
                                                     <select class="form-control m-bootstrap-select select_selectpicker" id="m_form_tea_garden" >
                                                         <option value=""> 全部 </option>
-                                                        <option th:each="item:${teaGardens}" th:value="${item.id}" th:text="${item.name}"> </option>
+                                                        <option th:each="item:${teaGardens}" th:value="${item.id}" th:text="${item.name_area}"> </option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -76,8 +62,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-2 order-1 order-xl-2 m--align-left">
-                                    <button type="button" shiro:hasPermission="origin:add" class="btn btn-info addManageBatch" data-toggle="modal" data-target=".manageBatchEdit">
+                                <div class="col-xl-4 order-2 order-xl-2 m--align-left">
+                                    <button type="button" shiro:hasPermission="manageBatch:add" class="btn btn-info addManageBatch" data-toggle="modal" data-target=".manageBatchEdit">
                                         新增
                                     </button>
                                     <button type="button" class="btn btn-secondary datatableRoload">
@@ -99,10 +85,10 @@
             <!--END: Main Portlet-->
             <!-- PageRole -->
             <div class="m--hide" id="actionsTemplate">
-                <a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editManageBatchItem" title="编辑" shiro:hasPermission="roles:edit" item="#rowId#" data-toggle="modal" data-target=".manageBatchEdit">
+                <a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editManageBatchItem" title="编辑" shiro:hasPermission="manageBatch:edit" item="#rowId#" data-toggle="modal" data-target=".manageBatchEdit">
                     <i class="la la-edit"></i>
                 </a>
-                <a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delManageBatchItem" title="删除" shiro:hasPermission="roles:delete" item="#rowId#" >
+                <a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delManageBatchItem" title="删除" shiro:hasPermission="manageBatch:delete" item="#rowId#" >
                     <i class="la la-trash"></i>
                 </a>
             </div>

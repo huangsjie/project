@@ -177,7 +177,6 @@ var TeaGardenManage = function () {
                     {id:id},
                     function (result) {
                         if(result.message){
-
                             $(".teaGardenLogEdit [name='id']").val(result.data.id)
                             $(".teaGardenLogEdit [name='teaGardenId']").val(result.data.teaGardenId)
                             $(".teaGardenLogEdit #cultivarId").html("<option value=\"\"> 全部</option>")
