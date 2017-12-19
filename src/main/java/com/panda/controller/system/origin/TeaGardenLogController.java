@@ -227,6 +227,7 @@ public class TeaGardenLogController {
                 if (status.size() > 0 && status.get("gardenType") != ""){
                     query.put("gardenType",status.get("gardenType"));
                 }
+
             }
             List<TeaGardenLog> TeaGardenLog = teaGardenLogService.selectTeaGardenLogList(query);
             if(TeaGardenLog.size() > 0){
