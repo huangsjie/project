@@ -83,8 +83,14 @@ var TeaGardenManage = function () {
                 }
             }]
         }
+
+
         var datatable = $('.tea_garden_manage_ajax').mDatatable(option);
+
         var query = datatable.getDataSourceQuery();
+        query.farmType = $("#farmType").val();
+        console.log($("#farmType").val());
+        datatable.setDataSourceQuery(query);
         $('#m_form_search').on('keyup', function (e) {
             var query = datatable.getDataSourceQuery();
             query.generalSearch = $(this).val().toLowerCase();
@@ -97,12 +103,12 @@ var TeaGardenManage = function () {
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(typeof query.createYear !== 'undefined' ? query.createYear : '');
-        $('#farmType').on('change', function () {
+        /*$('#farmType').on('change', function () {
             var query = datatable.getDataSourceQuery();
             query.farmType = $(this).val();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.farmType !== 'undefined' ? query.farmType : '');
+        }).val(typeof query.farmType !== 'undefined' ? query.farmType : '');*/
         $('#gardenType').on('change', function () {
             var query = datatable.getDataSourceQuery();
             query.gardenType = $(this).val();
