@@ -1432,7 +1432,7 @@
                 return this.optional( element ) || /^[a-zA-Z0-9-]+$/.test( value);
             },
             urlCheck: function(value, element){
-                return this.optional( element ) || /^((\/system\/|\/index\/|\/home\/|\/wechat\/|\/api\/)+[a-zA-Z/]+$)/.test(value);
+                return this.optional( element ) || /^((\/system\/|\/index\/|\/home\/|\/wechat\/|\/api\/)+[a-zA-Z?=0-9/]+$)/.test(value);
             },
             // https://jqueryvalidation.org/url-method/
             url: function( value, element ) {

@@ -201,9 +201,8 @@
   <select id="selectTeaGardenLogList" resultType="map" parameterType="map">
     SELECT
     tgl.id, tgl.farm_desc, tgl.operator_id,tgl.create_time, tgl.cultivar_id cultivarId, tgl.farm_type_id farmType, tgl.tea_garden_id gardenType,
-    tg.name teaGardenName, year(tgl.create_time) createYear,
-    CASE WHEN ISNULL(tgl.end_time) THEN 0 ELSE 1 END statusOff,
-    d.name cultivarName, d1.name farmName, u.chinese_name createName
+    tg.name_area teaGardenName, year(tgl.create_time) createYear,
+    CASE WHEN ISNULL(tgl.end_time) THEN 0 ELSE 1 END statusOff, d.name cultivarName, d1.name farmName, u.chinese_name createName
     FROM	e_tea_garden tg, e_tea_garden_log tgl
     LEFT JOIN s_dictionary as d  ON tgl.cultivar_id = d.id
     LEFT JOIN s_dictionary as d1 ON tgl.farm_type_id = d1.id

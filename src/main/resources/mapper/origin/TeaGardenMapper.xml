@@ -288,15 +288,13 @@
 
   <select id="selectTeaGardenNameAndId" parameterType="map" resultType="map">
     SELECT
-    tg.id, tg.name_
+    tg.id, tg.name_area
     FROM e_tea_garden tg
     WHERE 1 = 1
     <if test="status != null and status != ''">
       AND tg.status = #{status}
     </if>
-    <if test="teaIs != null and teaIs != ''">
-      AND tg.tea_is = #{teaIs}
-    </if>
+
     <if test="cultivarId != null and cultivarId != ''">
       AND tg.cultivar_id = #{cultivarId}
     </if>

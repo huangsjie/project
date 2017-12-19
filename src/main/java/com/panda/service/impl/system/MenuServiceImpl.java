@@ -1,21 +1,16 @@
 package com.panda.service.impl.system;
 
-import com.panda.config.DruidConfig;
-import com.panda.model.system.Users;
 import com.panda.service.system.PageRoleService;
-import com.panda.util.SerializeUtil;
 import com.panda.util.abs.AbstractMapper;
 import com.panda.util.abs.AbstractServiceImpl;
 import com.panda.mapper.system.MenuMapper;
 import com.panda.model.system.Menu;
 import com.panda.service.system.MenuService;
-import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import javax.annotation.Resource;
@@ -72,6 +67,7 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
     public List<Menu> selectManagerRoleMenuList(Map<String,String> map){
        // Jedis jedis = jedisPool.getResource();
         List<Menu> menuList = null;
+        Map menuPermission = null;
         try {
 //            String cacheMenuList = "manager_menu_list:"+map.get("userId");
 //            byte[] byteMenuList = jedis.get(cacheMenuList.getBytes());
@@ -92,16 +88,16 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
                                 List<Menu> lastChild = menuMapper.selectManagerRoleMenuList(map);
                                 if(lastChild != null && lastChild.size() > 0){
                                     for (Menu item : lastChild){
-                                        userMenuRolePermission(item,map);
+                                        userMenuRolePermission(menuPermission,item,map);
                                     }
                                     child.setChildMenuList(lastChild);
                                 }else{
-                                    userMenuRolePermission(child,map);
+                                    userMenuRolePermission(menuPermission,child,map);
                                 }
                             }
                             menu.setChildMenuList(childList);
                         }else{
-                            userMenuRolePermission(menu,map);
+                            userMenuRolePermission(menuPermission,menu,map);
                         }
                     }
                    // logger.info("------->"+cacheMenuList+" 创建 menuList 缓存数据 !");
@@ -139,6 +135,7 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
         map.put("parentId", "10000000-0000-0000-0000-200000000000");
         //Jedis jedis = jedisPool.getResource();
         List<Menu> menuList = null;
+        Map menuPermission = null;
         try {
 //            String cacheMenuList = "home_menu_list";
 //            byte[] byteMenuList = jedis.get(cacheMenuList.getBytes());
@@ -159,16 +156,16 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
                                 List<Menu> lastChild = menuMapper.selectManagerRoleMenuList(map);
                                 if(lastChild != null && lastChild.size() > 0){
                                     for (Menu item : lastChild){
-                                        userMenuRolePermission(item,map);
+                                        userMenuRolePermission(menuPermission,item,map);
                                     }
                                     child.setChildMenuList(lastChild);
                                 }else{
-                                    userMenuRolePermission(child,map);
+                                    userMenuRolePermission(menuPermission,child,map);
                                 }
                             }
                             menu.setChildMenuList(childList);
                         }else{
-                            userMenuRolePermission(menu,map);
+                            userMenuRolePermission(menuPermission,menu,map);
                         }
                     }
 //                     logger.info("------->"+cacheMenuList+" 创建 menuList 缓存数据 !");
@@ -188,17 +185,20 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
      * @param map
      * @return
      */
-    private void userMenuRolePermission(Menu menu,Map map){
+    private void userMenuRolePermission(Map menuPermission, Menu menu, Map map){
         if (menu.getChildMenuList() == null && menu.getUrl() != null){
             map.put("menuId",menu.getId());
             String[] urlArr = menu.getUrl().split("/");
-            List<Map> permList = pageRoleService.selectUserMenuRolePermission(map);
-            if (permList != null && permList.size() > 0){
-                ArrayList per = new ArrayList();
-                for (Map item : permList){
-                    per.add(urlArr[2]+":"+item.get("value"));
+            if (menuPermission == null || !menuPermission.containsKey(urlArr[2])){
+                List<Map> permList = pageRoleService.selectUserMenuRolePermission(map);
+                if (permList != null && permList.size() > 0){
+                    ArrayList per = new ArrayList();
+                    for (Map item : permList){
+                        per.add(urlArr[2]+":"+item.get("value"));
+                        menuPermission.put(urlArr[2],menu.getId());
+                    }
+                    menu.setPermissionList(per);
                 }
-                menu.setPermissionList(per);
             }
         }
     }
