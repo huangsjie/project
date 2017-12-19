@@ -44,7 +44,9 @@ public class TeaGardenController {
     @RequiresPermissions("origin:view")//权限管理;
     public String getTeaGardenList(HttpServletRequest request, Model model){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        List<Dictionary> treeType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");
+        List<Dictionary> treeType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");//树种
+        List<Dictionary> orientationType = dictionaryService.selectDictionaryValueList("ab73bbbb-f7ca-4fe9-a086-296e57b9c3ac"); //方向
+        model.addAttribute("orientationType",orientationType);
         model.addAttribute("treeType",treeType);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
@@ -144,7 +146,6 @@ public class TeaGardenController {
                 teaGarden.setModifyId(user.getId());
                 teaGarden.setModifyTime(new Date());
                 teaGarden.setStatus(1);
-
                 int insert = teaGardenService.insertSelective(teaGarden);
                 if(insert > 0){
                     message = true;

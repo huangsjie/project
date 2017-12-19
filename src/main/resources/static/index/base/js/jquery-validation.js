@@ -363,6 +363,8 @@
             required: "此字段必填.",
             email: "请输入邮箱地址.",
             account: "请输入一个有效的账号.",
+            decimalCheck: "请输入正小数或正整数",
+            decimalCheckTo : "请输入小数",
             alphanumerical: "请输入字母或数字.",
             nameCheck: "请输入中文 或 字母.",
             mobileZH: "请输入中国境内手机号码.",
@@ -1400,6 +1402,14 @@
             alphanumerical: function(value, element) {
                 return this.optional( element ) || /^[:a-zA-Z0-9]+$/.test( value );
             },
+            //小数 非负数
+            decimalCheck: function(value, element) {
+                return this.optional( element ) || /^([1-9]\d*.\d*|0.\d*[1-9]\d*)/.test( value );
+            },
+            //小数 正负数
+            // decimalCheckTo: function(value, element) {
+            //     return this.optional( element ) || /^-([1-9]\d*.\d*|0.\d*[1-9]\d*)/.test( value ) || /^([1-9]\d*.\d*|0.\d*[1-9]\d*)/.test( value );
+            // },
             //名称验证
             nameCheck: function( value, element) {
                 return this.optional( element ) || /^[\u4e00-\u9fa5]|[a-zA-Z]+$/.test( value);

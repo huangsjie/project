@@ -1,6 +1,7 @@
 package com.panda.model.origin;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class TeaGarden implements Serializable{
@@ -10,7 +11,9 @@ public class TeaGarden implements Serializable{
 
     private String areaCode;
 
-    private String plantYear;
+    private String orientation;
+
+    private Integer plantYear;
 
     private Integer ageLimit;
 
@@ -20,7 +23,9 @@ public class TeaGarden implements Serializable{
 
     private String elevation;
 
-    private String coordinate;
+    private BigDecimal latitude;
+
+    private BigDecimal longitude;
 
     private String direction;
 
@@ -64,11 +69,19 @@ public class TeaGarden implements Serializable{
         this.areaCode = areaCode;
     }
 
-    public String getPlantYear() {
+    public String getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(String orientation) {
+        this.orientation = orientation;
+    }
+
+    public Integer getPlantYear() {
         return plantYear;
     }
 
-    public void setPlantYear(String plantYear) {
+    public void setPlantYear(Integer plantYear) {
         this.plantYear = plantYear;
     }
 
@@ -104,12 +117,20 @@ public class TeaGarden implements Serializable{
         this.elevation = elevation;
     }
 
-    public String getCoordinate() {
-        return coordinate;
+    public BigDecimal getLatitude() {
+        return latitude;
     }
 
-    public void setCoordinate(String coordinate) {
-        this.coordinate = coordinate;
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
+
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
     }
 
     public String getDirection() {

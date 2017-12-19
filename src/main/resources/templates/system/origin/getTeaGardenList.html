@@ -2,6 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <!-- begin: head -->
 <div th:replace="system/public/head :: head"></div>
+<style>
+    .m-form .row .r-pm {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+</style>
 <!-- end: head -->
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
 <!-- begin:: Page -->
@@ -130,6 +136,7 @@
 <script th:src="@{/assets/js/jquery/jquery.scrollbar.min.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/jquery/jquery.slimscroll.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/jquery/jquery-validation.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/base/moment.min.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/system/base.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/origin/teaGarden.js}" type="text/javascript"></script>
 </body>

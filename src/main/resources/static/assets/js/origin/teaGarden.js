@@ -32,12 +32,13 @@ var TeaGarden = function () {
                 {field: "name_area", title: "区域名", width: 100},
                 {field: "area_code", title: "编号", width: 100},
                 {field: "treeName", title: "栽培品种", width: 100},
-                {field: "plant_year", title: "栽培年份", width: 100,template: function (row) {
-                    return row.plant_year.substring(0,4); }
-                },
+                {field: "plant_year", title: "栽培年份", width: 100},
                 {field: "acreage", title: "面积", width: 100},
-                {field: "age_limit", title: "树龄", width: 100},
-
+                {field: "age_limit", title: "树龄", width: 100,
+                    template: function (row) {
+                        return calculateTree(row.plant_year);
+                    }
+                },
                 {field: "principal", title: "负责人", width: 100},
                 {field: "create_time", title: "创建时间", sortable: 'asc', width: 150},
                 {
@@ -103,9 +104,11 @@ var TeaGarden = function () {
                 },
                 teaGrade:{required: true,},
                 gardenType:{required: true,},
-                areaCode:{required: true,nameCheck:true},
-                plantYear:{required: true,number:true},
-                acreage:{required: true,},
+                areaCode:{required: true,alphanumerical:true},
+                plantYear:{required: true,number:true,maxlength:4},
+                acreage:{required: true,decimalCheck:true},
+                latitude:{decimalCheck:true,maxlength:20},
+                longitude:{decimalCheck:true,maxlength:20},
                 dicCultivarId:{required: true,},
                 principal:{required: true,},
                 ageLimit:{required: true,number:true},
@@ -122,7 +125,7 @@ var TeaGarden = function () {
                             removeValue('add');
                             blockUiClose('.teaGardenEdit .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
-                            ;
+                            location.reload()
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }
@@ -161,8 +164,17 @@ var TeaGarden = function () {
         $(".addTeaGarden").on('click',function(){
             removeValue('add')
         })
-    }
 
+        $("#plantYearInTo").on("change",function () {
+            var treeAge = calculateTree($(this).val());
+            $("#ageLimit").val(treeAge);
+        })
+    }
+    //计算树龄
+    var calculateTree = function (year) {
+        var now = new Date().getFullYear();
+        return Number(now-year);
+    }
     /**
      * 获取角色信息,并移除上一轮错误信息
      */
@@ -221,6 +233,25 @@ var TeaGarden = function () {
         })
     }
 
+    var datetimepickerSelect = function () {
+        $('.datetimepicker_select').datetimepicker({
+            todayHighlight: false,
+            autoclose: true,
+            startView: 4,
+            minView: 4,
+            sideBySide: false,
+            pickerPosition: 'bottom-left',
+            format: 'yyyy'
+        });
+
+        $('.begin_time').datetimepicker({
+            todayHighlight: false,
+            autoclose: true,
+            sideBySide: false,
+            pickerPosition: 'top-left',
+            format: 'yyyy-mm-dd hh:mm:ss'
+        });
+    }
     return {
         init: function () {
             addTeaGarden();
@@ -228,6 +259,7 @@ var TeaGarden = function () {
             delTeaGardenItem()
             teaGardenInfoShow();
             teaGardenInfoForm();
+            datetimepickerSelect();
         }
     };
 }();

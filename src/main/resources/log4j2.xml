@@ -13,10 +13,10 @@
 
     <!--配置mybatis日志-->
     <loggers>
-        <logger name="log4j.logger.org.mybatis" level="debug" additivity="false">
+        <logger name="log4j2.logger.org.mybatis" level="debug" additivity="false">
             <appender-ref ref="Console"/>
         </logger>
-        <logger name="log4j.logger.java.sql" level="debug" additivity="false">
+        <logger name="log4j2.logger.java.sql" level="debug" additivity="false">
             <appender-ref ref="Console"/>
         </logger>
         <logger name="com.panda.mapper" level="debug" />
