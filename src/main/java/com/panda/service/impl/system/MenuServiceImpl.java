@@ -67,7 +67,7 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
     public List<Menu> selectManagerRoleMenuList(Map<String,String> map){
        // Jedis jedis = jedisPool.getResource();
         List<Menu> menuList = null;
-        Map menuPermission = null;
+        Map menuPermission = new HashMap();
         try {
 //            String cacheMenuList = "manager_menu_list:"+map.get("userId");
 //            byte[] byteMenuList = jedis.get(cacheMenuList.getBytes());
@@ -135,7 +135,7 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
         map.put("parentId", "10000000-0000-0000-0000-200000000000");
         //Jedis jedis = jedisPool.getResource();
         List<Menu> menuList = null;
-        Map menuPermission = null;
+        Map menuPermission = new HashMap();
         try {
 //            String cacheMenuList = "home_menu_list";
 //            byte[] byteMenuList = jedis.get(cacheMenuList.getBytes());
@@ -189,7 +189,7 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
         if (menu.getChildMenuList() == null && menu.getUrl() != null){
             map.put("menuId",menu.getId());
             String[] urlArr = menu.getUrl().split("/");
-            if (menuPermission == null || !menuPermission.containsKey(urlArr[2])){
+            if (!menuPermission.containsKey(urlArr[2])){
                 List<Map> permList = pageRoleService.selectUserMenuRolePermission(map);
                 if (permList != null && permList.size() > 0){
                     ArrayList per = new ArrayList();
