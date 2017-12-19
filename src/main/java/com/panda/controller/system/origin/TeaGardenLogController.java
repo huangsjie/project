@@ -72,8 +72,9 @@ public class TeaGardenLogController {
         List<Dictionary> cultivarType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");//品种
         model.addAttribute("cultivarType",cultivarType);
         model.addAttribute("gardenType",gardenType);
-        model.addAttribute("farmType",farmType);
-        model.addAttribute("type","reclaim");
+        //model.addAttribute("farmType",farmType);
+       // model.addAttribute("type","reclaim");
+        model.addAttribute("type","43512930-9822-48b4-b577-e900c4a12504");
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
         return "system/origin/getTeaGardenLogList";
@@ -93,7 +94,7 @@ public class TeaGardenLogController {
         model.addAttribute("cultivarType",cultivarType);
         model.addAttribute("gardenType",gardenType);
         model.addAttribute("farmType",farmType);
-        model.addAttribute("type","plough");
+        model.addAttribute("type","4b2946d6-ec92-403f-ae59-6a2d6311e6cd");
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
         return "system/origin/getTeaGardenLogList";
@@ -113,7 +114,7 @@ public class TeaGardenLogController {
         model.addAttribute("cultivarType",cultivarType);
         model.addAttribute("gardenType",gardenType);
         model.addAttribute("farmType",farmType);
-        model.addAttribute("type","seed");
+        model.addAttribute("type","1689fac5-4b03-4d4b-94c1-d1bbbe8d06ee");
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
         return "system/origin/getTeaGardenLogList";
@@ -133,7 +134,7 @@ public class TeaGardenLogController {
         model.addAttribute("cultivarType",cultivarType);
         model.addAttribute("gardenType",gardenType);
         model.addAttribute("farmType",farmType);
-        model.addAttribute("type","fertilizer");
+        model.addAttribute("type","d687763c-2a2e-41a7-b57d-71e9caebf579");
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
         return "system/origin/getTeaGardenLogList";
@@ -153,7 +154,7 @@ public class TeaGardenLogController {
         model.addAttribute("cultivarType",cultivarType);
         model.addAttribute("gardenType",gardenType);
         model.addAttribute("farmType",farmType);
-        model.addAttribute("type","weeding");
+        model.addAttribute("type","d5bbd9b5-91c4-48c2-b5f8-0c7328f8902f");
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
         return "system/origin/getTeaGardenLogList";
@@ -173,7 +174,7 @@ public class TeaGardenLogController {
         model.addAttribute("cultivarType",cultivarType);
         model.addAttribute("gardenType",gardenType);
         model.addAttribute("farmType",farmType);
-        model.addAttribute("type","insecticide");
+        model.addAttribute("type","e1f3e464-31c2-46b5-8e20-20d7ea12fb3f");
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
         return "system/origin/getTeaGardenLogList";
@@ -193,7 +194,7 @@ public class TeaGardenLogController {
         model.addAttribute("cultivarType",cultivarType);
         model.addAttribute("gardenType",gardenType);
         model.addAttribute("farmType",farmType);
-        model.addAttribute("type","irrigate");
+        model.addAttribute("type","5fe37095-7d9a-4235-914f-cf0c6f1e592a");
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
         return "system/origin/getTeaGardenLogList";

@@ -23,10 +23,11 @@
                 <div class="modal-body">
                     <input type="hidden" name="id" value="">
                     <input type="hidden" name="save" value="edit">
+                    <input type="hidden" name="farmTypeId" th:value="${type}">
                     <div class="form-group m-form__group row">
                         <label class="col-form-label col-lg-3 col-sm-12">
-                            茶园 *
-                        </label>
+                        茶园 *
+                    </label>
                         <div class="col-lg-8 col-md-9 col-sm-12">
                             <select class="form-control teaGardenId " name="teaGardenId" id="teaGardenId" >
                                 <option value=""> 全部 </option>
@@ -42,18 +43,6 @@
                         <div class="col-lg-8 col-md-9 col-sm-12">
                             <select class="form-control " name="cultivarId" id="cultivarId" >
 
-                            </select>
-                            <span class="m-form__help"></span>
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <label class="col-form-label col-lg-3 col-sm-12">
-                            农事 *
-                        </label>
-                        <div class="col-lg-8 col-md-9 col-sm-12">
-                            <select class="form-control " name="farmTypeId" >
-                                <option value=""> 全部 </option>
-                                <option th:each="item:${farmType}" th:value="${item.id}" th:text="${item.name}"></option>
                             </select>
                             <span class="m-form__help"></span>
                         </div>
