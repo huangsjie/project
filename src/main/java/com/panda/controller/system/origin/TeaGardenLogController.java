@@ -42,7 +42,6 @@ public class TeaGardenLogController {
 
     @Resource
     private TeaGardenLogService teaGardenLogService;
-
     private static boolean message = false;
     private static Object  data    = null;
 
@@ -64,20 +63,11 @@ public class TeaGardenLogController {
      * @return
      */
     @RequestMapping(value = "/reclaim",method= RequestMethod.GET)
-    @RequiresPermissions("origin:view")//权限管理;
+    @RequiresPermissions("teaLog:view")//权限管理;
     public String getTeaGardenLogReclaim(HttpServletRequest request, Model model){
-        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        List<Map> gardenType = teaGardenService.selectTeaGardenNameAndId(new HashMap());
-        List<Dictionary> farmType = dictionaryService.selectDictionaryValueList("92253cc8-2128-11e5-965c-000c29d7a3a0");//农事
-        List<Dictionary> cultivarType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");//品种
-        model.addAttribute("cultivarType",cultivarType);
-        model.addAttribute("gardenType",gardenType);
-        //model.addAttribute("farmType",farmType);
-       // model.addAttribute("type","reclaim");
-        model.addAttribute("type","43512930-9822-48b4-b577-e900c4a12504");
-        model.addAttribute("menuList",user.getMenuList());
-        model.addAttribute("user",user);
+        teaLogPageShow(request,model,"43512930-9822-48b4-b577-e900c4a12504");
         return "system/origin/getTeaGardenLogList";
+
     }
 
     /**
@@ -85,18 +75,9 @@ public class TeaGardenLogController {
      * @return
      */
     @RequestMapping(value = "/plough",method= RequestMethod.GET)
-    @RequiresPermissions("origin:view")//权限管理;
+    @RequiresPermissions("teaLog:view")//权限管理;
     public String getTeaGardenLogPlough(HttpServletRequest request, Model model){
-        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        List<Map> gardenType = teaGardenService.selectTeaGardenNameAndId(new HashMap());
-        List<Dictionary> farmType = dictionaryService.selectDictionaryValueList("92253cc8-2128-11e5-965c-000c29d7a3a0");//农事
-        List<Dictionary> cultivarType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");//品种
-        model.addAttribute("cultivarType",cultivarType);
-        model.addAttribute("gardenType",gardenType);
-        model.addAttribute("farmType",farmType);
-        model.addAttribute("type","4b2946d6-ec92-403f-ae59-6a2d6311e6cd");
-        model.addAttribute("menuList",user.getMenuList());
-        model.addAttribute("user",user);
+        teaLogPageShow(request,model,"4b2946d6-ec92-403f-ae59-6a2d6311e6cd");
         return "system/origin/getTeaGardenLogList";
     }
 
@@ -105,18 +86,9 @@ public class TeaGardenLogController {
      * @return
      */
     @RequestMapping(value = "/seed",method= RequestMethod.GET)
-    @RequiresPermissions("origin:view")//权限管理;
+    @RequiresPermissions("teaLog:view")//权限管理;
     public String getTeaGardenLogSeed(HttpServletRequest request, Model model){
-        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        List<Map> gardenType = teaGardenService.selectTeaGardenNameAndId(new HashMap());
-        List<Dictionary> farmType = dictionaryService.selectDictionaryValueList("92253cc8-2128-11e5-965c-000c29d7a3a0");//农事
-        List<Dictionary> cultivarType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");//品种
-        model.addAttribute("cultivarType",cultivarType);
-        model.addAttribute("gardenType",gardenType);
-        model.addAttribute("farmType",farmType);
-        model.addAttribute("type","1689fac5-4b03-4d4b-94c1-d1bbbe8d06ee");
-        model.addAttribute("menuList",user.getMenuList());
-        model.addAttribute("user",user);
+        teaLogPageShow(request,model,"1689fac5-4b03-4d4b-94c1-d1bbbe8d06ee");
         return "system/origin/getTeaGardenLogList";
     }
 
@@ -125,18 +97,9 @@ public class TeaGardenLogController {
      * @return
      */
     @RequestMapping(value = "/fertilizer",method= RequestMethod.GET)
-    @RequiresPermissions("origin:view")//权限管理;
+    @RequiresPermissions("teaLog:view")//权限管理;
     public String getTeaGardenLogFertilizer(HttpServletRequest request, Model model){
-        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        List<Map> gardenType = teaGardenService.selectTeaGardenNameAndId(new HashMap());
-        List<Dictionary> farmType = dictionaryService.selectDictionaryValueList("92253cc8-2128-11e5-965c-000c29d7a3a0");//农事
-        List<Dictionary> cultivarType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");//品种
-        model.addAttribute("cultivarType",cultivarType);
-        model.addAttribute("gardenType",gardenType);
-        model.addAttribute("farmType",farmType);
-        model.addAttribute("type","d687763c-2a2e-41a7-b57d-71e9caebf579");
-        model.addAttribute("menuList",user.getMenuList());
-        model.addAttribute("user",user);
+        teaLogPageShow(request,model,"d687763c-2a2e-41a7-b57d-71e9caebf579");
         return "system/origin/getTeaGardenLogList";
     }
 
@@ -145,18 +108,9 @@ public class TeaGardenLogController {
      * @return
      */
     @RequestMapping(value = "/weeding",method= RequestMethod.GET)
-    @RequiresPermissions("origin:view")//权限管理;
+    @RequiresPermissions("teaLog:view")//权限管理;
     public String getTeaGardenLogWeeding(HttpServletRequest request, Model model){
-        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        List<Map> gardenType = teaGardenService.selectTeaGardenNameAndId(new HashMap());
-        List<Dictionary> farmType = dictionaryService.selectDictionaryValueList("92253cc8-2128-11e5-965c-000c29d7a3a0");//农事
-        List<Dictionary> cultivarType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");//品种
-        model.addAttribute("cultivarType",cultivarType);
-        model.addAttribute("gardenType",gardenType);
-        model.addAttribute("farmType",farmType);
-        model.addAttribute("type","d5bbd9b5-91c4-48c2-b5f8-0c7328f8902f");
-        model.addAttribute("menuList",user.getMenuList());
-        model.addAttribute("user",user);
+        teaLogPageShow(request,model,"d5bbd9b5-91c4-48c2-b5f8-0c7328f8902f");
         return "system/origin/getTeaGardenLogList";
     }
 
@@ -165,18 +119,9 @@ public class TeaGardenLogController {
      * @return
      */
     @RequestMapping(value = "/insecticide",method= RequestMethod.GET)
-    @RequiresPermissions("origin:view")//权限管理;
+    @RequiresPermissions("teaLog:view")//权限管理;
     public String getTeaGardenLogInsecticide(HttpServletRequest request, Model model){
-        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        List<Map> gardenType = teaGardenService.selectTeaGardenNameAndId(new HashMap());
-        List<Dictionary> farmType = dictionaryService.selectDictionaryValueList("92253cc8-2128-11e5-965c-000c29d7a3a0");//农事
-        List<Dictionary> cultivarType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");//品种
-        model.addAttribute("cultivarType",cultivarType);
-        model.addAttribute("gardenType",gardenType);
-        model.addAttribute("farmType",farmType);
-        model.addAttribute("type","e1f3e464-31c2-46b5-8e20-20d7ea12fb3f");
-        model.addAttribute("menuList",user.getMenuList());
-        model.addAttribute("user",user);
+        teaLogPageShow(request,model,"e1f3e464-31c2-46b5-8e20-20d7ea12fb3f");
         return "system/origin/getTeaGardenLogList";
     }
 
@@ -185,19 +130,23 @@ public class TeaGardenLogController {
      * @return
      */
     @RequestMapping(value = "/irrigate",method= RequestMethod.GET)
-    @RequiresPermissions("origin:view")//权限管理;
+    @RequiresPermissions("teaLog:view")//权限管理;
     public String getTeaGardenLogIrrigate(HttpServletRequest request, Model model,String type){
+        teaLogPageShow(request,model,"5fe37095-7d9a-4235-914f-cf0c6f1e592a");
+        return "system/origin/getTeaGardenLogList";
+    }
+
+    private void teaLogPageShow(HttpServletRequest request, Model model,String type){
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
-        List<Map> gardenType = teaGardenService.selectTeaGardenNameAndId(new HashMap());
         List<Dictionary> farmType = dictionaryService.selectDictionaryValueList("92253cc8-2128-11e5-965c-000c29d7a3a0");//农事
         List<Dictionary> cultivarType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");//品种
+        List<Map> gardenType = teaGardenService.selectTeaGardenNameAndId(new HashMap());
         model.addAttribute("cultivarType",cultivarType);
         model.addAttribute("gardenType",gardenType);
         model.addAttribute("farmType",farmType);
-        model.addAttribute("type","5fe37095-7d9a-4235-914f-cf0c6f1e592a");
+        model.addAttribute("type",type);
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("user",user);
-        return "system/origin/getTeaGardenLogList";
     }
 
     /**
@@ -228,7 +177,6 @@ public class TeaGardenLogController {
                 if (status.size() > 0 && status.get("gardenType") != ""){
                     query.put("gardenType",status.get("gardenType"));
                 }
-
             }
             List<TeaGardenLog> TeaGardenLog = teaGardenLogService.selectTeaGardenLogList(query);
             if(TeaGardenLog.size() > 0){

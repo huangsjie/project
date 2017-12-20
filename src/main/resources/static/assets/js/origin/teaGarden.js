@@ -64,26 +64,19 @@ var TeaGarden = function () {
             datatable.load();
         }).val(query.generalSearch);
 
-        $('#m_form_tea_grade_level').on('change', function () {
+        $('#plantYear').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.tea_grade = $(this).val().toLowerCase();
+            query.plantYear = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.tea_grade !== 'undefined' ? query.tea_grade : '');
+        }).val(typeof query.plantYear !== 'undefined' ? query.plantYear : '');
 
-        $('#m_form_tea_garden_type').on('change', function () {
+       $('#dicCultivarId').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.garden_type = $(this).val().toLowerCase();
+            query.dicCultivarId = $(this).val();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.garden_type !== 'undefined' ? query.garden_type : '');
-
-       $('#cultivarType').on('change', function () {
-            var query = datatable.getDataSourceQuery();
-            query.cultivar_id = $(this).val();
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.cultivar_id !== 'undefined' ? query.cultivar_id : '');
+        }).val(typeof query.dicCultivarId !== 'undefined' ? query.dicCultivarId : '');
         $('.datatableRoload').on('click', function () {
             location.reload()
         });
@@ -241,6 +234,7 @@ var TeaGarden = function () {
             minView: 4,
             sideBySide: false,
             pickerPosition: 'bottom-left',
+            clearBtn: true,
             format: 'yyyy'
         });
 
@@ -249,6 +243,7 @@ var TeaGarden = function () {
             autoclose: true,
             sideBySide: false,
             pickerPosition: 'top-left',
+            clearBtn: true,
             format: 'yyyy-mm-dd hh:mm:ss'
         });
     }

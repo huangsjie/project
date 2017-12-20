@@ -41,16 +41,11 @@ var TeaGardenManage = function () {
             },{
                 field: "teaGardenName",
                 title: "茶园",
-                width: 60
+                width: 120
             }, {
                 field: "farmName",
                 title: "农事",
                 width: 60
-            }, {
-                field: "farm_desc",
-                title: "农事描述",
-                overflow: 'hide',
-                width: 100
             }, {
                 field: "operator_id",
                 title: "实施人",
@@ -66,7 +61,7 @@ var TeaGardenManage = function () {
                 field: "create_time",
                 title: "创建时间",
                 sortable: 'asc',
-                width: 100
+                width: 150
             }, {
                 field: "createName",
                 title: "创建人",
@@ -86,29 +81,25 @@ var TeaGardenManage = function () {
 
 
         var datatable = $('.tea_garden_manage_ajax').mDatatable(option);
-
         var query = datatable.getDataSourceQuery();
         query.farmType = $("#farmType").val();
-        console.log($("#farmType").val());
         datatable.setDataSourceQuery(query);
+        datatable.load();
+
         $('#m_form_search').on('keyup', function (e) {
             var query = datatable.getDataSourceQuery();
             query.generalSearch = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(query.generalSearch);
+
         $('#createYear').on('change', function () {
             var query = datatable.getDataSourceQuery();
             query.createYear = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(typeof query.createYear !== 'undefined' ? query.createYear : '');
-        /*$('#farmType').on('change', function () {
-            var query = datatable.getDataSourceQuery();
-            query.farmType = $(this).val();
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.farmType !== 'undefined' ? query.farmType : '');*/
+
         $('#gardenType').on('change', function () {
             var query = datatable.getDataSourceQuery();
             query.gardenType = $(this).val();

@@ -1,23 +1,23 @@
 package com.panda.model.origin;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class TeaGardenLog implements Serializable {
-
+public class TeaGardenLog {
     private String id;
 
     private String teaGardenId;
 
     private String farmTypeId;
 
-    private String farmDesc;
+    private Double farmQuantity;
+
+    private Date farmTime;
+
+    private String farmPattern;
+
+    private String fertVariety;
 
     private String cultivarId;
-
-    private Date beginTime;
-
-    private Date endTime;
 
     private String operatorId;
 
@@ -57,12 +57,36 @@ public class TeaGardenLog implements Serializable {
         this.farmTypeId = farmTypeId;
     }
 
-    public String getFarmDesc() {
-        return farmDesc;
+    public Double getFarmQuantity() {
+        return farmQuantity;
     }
 
-    public void setFarmDesc(String farmDesc) {
-        this.farmDesc = farmDesc;
+    public void setFarmQuantity(Double farmQuantity) {
+        this.farmQuantity = farmQuantity;
+    }
+
+    public Date getFarmTime() {
+        return farmTime;
+    }
+
+    public void setFarmTime(Date farmTime) {
+        this.farmTime = farmTime;
+    }
+
+    public String getFarmPattern() {
+        return farmPattern;
+    }
+
+    public void setFarmPattern(String farmPattern) {
+        this.farmPattern = farmPattern;
+    }
+
+    public String getFertVariety() {
+        return fertVariety;
+    }
+
+    public void setFertVariety(String fertVariety) {
+        this.fertVariety = fertVariety;
     }
 
     public String getCultivarId() {
@@ -71,22 +95,6 @@ public class TeaGardenLog implements Serializable {
 
     public void setCultivarId(String cultivarId) {
         this.cultivarId = cultivarId;
-    }
-
-    public Date getBeginTime() {
-        return beginTime;
-    }
-
-    public void setBeginTime(Date beginTime) {
-        this.beginTime = beginTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
     }
 
     public String getOperatorId() {

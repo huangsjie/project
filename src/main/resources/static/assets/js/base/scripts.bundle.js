@@ -1231,8 +1231,7 @@ jQuery.fn.extend({
 			 */
 			setupSystemColumn: function () {
 				// no records available
-				if (datatable.jsonData.length === 0) return;
-
+				if (datatable.jsonData == null || datatable.jsonData.length === 0) return;
 				var columns = options.columns;
 				$(datatable.tableBody).find('.m-datatable__row').each(function (tri, tr) {
 					$(tr).find('.m-datatable__cell').each(function (tdi, td) {
@@ -1628,9 +1627,9 @@ jQuery.fn.extend({
 					});
 					$(tr).appendTo(tableBody);
 				});
-
+                console.log("123")
 				// display no records message
-				if (datatable.jsonData.length === 0) {
+				if (datatable.jsonData == null || datatable.jsonData.length === 0) {
 					$('<span/>').addClass('m-datatable--error').width('100%').html(API.getOption('translate.records.noRecords')).appendTo(tableBody);
 					$(datatable).addClass('m-datatable--error');
 				}

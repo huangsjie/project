@@ -72,8 +72,8 @@ public class TeaGardenController {
                 if (status.size() > 0 && status.get("plantYear") != ""){
                     query.put("plantYear",status.get("plantYear"));
                 }
-                if (status.size() > 0 && status.get("dicCultivarId") != ""){
-                    query.put("dicCultivarId",status.get("dicCultivarId"));
+                if (status.size() > 0 && status.get("dic_cultivar_id") != ""){
+                    query.put("dic_cultivar_id",status.get("dic_cultivar_id"));
                 }
             }
 
