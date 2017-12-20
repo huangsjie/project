@@ -6,8 +6,9 @@
 </head>
 <body>
 <!--begin::Modal-->
-<div class="modal fade teaGardenLogEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" th:fragment="teaGardenLogEdit">
-    <div class="modal-dialog " role="document">
+<div class="modal fade teaGardenLogEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true" th:fragment="teaGardenLogEdit">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
@@ -19,85 +20,156 @@
                     </span>
                 </button>
             </div>
-            <form class="m-form m-form--state m-form--fit m-form--label-align-right" id="tea_garden_log_form" novalidate="novalidate">
+            <form class="m-form m-form--state m-form--fit m-form--label-align-right" id="tea_garden_log_form"
+                  novalidate="novalidate">
                 <div class="modal-body">
-                    <input type="hidden" name="id" value="">
-                    <input type="hidden" name="save" value="edit">
-                    <div class="form-group m-form__group row">
-                        <label class="col-form-label col-lg-3 col-sm-12">
-                            茶园 <span style="color: red">*</span>
-                        </label>
-                        <div class="col-lg-8 col-md-9 col-sm-12">
-                            <select class="form-control teaGardenId " name="teaGardenId" id="teaGardenId" >
-                                <option value=""> 全部 </option>
-                                <option th:each="item:${gardenType}" th:value="${item.id}" th:text="${item.name_area}"></option>
-                            </select>
-                            <span class="m-form__help"></span>
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <label class="col-form-label col-lg-3 col-sm-12">
-                            农事 <span style="color: red">*</span>
-                        </label>
-                        <div class="col-lg-8 col-md-9 col-sm-12">
-                            <select class="form-control farmTypeId " name="farmTypeId" >
-                                <option value=""> 全部 </option>
-                                <option th:each="item:${farmType}" th:value="${item.id}" th:text="${item.name}" th:if="${item.id == type} ? 'selected' "></option>
-                            </select>
-                            <span class="m-form__help"></span>
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <label class="col-form-label col-lg-3 col-sm-12" >
-                            管理批次 <span style="color: red">*</span>
-                        </label>
-                        <div class="col-lg-8 col-md-9 col-sm-12">
-                            <select class="form-control " name="cultivarId" id="cultivarId" >
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input type="hidden" name="id" value="">
+                            <input type="hidden" name="save" value="edit">
+                            <div class="form-group m-form__group row r-pm">
+                                <label class="col-form-label col-lg-3 col-sm-12">
+                                    茶园 <span style="color: red">*</span>
+                                </label>
+                                <div class="col-lg-8 col-md-9 col-sm-12">
+                                    <select class="form-control teaGardenId " name="teaGardenId" id="teaGardenId">
+                                        <option value=""> 全部</option>
+                                        <option th:each="item:${gardenType}" th:value="${item.id}"
+                                                th:text="${item.name_area}"></option>
+                                    </select>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row r-pm">
+                                <label class="col-form-label col-lg-3 col-sm-12">
+                                    农事 <span style="color: red">*</span>
+                                </label>
+                                <div class="col-lg-8 col-md-9 col-sm-12">
+                                    <select class="form-control farmTypeId " name="farmTypeId">
+                                        <option value=""> 全部</option>
+                                        <option th:each="item:${farmType}" th:if="${item.id == type}" th:value="${item.id}" th:text="${item.name}"></option>
+                                    </select>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row r-pm">
+                                <label class="col-form-label col-lg-3 col-sm-12">
+                                    管理批次 <span style="color: red">*</span>
+                                </label>
+                                <div class="col-lg-8 col-md-9 col-sm-12">
+                                    <select class="form-control " name="cultivarId" id="cultivarId">
 
-                            </select>
-                            <span class="m-form__help"></span>
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <label class="col-form-label col-lg-3 col-sm-12">
-                            农事说明 <span style="color: red">*</span>
-                        </label>
-                        <div class="col-lg-8 col-md-9 col-sm-12">
-                            <div class="input-group">
-                                <input type="text" class="form-control m-input" name="farmDesc" placeholder="农事说明">
+                                    </select>
+                                    <span class="m-form__help"></span>
+                                </div>
                             </div>
-                            <span class="m-form__help"></span>
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <label class="col-form-label col-lg-3 col-sm-12">
-                            实施人 <span style="color: red">*</span>
-                        </label>
-                        <div class="col-lg-8 col-md-9 col-sm-12">
-                            <div class="input-group">
-                                <input type="text" class="form-control m-input" name="operatorId" placeholder="实施人">
+                            <div class="form-group m-form__group row r-pm">
+                                <label class="col-form-label col-lg-3 col-sm-12">
+                                    农事说明 <span style="color: red">*</span>
+                                </label>
+                                <div class="col-lg-8 col-md-9 col-sm-12">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control m-input" name="farmDesc"
+                                               placeholder="农事说明">
+                                    </div>
+                                    <span class="m-form__help"></span>
+                                </div>
                             </div>
-                            <span class="m-form__help"></span>
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <label class="col-form-label col-lg-3 col-sm-12">
-                            操作时间 <span style="color: red">*</span>
-                        </label>
-                        <div class="col-lg-8 col-md-9 col-sm-12">
-                            <div class="input-group">
-                                <input type="text" class="form-control m-input begin_time" name="beginTime" placeholder="开始时间">
+                            <div class="form-group m-form__group row r-pm">
+                                <label class="col-form-label col-lg-3 col-sm-12">
+                                    备注
+                                </label>
+                                <div class="col-lg-8 col-md-9 col-sm-12">
+                                    <textarea class="form-control m-input" name="description"
+                                              placeholder="介绍用途等"></textarea>
+                                    <span class="m-form__help"></span>
+                                </div>
                             </div>
-                            <span class="m-form__help"></span>
                         </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <label class="col-form-label col-lg-3 col-sm-12">
-                            备注
-                        </label>
-                        <div class="col-lg-8 col-md-9 col-sm-12">
-                            <textarea class="form-control m-input" name="description" placeholder="介绍用途等"></textarea>
-                            <span class="m-form__help"></span>
+                        <div class="col-lg-6">
+                            <div class="form-group m-form__group row r-pm">
+                                <label class="col-form-label col-lg-3 col-sm-12">
+                                    茶园 <span style="color: red">*</span>
+                                </label>
+                                <div class="col-lg-8 col-md-9 col-sm-12">
+                                    <select class="form-control teaGardenId " name="teaGardenId" id="teaGardenId">
+                                        <option value=""> 全部</option>
+                                        <option th:each="item:${gardenType}" th:value="${item.id}"
+                                                th:text="${item.name_area}"></option>
+                                    </select>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row r-pm">
+                                <label class="col-form-label col-lg-3 col-sm-12">
+                                    农事 <span style="color: red">*</span>
+                                </label>
+                                <div class="col-lg-8 col-md-9 col-sm-12">
+                                    <select class="form-control farmTypeId " name="farmTypeId">
+                                        <option value=""> 全部</option>
+                                        <option th:each="item:${farmType}" th:value="${item.id}" th:text="${item.name}"
+                                                th:if="${item.id == type} ? 'selected' "></option>
+                                    </select>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row r-pm">
+                                <label class="col-form-label col-lg-3 col-sm-12">
+                                    管理批次 <span style="color: red">*</span>
+                                </label>
+                                <div class="col-lg-8 col-md-9 col-sm-12">
+                                    <select class="form-control " name="cultivarId" id="cultivarId">
+
+                                    </select>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row r-pm">
+                                <label class="col-form-label col-lg-3 col-sm-12">
+                                    农事说明 <span style="color: red">*</span>
+                                </label>
+                                <div class="col-lg-8 col-md-9 col-sm-12">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control m-input" name="farmDesc"
+                                               placeholder="农事说明">
+                                    </div>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row r-pm">
+                                <label class="col-form-label col-lg-3 col-sm-12">
+                                    实施人 <span style="color: red">*</span>
+                                </label>
+                                <div class="col-lg-8 col-md-9 col-sm-12">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control m-input" name="operatorId"
+                                               placeholder="实施人">
+                                    </div>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row r-pm">
+                                <label class="col-form-label col-lg-3 col-sm-12">
+                                    操作时间 <span style="color: red">*</span>
+                                </label>
+                                <div class="col-lg-8 col-md-9 col-sm-12">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control m-input begin_time" name="beginTime"
+                                               placeholder="开始时间">
+                                    </div>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row r-pm">
+                                <label class="col-form-label col-lg-3 col-sm-12">
+                                    备注
+                                </label>
+                                <div class="col-lg-8 col-md-9 col-sm-12">
+                                    <textarea class="form-control m-input" name="description"
+                                              placeholder="介绍用途等"></textarea>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!--<div class="m-form__seperator m-form__seperator&#45;&#45;dashed m-form__seperator&#45;&#45;space"></div>-->

@@ -1627,7 +1627,6 @@ jQuery.fn.extend({
 					});
 					$(tr).appendTo(tableBody);
 				});
-                console.log("123")
 				// display no records message
 				if (datatable.jsonData == null || datatable.jsonData.length === 0) {
 					$('<span/>').addClass('m-datatable--error').width('100%').html(API.getOption('translate.records.noRecords')).appendTo(tableBody);

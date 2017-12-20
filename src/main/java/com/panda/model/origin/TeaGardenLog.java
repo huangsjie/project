@@ -1,8 +1,9 @@
 package com.panda.model.origin;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TeaGardenLog {
+public class TeaGardenLog implements Serializable{
     private String id;
 
     private String teaGardenId;
@@ -24,6 +25,8 @@ public class TeaGardenLog {
     private Integer status;
 
     private String description;
+
+    private Date endTime;
 
     private String createId;
 
@@ -119,6 +122,14 @@ public class TeaGardenLog {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public String getCreateId() {

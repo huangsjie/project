@@ -78,18 +78,17 @@ var TeaGardenManage = function () {
                 }
             }]
         }
-
-
         var datatable = $('.tea_garden_manage_ajax').mDatatable(option);
         var query = datatable.getDataSourceQuery();
         query.farmType = $("#farmType").val();
         datatable.setDataSourceQuery(query);
-        datatable.load();
+        datatable.load(); //load 2次才能显示正常
 
         $('#m_form_search').on('keyup', function (e) {
             var query = datatable.getDataSourceQuery();
             query.generalSearch = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
+            datatable.load();
             datatable.load();
         }).val(query.generalSearch);
 
@@ -98,12 +97,14 @@ var TeaGardenManage = function () {
             query.createYear = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
             datatable.load();
+            datatable.load();
         }).val(typeof query.createYear !== 'undefined' ? query.createYear : '');
 
         $('#gardenType').on('change', function () {
             var query = datatable.getDataSourceQuery();
             query.gardenType = $(this).val();
             datatable.setDataSourceQuery(query);
+            datatable.load();
             datatable.load();
         }).val(typeof query.gardenType !== 'undefined' ? query.gardenType : '');
         $('.datatableRoload').on('click', function () {
@@ -245,6 +246,7 @@ var TeaGardenManage = function () {
      * 重置表单
      */
     var removeValue = function(type){
+        var farmType = $("#farmType").val();
         if(type == 'edit'){
             $(".teaGardenLogEdit .modal-title").text("编辑记录")
             $(".teaGardenLogEdit [name='save']").val('edit')
@@ -258,7 +260,7 @@ var TeaGardenManage = function () {
         }
         $(".teaGardenLogEdit [name='id']").val("")
         $(".teaGardenLogEdit [name='teaGardenId']").val("")
-        $(".teaGardenLogEdit [name='farmTypeId']").val("")
+        $(".teaGardenLogEdit [name='farmTypeId']").val(farmType)
         $(".teaGardenLogEdit [name='farmDesc']").val("")
         $(".teaGardenLogEdit [name='operatorId']").val("")
         $(".teaGardenLogEdit [name='beginTime']").val("")
@@ -284,6 +286,7 @@ var TeaGardenManage = function () {
             startView: 4,
             minView: 4,
             sideBySide: false,
+            clearBtn: true,
             pickerPosition: 'bottom-left',
             format: 'yyyy'
         });
@@ -293,6 +296,7 @@ var TeaGardenManage = function () {
             autoclose: true,
             sideBySide: false,
             pickerPosition: 'top-left',
+            clearBtn: true,
             format: 'yyyy-mm-dd hh:mm:ss'
         });
     }
