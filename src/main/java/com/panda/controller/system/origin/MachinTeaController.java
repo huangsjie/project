@@ -62,7 +62,66 @@ public class MachinTeaController {
         CustomDateEditor dateEditor = new CustomDateEditor(fmt, true);
         binder.registerCustomEditor(Date.class, dateEditor);
     }
-
+    /**
+     * 鲜叶
+     * @return
+     */
+    @RequestMapping(value = "/pick",method= RequestMethod.GET)
+    @RequiresPermissions("machinTea:view")//权限管理;
+    public String getMachinTeaListPick(HttpServletRequest request, Model model){
+        machinTeaPageShow(request,model,"43512930-9822-48b4-b577-e900c4a12504");
+        return "system/origin/getMachinTeaList";
+    }
+    /**
+     * 萎凋
+     * @return
+     */
+    @RequestMapping(value = "/wither",method= RequestMethod.GET)
+    @RequiresPermissions("machinTea:view")//权限管理;
+    public String getMachinTeaListWither(HttpServletRequest request, Model model){
+        machinTeaPageShow(request,model,"43512930-9822-48b4-b577-e900c4a12504");
+        return "system/origin/getMachinTeaList";
+    }
+    /**
+     * 杀青
+     * @return
+     */
+    @RequestMapping(value = "/killOut",method= RequestMethod.GET)
+    @RequiresPermissions("machinTea:view")//权限管理;
+    public String getMachinTeaListKillOut(HttpServletRequest request, Model model){
+        machinTeaPageShow(request,model,"43512930-9822-48b4-b577-e900c4a12504");
+        return "system/origin/getMachinTeaList";
+    }
+    /**
+     * 揉捻
+     * @return
+     */
+    @RequestMapping(value = "/rolling",method= RequestMethod.GET)
+    @RequiresPermissions("machinTea:view")//权限管理;
+    public String getMachinTeaListRolling(HttpServletRequest request, Model model){
+        machinTeaPageShow(request,model,"43512930-9822-48b4-b577-e900c4a12504");
+        return "system/origin/getMachinTeaList";
+    }
+    /**
+     * 发酵
+     * @return
+     */
+    @RequestMapping(value = "/fermentation",method= RequestMethod.GET)
+    @RequiresPermissions("machinTea:view")//权限管理;
+    public String getMachinTeaListFermentation(HttpServletRequest request, Model model){
+        machinTeaPageShow(request,model,"43512930-9822-48b4-b577-e900c4a12504");
+        return "system/origin/getMachinTeaList";
+    }
+    /**
+     * 干燥
+     * @return
+     */
+    @RequestMapping(value = "/dry",method= RequestMethod.GET)
+    @RequiresPermissions("machinTea:view")//权限管理;
+    public String getMachinTeaListDry(HttpServletRequest request, Model model){
+        machinTeaPageShow(request,model,"43512930-9822-48b4-b577-e900c4a12504");
+        return "system/origin/getMachinTeaList";
+    }
     /**
      * 获取加工设置数据
      * @return
@@ -89,6 +148,27 @@ public class MachinTeaController {
         model.addAttribute("user",user);
         return "system/origin/getMachinTeaList";
     }
+
+    private void machinTeaPageShow(HttpServletRequest request, Model model,String type){
+        Users user= (Users) SecurityUtils.getSubject().getPrincipal();
+        Map map = new HashMap();
+        map.put("status",1);
+        List<Dictionary> machinType = dictionaryService.selectDictionaryValueList("0b9ed538-29d6-11e5-965c-000c29d7a3a0");//加工类型
+        List<Dictionary> teaArrt = dictionaryService.selectDictionaryValueList("31783870-956f-469f-b43e-9fefd905afca");//茶系
+        List<Dictionary> machinProcess = dictionaryService.selectDictionaryValueList("1e12732d-246e-11e5-965c-000c29d7a3a0");//工序
+        List<Dictionary> teaGrade = dictionaryService.selectDictionaryValueList("f63fe4f8-27ab-11e5-965c-000c29d7a3a0");//等级
+        List<Dictionary> teaType = dictionaryService.selectDictionaryValueList("be0ba01c-23ad-11e5-965c-000c29d7a3a0");//品种
+        List<Map> processBatchList = processBatchService.selectProcessBatchList(map);
+        model.addAttribute("machinType",machinType);
+        model.addAttribute("processBatchList",processBatchList);
+        model.addAttribute("teaArrt",teaArrt);
+        model.addAttribute("machinProcess",machinProcess);
+        model.addAttribute("teaGrade",teaGrade);
+        model.addAttribute("teaType",teaType);
+        model.addAttribute("menuList",user.getMenuList());
+        model.addAttribute("user",user);
+    }
+
 
     /**
      * Ajax 获取信息列表

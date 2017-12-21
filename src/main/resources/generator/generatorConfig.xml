@@ -35,7 +35,7 @@
 
         <!-- 数据表 -->
 
-        <table tableName="e_tea_garden_log" domainObjectName="TeaGardenLog" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <table tableName="e_harvest_records" domainObjectName="HarvestRecords" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
 
         <!-- 数据表 -->
     </context>
