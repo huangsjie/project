@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.panda.mapper.origin.HarvestRecordsMapper" >
+  <resultMap id="BaseResultMap" type="com.panda.model.origin.HarvestRecords" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="tea_garden_id" property="teaGardenId" jdbcType="VARCHAR" />
+    <result column="dic_standard" property="dicStandard" jdbcType="VARCHAR" />
+    <result column="rec_quantity" property="recQuantity" jdbcType="DOUBLE" />
+    <result column="pick_number" property="pickNumber" jdbcType="VARCHAR" />
+    <result column="pick_area" property="pickArea" jdbcType="VARCHAR" />
+    <result column="pick_time" property="pickTime" jdbcType="INTEGER" />
+    <result column="operator_id" property="operatorId" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, tea_garden_id, dic_standard, rec_quantity, pick_number, pick_area, pick_time, 
+    operator_id, create_id, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from e_harvest_records
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from e_harvest_records
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.panda.model.origin.HarvestRecords" >
+    insert into e_harvest_records (id, tea_garden_id, dic_standard, 
+      rec_quantity, pick_number, pick_area, 
+      pick_time, operator_id, create_id, 
+      create_time)
+    values (#{id,jdbcType=VARCHAR}, #{teaGardenId,jdbcType=VARCHAR}, #{dicStandard,jdbcType=VARCHAR}, 
+      #{recQuantity,jdbcType=DOUBLE}, #{pickNumber,jdbcType=VARCHAR}, #{pickArea,jdbcType=VARCHAR}, 
+      #{pickTime,jdbcType=INTEGER}, #{operatorId,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.panda.model.origin.HarvestRecords" >
+    insert into e_harvest_records
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="teaGardenId != null" >
+        tea_garden_id,
+      </if>
+      <if test="dicStandard != null" >
+        dic_standard,
+      </if>
+      <if test="recQuantity != null" >
+        rec_quantity,
+      </if>
+      <if test="pickNumber != null" >
+        pick_number,
+      </if>
+      <if test="pickArea != null" >
+        pick_area,
+      </if>
+      <if test="pickTime != null" >
+        pick_time,
+      </if>
+      <if test="operatorId != null" >
+        operator_id,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="teaGardenId != null" >
+        #{teaGardenId,jdbcType=VARCHAR},
+      </if>
+      <if test="dicStandard != null" >
+        #{dicStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="recQuantity != null" >
+        #{recQuantity,jdbcType=DOUBLE},
+      </if>
+      <if test="pickNumber != null" >
+        #{pickNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="pickArea != null" >
+        #{pickArea,jdbcType=VARCHAR},
+      </if>
+      <if test="pickTime != null" >
+        #{pickTime,jdbcType=INTEGER},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.panda.model.origin.HarvestRecords" >
+    update e_harvest_records
+    <set >
+      <if test="teaGardenId != null" >
+        tea_garden_id = #{teaGardenId,jdbcType=VARCHAR},
+      </if>
+      <if test="dicStandard != null" >
+        dic_standard = #{dicStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="recQuantity != null" >
+        rec_quantity = #{recQuantity,jdbcType=DOUBLE},
+      </if>
+      <if test="pickNumber != null" >
+        pick_number = #{pickNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="pickArea != null" >
+        pick_area = #{pickArea,jdbcType=VARCHAR},
+      </if>
+      <if test="pickTime != null" >
+        pick_time = #{pickTime,jdbcType=INTEGER},
+      </if>
+      <if test="operatorId != null" >
+        operator_id = #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.panda.model.origin.HarvestRecords" >
+    update e_harvest_records
+    set tea_garden_id = #{teaGardenId,jdbcType=VARCHAR},
+      dic_standard = #{dicStandard,jdbcType=VARCHAR},
+      rec_quantity = #{recQuantity,jdbcType=DOUBLE},
+      pick_number = #{pickNumber,jdbcType=VARCHAR},
+      pick_area = #{pickArea,jdbcType=VARCHAR},
+      pick_time = #{pickTime,jdbcType=INTEGER},
+      operator_id = #{operatorId,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from e_harvest_records
+  </select>
+
+  <select id="selectHarvestRecordsList" resultType="map" parameterType="map">
+    SELECT
+     hr.id,
+     hr.dic_standard dicStandard,
+     hr.tea_garden_id teaGardenId,
+     hr.rec_quantity recQuantity,
+     hr.pick_number pickNumber,
+     hr.pick_area pickArea,
+     hr.pick_time pickTime,
+     hr.operator_id operatorId,
+     hr.create_id createId,
+     tg.area_code areaCode,
+     tg.name_area nameArea,
+     d. name dicName,
+     u.chinese_name createName
+    FROM
+        e_harvest_records hr,
+        e_tea_garden tg,
+        s_dictionary d,
+        s_users u
+    WHERE 1 = 1
+        AND hr.tea_garden_id = tg.id
+        AND hr.dic_standard =  d.id
+        AND hr.create_id = u.id
+      <if test="teaGardenId != null and teaGardenId != ''">
+        AND hr.tea_garden_id = #{teaGardenId}
+      </if>
+      <if test="recQuantity != null and recQuantity != ''">
+        AND hr.rec_quantity = #{recQuantity}
+      </if>
+      <if test="pickTime != null and pickTime != ''">
+        AND hr.pick_time = #{pickTime}
+      </if>
+  </select>
+
+  <select id="selectHarvestRecordsListPickNum" resultType="map" parameterType="map">
+
+  </select>
+</mapper>

@@ -1,0 +1,106 @@
+package com.panda.model.origin;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class HarvestRecords implements Serializable{
+    private String id;
+
+    private String teaGardenId;
+
+    private String dicStandard;
+
+    private Double recQuantity;
+
+    private String pickNumber;
+
+    private String pickArea;
+
+    private Integer pickTime;
+
+    private String operatorId;
+
+    private String createId;
+
+    private Date createTime;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTeaGardenId() {
+        return teaGardenId;
+    }
+
+    public void setTeaGardenId(String teaGardenId) {
+        this.teaGardenId = teaGardenId;
+    }
+
+    public String getDicStandard() {
+        return dicStandard;
+    }
+
+    public void setDicStandard(String dicStandard) {
+        this.dicStandard = dicStandard;
+    }
+
+    public Double getRecQuantity() {
+        return recQuantity;
+    }
+
+    public void setRecQuantity(Double recQuantity) {
+        this.recQuantity = recQuantity;
+    }
+
+    public String getPickNumber() {
+        return pickNumber;
+    }
+
+    public void setPickNumber(String pickNumber) {
+        this.pickNumber = pickNumber;
+    }
+
+    public String getPickArea() {
+        return pickArea;
+    }
+
+    public void setPickArea(String pickArea) {
+        this.pickArea = pickArea;
+    }
+
+    public Integer getPickTime() {
+        return pickTime;
+    }
+
+    public void setPickTime(Integer pickTime) {
+        this.pickTime = pickTime;
+    }
+
+    public String getOperatorId() {
+        return operatorId;
+    }
+
+    public void setOperatorId(String operatorId) {
+        this.operatorId = operatorId;
+    }
+
+    public String getCreateId() {
+        return createId;
+    }
+
+    public void setCreateId(String createId) {
+        this.createId = createId;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+}
