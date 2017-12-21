@@ -14,6 +14,10 @@ public interface TeaGardenLogService extends AbstractService<TeaGardenLog> {
      */
     List<TeaGardenLog> selectTeaGardenLogList(Map map);
 
-   //
-    Map  selectByPrimaryKey1(String id);
+    /**
+     * 根据茶园日志ID 查询 日志详情
+     * @param id
+     * @return
+     */
+    Map selectTeaGardenLogItem(String id);
 }

@@ -31,9 +31,14 @@ public class TeaGardenLogServiceImpl extends AbstractServiceImpl<TeaGardenLog> i
     }
 
 
+    /**
+     * 根据茶园日志ID 查询 日志详情
+     * @param id
+     * @return
+     */
     @Override
-    public Map selectByPrimaryKey1(String id){
-        return teaGardenLogMapper.selectByPrimaryKey1(id);
+    public Map selectTeaGardenLogItem(String id){
+        return teaGardenLogMapper.selectTeaGardenLogItem(id);
     }
 
 }

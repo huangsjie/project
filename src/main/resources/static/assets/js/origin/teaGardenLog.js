@@ -1,9 +1,51 @@
 var TeaGardenManage = function () {
+    var farmType = $("#farmType").val();
     var actionsTemplate = $("#actionsTemplate").html();
     var statusOff = {
         1: {'title': '已完成', 'class': ' m-badge--success'},
         0: {'title': '进行中', 'class': ' m-badge--warning'}
     };
+    var columns = {
+        '43512930-9822-48b4-b577-e900c4a12504':[{ field: "createYear", title: "年份", width: 60 },
+            { field: "operator_id", title: "实施人", width: 60 }, { field: "fert_variety", title: "开垦编号", width: 60 }, { field: "farm_quantity", title: "开垦面积", width: 60 },
+            { field: "statusOff", title: "进度", width: 60, template: function (row) { return '<span class="m-badge ' + statusOff[row.statusOff].class + ' m-badge--wide">' + statusOff[row.statusOff].title + '</span>';}},
+            { field: "create_time", title: "创建时间", sortable: 'asc', width: 150 }, { field: "createName", title: "创建人", width: 60 },
+            { field: "Actions", width: 100, title: "操作", sortable: false, overflow: 'visible', template: function (row) { return actionsTemplate.replace(/#rowId#/g, row.id);}}],
+        '4b2946d6-ec92-403f-ae59-6a2d6311e6cd':[{ field: "createYear", title: "年份", width: 60 },
+            { field: "teaGardenName", title: "茶园", width: 80 }, { field: "farmName", title: "农事", width: 60 }, { field: "operator_id", title: "实施人", width: 60 }, { field: "fert_variety", title: "耕地沟宽", width: 60 }, { field: "farm_quantity", title: "耕地面积", width: 60 },
+            { field: "statusOff", title: "进度", width: 60, template: function (row) { return '<span class="m-badge ' + statusOff[row.statusOff].class + ' m-badge--wide">' + statusOff[row.statusOff].title + '</span>';}},
+            { field: "create_time", title: "创建时间", sortable: 'asc', width: 150 }, { field: "createName", title: "创建人", width: 60 },
+            { field: "Actions", width: 100, title: "操作", sortable: false, overflow: 'visible', template: function (row) { return actionsTemplate.replace(/#rowId#/g, row.id);}}],
+        '1689fac5-4b03-4d4b-94c1-d1bbbe8d06ee':[{ field: "createYear", title: "年份", width: 60 }, { field: "teaGardenName", title: "茶园", width: 80 },
+            { field: "operator_id", title: "实施人", width: 60 }, { field: "d4Name", title: "种子来源", width: 100 }, { field: "d3Name", title: "种植品种", width: 60 }, { field: "farm_quantity", title: "种植数量", width: 60 },
+            { field: "statusOff", title: "进度", width: 60, template: function (row) { return '<span class="m-badge ' + statusOff[row.statusOff].class + ' m-badge--wide">' + statusOff[row.statusOff].title + '</span>';}},
+            { field: "create_time", title: "创建时间", sortable: 'asc', width: 150 }, { field: "createName", title: "创建人", width: 60 },
+            { field: "Actions", width: 100, title: "操作", sortable: false, overflow: 'visible', template: function (row) { return actionsTemplate.replace(/#rowId#/g, row.id);}}],
+        'd687763c-2a2e-41a7-b57d-71e9caebf579':[{ field: "createYear", title: "年份", width: 60 }, { field: "teaGardenName", title: "茶园", width: 80 },
+            { field: "operator_id", title: "实施人", width: 60 }, { field: "d4Name", title: "肥料品种", width: 100 }, { field: "d2Name", title: "施肥方式", width: 60 }, { field: "farm_quantity", title: "施肥数量", width: 60 },
+            { field: "statusOff", title: "进度", width: 60, template: function (row) { return '<span class="m-badge ' + statusOff[row.statusOff].class + ' m-badge--wide">' + statusOff[row.statusOff].title + '</span>';}},
+            { field: "create_time", title: "创建时间", sortable: 'asc', width: 150 }, { field: "createName", title: "创建人", width: 60 },
+            { field: "Actions", width: 100, title: "操作", sortable: false, overflow: 'visible', template: function (row) { return actionsTemplate.replace(/#rowId#/g, row.id);}}],
+        'd5bbd9b5-91c4-48c2-b5f8-0c7328f8902f':[{ field: "createYear", title: "年份", width: 60 }, { field: "teaGardenName", title: "茶园", width: 80 },
+            { field: "operator_id", title: "实施人", width: 60 }, { field: "d2Name", title: "除草方式", width: 60 }, { field: "farm_quantity", title: "施肥数量", width: 60 },
+            { field: "statusOff", title: "进度", width: 60, template: function (row) { return '<span class="m-badge ' + statusOff[row.statusOff].class + ' m-badge--wide">' + statusOff[row.statusOff].title + '</span>';}},
+            { field: "create_time", title: "创建时间", sortable: 'asc', width: 150 }, { field: "createName", title: "创建人", width: 60 },
+            { field: "Actions", width: 100, title: "操作", sortable: false, overflow: 'visible', template: function (row) { return actionsTemplate.replace(/#rowId#/g, row.id);}}],
+        'e1f3e464-31c2-46b5-8e20-20d7ea12fb3f':[{ field: "createYear", title: "年份", width: 60 }, { field: "teaGardenName", title: "茶园", width: 80 },
+            { field: "operator_id", title: "实施人", width: 60 }, { field: "d2Name", title: "治虫方式", width: 60 }, { field: "fert_variety", title: "防治对象", width: 60 }, { field: "farm_quantity", title: "施肥数量", width: 60 },
+            { field: "statusOff", title: "进度", width: 60, template: function (row) { return '<span class="m-badge ' + statusOff[row.statusOff].class + ' m-badge--wide">' + statusOff[row.statusOff].title + '</span>';}},
+            { field: "create_time", title: "创建时间", sortable: 'asc', width: 150 }, { field: "createName", title: "创建人", width: 60 },
+            { field: "Actions", width: 100, title: "操作", sortable: false, overflow: 'visible', template: function (row) { return actionsTemplate.replace(/#rowId#/g, row.id);}}],
+        '5fe37095-7d9a-4235-914f-cf0c6f1e592a':[{ field: "createYear", title: "年份", width: 60 }, { field: "teaGardenName", title: "茶园", width: 80 },
+            { field: "operator_id", title: "实施人", width: 60 }, { field: "d2Name", title: "灌溉方式", width: 60 },{ field: "farm_quantity", title: "用量", width: 60 },
+            { field: "statusOff", title: "进度", width: 60, template: function (row) { return '<span class="m-badge ' + statusOff[row.statusOff].class + ' m-badge--wide">' + statusOff[row.statusOff].title + '</span>';}},
+            { field: "create_time", title: "创建时间", sortable: 'asc', width: 150 }, { field: "createName", title: "创建人", width: 60 },
+            { field: "Actions", width: 100, title: "操作", sortable: false, overflow: 'visible', template: function (row) { return actionsTemplate.replace(/#rowId#/g, row.id);}}]
+    }
+    //禁用茶园筛选项
+    if (farmType == '43512930-9822-48b4-b577-e900c4a12504'){
+        $("#gardenType").attr("disabled",true);
+    }
     var teaGardenManageShow = function () {
         var option = {
             data: {
@@ -28,59 +70,11 @@ var TeaGardenManage = function () {
             sortable: true,
             filterable: false,
             pagination: true,
-            columns: [{
-                title: "#",
-                width: 40,
-                template: function (row) {
-                    return row.rowIndex+1;
-                }
-            },{
-                field: "createYear",
-                title: "年份",
-                width: 60
-            },{
-                field: "teaGardenName",
-                title: "茶园",
-                width: 120
-            }, {
-                field: "farmName",
-                title: "农事",
-                width: 60
-            }, {
-                field: "operator_id",
-                title: "实施人",
-                width: 60
-            }, {
-                field: "statusOff",
-                title: "进度",
-                width: 60,
-                template: function (row) {
-                    return '<span class="m-badge ' + statusOff[row.statusOff].class + ' m-badge--wide">' + statusOff[row.statusOff].title + '</span>';
-                }
-            },{
-                field: "create_time",
-                title: "创建时间",
-                sortable: 'asc',
-                width: 150
-            }, {
-                field: "createName",
-                title: "创建人",
-                width: 60
-            },{
-                field: "Actions",
-                width: 100,
-                title: "操作",
-                sortable: false,
-                overflow: 'visible',
-                template: function (row) {
-                    var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
-                    return actionsTemplate.replace(/#rowId#/g, row.id);
-                }
-            }]
+            columns: columns[farmType]
         }
         var datatable = $('.tea_garden_manage_ajax').mDatatable(option);
         var query = datatable.getDataSourceQuery();
-        query.farmType = $("#farmType").val();
+        query.farmType = farmType;
         datatable.setDataSourceQuery(query);
         datatable.load(); //load 2次才能显示正常
 
@@ -121,26 +115,15 @@ var TeaGardenManage = function () {
     var teaGardenManageForm = function () {
         $( "#tea_garden_log_form" ).validate({
             rules: {
-                teaGardenId: {
-                    required: true
-                },
-                farmTypeId: {
-                    required: true
-                },
-                cultivarId: {
-                    required: true
-                },
-                farmDesc: {
-                    required: true,
-                    nameCheck:true
-                },
-                operatorId: {
-                    required: true,
-                    nameCheck:true
-                },
-                beginTime: {
-                    required: true
-                }
+                teaGardenId: { required: true },
+                farmTypeId: { required: true },
+                cultivarId: { required: true },
+                fertVariety: { required: true },
+                operatorId: { required: true, nameCheck:true },
+                farmTime: { required: true },
+                farmQuantity:{ required: true },
+                farmPattern:{ required: true },
+                batchNum:{ required: true }
             },
             submitHandler: function (form){
                 blockUiOpen('.teaGardenLogEdit .modal-content');
@@ -175,14 +158,20 @@ var TeaGardenManage = function () {
                     {id:id},
                     function (result) {
                         if(result.message){
-                            $(".teaGardenLogEdit [name='id']").val(result.data.id)
-                            $(".teaGardenLogEdit [name='teaGardenId']").val(result.data.teaGardenId)
-                            $(".teaGardenLogEdit #cultivarId").html("<option value=\"\"> 全部</option>")
-                            $(".teaGardenLogEdit [name='farmTypeId']").val(result.data.farmTypeId)
-                            $(".teaGardenLogEdit [name='farmDesc']").val(result.data.farmDesc)
-                            $(".teaGardenLogEdit [name='operatorId']").val(result.data.operatorId)
-                            $(".teaGardenLogEdit [name='beginTime']").val(result.data.beginTime)
-                            $(".teaGardenLogEdit [name='description']").val(result.data.description)
+                            $(".teaGardenLogEdit [name='id']").val(result.data.id);
+                            $(".teaGardenLogEdit [name='teaGardenId']").val(result.data.teaGardenId);
+                            $(".teaGardenLogEdit #batchNum").html("<option> "+result.data.batchNumber+"</option>");
+                            $(".teaGardenLogEdit [name='farmTypeId']").val(result.data.farmTypeId);
+                            $(".teaGardenLogEdit [name='operatorId']").val(result.data.operatorId);
+                            $(".teaGardenLogEdit [name='farmTime']").val(result.data.farmTime);
+                            $(".teaGardenLogEdit [name='description']").val(result.data.description);
+                            $(".teaGardenLogEdit [name='farmQuantity']").val(result.data.farmQuantity);
+                            $(".teaGardenLogEdit [name='fertVariety']").val(result.data.fertVariety);
+                            $(".teaGardenLogEdit #acreage").val(result.data.acreage);
+                            $(".teaGardenLogEdit #area_code").val(result.data.area_code);
+                            $(".teaGardenLogEdit #principal").val(result.data.principal);
+                            $(".teaGardenLogEdit [name='cultivarId']").val(result.data.cultivarId);
+                            $(".teaGardenLogEdit [name='fertVariety']").val(result.data.fertVariety);
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }
@@ -201,16 +190,18 @@ var TeaGardenManage = function () {
                 {teaGardenId:teaGardenId},
                 function (result) {
                     if(result.message){
-                        console.log(result.data);
                         if (result.data.length > 0){
                             $.each(result.data, function (i, n) {
-                                html += "<option value="+n.id+"> "+n.batch_number+" </option>";
+                                html += "<option value="+n.id+" > "+n.batch_number+" </option>";
                             });
                         }
-                        $("#cultivarId").html(html);
+                        $(".teaGardenLogEdit #acreage").val(result.data[0].acreage)
+                        $(".teaGardenLogEdit #area_code").val(result.data[0].area_code)
+                        $(".teaGardenLogEdit #principal").val(result.data[0].principal)
+                        $(".teaGardenLogEdit #batchNum").html(html);
                         blockUiClose('.teaGardenLogEdit .modal-content',0,".close-parent",0);
                     }else{
-                        $("#cultivarId").html('');
+                        $("#batchNum").html('');
                         ToastrMsg(result.data,"error","topRight",'.teaGardenLogEdit .modal-content');
                     }
                 })
@@ -261,10 +252,12 @@ var TeaGardenManage = function () {
         $(".teaGardenLogEdit [name='id']").val("")
         $(".teaGardenLogEdit [name='teaGardenId']").val("")
         $(".teaGardenLogEdit [name='farmTypeId']").val(farmType)
-        $(".teaGardenLogEdit [name='farmDesc']").val("")
         $(".teaGardenLogEdit [name='operatorId']").val("")
         $(".teaGardenLogEdit [name='beginTime']").val("")
+        $(".teaGardenLogEdit [name='farmTime']").val("")
         $(".teaGardenLogEdit [name='description']").val("")
+        $(".teaGardenLogEdit [name='farmQuantity']").val("")
+        $(".teaGardenLogEdit [name='fertVariety']").val("")
         $(".teaGardenLogEdit .form-control-feedback").remove()
         $(".teaGardenLogEdit div").removeClass("has-danger")
         $(".teaGardenLogEdit div").removeClass("has-success")
@@ -291,11 +284,11 @@ var TeaGardenManage = function () {
             format: 'yyyy'
         });
 
-        $('.begin_time').datetimepicker({
-            todayHighlight: false,
+        $('.farm_time').datetimepicker({
+            todayHighlight: true,
             autoclose: true,
             sideBySide: false,
-            pickerPosition: 'top-left',
+            pickerPosition: 'bottom-left',
             clearBtn: true,
             format: 'yyyy-mm-dd hh:mm:ss'
         });

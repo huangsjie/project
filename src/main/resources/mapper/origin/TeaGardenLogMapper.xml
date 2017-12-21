@@ -10,6 +10,7 @@
     <result column="farm_pattern" jdbcType="VARCHAR" property="farmPattern" />
     <result column="fert_variety" jdbcType="VARCHAR" property="fertVariety" />
     <result column="cultivar_id" jdbcType="VARCHAR" property="cultivarId" />
+    <result column="batch_num" jdbcType="VARCHAR" property="batchNum" />
     <result column="operator_id" jdbcType="VARCHAR" property="operatorId" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="description" jdbcType="VARCHAR" property="description" />
@@ -21,7 +22,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, tea_garden_id, farm_type_id, farm_quantity, farm_time, farm_pattern, fert_variety, 
-    cultivar_id, operator_id, status, description, end_time, create_id, create_time, 
+    cultivar_id, batch_num, operator_id, status, description, end_time, create_id, create_time, 
     modify_id, modify_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -37,16 +38,16 @@
   <insert id="insert" parameterType="com.panda.model.origin.TeaGardenLog">
     insert into e_tea_garden_log (id, tea_garden_id, farm_type_id, 
       farm_quantity, farm_time, farm_pattern, 
-      fert_variety, cultivar_id, operator_id, 
-      status, description, end_time, 
-      create_id, create_time, modify_id, 
-      modify_time)
+      fert_variety, cultivar_id, batch_num, 
+      operator_id, status, description, 
+      end_time, create_id, create_time, 
+      modify_id, modify_time)
     values (#{id,jdbcType=VARCHAR}, #{teaGardenId,jdbcType=VARCHAR}, #{farmTypeId,jdbcType=VARCHAR}, 
       #{farmQuantity,jdbcType=DOUBLE}, #{farmTime,jdbcType=TIMESTAMP}, #{farmPattern,jdbcType=VARCHAR}, 
-      #{fertVariety,jdbcType=VARCHAR}, #{cultivarId,jdbcType=VARCHAR}, #{operatorId,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{endTime,jdbcType=TIMESTAMP}, 
-      #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR}, 
-      #{modifyTime,jdbcType=TIMESTAMP})
+      #{fertVariety,jdbcType=VARCHAR}, #{cultivarId,jdbcType=VARCHAR}, #{batchNum,jdbcType=VARCHAR}, 
+      #{operatorId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.panda.model.origin.TeaGardenLog">
     insert into e_tea_garden_log
@@ -74,6 +75,9 @@
       </if>
       <if test="cultivarId != null">
         cultivar_id,
+      </if>
+      <if test="batchNum != null">
+        batch_num,
       </if>
       <if test="operatorId != null">
         operator_id,
@@ -125,6 +129,9 @@
       <if test="cultivarId != null">
         #{cultivarId,jdbcType=VARCHAR},
       </if>
+      <if test="batchNum != null">
+        #{batchNum,jdbcType=VARCHAR},
+      </if>
       <if test="operatorId != null">
         #{operatorId,jdbcType=VARCHAR},
       </if>
@@ -175,6 +182,9 @@
       <if test="cultivarId != null">
         cultivar_id = #{cultivarId,jdbcType=VARCHAR},
       </if>
+      <if test="batchNum != null">
+        batch_num = #{batchNum,jdbcType=VARCHAR},
+      </if>
       <if test="operatorId != null">
         operator_id = #{operatorId,jdbcType=VARCHAR},
       </if>
@@ -211,6 +221,7 @@
       farm_pattern = #{farmPattern,jdbcType=VARCHAR},
       fert_variety = #{fertVariety,jdbcType=VARCHAR},
       cultivar_id = #{cultivarId,jdbcType=VARCHAR},
+      batch_num = #{batchNum,jdbcType=VARCHAR},
       operator_id = #{operatorId,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR},
@@ -224,16 +235,19 @@
   <!-- 茶园日志列表数据 -->
   <select id="selectTeaGardenLogList" parameterType="map" resultType="map">
     SELECT
-    tgl.id, tgl.operator_id,tgl.create_time, tgl.cultivar_id cultivarId, tgl.farm_type_id farmType, tgl.tea_garden_id gardenType,
-    tg.name_area teaGardenName, year(tgl.create_time) createYear,
+    tgl.id, tgl.operator_id,tgl.create_time,tgl.batch_num batchNum, tgl.cultivar_id cultivarId, tgl.farm_type_id farmType, tgl.tea_garden_id gardenType,
+    tg.name_area teaGardenName, year(tgl.create_time) createYear, tgl.fert_variety,tgl.farm_quantity,d2.name d2Name,d3.name d3Name, d4.name d4Name,
     CASE WHEN ISNULL(tgl.end_time) THEN 0 ELSE 1 END statusOff, d.name cultivarName, d1.name farmName, u.chinese_name createName
-    FROM	e_tea_garden tg, e_tea_garden_log tgl
+    FROM e_tea_garden_log tgl
     LEFT JOIN s_dictionary as d  ON tgl.cultivar_id = d.id
     LEFT JOIN s_dictionary as d1 ON tgl.farm_type_id = d1.id
+    LEFT JOIN s_dictionary as d2 ON tgl.farm_pattern = d2.id
+    LEFT JOIN s_dictionary as d3 ON tgl.cultivar_id = d3.id
+    LEFT JOIN s_dictionary as d4 ON tgl.fert_variety = d4.id
     LEFT JOIN s_users as u ON tgl.create_id = u.id
+    LEFT JOIN e_tea_garden tg ON tgl.tea_garden_id = tg.id
     WHERE
     1 = 1
-    AND tgl.tea_garden_id = tg.id
     <if test="cultivarId != null and cultivarId != ''">
       AND tgl.cultivar_id = #{cultivarId}
     </if>
@@ -252,4 +266,30 @@
     GROUP BY tgl.id ORDER BY tgl.create_time DESC
   </select>
   <!-- 茶园日志列表数据 -->
+
+  <select id="selectTeaGardenLogItem" parameterType="java.lang.String" resultType="map">
+    SELECT
+        tgl.id,
+        tgl.description,
+        tgl.tea_garden_id teaGardenId,
+        tgl.end_time endTime,
+        tgl.fert_variety fertVariety,
+        tgl.cultivar_id cultivarId,
+        tgl.farm_pattern farmPattern,
+        tgl.farm_quantity farmQuantity,
+        tgl.farm_time farmTime,
+        tgl.farm_type_id farmTypeId,
+        tgl.operator_id operatorId,
+        tg.area_code,
+        tg.acreage,
+        tg.principal,
+        mg.batch_number batchNumber
+    FROM
+        e_tea_garden_log tgl
+    LEFT JOIN e_tea_garden tg ON tgl.tea_garden_id = tg.id
+    LEFT JOIN e_manage_batch mg ON tgl.batch_num = mg.id
+    WHERE
+        1 = 1
+        AND tgl.id = #{id}
+  </select>
 </mapper>

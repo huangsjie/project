@@ -309,7 +309,12 @@
 
   <!-- 根据茶园ID获取批次号信息-->
   <select id="selectTeaGardenBatch" parameterType="java.lang.String" resultType="map">
-    SELECT * FROM e_manage_batch where
-    tea_garden_id = #{teaGardenId} GROUP BY id
+    SELECT b.*,g.area_code,g.acreage,g.principal
+    FROM e_manage_batch b,e_tea_garden g
+    where
+    1 = 1
+    AND b.tea_garden_id = g.id
+    AND b.tea_garden_id = #{teaGardenId}
+    GROUP BY id
   </select>
 </mapper>

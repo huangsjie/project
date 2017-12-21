@@ -20,6 +20,8 @@ public class TeaGardenLog implements Serializable{
 
     private String cultivarId;
 
+    private String batchNum;
+
     private String operatorId;
 
     private Integer status;
@@ -98,6 +100,14 @@ public class TeaGardenLog implements Serializable{
 
     public void setCultivarId(String cultivarId) {
         this.cultivarId = cultivarId;
+    }
+
+    public String getBatchNum() {
+        return batchNum;
+    }
+
+    public void setBatchNum(String batchNum) {
+        this.batchNum = batchNum;
     }
 
     public String getOperatorId() {
