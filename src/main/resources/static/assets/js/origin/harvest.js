@@ -176,6 +176,7 @@ var Harvest = function () {
                             $(".HarvestEditModal [name='pickTime'][value='"+result.data.pick_time+"']").click()
                             $(".HarvestEditModal [name='operatorId']").val(result.data.operator_id)
                             $(".HarvestEditModal [name='description']").val(result.data.description)
+                            $(".HarvestEditModal [name='pickBatchNo']").val(result.data.pick_batch_no).attr("disabled",true)
                             var str=result.data.pick_area;
                             var arr=str.split(',');
                             $('#pickArea').selectpicker('val', arr);
@@ -237,6 +238,34 @@ var Harvest = function () {
                 })
         })
     }
+
+    /**
+     *
+     */
+    var pickNumberChange = function () {
+        function getPickBatchNo(){
+            var pickNumber = $("#pickNumber option:selected").text().split("-");
+            blockUiOpen('.HarvestEditModal .modal-content');
+            request(
+                "/system/manageBatch/getMsuData",
+                'get',
+                {pickNumber:pickNumber},
+                function (result) {
+                    if(result.message){
+                        $("#pickBatchNo").val(pickNumber[0]+pickNumber[1]+"-"+result.data)
+                        blockUiClose('.HarvestEditModal .modal-content',0,".close-parent",0);
+                    }else{
+                        ToastrMsg(result.data,"error","topRight",'.HarvestEditModal .modal-content');
+                    }
+                })
+        }
+        $("#pickNumber").on("change",function () {
+            getPickBatchNo()
+        })
+        $(".HarvestEditModal .la-hand-o-up").on("click",function () {
+            getPickBatchNo()
+        })
+    }
     /**
      * 重置表单
      */
@@ -252,6 +281,7 @@ var Harvest = function () {
         }
         $(".HarvestEditModal [name='id']").val("")
         $(".HarvestEditModal [name='teaGardenId']").val("").attr("disabled",false)
+        $(".HarvestEditModal [name='pickBatchNo']").val("").attr("disabled",false)
         $(".HarvestEditModal [name='pickNumber']").html("<option> 全部</option>").attr("disabled",false)
         $(".HarvestEditModal [name='dicStandard']").val("")
         $(".HarvestEditModal [name='recQuantity']").val("")
@@ -310,6 +340,7 @@ var Harvest = function () {
             addHarvestItem();
             delHarvestItem();
             getTeaGardenBatch();
+            pickNumberChange();
         }
     };
 }();

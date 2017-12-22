@@ -14,6 +14,8 @@ public class HarvestRecords implements Serializable{
 
     private String pickNumber;
 
+    private String pickBatchNo;
+
     private String pickArea;
 
     private Integer pickTime;
@@ -64,6 +66,14 @@ public class HarvestRecords implements Serializable{
 
     public void setPickNumber(String pickNumber) {
         this.pickNumber = pickNumber;
+    }
+
+    public String getPickBatchNo() {
+        return pickBatchNo;
+    }
+
+    public void setPickBatchNo(String pickBatchNo) {
+        this.pickBatchNo = pickBatchNo;
     }
 
     public String getPickArea() {

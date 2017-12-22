@@ -178,6 +178,7 @@
         s_dictionary d
     where
         d.parent_id = #{parentId}
+        AND d.status = 1
     order by
         d.sort_id asc;
   </select>
