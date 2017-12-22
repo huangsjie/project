@@ -48,4 +48,14 @@ public class HarvestRecordsServiceImpl extends AbstractServiceImpl<HarvestRecord
     public List<Map> selectHarvestRecordsListPickNum(Map map){
         return harvestRecordsMapper.selectHarvestRecordsListPickNum(map);
     }
+
+    /**
+     * 获取当前编辑项详细信息
+     * @param id
+     * @return
+     */
+    @Override
+    public Map selectHarvestRecordsItem(String id){
+        return harvestRecordsMapper.selectHarvestRecordsItem(id);
+    }
 }

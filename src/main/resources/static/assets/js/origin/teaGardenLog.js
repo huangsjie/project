@@ -6,7 +6,7 @@ var TeaGardenManage = function () {
         0: {'title': '进行中', 'class': ' m-badge--warning'}
     };
     var columns = {
-        '43512930-9822-48b4-b577-e900c4a12504':[{ field: "createYear", title: "年份", width: 60 },
+        '43512930-9822-48b4-b577-e900c4a12504':[{ field: "createYear", title: "年份", width: 60 }, { field: "farmName", title: "农事", width: 60 },
             { field: "operator_id", title: "实施人", width: 60 }, { field: "fert_variety", title: "开垦编号", width: 60 }, { field: "farm_quantity", title: "开垦面积", width: 60 },
             { field: "statusOff", title: "进度", width: 60, template: function (row) { return '<span class="m-badge ' + statusOff[row.statusOff].class + ' m-badge--wide">' + statusOff[row.statusOff].title + '</span>';}},
             { field: "create_time", title: "创建时间", sortable: 'asc', width: 150 }, { field: "createName", title: "创建人", width: 60 },
@@ -16,27 +16,27 @@ var TeaGardenManage = function () {
             { field: "statusOff", title: "进度", width: 60, template: function (row) { return '<span class="m-badge ' + statusOff[row.statusOff].class + ' m-badge--wide">' + statusOff[row.statusOff].title + '</span>';}},
             { field: "create_time", title: "创建时间", sortable: 'asc', width: 150 }, { field: "createName", title: "创建人", width: 60 },
             { field: "Actions", width: 100, title: "操作", sortable: false, overflow: 'visible', template: function (row) { return actionsTemplate.replace(/#rowId#/g, row.id);}}],
-        '1689fac5-4b03-4d4b-94c1-d1bbbe8d06ee':[{ field: "createYear", title: "年份", width: 60 }, { field: "teaGardenName", title: "茶园", width: 80 },
+        '1689fac5-4b03-4d4b-94c1-d1bbbe8d06ee':[{ field: "createYear", title: "年份", width: 60 }, { field: "teaGardenName", title: "茶园", width: 80 }, { field: "farmName", title: "农事", width: 60 },
             { field: "operator_id", title: "实施人", width: 60 }, { field: "d4Name", title: "种子来源", width: 100 }, { field: "d3Name", title: "种植品种", width: 60 }, { field: "farm_quantity", title: "种植数量", width: 60 },
             { field: "statusOff", title: "进度", width: 60, template: function (row) { return '<span class="m-badge ' + statusOff[row.statusOff].class + ' m-badge--wide">' + statusOff[row.statusOff].title + '</span>';}},
             { field: "create_time", title: "创建时间", sortable: 'asc', width: 150 }, { field: "createName", title: "创建人", width: 60 },
             { field: "Actions", width: 100, title: "操作", sortable: false, overflow: 'visible', template: function (row) { return actionsTemplate.replace(/#rowId#/g, row.id);}}],
-        'd687763c-2a2e-41a7-b57d-71e9caebf579':[{ field: "createYear", title: "年份", width: 60 }, { field: "teaGardenName", title: "茶园", width: 80 },
+        'd687763c-2a2e-41a7-b57d-71e9caebf579':[{ field: "createYear", title: "年份", width: 60 }, { field: "teaGardenName", title: "茶园", width: 80 }, { field: "farmName", title: "农事", width: 60 },
             { field: "operator_id", title: "实施人", width: 60 }, { field: "d4Name", title: "肥料品种", width: 100 }, { field: "d2Name", title: "施肥方式", width: 60 }, { field: "farm_quantity", title: "施肥数量", width: 60 },
             { field: "statusOff", title: "进度", width: 60, template: function (row) { return '<span class="m-badge ' + statusOff[row.statusOff].class + ' m-badge--wide">' + statusOff[row.statusOff].title + '</span>';}},
             { field: "create_time", title: "创建时间", sortable: 'asc', width: 150 }, { field: "createName", title: "创建人", width: 60 },
             { field: "Actions", width: 100, title: "操作", sortable: false, overflow: 'visible', template: function (row) { return actionsTemplate.replace(/#rowId#/g, row.id);}}],
-        'd5bbd9b5-91c4-48c2-b5f8-0c7328f8902f':[{ field: "createYear", title: "年份", width: 60 }, { field: "teaGardenName", title: "茶园", width: 80 },
+        'd5bbd9b5-91c4-48c2-b5f8-0c7328f8902f':[{ field: "createYear", title: "年份", width: 60 }, { field: "teaGardenName", title: "茶园", width: 80 }, { field: "farmName", title: "农事", width: 60 },
             { field: "operator_id", title: "实施人", width: 60 }, { field: "d2Name", title: "除草方式", width: 60 }, { field: "farm_quantity", title: "施肥数量", width: 60 },
             { field: "statusOff", title: "进度", width: 60, template: function (row) { return '<span class="m-badge ' + statusOff[row.statusOff].class + ' m-badge--wide">' + statusOff[row.statusOff].title + '</span>';}},
             { field: "create_time", title: "创建时间", sortable: 'asc', width: 150 }, { field: "createName", title: "创建人", width: 60 },
             { field: "Actions", width: 100, title: "操作", sortable: false, overflow: 'visible', template: function (row) { return actionsTemplate.replace(/#rowId#/g, row.id);}}],
-        'e1f3e464-31c2-46b5-8e20-20d7ea12fb3f':[{ field: "createYear", title: "年份", width: 60 }, { field: "teaGardenName", title: "茶园", width: 80 },
+        'e1f3e464-31c2-46b5-8e20-20d7ea12fb3f':[{ field: "createYear", title: "年份", width: 60 }, { field: "teaGardenName", title: "茶园", width: 80 }, { field: "farmName", title: "农事", width: 60 },
             { field: "operator_id", title: "实施人", width: 60 }, { field: "d2Name", title: "治虫方式", width: 60 }, { field: "fert_variety", title: "防治对象", width: 60 }, { field: "farm_quantity", title: "施肥数量", width: 60 },
             { field: "statusOff", title: "进度", width: 60, template: function (row) { return '<span class="m-badge ' + statusOff[row.statusOff].class + ' m-badge--wide">' + statusOff[row.statusOff].title + '</span>';}},
             { field: "create_time", title: "创建时间", sortable: 'asc', width: 150 }, { field: "createName", title: "创建人", width: 60 },
             { field: "Actions", width: 100, title: "操作", sortable: false, overflow: 'visible', template: function (row) { return actionsTemplate.replace(/#rowId#/g, row.id);}}],
-        '5fe37095-7d9a-4235-914f-cf0c6f1e592a':[{ field: "createYear", title: "年份", width: 60 }, { field: "teaGardenName", title: "茶园", width: 80 },
+        '5fe37095-7d9a-4235-914f-cf0c6f1e592a':[{ field: "createYear", title: "年份", width: 60 }, { field: "teaGardenName", title: "茶园", width: 80 }, { field: "farmName", title: "农事", width: 60 },
             { field: "operator_id", title: "实施人", width: 60 }, { field: "d2Name", title: "灌溉方式", width: 60 },{ field: "farm_quantity", title: "用量", width: 60 },
             { field: "statusOff", title: "进度", width: 60, template: function (row) { return '<span class="m-badge ' + statusOff[row.statusOff].class + ' m-badge--wide">' + statusOff[row.statusOff].title + '</span>';}},
             { field: "create_time", title: "创建时间", sortable: 'asc', width: 150 }, { field: "createName", title: "创建人", width: 60 },
@@ -179,7 +179,9 @@ var TeaGardenManage = function () {
             }
         })
     }
-
+    /**
+     * 获取管理批次
+     */
     var getTeaGardenBatch = function(){
         $("#teaGardenId").on("change",function () {
             var teaGardenId = $(".teaGardenLogEdit .teaGardenId").val(),html = "";

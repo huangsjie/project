@@ -20,6 +20,8 @@ public class HarvestRecords implements Serializable{
 
     private String operatorId;
 
+    private String description;
+
     private String createId;
 
     private Date createTime;
@@ -86,6 +88,14 @@ public class HarvestRecords implements Serializable{
 
     public void setOperatorId(String operatorId) {
         this.operatorId = operatorId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getCreateId() {

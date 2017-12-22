@@ -27,4 +27,11 @@ public interface HarvestRecordsService extends AbstractService<HarvestRecords> {
      * @return
      */
     List<Map> selectHarvestRecordsListPickNum(Map map);
+
+    /**
+     * 获取当前编辑项详细信息
+     * @param id
+     * @return
+     */
+    Map selectHarvestRecordsItem(String id);
 }
