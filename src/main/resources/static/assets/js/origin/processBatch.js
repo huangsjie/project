@@ -28,9 +28,8 @@ var processBatch = function () {
                 {title: "#", width: 40, template: function (row) {
                     return row.rowIndex+1;
                 }},
-                {field: "batch_number", title: "加工批次号", width: 150},
-                {field: "manageBatchNumber", title: "管理批次号", width: 150},
-                {field: "productName", title: "产品名称", width: 150},
+                {field: "batch_number", title: "加工批次", width: 150},
+                {field: "manageBatchNumber", title: "鲜叶批次号", width: 150},
                 {field: "create_time", title: "创建时间", sortable: 'asc', width: 150},
                 {
                     field: "Actions",
@@ -39,7 +38,6 @@ var processBatch = function () {
                     sortable: false,
                     overflow: 'visible',
                     template: function (row) {
-                        var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
                         return actionsTemplate.replace(/#rowId#/g, row.id);
                     }
                 }]
@@ -70,7 +68,7 @@ var processBatch = function () {
         $( "#process_batch_edit_form" ).validate({
             rules: {
                 manageBatchId:{required: true,},
-                batchNumber:{required: true,optionalCheck: true},
+                batchNumber:{required: true},
             },
             submitHandler: function (form){
                 blockUiOpen('.processBatchEdit .modal-content');

@@ -12,12 +12,13 @@
     <result column="pick_time" jdbcType="INTEGER" property="pickTime" />
     <result column="operator_id" jdbcType="VARCHAR" property="operatorId" />
     <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_id" jdbcType="VARCHAR" property="createId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
     id, tea_garden_id, dic_standard, rec_quantity, pick_number, pick_batch_no, pick_area, 
-    pick_time, operator_id, description, create_id, create_time
+    pick_time, operator_id, description, status, create_id, create_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -33,13 +34,13 @@
     insert into e_harvest_records (id, tea_garden_id, dic_standard, 
       rec_quantity, pick_number, pick_batch_no, 
       pick_area, pick_time, operator_id, 
-      description, create_id, create_time
-      )
+      description, status, create_id, 
+      create_time)
     values (#{id,jdbcType=VARCHAR}, #{teaGardenId,jdbcType=VARCHAR}, #{dicStandard,jdbcType=VARCHAR}, 
       #{recQuantity,jdbcType=DOUBLE}, #{pickNumber,jdbcType=VARCHAR}, #{pickBatchNo,jdbcType=VARCHAR}, 
       #{pickArea,jdbcType=VARCHAR}, #{pickTime,jdbcType=INTEGER}, #{operatorId,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
-      )
+      #{description,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.panda.model.origin.HarvestRecords">
     insert into e_harvest_records
@@ -73,6 +74,9 @@
       </if>
       <if test="description != null">
         description,
+      </if>
+      <if test="status != null">
+        status,
       </if>
       <if test="createId != null">
         create_id,
@@ -112,6 +116,9 @@
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
       </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
       <if test="createId != null">
         #{createId,jdbcType=VARCHAR},
       </if>
@@ -150,6 +157,9 @@
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
       <if test="createId != null">
         create_id = #{createId,jdbcType=VARCHAR},
       </if>
@@ -170,11 +180,11 @@
       pick_time = #{pickTime,jdbcType=INTEGER},
       operator_id = #{operatorId,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
       create_id = #{createId,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-
     <select id="selectAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -200,7 +210,7 @@
           d. name dicName,
           u.chinese_name createName
         FROM
-          e_harvest_records hr,
+    e_harvest_records hr,
           e_tea_garden tg,
           s_dictionary d,
           s_users u
@@ -222,7 +232,10 @@
   </select>
 
   <select id="selectHarvestRecordsListPickNum" parameterType="map" resultType="map">
-
+  select
+    <include refid="Base_Column_List" />
+  from e_harvest_records hr
+    WHERE hr.status = 0;
   </select>
 
   <select id="selectHarvestRecordsItem" parameterType="java.lang.String" resultType="map">

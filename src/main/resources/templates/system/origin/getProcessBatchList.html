@@ -38,12 +38,12 @@
                                         <div class="col-md-3">
                                             <div class="m-form__group m-form__group--inline">
                                                 <div class="m-form__label">
-                                                    <label style="width: 50px;">产品:</label>
+                                                    <label style="width: 50px;">鲜叶:</label>
                                                 </div>
                                                 <div class="m-form__control">
                                                     <select class="form-control m-bootstrap-select select_selectpicker" id="m_form_tea_garden" >
                                                         <option value=""> 全部 </option>
-                                                        <option th:each="item:${productsList}" th:value="${item.id}" th:text="${item.name}"> </option>
+                                                        <option th:each="item:${harvestList}" th:value="${item.id}" th:text="${item.pick_batch_no}"> </option>
                                                     </select>
                                                 </div>
                                             </div>

@@ -134,7 +134,6 @@ var Harvest = function () {
             },
             submitHandler: function (form){
                 blockUiOpen('.HarvestEditModal .modal-content');
-                console.log($("#harvest_edit_form").serialize())
                 request(
                     "saveOrUpdateHarvest",
                     "post",
@@ -165,7 +164,6 @@ var Harvest = function () {
                     'get',
                     {id:id},
                     function (result) {
-                        console.log(result)
                         if(result.message){
                             $(".HarvestEditModal [name='id']").val(result.data.id)
                             $(".HarvestEditModal [name='teaGardenId']").val(result.data.tea_garden_id).attr("disabled",true)
@@ -244,20 +242,29 @@ var Harvest = function () {
      */
     var pickNumberChange = function () {
         function getPickBatchNo(){
-            var pickNumber = $("#pickNumber option:selected").text().split("-");
-            blockUiOpen('.HarvestEditModal .modal-content');
-            request(
-                "/system/manageBatch/getMsuData",
-                'get',
-                {pickNumber:pickNumber},
-                function (result) {
-                    if(result.message){
-                        $("#pickBatchNo").val(pickNumber[0]+pickNumber[1]+"-"+result.data)
-                        blockUiClose('.HarvestEditModal .modal-content',0,".close-parent",0);
-                    }else{
-                        ToastrMsg(result.data,"error","topRight",'.HarvestEditModal .modal-content');
+            var pickNumber = $("#pickNumber option:selected").text().split("-"),
+                save    = $(".HarvestEditModal [name='save']").val();;
+            if (pickNumber != "" && save == "add"){
+                blockUiOpen('.HarvestEditModal .modal-content');
+                request(
+                    "/system/manageBatch/getMsuData",
+                    'get',
+                    {pickNumber:pickNumber},
+                    function (result) {
+                        if(result.message){
+                            $("#pickBatchNo").val(pickNumber[0]+pickNumber[1]+"-"+result.data)
+                            blockUiClose('.HarvestEditModal .modal-content',0,".close-parent",0);
+                        }else{
+                            ToastrMsg(result.data,"error","topRight",'.HarvestEditModal .modal-content');
+                        }
+                    })
+                }else{
+                    if (save == "edit"){
+                        return false;
+                    }else {
+                        ToastrMsg("请选择管理批次.", "warning", "topRight", '.HarvestEditModal .modal-content');
                     }
-                })
+                }
         }
         $("#pickNumber").on("change",function () {
             getPickBatchNo()
