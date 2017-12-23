@@ -79,37 +79,30 @@ var Harvest = function () {
         }
         var datatable = $('.harvest_list').mDatatable(option);
         var query = datatable.getDataSourceQuery();
-        $('#productId').on('change', function () {
+        $('#teaGardenId').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.productId = $(this).val();
+            query.teaGardenId = $(this).val();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.productId !== 'undefined' ? query.productId : '');
+        }).val(typeof query.teaGardenId !== 'undefined' ? query.teaGardenId : '');
         $('#m_form_search').on('keyup', function (e) {
             var query = datatable.getDataSourceQuery();
             query.generalSearch = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(query.generalSearch);
-        $('#dicMacType').on('change', function () {
+        $('#dicStandard').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.dicMacType = $(this).val().toLowerCase();
+            query.dicStandard = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.dicMacType !== 'undefined' ? query.dicMacType : '');
-        $('#dicTeaAttr').on('change', function () {
+        }).val(typeof query.dicStandard !== 'undefined' ? query.dicStandard : '');
+        $('#pickTime').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.dicTeaAttr = $(this).val();
+            query.pickTime = $(this).val();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.dicTeaAttr !== 'undefined' ? query.dicTeaAttr : '');
-        $('#dicMacPro').on('change', function () {
-            var query = datatable.getDataSourceQuery();
-            query.dicMacPro = $(this).val();
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.dicMacPro !== 'undefined' ? query.dicMacPro : '');
-
+        }).val(typeof query.pickTime !== 'undefined' ? query.pickTime : '');
         $('.datatableRoload').on('click', function () {
             location.reload()
         });

@@ -3,7 +3,8 @@ var MachinSet = function () {
     var status = {
         1: {'title': '启用', 'class': ' m-badge--success'},
         0: {'title': '未知', 'class': ' m-badge--warning'},
-        2: {'title': '禁用', 'class': ' m-badge--danger'}
+        2: {'title': '禁用', 'class': ' m-badge--danger'},
+        'durationType':{1:"分",2:"时",3:"天"}
     };
     /**
      * 获取列表数据
@@ -39,10 +40,6 @@ var MachinSet = function () {
                     return row.rowIndex+1;
                 }
             },{
-                field: "productName",
-                title: "产品名称",
-                width: 100
-            },{
                 field: "macTypeName",
                 title: "类型",
                 width: 60
@@ -55,11 +52,25 @@ var MachinSet = function () {
                 title: "工序",
                 width: 60
             },{
-                field: "mac_loss",
-                title: "损耗",
-                width: 60,
+                field: "rollTypeName",
+                title: "揉捻级别",
+                width: 100,
                 template: function (row) {
-                    return row.mac_loss+" %∑";
+                    return row.rollTypeName != null ? row.rollTypeName : "无";
+                }
+            },{
+                field: "rollStatus",
+                title: "顺序",
+                width: 100,
+                template: function (row) {
+                    return "第"+row.rollStatus+"道工序";
+                }
+            },{
+                field: "durationType",
+                title: "时长",
+                width: 100,
+                template: function (row) {
+                    return row.beginDuration +"-"+row.endDuration+"("+status['durationType'][row.durationType]+")";
                 }
             },{
                 field: "temperature",
@@ -101,12 +112,6 @@ var MachinSet = function () {
         }
         var datatable = $('.machin_set_list').mDatatable(option);
         var query = datatable.getDataSourceQuery();
-        $('#productId').on('change', function () {
-            var query = datatable.getDataSourceQuery();
-            query.productId = $(this).val();
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.productId !== 'undefined' ? query.productId : '');
         $('#m_form_search').on('keyup', function (e) {
             var query = datatable.getDataSourceQuery();
             query.generalSearch = $(this).val().toLowerCase();
@@ -146,7 +151,6 @@ var MachinSet = function () {
     var machinSetEditForm = function () {
         $( "#machin_set_edit_form" ).validate({
             rules: {
-                productId: {required: true},
                 dicMacType: {required: true},
                 dicTeaAttr: {required: true},
                 dicMacPro: { required: true},
@@ -155,7 +159,6 @@ var MachinSet = function () {
                 endDuration: {required: true,digits:true,maxlength:2},
                 temperature: {digits:true,maxlength:3},
                 humidity: {digits:true,maxlength:2},
-                macLoss: {digits:true,maxlength:2},
                 description: {nameCheck:true}
             },
             submitHandler: function (form){
@@ -196,14 +199,13 @@ var MachinSet = function () {
                             $(".machinSetEditModal [name='dicMacType']").val(result.data.dicMacType)
                             $(".machinSetEditModal [name='dicTeaAttr']").val(result.data.dicTeaAttr)
                             $(".machinSetEditModal [name='dicMacPro']").val(result.data.dicMacPro)
-                            $(".machinSetEditModal [name='productId']").val(result.data.productId)
-                            $(".machinSetEditModal [name='dicTeaType']").val(result.data.dicTeaType)
                             $(".machinSetEditModal [name='durationType'][value='"+result.data.durationType+"']").click()
                             $(".machinSetEditModal [name='beginDuration']").val(result.data.beginDuration)
                             $(".machinSetEditModal [name='endDuration']").val(result.data.endDuration)
                             $(".machinSetEditModal [name='temperature']").val(result.data.temperature)
                             $(".machinSetEditModal [name='humidity']").val(result.data.humidity)
-                            $(".machinSetEditModal [name='macLoss']").val(result.data.macLoss)
+                            $(".machinSetEditModal [name='dicRollType']").val(result.data.dicRollType)
+                            $(".machinSetEditModal [name='rollStatus']").val(result.data.rollStatus)
                             $(".machinSetEditModal [name='description']").val(result.data.description)
                             $(".machinSetEditModal [name='status']").val(result.data.status)
                             if(result.data.status == 1){
@@ -259,14 +261,13 @@ var MachinSet = function () {
         $(".machinSetEditModal [name='dicMacType']").val("")
         $(".machinSetEditModal [name='dicTeaAttr']").val("")
         $(".machinSetEditModal [name='dicMacPro']").val("")
-        $(".machinSetEditModal [name='productId']").val("")
         $(".machinSetEditModal [name='beginDuration']").val("")
         $(".machinSetEditModal [name='endDuration']").val("")
         $(".machinSetEditModal [name='temperature']").val("")
         $(".machinSetEditModal [name='humidity']").val("")
-        $(".machinSetEditModal [name='macLoss']").val("")
         $(".machinSetEditModal [name='description']").val("")
         $(".machinSetEditModal [name='status']").val(2)
+        $(".machinSetEditModal [name='rollStatus']").val("")
         $('.status_switch').bootstrapSwitch('state',false);
         $(".machinSetEditModal .form-control-feedback").remove()
         $(".machinSetEditModal div").removeClass("has-danger")
@@ -279,6 +280,14 @@ var MachinSet = function () {
     var addMachinSetItem = function () {
         $(".addMachinSetItem").on('click',function(){
             removeValue('add')
+        })
+        $(".machinSetEditModal .dicMacPro").on("change",function () {
+            var dicMacPro = $(this).val();
+            if (dicMacPro == "8aa97837-a152-49be-98b8-47a11c3b1de4"){
+                $("#dicRollType").addClass("m--show").removeClass("m--hide")
+            }else{
+                $("#dicRollType").addClass("m--hide").removeClass("m--show")
+            }
         })
     }
 
@@ -317,7 +326,11 @@ var MachinSet = function () {
     };
 }();
 jQuery(document).ready(function () {
-    $('.status_switch').bootstrapSwitch();
+    $('.status_switch').bootstrapSwitch({
+        onText:'开启',
+        offText:'关闭',
+        handleWidth:'60'
+    });
     MachinSet.init();
     $('.status_switch').on('switchChange.bootstrapSwitch', function (event,state) {
         if(state==true){

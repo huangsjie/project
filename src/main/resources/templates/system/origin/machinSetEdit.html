@@ -24,18 +24,6 @@
                         <div class="col-lg-6">
                             <input type="hidden" name="id" value="">
                             <input type="hidden" name="save" value="edit">
-                            <!--<div class="form-group m-form__group row">-->
-                                <!--<label class="col-form-label col-lg-3 col-sm-12">-->
-                                    <!--产品类型  <span style="color: red">*</span>-->
-                                <!--</label>-->
-                                <!--<div class="col-lg-8 col-md-9 col-sm-12">-->
-                                    <!--<select class="form-control" name="productId" id="productId">-->
-                                        <!--<option value=""> 选择 </option>-->
-                                        <!--<option th:each="item:${productsList}" th:value="${item.id}" th:text="${item.name}"></option>-->
-                                    <!--</select>-->
-                                    <!--<span class="m-form__help"></span>-->
-                                <!--</div>-->
-                            <!--</div>-->
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-3 col-sm-12">
                                     加工类型 <span style="color: red">*</span>
@@ -65,25 +53,25 @@
                                     加工工序  <span style="color: red">*</span>
                                 </label>
                                 <div class="col-lg-8 col-md-9 col-sm-12">
-                                    <select class="form-control" name="dicMacPro" id="dicMacPro" >
+                                    <select class="form-control dicMacPro" name="dicMacPro" id="dicMacPro" >
                                         <option value=""> 选择 </option>
                                         <option th:each="item:${machinProcess}" th:value="${item.id}" th:text="${item.name}"></option>
                                     </select>
                                     <span class="m-form__help"></span>
                                 </div>
                             </div>
-                            <!--<div class="form-group m-form__group row">-->
-                                <!--<label class="col-form-label col-lg-3 col-sm-12">-->
-                                    <!--鲜叶品种-->
-                                <!--</label>-->
-                                <!--<div class="col-lg-8 col-md-9 col-sm-12">-->
-                                    <!--<select class="form-control" name="dicTeaType" id="dicTeaType">-->
-                                        <!--<option value=""> 选择 </option>-->
-                                        <!--<option th:each="item:${teaType}" th:value="${item.id}" th:text="${item.name}"></option>-->
-                                    <!--</select>-->
-                                    <!--<span class="m-form__help"></span>-->
-                                <!--</div>-->
-                            <!--</div>-->
+                            <div id="dicRollType" class="form-group m-form__group row m--hide">
+                                <label class="col-form-label col-lg-3 col-sm-12">
+                                    揉捻类型  <span style="color: red">*</span>
+                                </label>
+                                <div class="col-lg-8 col-md-9 col-sm-12">
+                                    <select class="form-control .dicRollType" name="dicRollType">
+                                        <option value=""> 选择 </option>
+                                        <option th:each="item:${rollingType}" th:value="${item.id}" th:text="${item.name}"></option>
+                                    </select>
+                                    <span class="m-form__help"></span>
+                                </div>
+                            </div>
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-3 col-sm-12">
                                     时长类型  <span style="color: red">*</span>
@@ -116,13 +104,13 @@
                                 <div class="col-lg-8 col-md-9 col-sm-12">
                                     <div class="input-group m-input-group">
                                     <span class="input-group-btn">
-                                        <input type="text" class="form-control" name="beginDuration" style="width: 100px" placeholder="范围起始">
+                                        <input type="text" class="form-control" name="beginDuration" style="width: 110px" placeholder="范围起始">
                                     </span>
                                         <span class="input-group-addon">
                                         至
                                     </span>
                                         <span class="input-group-btn">
-                                        <input type="text" class="form-control" name="endDuration" style="width: 100px" placeholder="范围结束">
+                                        <input type="text" class="form-control" name="endDuration" style="width: 110px" placeholder="范围结束">
                                     </span>
                                     </div>
                                     <span class="m-form__help">(固定时间仅填写范围结束)</span>
@@ -160,13 +148,16 @@
                             </div>
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-3 col-sm-12">
-                                    损耗
+                                    工序顺序 <span style="color: red">*</span>
                                 </label>
                                 <div class="col-lg-8 col-md-9 col-sm-12">
                                     <div class="input-group m-input-group ">
-                                        <input type="text" class="form-control m-input" name="macLoss" placeholder="损耗比例">
                                         <span class="input-group-addon">
-                                            %∑
+                                            第
+                                        </span>
+                                        <input type="text" class="form-control m-input" name="rollStatus" placeholder="一">
+                                        <span class="input-group-addon">
+                                            道工序
                                         </span>
                                     </div>
                                     <span class="m-form__help"></span>

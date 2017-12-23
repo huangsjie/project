@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class MachinSet implements Serializable {
+
     private String id;
 
     private String dicMacType;
@@ -12,9 +13,7 @@ public class MachinSet implements Serializable {
 
     private String dicMacPro;
 
-    private String dicTeaType;
-
-    private String productId;
+    private String dicRollType;
 
     private Integer temperature;
 
@@ -31,6 +30,8 @@ public class MachinSet implements Serializable {
     private Integer status;
 
     private String description;
+
+    private Integer rollStatus;
 
     private String createId;
 
@@ -72,20 +73,12 @@ public class MachinSet implements Serializable {
         this.dicMacPro = dicMacPro;
     }
 
-    public String getDicTeaType() {
-        return dicTeaType;
+    public String getDicRollType() {
+        return dicRollType;
     }
 
-    public void setDicTeaType(String dicTeaType) {
-        this.dicTeaType = dicTeaType;
-    }
-
-    public String getproductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setDicRollType(String dicRollType) {
+        this.dicRollType = dicRollType;
     }
 
     public Integer getTemperature() {
@@ -150,6 +143,14 @@ public class MachinSet implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getRollStatus() {
+        return rollStatus;
+    }
+
+    public void setRollStatus(Integer rollStatus) {
+        this.rollStatus = rollStatus;
     }
 
     public String getCreateId() {
