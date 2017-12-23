@@ -1,8 +1,9 @@
 package com.panda.model.origin;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ProductionSet {
+public class AssemblySet implements Serializable{
     private String id;
 
     private String name;

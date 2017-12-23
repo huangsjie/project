@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.panda.mapper.origin.ProductionSetMapper" >
-  <resultMap id="BaseResultMap" type="com.panda.model.origin.ProductionSet" >
+<mapper namespace="com.panda.mapper.origin.AssemblySetMapper" >
+  <resultMap id="BaseResultMap" type="com.panda.model.origin.AssemblySet" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="machine_id" property="machineId" jdbcType="VARCHAR" />
@@ -20,15 +20,15 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from e_production_set
+    from e_assembly_set
     where id = #{id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from e_production_set
+    delete from e_assembly_set
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.panda.model.origin.ProductionSet" >
-    insert into e_production_set (id, name, machine_id, 
+  <insert id="insert" parameterType="com.panda.model.origin.AssemblySet" >
+    insert into e_assembly_set (id, name, machine_id, 
       maintain_cycle, status, description, 
       create_id, create_time, modify_id, 
       modify_time)
@@ -37,8 +37,8 @@
       #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.panda.model.origin.ProductionSet" >
-    insert into e_production_set
+  <insert id="insertSelective" parameterType="com.panda.model.origin.AssemblySet" >
+    insert into e_assembly_set
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -104,8 +104,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.panda.model.origin.ProductionSet" >
-    update e_production_set
+  <update id="updateByPrimaryKeySelective" parameterType="com.panda.model.origin.AssemblySet" >
+    update e_assembly_set
     <set >
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -137,8 +137,8 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.panda.model.origin.ProductionSet" >
-    update e_production_set
+  <update id="updateByPrimaryKey" parameterType="com.panda.model.origin.AssemblySet" >
+    update e_assembly_set
     set name = #{name,jdbcType=VARCHAR},
       machine_id = #{machineId,jdbcType=VARCHAR},
       maintain_cycle = #{maintainCycle,jdbcType=INTEGER},
@@ -150,4 +150,17 @@
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectAssemblySetDataList" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from e_assembly_set a
+    where
+    1 = 1
+    <if test="status != null and status != ''">
+      AND a.status = #{status}
+    </if>
+    order by a.create_time desc
+  </select>
+
 </mapper>
