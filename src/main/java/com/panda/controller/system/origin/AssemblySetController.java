@@ -45,8 +45,12 @@ public class AssemblySetController {
     @RequestMapping(value = "/list",method= RequestMethod.GET)
     @RequiresPermissions("assembly:view")//权限管理;
     public String getAssemblySetList(HttpServletRequest request, Model model){
+        Map map = new HashMap();
+        map.put("parentId","10000000-0000-0000-0000-000000000000");
+        List<Map> assemblyList = assemblySetService.selectAssemblySetDataList(map);
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         model.addAttribute("menuList",user.getMenuList());
+        model.addAttribute("assemblyList",assemblyList);
         model.addAttribute("user",user);
         return "system/origin/getAssemblySetList";
     }
@@ -58,29 +62,15 @@ public class AssemblySetController {
      */
     @RequestMapping(value = "/getAssemblySetDataList",method = RequestMethod.POST)
     @ResponseBody
-    public Object getAssemblySetDataList(HttpServletRequest request,String datatable){
+    public Object getAssemblySetDataList(HttpServletRequest request,String parentId){
         message = false;
         data    = null;
         try {
             Map query = new HashMap();
-            if (datatable != null && !datatable.isEmpty()){
-                String jsonStr = StringEscapeUtil.unescapeHtml(datatable);
-                Map params = JSON.parseObject(jsonStr,Map.class);
-                Map status = JSON.parseObject(params.get("query").toString(),Map.class);
-                if (status.size() > 0 && status.get("dicMacType") != ""){
-                    query.put("dicMacType",status.get("dicMacType"));
-                }
-                if (status.size() > 0 && status.get("dicTeaAttr") != ""){
-                    query.put("dicTeaAttr",status.get("dicTeaAttr"));
-                }
-                if (status.size() > 0 && status.get("dicMacPro") != ""){
-                    query.put("dicMacPro",status.get("dicMacPro"));
-                }
-                if (status.size() > 0 && status.get("productId") != ""){
-                    query.put("productId",status.get("productId"));
-                }
+            if (parentId != null && !parentId.isEmpty()){
+                query.put("parentId",parentId);
             }
-            List<AssemblySet> assemblySetList = assemblySetService.selectAssemblySetDataList(query);
+            List<Map> assemblySetList = assemblySetService.selectAssemblySetDataList(query);
             if(assemblySetList.size() > 0){
                 message = true;
                 data = assemblySetList;

@@ -13,5 +13,5 @@ public interface AssemblySetMapper extends AbstractMapper<AssemblySet>{
      * @param map
      * @return
      */
-    List<AssemblySet> selectAssemblySetDataList(Map map);
+    List<Map> selectAssemblySetDataList(Map map);
 }

@@ -28,7 +28,7 @@ public class AssemblySetServiceImpl extends AbstractServiceImpl<AssemblySet> imp
      * @return
      */
     @Override
-    public List<AssemblySet> selectAssemblySetDataList(Map map){
+    public List<Map> selectAssemblySetDataList(Map map){
         return assemblySetMapper.selectAssemblySetDataList(map);
     }
 }

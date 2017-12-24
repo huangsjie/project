@@ -81,7 +81,8 @@ var equipment = function () {
                 unitNo: {required: true},
                 unitUsage: {required: true},
                 unitType: { required: true},
-                unitCycle: {required: true},
+                unitCycle: {required: true,digits:true,maxlength:2},
+                unitClear: {required: true,digits:true,maxlength:2},
                 description: {nameCheck:true},
                 pickArea: {required: true}
             },
@@ -125,6 +126,7 @@ var equipment = function () {
                             $(".equipmentEditModal [name='unitNo']").val(result.data.unitNo).attr("disabled",true)
                             $(".equipmentEditModal #createUser").val(result.data.createUser)
                             $(".equipmentEditModal [name='unitCycle']").val(result.data.unitCycle)
+                            $(".equipmentEditModal [name='unitClear']").val(result.data.unitClear)
                             $(".equipmentEditModal [name='description']").val(result.data.description);
                             $(".equipmentEditModal [name='status']").val(result.data.status)
                             if(result.data.status == 1){
@@ -134,8 +136,7 @@ var equipment = function () {
                             }
                             if (result.data.imgUrl){
                                 myDropzone.emit("initimage", result.data.imgUrl); //初始化图片
-                            }else{
-                                myDropzone.removeAllFiles(true);
+                                $(".equipmentEditModal [name='imgUrl']").val(result.data.imgUrl)
                             }
                         }else{
                             ToastrMsg(result.data,"error","topRight");
@@ -173,6 +174,7 @@ var equipment = function () {
      */
     var removeValue = function(type){
         var createUser = $("#chineseName").text();
+        myDropzone.removeAllFiles(true);
         if(type == 'edit'){
             $(".equipmentEditModal .modal-title").text("编辑设备")
             $(".equipmentEditModal [name='save']").val('edit')
@@ -190,6 +192,7 @@ var equipment = function () {
         $(".equipmentEditModal [name='unitCycle']").val("").attr("disabled",false)
         $(".equipmentEditModal [name='status']").val(2)
         $(".equipmentEditModal [name='description']").val("")
+        $(".equipmentEditModal [name='unitClear']").val("")
         $(".equipmentEditModal #createUser").val(createUser)
         $(".equipmentEditModal .form-control-feedback").remove()
         $('.status_switch').bootstrapSwitch('state',false);

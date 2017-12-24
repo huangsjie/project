@@ -18,6 +18,8 @@ public class Equipment implements Serializable{
 
     private Integer unitStatus;
 
+    private Integer unitClear;
+
     private String imgUrl;
 
     private Integer status;
@@ -86,6 +88,14 @@ public class Equipment implements Serializable{
 
     public void setUnitStatus(Integer unitStatus) {
         this.unitStatus = unitStatus;
+    }
+
+    public Integer getUnitClear() {
+        return unitClear;
+    }
+
+    public void setUnitClear(Integer unitClear) {
+        this.unitClear = unitClear;
     }
 
     public String getImgUrl() {

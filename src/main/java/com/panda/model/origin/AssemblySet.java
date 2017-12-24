@@ -8,9 +8,15 @@ public class AssemblySet implements Serializable{
 
     private String name;
 
+    private String parentId;
+
     private String machineId;
 
     private Integer maintainCycle;
+
+    private Integer maintainClear;
+
+    private Integer sortId;
 
     private Integer status;
 
@@ -40,6 +46,14 @@ public class AssemblySet implements Serializable{
         this.name = name;
     }
 
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
     public String getMachineId() {
         return machineId;
     }
@@ -54,6 +68,22 @@ public class AssemblySet implements Serializable{
 
     public void setMaintainCycle(Integer maintainCycle) {
         this.maintainCycle = maintainCycle;
+    }
+
+    public Integer getMaintainClear() {
+        return maintainClear;
+    }
+
+    public void setMaintainClear(Integer maintainClear) {
+        this.maintainClear = maintainClear;
+    }
+
+    public Integer getSortId() {
+        return sortId;
+    }
+
+    public void setSortId(Integer sortId) {
+        this.sortId = sortId;
     }
 
     public Integer getStatus() {

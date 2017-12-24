@@ -9,6 +9,7 @@
     <result column="unit_type" jdbcType="VARCHAR" property="unitType" />
     <result column="unit_cycle" jdbcType="INTEGER" property="unitCycle" />
     <result column="unit_status" jdbcType="INTEGER" property="unitStatus" />
+    <result column="unit_clear" jdbcType="INTEGER" property="unitClear" />
     <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="description" jdbcType="VARCHAR" property="description" />
@@ -18,8 +19,8 @@
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, unit_name, unit_no, unit_usage, unit_type, unit_cycle, unit_status, img_url, 
-    status, description, create_id, create_time, modify_id, modify_time
+    id, unit_name, unit_no, unit_usage, unit_type, unit_cycle, unit_status, unit_clear, 
+    img_url, status, description, create_id, create_time, modify_id, modify_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -34,14 +35,16 @@
   <insert id="insert" parameterType="com.panda.model.origin.Equipment">
     insert into e_equipment (id, unit_name, unit_no, 
       unit_usage, unit_type, unit_cycle, 
-      unit_status, img_url, status, 
-      description, create_id, create_time, 
-      modify_id, modify_time)
+      unit_status, unit_clear, img_url, 
+      status, description, create_id, 
+      create_time, modify_id, modify_time
+      )
     values (#{id,jdbcType=VARCHAR}, #{unitName,jdbcType=VARCHAR}, #{unitNo,jdbcType=VARCHAR}, 
       #{unitUsage,jdbcType=VARCHAR}, #{unitType,jdbcType=VARCHAR}, #{unitCycle,jdbcType=INTEGER}, 
-      #{unitStatus,jdbcType=INTEGER}, #{imgUrl,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{description,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{modifyId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP})
+      #{unitStatus,jdbcType=INTEGER}, #{unitClear,jdbcType=INTEGER}, #{imgUrl,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.panda.model.origin.Equipment">
     insert into e_equipment
@@ -66,6 +69,9 @@
       </if>
       <if test="unitStatus != null">
         unit_status,
+      </if>
+      <if test="unitClear != null">
+        unit_clear,
       </if>
       <if test="imgUrl != null">
         img_url,
@@ -111,6 +117,9 @@
       <if test="unitStatus != null">
         #{unitStatus,jdbcType=INTEGER},
       </if>
+      <if test="unitClear != null">
+        #{unitClear,jdbcType=INTEGER},
+      </if>
       <if test="imgUrl != null">
         #{imgUrl,jdbcType=VARCHAR},
       </if>
@@ -155,6 +164,9 @@
       <if test="unitStatus != null">
         unit_status = #{unitStatus,jdbcType=INTEGER},
       </if>
+      <if test="unitClear != null">
+        unit_clear = #{unitClear,jdbcType=INTEGER},
+      </if>
       <if test="imgUrl != null">
         img_url = #{imgUrl,jdbcType=VARCHAR},
       </if>
@@ -187,6 +199,7 @@
       unit_type = #{unitType,jdbcType=VARCHAR},
       unit_cycle = #{unitCycle,jdbcType=INTEGER},
       unit_status = #{unitStatus,jdbcType=INTEGER},
+      unit_clear = #{unitClear,jdbcType=INTEGER},
       img_url = #{imgUrl,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR},
@@ -217,7 +230,7 @@
   <select id="selectEquipmentItemByPrimaryKey" parameterType="java.lang.String" resultType="map">
     select
     e.id,e.unit_name unitName,e.unit_no unitNo, e.unit_usage unitUsage,u.chinese_name createUser,
-    e.unit_type unitType, e.unit_cycle unitCycle,e.status,e.img_url imgUrl,e.description
+    e.unit_type unitType, e.unit_cycle unitCycle,e.status,e.img_url imgUrl,e.description,e.unit_clear unitClear
     from e_equipment e,s_users u
     where
     1 = 1
