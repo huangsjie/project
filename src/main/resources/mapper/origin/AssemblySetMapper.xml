@@ -195,7 +195,8 @@
       e.unit_type unitType,
       e.unit_cycle unitCycle,
       e.status euStatus,
-      e.unit_status unitStatus
+      e.unit_status unitStatus,
+      e.unit_clear unitClear
     FROM e_assembly_set a
     LEFT JOIN e_equipment e ON a.machine_id = e.id
 

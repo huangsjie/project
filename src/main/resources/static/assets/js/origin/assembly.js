@@ -139,6 +139,7 @@ var Assembly = function () {
                     _html += "<td>"+n.unitType+"</td>";
                     _html += "<td>"+n.unitNo+"</td>";
                     _html += "<td>"+n.unitCycle+"</td>";
+                    _html += "<td>"+n.unitClear+"</td>";
                     _html += '<td><span class="m-badge ' + status[n.status].class + ' m-badge--wide">' + status[n.status].title + '</span></td>';
                     _html += '<td>'+actionsTemplate.replace(/#rowId#/g, n.id)+'</td>';
                     _html += "</tr>";
