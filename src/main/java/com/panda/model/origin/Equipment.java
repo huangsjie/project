@@ -16,6 +16,10 @@ public class Equipment implements Serializable{
 
     private Integer unitCycle;
 
+    private Integer unitStatus;
+
+    private String imgUrl;
+
     private Integer status;
 
     private String description;
@@ -74,6 +78,22 @@ public class Equipment implements Serializable{
 
     public void setUnitCycle(Integer unitCycle) {
         this.unitCycle = unitCycle;
+    }
+
+    public Integer getUnitStatus() {
+        return unitStatus;
+    }
+
+    public void setUnitStatus(Integer unitStatus) {
+        this.unitStatus = unitStatus;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public Integer getStatus() {

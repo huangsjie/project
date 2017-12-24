@@ -11241,6 +11241,10 @@ select.selectpicker {
   text-align: center;
   display: block;
   cursor: pointer;
+  background-color: #ffb822;
+  margin-top: 18px;
+  color: #ffffff;
+  border-radius: 3px;
   border: none; }
 
 .dropzone .dz-preview .dz-remove:hover {

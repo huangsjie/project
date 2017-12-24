@@ -70,7 +70,7 @@ public class EquipmentController {
                     query.put("unitStatus",status.get("unitStatus"));
                 }
             }
-            List<Equipment> EquipmentList = equipmentService.selectEquipmentDataList(query);
+            List<Map> EquipmentList = equipmentService.selectEquipmentDataList(query);
             if(EquipmentList.size() > 0){
                 message = true;
                 data = EquipmentList;
@@ -95,7 +95,7 @@ public class EquipmentController {
         data    = null;
         if (!id.isEmpty()){
             try {
-                Equipment equipment = equipmentService.selectByPrimaryKey(id);
+                Map equipment = equipmentService.selectEquipmentItemByPrimaryKey(id);
                 if(equipment != null){
                     message = true;
                     data = equipment;

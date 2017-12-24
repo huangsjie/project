@@ -1,19 +1,19 @@
-var Harvest = function () {
+var equipment = function () {
     var actionsTemplate = $("#actionsTemplate").html();
     var status = {
-        1: {'title': '上午', 'class': ' m-badge--warning'},
-        2: {'title': '下午', 'class': ' m-badge--success'}
+        2: {'title': '禁用', 'class': ' m-badge--warning'},
+        1: {'title': '启用', 'class': ' m-badge--success'}
     };
     /**
      * 获取列表数据
      */
-    var getHarvestDataList = function () {
+    var getEquipmentDataList = function () {
         var option = {
             data: {
                 type: 'remote',
                 source: {
                     read: {
-                        url: 'getHarvestDataList'
+                        url: 'getEquipmentDataList'
                     }
                 },
                 pageSize: 10,
@@ -31,78 +31,38 @@ var Harvest = function () {
             sortable: true,
             filterable: false,
             pagination: true,
-            columns: [{
-                field: "nameArea",
-                title: "采摘茶园",
-                width: 100
-            },{
-                field: "macTypeName",
-                title: "采摘时间",
-                width: 100,
+            columns: [{ field: "unitName", title: "设备名称", width: 100 },
+                { field: "unitNo", title: "设备编号", width: 100 },
+                { field: "unitUsage", title: "设备用途", width: 100 },
+                { field: "unitType", title: "设备型号", width: 100 },
+                { field: "unitCycle", title: "维护周期", width: 100 },
+                { field: "status", title: "状态", width: 100,
                 template: function (row) {
-                    return '<span class="m-badge ' + status[row.pickTime].class + ' m-badge--wide">' + status[row.pickTime].title + '</span>';
+                    return '<span class="m-badge ' + status[row.status].class + ' m-badge--wide">' + status[row.status].title + '</span>';
                 }
-            },{
-                field: "operatorId",
-                title: "采摘人",
-                width: 100
-            }, {
-                field: "dicName",
-                title: "采摘标准",
-                width: 100
-            },{
-                field: "dicCultiName",
-                title: "品种",
-                width: 100
-            },{
-                field: "recQuantity",
-                title: "数量",
-                width: 100,
-                template: function (row) {
-                    return row.recQuantity+" 斤";
-                }
-            },{
-                field: "createName",
-                title: "记录人",
-                width: 100
-            },{
-                field: "Actions",
-                width: 100,
-                title: "操作",
-                sortable: false,
-                overflow: 'visible',
+            },{ field: "createName", title: "记录人", width: 100
+            },{ field: "Actions", width: 100, title: "操作", sortable: false, overflow: 'visible',
                 template: function (row) {
                     var dropup = (row.getIndex() - row.getIndex()) <= 4 ? 'dropup' : '';
                     return actionsTemplate.replace(/#rowId#/g, row.id);
                 }
             }]
         }
-        var datatable = $('.harvest_list').mDatatable(option);
+        var datatable = $('.equipment_list').mDatatable(option);
         var query = datatable.getDataSourceQuery();
-        $('#teaGardenId').on('change', function () {
+        $('#status').on('change', function () {
             var query = datatable.getDataSourceQuery();
-            query.teaGardenId = $(this).val();
+            query.status = $(this).val();
             datatable.setDataSourceQuery(query);
             datatable.load();
-        }).val(typeof query.teaGardenId !== 'undefined' ? query.teaGardenId : '');
+        }).val(typeof query.status !== 'undefined' ? query.status : '');
         $('#m_form_search').on('keyup', function (e) {
             var query = datatable.getDataSourceQuery();
             query.generalSearch = $(this).val().toLowerCase();
             datatable.setDataSourceQuery(query);
             datatable.load();
         }).val(query.generalSearch);
-        $('#dicStandard').on('change', function () {
-            var query = datatable.getDataSourceQuery();
-            query.dicStandard = $(this).val().toLowerCase();
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.dicStandard !== 'undefined' ? query.dicStandard : '');
-        $('#pickTime').on('change', function () {
-            var query = datatable.getDataSourceQuery();
-            query.pickTime = $(this).val();
-            datatable.setDataSourceQuery(query);
-            datatable.load();
-        }).val(typeof query.pickTime !== 'undefined' ? query.pickTime : '');
+
         $('.datatableRoload').on('click', function () {
             location.reload()
         });
@@ -114,26 +74,26 @@ var Harvest = function () {
      * 新增与编辑表单验证
      * 加工设置
      */
-    var HarvestEditForm = function () {
-        $( "#harvest_edit_form" ).validate({
+    var equipmentEditForm = function () {
+        $( "#equipment_edit_form" ).validate({
             rules: {
-                teaGardenId: {required: true},
-                pickNumber: {required: true},
-                dicStandard: {required: true},
-                recQuantity: { required: true},
-                pickTime: {required: true},
-                operatorId: {required:true,nameCheck:true},
+                unitName: {required: true},
+                unitNo: {required: true},
+                unitUsage: {required: true},
+                unitType: { required: true},
+                unitCycle: {required: true},
+                description: {nameCheck:true},
                 pickArea: {required: true}
             },
             submitHandler: function (form){
-                blockUiOpen('.HarvestEditModal .modal-content');
+                blockUiOpen('.equipmentEditModal .modal-content');
                 request(
-                    "saveOrUpdateHarvest",
+                    "saveOrUpdateEquipment",
                     "post",
-                    $("#harvest_edit_form").serialize(),
+                    $("#equipment_edit_form").serialize(),
                     function(result){
                         if(result.message){
-                            blockUiClose('.HarvestEditModal .modal-content',1,".close-parent",0);
+                            blockUiClose('.equipmentEditModal .modal-content',1,".close-parent",0);
                             ToastrMsg(result.data,"success","topRight");
                             location.reload()
                         }else{
@@ -147,30 +107,36 @@ var Harvest = function () {
     /**
      * 获取所编辑的数据
      */
-    var editHarvestItem = function () {
-        $("#harvest_list").on("click", ".editHarvestItem", function () {
+    var editEquipmentItem = function () {
+        $("#equipment_list").on("click", ".editEquipmentItem", function () {
             removeValue('edit')
             var id = $(this).attr("item");
             if(id != ""){
                 request(
-                    "editHarvestItem",
+                    "editEquipmentItem",
                     'get',
                     {id:id},
                     function (result) {
                         if(result.message){
-                            $(".HarvestEditModal [name='id']").val(result.data.id)
-                            $(".HarvestEditModal [name='teaGardenId']").val(result.data.tea_garden_id).attr("disabled",true)
-                            $(".HarvestEditModal [name='pickNumber']").html("<option> "+result.data.batch_number+"</option>").attr("disabled",true)
-                            $(".HarvestEditModal [name='dicStandard']").val(result.data.dic_standard)
-                            $(".HarvestEditModal [name='recQuantity']").val(result.data.rec_quantity)
-                            $(".HarvestEditModal #createUser").val(result.data.chinese_name)
-                            $(".HarvestEditModal [name='pickTime'][value='"+result.data.pick_time+"']").click()
-                            $(".HarvestEditModal [name='operatorId']").val(result.data.operator_id)
-                            $(".HarvestEditModal [name='description']").val(result.data.description)
-                            $(".HarvestEditModal [name='pickBatchNo']").val(result.data.pick_batch_no).attr("disabled",true)
-                            var str=result.data.pick_area;
-                            var arr=str.split(',');
-                            $('#pickArea').selectpicker('val', arr);
+                            $(".equipmentEditModal [name='id']").val(result.data.id)
+                            $(".equipmentEditModal [name='unitName']").val(result.data.unitName).attr("disabled",true)
+                            $(".equipmentEditModal [name='unitUsage']").val(result.data.unitUsage).attr("disabled",true)
+                            $(".equipmentEditModal [name='unitType']").val(result.data.unitType).attr("disabled",true)
+                            $(".equipmentEditModal [name='unitNo']").val(result.data.unitNo).attr("disabled",true)
+                            $(".equipmentEditModal #createUser").val(result.data.createUser)
+                            $(".equipmentEditModal [name='unitCycle']").val(result.data.unitCycle)
+                            $(".equipmentEditModal [name='description']").val(result.data.description);
+                            $(".equipmentEditModal [name='status']").val(result.data.status)
+                            if(result.data.status == 1){
+                                $('.status_switch').bootstrapSwitch('state',true);
+                            }else{
+                                $('.status_switch').bootstrapSwitch('state',false);
+                            }
+                            if (result.data.imgUrl){
+                                myDropzone.emit("initimage", result.data.imgUrl); //初始化图片
+                            }else{
+                                myDropzone.removeAllFiles(true);
+                            }
                         }else{
                             ToastrMsg(result.data,"error","topRight");
                         }
@@ -181,170 +147,88 @@ var Harvest = function () {
     /**
      * 删除单条数据
      */
-    var delHarvestItem = function () {
-        $("#harvest_list").on("click", ".delHarvestItem", function () {
-            blockUiOpen('#harvest_list');
+    var delEquipmentItem = function () {
+        $("#equipment_list").on("click", ".delEquipmentItem", function () {
+            blockUiOpen('#equipment_list');
             var self = $(this);
             var id = self.attr("item");
             if(id != ""){
                 request(
-                    "delHarvestItem",
+                    "delEquipmentItem",
                     'get',
                     {id:id},
                     function (result) {
                         if(result.message){
                             self.parents("tr").remove();
-                            ToastrMsg(result.data,"success","topRight",'#harvest_list');
+                            ToastrMsg(result.data,"success","topRight",'#equipment_list');
                         }else{
-                            ToastrMsg(result.data,"error","topRight",'#harvest_list');
+                            ToastrMsg(result.data,"error","topRight",'#equipment_list');
                         }
                     })
             }
         })
     }
     /**
-     * 获取管理批次
-     */
-    var getTeaGardenBatch = function(){
-        $(".HarvestEditModal .teaGardenId").on("change",function () {
-            var teaGardenId = $(".HarvestEditModal .teaGardenId").val(),html = "";
-            blockUiOpen('.HarvestEditModal .modal-content');
-            request(
-                "/system/teaLog/getTeaGardenBatch",
-                'get',
-                {teaGardenId:teaGardenId},
-                function (result) {
-                    if(result.message){
-                        if (result.data.length > 0){
-                            $.each(result.data, function (i, n) {
-                                html += "<option value="+n.id+" > "+n.batch_number+" </option>";
-                            });
-                        }
-                        $(".HarvestEditModal #pickNumber").html(html);
-                        blockUiClose('.HarvestEditModal .modal-content',0,".close-parent",0);
-                    }else{
-                        $("#pickNumber").html('');
-                        ToastrMsg(result.data,"error","topRight",'.HarvestEditModal .modal-content');
-                    }
-                })
-        })
-    }
-
-    /**
-     *
-     */
-    var pickNumberChange = function () {
-        function getPickBatchNo(){
-            var pickNumber = $("#pickNumber option:selected").text().split("-"),
-                save    = $(".HarvestEditModal [name='save']").val();;
-            if (pickNumber != "" && save == "add"){
-                blockUiOpen('.HarvestEditModal .modal-content');
-                request(
-                    "/system/manageBatch/getMsuData",
-                    'get',
-                    {pickNumber:pickNumber},
-                    function (result) {
-                        if(result.message){
-                            $("#pickBatchNo").val(pickNumber[0]+pickNumber[1]+"-"+result.data)
-                            blockUiClose('.HarvestEditModal .modal-content',0,".close-parent",0);
-                        }else{
-                            ToastrMsg(result.data,"error","topRight",'.HarvestEditModal .modal-content');
-                        }
-                    })
-                }else{
-                    if (save == "edit"){
-                        return false;
-                    }else {
-                        ToastrMsg("请选择管理批次.", "warning", "topRight", '.HarvestEditModal .modal-content');
-                    }
-                }
-        }
-        $("#pickNumber").on("change",function () {
-            getPickBatchNo()
-        })
-        $(".HarvestEditModal .la-hand-o-up").on("click",function () {
-            getPickBatchNo()
-        })
-    }
-    /**
      * 重置表单
      */
     var removeValue = function(type){
+        var createUser = $("#chineseName").text();
         if(type == 'edit'){
-            $(".HarvestEditModal .modal-title").text("编辑采摘")
-            $(".HarvestEditModal [name='save']").val('edit')
+            $(".equipmentEditModal .modal-title").text("编辑设备")
+            $(".equipmentEditModal [name='save']").val('edit')
             $(".reset-btn").addClass("m--hide");
         }else{
-            $(".HarvestEditModal .modal-title").text("新增采摘")
-            $(".HarvestEditModal [name='save']").val('add');
+            $(".equipmentEditModal .modal-title").text("新增设备")
+            $(".equipmentEditModal [name='save']").val('add');
             $(".reset-btn").removeClass("m--hide");
         }
-        $(".HarvestEditModal [name='id']").val("")
-        $(".HarvestEditModal [name='teaGardenId']").val("").attr("disabled",false)
-        $(".HarvestEditModal [name='pickBatchNo']").val("").attr("disabled",false)
-        $(".HarvestEditModal [name='pickNumber']").html("<option> 全部</option>").attr("disabled",false)
-        $(".HarvestEditModal [name='dicStandard']").val("")
-        $(".HarvestEditModal [name='recQuantity']").val("")
-        $(".HarvestEditModal [name='pickTime'][value='1']").click()
-        $(".HarvestEditModal [name='operatorId']").val("")
-        $(".HarvestEditModal [name='description']").val("")
-        $(".HarvestEditModal .form-control-feedback").remove()
+        $(".equipmentEditModal [name='id']").val("")
+        $(".equipmentEditModal [name='unitName']").val("").attr("disabled",false)
+        $(".equipmentEditModal [name='unitUsage']").val("").attr("disabled",false)
+        $(".equipmentEditModal [name='unitType']").val("").attr("disabled",false)
+        $(".equipmentEditModal [name='unitNo']").val("").attr("disabled",false)
+        $(".equipmentEditModal [name='unitCycle']").val("").attr("disabled",false)
+        $(".equipmentEditModal [name='status']").val(2)
+        $(".equipmentEditModal [name='description']").val("")
+        $(".equipmentEditModal #createUser").val(createUser)
+        $(".equipmentEditModal .form-control-feedback").remove()
+        $('.status_switch').bootstrapSwitch('state',false);
 
-        // $("#pickArea").empty();
-        // $('#pickArea').append(options);
-      //  $('#pickArea').selectpicker('render');
-        $('#pickArea').selectpicker('refresh');
-
-        $(".HarvestEditModal div").removeClass("has-danger")
-        $(".HarvestEditModal div").removeClass("has-success")
+        $(".equipmentEditModal div").removeClass("has-danger")
+        $(".equipmentEditModal div").removeClass("has-success")
     }
 
     /**
      * 新增重置表单初始值
      */
-    var addHarvestItem = function () {
-        $(".addHarvestItem").on('click',function(){
+    var addEquipmentItem = function () {
+        $(".addEquipmentItem").on('click',function(){
             removeValue('add')
         })
     }
 
-    /**
-     * bootstrap datetimepicker 插件
-     * 输入时间请先了解单个参数
-     */
-    var datetimepickerSelect = function () {
-        $('.datetimepicker_select').datetimepicker({
-            todayHighlight: false,
-            autoclose: true,
-            startView: 4,
-            minView: 4,
-            sideBySide: false,
-            pickerPosition: 'bottom-left',
-            format: 'yyyy'
-        });
-
-        $('.begin_time').datetimepicker({
-            todayHighlight: false,
-            autoclose: true,
-            sideBySide: false,
-            pickerPosition: 'top-left',
-            format: 'yyyy-mm-dd hh:mm:ss'
-        });
-    }
-
     return {
         init: function () {
-            getHarvestDataList();
-            editHarvestItem();
-            HarvestEditForm();
-            addHarvestItem();
-            delHarvestItem();
-            getTeaGardenBatch();
-            pickNumberChange();
+            getEquipmentDataList();
+            editEquipmentItem();
+            equipmentEditForm();
+            addEquipmentItem();
+            delEquipmentItem();
         }
     };
 }();
 jQuery(document).ready(function () {
-    Harvest.init();
-    $('.m_selectpicker').selectpicker();
+    equipment.init();
+    $('.status_switch').bootstrapSwitch({
+        onText:'开启',
+        offText:'关闭',
+        handleWidth:'60'
+    });
+    $('.status_switch').on('switchChange.bootstrapSwitch', function (event,state) {
+        if(state==true){
+            $(this).parents("div").find(".status_switch_parent").find("[name='status']").val(1)
+        }else{
+            $(this).parents("div").find(".status_switch_parent").find("[name='status']").val(2)
+        }
+    });
 });

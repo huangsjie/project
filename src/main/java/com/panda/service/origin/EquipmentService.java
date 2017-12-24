@@ -13,5 +13,12 @@ public interface EquipmentService extends AbstractService<Equipment> {
      * @param map
      * @return
      */
-    List<Equipment> selectEquipmentDataList(Map map);
+    List<Map> selectEquipmentDataList(Map map);
+
+    /**
+     * 获取设备详细信息
+     * @param id
+     * @return
+     */
+    Map selectEquipmentItemByPrimaryKey(String id);
 }

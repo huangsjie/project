@@ -28,7 +28,17 @@ public class EquipmentServiceImpl extends AbstractServiceImpl<Equipment> impleme
      * @return
      */
     @Override
-    public List<Equipment> selectEquipmentDataList(Map map){
+    public List<Map> selectEquipmentDataList(Map map){
         return equipmentMapper.selectEquipmentDataList(map);
+    }
+
+    /**
+     * 获取设备详细信息
+     * @param id
+     * @return
+     */
+    @Override
+    public Map selectEquipmentItemByPrimaryKey(String id){
+        return equipmentMapper.selectEquipmentItemByPrimaryKey(id);
     }
 }
