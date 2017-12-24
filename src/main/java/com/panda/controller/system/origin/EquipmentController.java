@@ -138,7 +138,7 @@ public class EquipmentController {
                 equipment.setCreateTime(new Date());
                 equipment.setModifyId(user.getId());
                 equipment.setModifyTime(new Date());
-                equipment.setStatus(1);
+                equipment.setUnitStatus(2);
                 int insert = equipmentService.insertSelective(equipment);
                 if(insert > 0){
                     message = true;

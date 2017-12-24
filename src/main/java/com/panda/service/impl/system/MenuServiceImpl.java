@@ -11,6 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import redis.clients.jedis.JedisPool;
 
 import javax.annotation.Resource;
@@ -201,5 +204,29 @@ public class MenuServiceImpl extends AbstractServiceImpl<Menu> implements MenuSe
                 }
             }
         }
+    }
+
+    /**
+     * Ajax 删除菜单信息 包含子级时，将全部删除
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = {Exception.class})
+    public Integer delMenuParentAndChild(String id){
+        Integer resultStatus = 0;
+        try {
+            if (!id.isEmpty()) {
+                int i = menuMapper.delMenuParentAndChild(id);
+                if (i > 0){
+                    resultStatus = 200;
+                }
+            }
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            resultStatus = 101;
+        }
+        return resultStatus;
     }
 }

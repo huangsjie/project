@@ -33,7 +33,9 @@
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title" style="float: right;">
                                         <h3 class="m-portlet__head-text">
-                                            <button type="button" class="btn btn-info editAssemblyItem" shiro:hasPermission="assembly:add" data-toggle="modal" data-target=".assemblyEdit" data-type="add_assembly">
+                                            <button type="button" class="btn btn-info addAssemblySetEditParent"
+                                                    shiro:hasPermission="assembly:add" data-toggle="modal"
+                                                    data-target=".assemblySetEditParentModal">
                                                 新增
                                             </button>
                                         </h3>
@@ -76,7 +78,9 @@
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title" style="float: right;">
                                         <h3 class="m-portlet__head-text">
-                                            <button type="button" class="btn btn-info editAssemblyItem" shiro:hasPermission="assembly:add" data-toggle="modal" data-target=".assemblySetEdit" data-type="add_assembly_child">
+                                            <button type="button" class="btn btn-info editAssemblyItem"
+                                                    shiro:hasPermission="assembly:add" data-toggle="modal"
+                                                    data-target=".assemblySetEditModal" data-type="add_child">
                                                 绑定设备
                                             </button>
                                         </h3>
@@ -88,7 +92,7 @@
                             <div class="m-portlet__body assembly_data_list">
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" data-toggle="tab" href="#assembly_value_list"
+                                        <a class="nav-link active" data-toggle="tab" href="#assembly_list"
                                            aria-expanded="true">
                                             设备信息
                                         </a>
@@ -101,12 +105,11 @@
                                     </li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane active" id="assembly_value_list" role="tabpanel"
+                                    <div class="tab-pane active" id="assembly_list" role="tabpanel"
                                          aria-expanded="true">
                                         <table class="table m-table m-table--head-bg-success ">
                                             <thead>
                                             <tr>
-                                                <th>生产线</th>
                                                 <th>设备名称</th>
                                                 <th>设备型号</th>
                                                 <th>设备编号</th>
@@ -127,22 +130,46 @@
                                             <input type="hidden" name="save" value="edit">
                                             <div class="form-group m-form__group row">
                                                 <label class="col-form-label col-lg-3 col-sm-12">
-                                                    名称 *
+                                                    生产线 <span style="color: red">*</span>
                                                 </label>
                                                 <div class="col-lg-6 col-md-9 col-sm-12">
                                                     <input type="text" class="form-control m-input" name="name"
-                                                           placeholder="字典名称">
+                                                           placeholder="生产线">
                                                     <span class="m-form__help"></span>
                                                 </div>
                                             </div>
                                             <div class="form-group m-form__group row">
                                                 <label class="col-form-label col-lg-3 col-sm-12">
-                                                    属性 *
+                                                    保养周期 <span style="color: red">*</span>
                                                 </label>
                                                 <div class="col-lg-6 col-md-9 col-sm-12">
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control m-input" name="value"
-                                                               placeholder="字典属性">
+                                                        <span class="input-group-addon" style="cursor: pointer;">
+                                                            运行
+                                                        </span>
+                                                        <input type="text" class="form-control m-input maintainCycle"
+                                                               name="maintainCycle" placeholder="保养周期">
+                                                        <span class="input-group-addon" style="cursor: pointer;">
+                                                            次
+                                                        </span>
+                                                    </div>
+                                                    <span class="m-form__help"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group m-form__group row">
+                                                <label class="col-form-label col-lg-3 col-sm-12">
+                                                    清洁周期 <span style="color: red">*</span>
+                                                </label>
+                                                <div class="col-lg-6 col-md-9 col-sm-12">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="cursor: pointer;">
+                                                            运行
+                                                        </span>
+                                                        <input type="text" class="form-control m-input maintainClear"
+                                                               name="maintainClear" placeholder="清洁周期">
+                                                        <span class="input-group-addon" style="cursor: pointer;">
+                                                            次
+                                                        </span>
                                                     </div>
                                                     <span class="m-form__help"></span>
                                                 </div>
@@ -164,7 +191,8 @@
                                                     状态 *
                                                 </label>
                                                 <div class="col-lg-6 col-md-9 col-sm-12">
-                                                    <input data-switch="true" type="checkbox" class="status_switch" data-on-color="success" data-off-color="warning">
+                                                    <input data-switch="true" type="checkbox" class="status_switch"
+                                                           data-on-color="success" data-off-color="warning">
                                                     <br>
                                                     <span class="m-form__help"></span>
                                                 </div>
@@ -185,10 +213,15 @@
                                                 <div class="m-form__actions m-form__actions">
                                                     <div class="form-group m-form__group row">
                                                         <div class="col-lg-9 ml-lg-auto">
-                                                            <button type="submit" shiro:hasPermission="assembly:submit" class="btn btn-accent assembly_form_save">
+                                                            <button type="submit" shiro:hasPermission="assembly:submit"
+                                                                    class="btn btn-accent assembly_form_save">
                                                                 确定
                                                             </button>
-                                                            <button type="button" shiro:hasPermission="assembly:delete" class="btn btn-danger delParentassembly" data-skin="dark" data-toggle="m-tooltip" data-placement="top" title="" data-original-title="注意: 删除当前字典时,附带子级也一并删除.">
+                                                            <button type="button" shiro:hasPermission="assembly:delete"
+                                                                    class="btn btn-danger delParentassembly"
+                                                                    data-skin="dark" data-toggle="m-tooltip"
+                                                                    data-placement="top" title=""
+                                                                    data-original-title="注意: 删除当生产线时,设备绑定关系将解除.">
                                                                 删除
                                                             </button>
                                                         </div>
@@ -200,6 +233,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div th:replace="~{system/origin/assemblySetEditParent :: assemblySetEditParent}"></div>
                         <div th:replace="~{system/origin/assemblySetEdit :: assemblySetEdit}"></div>
                         <!--end::Portlet-->
                         <!--begin::Form-->
@@ -209,10 +243,14 @@
             <!--END: Main Portlet-->
             <!-- PageRole -->
             <div class="m--hide" id="actionsTemplate">
-                <a href="" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editAssemblyItem" title="编辑" shiro:hasPermission="assembly:edit" item="#rowId#" data-toggle="modal" data-target=".assemblySetEdit">
+                <a href=""
+                   class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill editAssemblyItem"
+                   title="编辑" shiro:hasPermission="assembly:edit" item="#rowId#" data-toggle="modal"
+                   data-target=".assemblySetEditModal">
                     <i class="la la-edit"></i>
                 </a>
-                <a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delAssemblyItem" title="删除" shiro:hasPermission="assembly:delete" item="#rowId#" >
+                <a class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill delAssemblyItem"
+                   title="删除" shiro:hasPermission="assembly:delete" item="#rowId#">
                     <i class="la la-trash"></i>
                 </a>
             </div>

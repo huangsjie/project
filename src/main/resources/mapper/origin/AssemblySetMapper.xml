@@ -190,7 +190,7 @@
       a.id, a.name, a.status,a.maintain_cycle maintainCycle,
       a.sort_id sortId,a.description,
       e.unit_name unitName,
-      e.unit_no unitNo,
+      e.unit_no unitNo,a.maintain_clear maintainClear,
       e.unit_usage unitUsage,
       e.unit_type unitType,
       e.unit_cycle unitCycle,
@@ -228,4 +228,12 @@
     order by a.create_time desc
   </select>
 
+  <select id="selectAssemblyData" resultType="map" parameterType="java.lang.String">
+    SELECT
+        a.*, e.unit_name
+    FROM
+        e_assembly_set a, e_equipment e
+    where a.id = #{id,jdbcType=VARCHAR}
+    AND a.machine_id = e.id
+  </select>
 </mapper>

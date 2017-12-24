@@ -255,4 +255,16 @@
         ORDER BY m.create_time,m.sort_id ASC
     </select>
     <!-- 获取当前菜单和子集菜单 -->
+
+    <delete id="delMenuParentAndChild" parameterType="java.lang.String">
+        delete
+        from s_menu
+        where id in(
+        select id from (
+        select id from s_menu where id = #{id}
+        union
+        select id from s_menu where parent_id  = #{id}
+        ) a where 1 =1
+        )
+    </delete>
 </mapper>

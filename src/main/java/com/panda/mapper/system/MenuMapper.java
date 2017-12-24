@@ -34,4 +34,11 @@ public interface MenuMapper extends AbstractMapper<Menu> {
      * @return
      */
     List<Menu> selectMenuAndChildMenu(String menuId);
+
+    /**
+     * Ajax 删除菜单信息 包含子级时，将全部删除
+     * @param id
+     * @return
+     */
+    Integer delMenuParentAndChild(String id);
 }

@@ -149,12 +149,37 @@ var MenuPage = function () {
             $(this).addClass("m--hide")
         })
     }
+
+    /**
+     * 删除父级属性
+     */
+    var delParentMenu = function () {
+        $(".delParentMenu ").on("click", function () {
+            blockUiOpen('.menu_edit_form');
+            var id = $("#menu_edit_form [name='id']").val();
+            if(id != ""){
+                request(
+                    "delParentMenu",
+                    'post',
+                    {id:id},
+                    function (result) {
+                        if(result.message){
+                            ToastrMsg(result.data,"success","topRight",".menu_edit_form");
+                            location.reload()
+                        }else{
+                            ToastrMsg(result.data,"warning","topRight",".menu_edit_form");
+                        }
+                    })
+            }
+        })
+    }
     return {
         init: function() {
             getMenuList();
             resetForm();
             menuForm();
             getMenuData();
+            delParentMenu();
         }
     };
 }();

@@ -8,6 +8,7 @@ import com.panda.model.system.Users;
 import com.panda.service.commodity.ProductsService;
 import com.panda.service.origin.AssemblySetService;
 import com.panda.service.origin.AssemblySetService;
+import com.panda.service.origin.EquipmentService;
 import com.panda.service.system.DictionaryService;
 import com.panda.util.ResultMsgUtil;
 import com.panda.util.ResultStateUtil;
@@ -27,6 +28,8 @@ import java.util.*;
 @RequestMapping(value = "/system/assembly")
 public class AssemblySetController {
 
+    @Resource
+    private EquipmentService equipmentService;
 
     @Resource
     private AssemblySetService assemblySetService;
@@ -48,9 +51,13 @@ public class AssemblySetController {
         Map map = new HashMap();
         map.put("parentId","10000000-0000-0000-0000-000000000000");
         List<Map> assemblyList = assemblySetService.selectAssemblySetDataList(map);
+        map.put("status",1);
+        map.put("unitStatus",2);
+        List<Map> equipmentList = equipmentService.selectEquipmentDataList(map);
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         model.addAttribute("menuList",user.getMenuList());
         model.addAttribute("assemblyList",assemblyList);
+        model.addAttribute("equipmentList",equipmentList);
         model.addAttribute("user",user);
         return "system/origin/getAssemblySetList";
     }
@@ -95,7 +102,7 @@ public class AssemblySetController {
         data    = null;
         if (!id.isEmpty()){
             try {
-                AssemblySet assemblySet = assemblySetService.selectByPrimaryKey(id);
+                Map assemblySet = assemblySetService.selectAssemblyData(id);
                 if(assemblySet != null){
                     message = true;
                     data = assemblySet;
@@ -124,27 +131,25 @@ public class AssemblySetController {
         message = false;
         data    = null;
         try{
-            if(!assemblySet.getId().isEmpty() && save != null && save.equals("edit")){
-                int i = assemblySetService.updateByPrimaryKeySelective(assemblySet);
-                if(i > 0){
-                    message = true;
-                    data    = ResultStateUtil.SUCCESS_UPDATE;
+            if(assemblySet != null){
+                if(save.equals("add")){
+                    assemblySet.setCreateId(user.getId());
+                    assemblySet.setCreateTime(new Date());
                 }else{
-                    data    = ResultStateUtil.FAIL_UPDATE;
+                    assemblySet.setModifyId(user.getId());
+                    assemblySet.setModifyTime(new Date());
                 }
-            }else if(save.equals("add")) {
-                assemblySet.setId(UUID.randomUUID().toString());
-                assemblySet.setCreateId(user.getId());
-                assemblySet.setCreateTime(new Date());
-                assemblySet.setModifyId(user.getId());
-                assemblySet.setModifyTime(new Date());
-                assemblySet.setStatus(1);
-                int insert = assemblySetService.insertSelective(assemblySet);
-                if(insert > 0){
-                    message = true;
-                    data    = ResultStateUtil.SUCCESS_ADD;
-                }else{
-                    data    = ResultStateUtil.FAIL_ADD;
+                int insert = assemblySetService.saveOrUpdateAssemblySet(assemblySet);
+                switch (insert){
+                    case 200:
+                        message = true;
+                        data    = ResultStateUtil.SUCCESS_ABNORMAL;
+                        break;
+                    case 101:
+                        data    = ResultStateUtil.FAIL_ADD;
+                        break;
+                    default:
+                        data    = ResultStateUtil.FAIL_ADD;
                 }
             }
         }catch (Exception e){
@@ -160,7 +165,7 @@ public class AssemblySetController {
      * @param id
      * @return
      */
-    @RequestMapping(value="/delAssemblySetItem",method = RequestMethod.GET)
+    @RequestMapping(value="/delAssemblySetItem",method = RequestMethod.POST)
     @ResponseBody
     public Object delAssemblySetItem(HttpServletRequest request ,String id){
         message = false;

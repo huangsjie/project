@@ -42,4 +42,11 @@ public interface MenuService extends AbstractService<Menu>{
      * @return
      */
     List<Menu> selectHomeMenuList(String roleId);
+
+    /**
+     * Ajax 删除菜单信息 包含子级时，将全部删除
+     * @param id
+     * @return
+     */
+    Integer delMenuParentAndChild(String id);
 }
