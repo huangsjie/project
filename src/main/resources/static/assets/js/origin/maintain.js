@@ -132,6 +132,7 @@ var maintain = function () {
                             $(".maintainEditModal [name='parentId']").val(result.data.sid).attr("disabled",true)
                             $(".maintainEditModal [name='equipmentId']").html("<option>"+result.data.unitName+"</option>").attr("disabled",true)
                             $(".maintainEditModal [name='maintainType']").val(result.data.maintainType).attr("disabled",true)
+                            $(".maintainEditModal [name='description']").val(result.data.description)
                             $(".maintainEditModal #createUser").val(result.data.createName)
                             $(".maintainEditModal #unitNo").val(result.data.unitNo)
                             $(".maintainEditModal #unitCycle").val(result.data.unitCycle)

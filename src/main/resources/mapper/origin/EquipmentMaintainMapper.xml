@@ -205,8 +205,9 @@
   <select id="selectEquipmentMaintainDataItem" parameterType="java.lang.String" resultType="map">
     SELECT
         m.id,
-        m.maintain_status,
+        m.maintain_status maintainStatus,
         m.maintain_type maintainType,
+        m.description,
         e.unit_clear unitClear,
         e.unit_cycle unitCycle,
         e.unit_name unitName,
