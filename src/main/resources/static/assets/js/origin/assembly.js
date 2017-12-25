@@ -160,6 +160,7 @@ var Assembly = function () {
                     _html += "<td>"+n.unitNo+"</td>";
                     _html += "<td>运行"+n.unitCycle+"次</td>";
                     _html += "<td>运行"+n.unitClear+"次</td>";
+                    _html += "<td>已运行"+n.runNum+"次</td>";
                     _html += '<td><span class="m-badge ' + status[n.status].class + ' m-badge--wide">' + status[n.status].title + '</span></td>';
                     _html += '<td>'+actionsTemplate.replace(/#rowId#/g, n.id)+'</td>';
                     _html += "</tr>";

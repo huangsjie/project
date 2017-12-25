@@ -28,4 +28,11 @@ public interface AssemblySetMapper extends AbstractMapper<AssemblySet>{
      * @return
      */
     Integer saveOrUpdateAssemblySet(AssemblySet assemblySet);
+
+    /**
+     * 删除绑定的设备，解除设备绑定关系
+     * @param id
+     * @return
+     */
+    Integer delAssemblySetItem(String id);
 }

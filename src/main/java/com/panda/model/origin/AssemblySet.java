@@ -16,6 +16,8 @@ public class AssemblySet implements Serializable{
 
     private Integer maintainClear;
 
+    private Integer runNum;
+
     private Integer sortId;
 
     private Integer status;
@@ -76,6 +78,14 @@ public class AssemblySet implements Serializable{
 
     public void setMaintainClear(Integer maintainClear) {
         this.maintainClear = maintainClear;
+    }
+
+    public Integer getRunNum() {
+        return runNum;
+    }
+
+    public void setRunNum(Integer runNum) {
+        this.runNum = runNum;
     }
 
     public Integer getSortId() {

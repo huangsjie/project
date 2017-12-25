@@ -222,7 +222,7 @@
       AND e.status = #{status}
     </if>
     <if test="unitStatus != null and unitStatus != ''">
-      AND e.status = #{unitStatus}
+      AND e.unit_status = #{unitStatus}
     </if>
     order by e.create_time desc
   </select>

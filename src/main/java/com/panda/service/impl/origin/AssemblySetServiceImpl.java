@@ -60,25 +60,27 @@ public class AssemblySetServiceImpl extends AbstractServiceImpl<AssemblySet> imp
         try {
             Equipment equipment = new Equipment();
             if (assemblySet != null && !assemblySet.getId().isEmpty()) {
-
                 AssemblySet old = assemblySetMapper.selectByPrimaryKey(assemblySet.getId());
                 if (old.getMachineId().equals(assemblySet.getMachineId())){
                     assemblySetMapper.updateByPrimaryKeySelective(assemblySet);
                     resultStatus = 200;
                 }else{
-
-                    equipment.setId(old.getMachineId());
-                    equipment.setUnitStatus(2);
-                    int c = equipmentService.updateByPrimaryKeySelective(equipment);
-                    if (c > 0){
-                        assemblySetMapper.updateByPrimaryKeySelective(assemblySet);
-                        equipment.setId(assemblySet.getMachineId());
-                        equipment.setUnitStatus(1);
-                        equipmentService.updateByPrimaryKeySelective(equipment);
-                        resultStatus = 200;
+                    if (!old.getMachineId().isEmpty()) {
+                        equipment.setId(old.getMachineId());
+                        equipment.setUnitStatus(2);
+                        int c = equipmentService.updateByPrimaryKeySelective(equipment);
+                        if (c > 0){
+                            int i = assemblySetMapper.updateByPrimaryKeySelective(assemblySet);
+                            if (i > 0 && !assemblySet.getMachineId().isEmpty()) {
+                                equipment.setId(assemblySet.getMachineId());
+                                equipment.setUnitStatus(1);
+                                equipmentService.updateByPrimaryKeySelective(equipment);
+                            }
+                            resultStatus = 200;
+                        }
                     }
                 }
-            }else if (!assemblySet.getId().isEmpty()){
+            }else if (assemblySet.getId().isEmpty() && !assemblySet.getMachineId().isEmpty()){
                 int i = assemblySetMapper.insertSelective(assemblySet);
                 if (i > 0) {
                     equipment.setId(assemblySet.getMachineId());
@@ -86,6 +88,43 @@ public class AssemblySetServiceImpl extends AbstractServiceImpl<AssemblySet> imp
                     equipmentService.updateByPrimaryKeySelective(equipment);
                     resultStatus = 200;
                 }
+            }
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            resultStatus = 101;
+        }
+        return resultStatus;
+    }
+
+    /**
+     * 删除绑定的设备，解除设备绑定关系
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = {Exception.class})
+    public Integer delAssemblySetItem(String id){
+        Integer resultStatus = 0;
+        try {
+            Equipment equipment = new Equipment();
+            if (!id.isEmpty()) {
+                AssemblySet old = assemblySetMapper.selectByPrimaryKey(id);
+                if (old != null){
+                    if (!old.getMachineId().isEmpty()){
+                        equipment.setId(old.getMachineId());
+                        equipment.setUnitStatus(2);//解除绑定设备
+                        int i = equipmentService.updateByPrimaryKeySelective(equipment);
+                        if (i > 0){
+                            assemblySetMapper.deleteByPrimaryKey(old.getId());
+                        }
+                    }else{
+                        assemblySetMapper.deleteByPrimaryKey(old.getId());
+                    }
+                    resultStatus = 200;
+                }
+            }else {
+                resultStatus = 101;
             }
         } catch (Exception e) {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();

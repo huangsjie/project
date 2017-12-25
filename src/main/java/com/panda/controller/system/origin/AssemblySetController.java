@@ -1,12 +1,8 @@
 package com.panda.controller.system.origin;
 
-import com.alibaba.citrus.util.StringEscapeUtil;
-import com.alibaba.fastjson.JSON;
 import com.panda.model.origin.AssemblySet;
-import com.panda.model.system.Dictionary;
 import com.panda.model.system.Users;
 import com.panda.service.commodity.ProductsService;
-import com.panda.service.origin.AssemblySetService;
 import com.panda.service.origin.AssemblySetService;
 import com.panda.service.origin.EquipmentService;
 import com.panda.service.system.DictionaryService;
@@ -22,7 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/system/assembly")
@@ -42,7 +41,7 @@ public class AssemblySetController {
     private static boolean message = false;
     private static Object  data    = null;
     /**
-     * 获取加工设置数据
+     * 获取生产线
      * @return
      */
     @RequestMapping(value = "/list",method= RequestMethod.GET)
@@ -53,6 +52,7 @@ public class AssemblySetController {
         List<Map> assemblyList = assemblySetService.selectAssemblySetDataList(map);
         map.put("status",1);
         map.put("unitStatus",2);
+        //未绑定的设备信息
         List<Map> equipmentList = equipmentService.selectEquipmentDataList(map);
         Users user= (Users) SecurityUtils.getSubject().getPrincipal();
         model.addAttribute("menuList",user.getMenuList());
@@ -76,11 +76,11 @@ public class AssemblySetController {
             Map query = new HashMap();
             if (parentId != null && !parentId.isEmpty()){
                 query.put("parentId",parentId);
-            }
-            List<Map> assemblySetList = assemblySetService.selectAssemblySetDataList(query);
-            if(assemblySetList.size() > 0){
-                message = true;
-                data = assemblySetList;
+                List<Map> assemblySetList = assemblySetService.selectAssemblySetDataList(query);
+                if(assemblySetList.size() > 0){
+                    message = true;
+                    data = assemblySetList;
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -172,12 +172,17 @@ public class AssemblySetController {
         data    = null;
         try{
             if (!id.isEmpty()){
-                int i = assemblySetService.deleteByPrimaryKey(id);
-                if(i > 0){
-                    message = true;
-                    data = ResultStateUtil.SUCCESS_DELETE;
-                }else{
-                    data = ResultStateUtil.ERROR_QUERY;
+                int del = assemblySetService.delAssemblySetItem(id);
+                switch (del){
+                    case 200:
+                        message = true;
+                        data    = ResultStateUtil.SUCCESS_ABNORMAL;
+                        break;
+                    case 101:
+                        data    = ResultStateUtil.FAIL_ADD;
+                        break;
+                    default:
+                        data    = ResultStateUtil.FAIL_ADD;
                 }
             }else{
                 data = ResultStateUtil.ERROR_PARAMETER_IS_EMPTY;
@@ -188,5 +193,4 @@ public class AssemblySetController {
         }
         return ResultMsgUtil.getResultMsg(message,data);
     }
-
 }

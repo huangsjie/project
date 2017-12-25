@@ -8,6 +8,7 @@
     <result column="machine_id" jdbcType="VARCHAR" property="machineId" />
     <result column="maintain_cycle" jdbcType="INTEGER" property="maintainCycle" />
     <result column="maintain_clear" jdbcType="INTEGER" property="maintainClear" />
+    <result column="run_num" jdbcType="INTEGER" property="runNum" />
     <result column="sort_id" jdbcType="INTEGER" property="sortId" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="description" jdbcType="VARCHAR" property="description" />
@@ -17,8 +18,8 @@
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, parent_id, machine_id, maintain_cycle, maintain_clear, sort_id, status, 
-    description, create_id, create_time, modify_id, modify_time
+    id, name, parent_id, machine_id, maintain_cycle, maintain_clear, run_num, sort_id, 
+    status, description, create_id, create_time, modify_id, modify_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -33,14 +34,14 @@
   <insert id="insert" parameterType="com.panda.model.origin.AssemblySet">
     insert into e_assembly_set (id, name, parent_id, 
       machine_id, maintain_cycle, maintain_clear, 
-      sort_id, status, description, 
-      create_id, create_time, modify_id, 
-      modify_time)
+      run_num, sort_id, status, 
+      description, create_id, create_time, 
+      modify_id, modify_time)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
       #{machineId,jdbcType=VARCHAR}, #{maintainCycle,jdbcType=INTEGER}, #{maintainClear,jdbcType=INTEGER}, 
-      #{sortId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
-      #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR}, 
-      #{modifyTime,jdbcType=TIMESTAMP})
+      #{runNum,jdbcType=INTEGER}, #{sortId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.panda.model.origin.AssemblySet">
     insert into e_assembly_set
@@ -62,6 +63,9 @@
       </if>
       <if test="maintainClear != null">
         maintain_clear,
+      </if>
+      <if test="runNum != null">
+        run_num,
       </if>
       <if test="sortId != null">
         sort_id,
@@ -104,6 +108,9 @@
       <if test="maintainClear != null">
         #{maintainClear,jdbcType=INTEGER},
       </if>
+      <if test="runNum != null">
+        #{runNum,jdbcType=INTEGER},
+      </if>
       <if test="sortId != null">
         #{sortId,jdbcType=INTEGER},
       </if>
@@ -145,6 +152,9 @@
       <if test="maintainClear != null">
         maintain_clear = #{maintainClear,jdbcType=INTEGER},
       </if>
+      <if test="runNum != null">
+        run_num = #{runNum,jdbcType=INTEGER},
+      </if>
       <if test="sortId != null">
         sort_id = #{sortId,jdbcType=INTEGER},
       </if>
@@ -176,6 +186,7 @@
       machine_id = #{machineId,jdbcType=VARCHAR},
       maintain_cycle = #{maintainCycle,jdbcType=INTEGER},
       maintain_clear = #{maintainClear,jdbcType=INTEGER},
+      run_num = #{runNum,jdbcType=INTEGER},
       sort_id = #{sortId,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR},
@@ -185,10 +196,11 @@
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
   <select id="selectAssemblySetDataList" parameterType="map" resultType="map">
     SELECT
       a.id, a.name, a.status,a.maintain_cycle maintainCycle,
-      a.sort_id sortId,a.description,
+      a.sort_id sortId,a.description,a.run_num runNum,
       e.unit_name unitName,
       e.unit_no unitNo,a.maintain_clear maintainClear,
       e.unit_usage unitUsage,
@@ -199,7 +211,6 @@
       e.unit_clear unitClear
     FROM e_assembly_set a
     LEFT JOIN e_equipment e ON a.machine_id = e.id
-
     <choose>
       <when test="parentId != null and parentId != ''">
         WHERE a.id in(
@@ -228,7 +239,7 @@
     order by a.create_time desc
   </select>
 
-  <select id="selectAssemblyData" resultType="map" parameterType="java.lang.String">
+  <select id="selectAssemblyData" parameterType="java.lang.String" resultType="map">
     SELECT
         a.*, e.unit_name
     FROM
