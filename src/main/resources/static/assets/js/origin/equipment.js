@@ -32,7 +32,7 @@ var equipment = function () {
             filterable: false,
             pagination: true,
             columns: [{ field: "unitName", title: "设备名称", width: 100 },
-                { field: "unitNo", title: "设备编号", width: 100 },
+                { field: "unitNo", title: "资产编号", width: 100 },
                 { field: "unitUsage", title: "设备用途", width: 100 },
                 { field: "unitType", title: "设备型号", width: 100 },
                 { field: "unitCycle", title: "维护周期", width: 100 },

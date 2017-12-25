@@ -201,7 +201,7 @@
     SELECT
       a.id, a.name, a.status,a.maintain_cycle maintainCycle,
       a.sort_id sortId,a.description,a.run_num runNum,
-      e.unit_name unitName,
+      e.unit_name unitName,e.id unitId,
       e.unit_no unitNo,a.maintain_clear maintainClear,
       e.unit_usage unitUsage,
       e.unit_type unitType,

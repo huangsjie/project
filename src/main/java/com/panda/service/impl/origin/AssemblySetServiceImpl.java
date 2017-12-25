@@ -14,6 +14,7 @@ import com.panda.model.origin.Equipment;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class AssemblySetServiceImpl extends AbstractServiceImpl<AssemblySet> implements AssemblySetService {
@@ -81,6 +82,7 @@ public class AssemblySetServiceImpl extends AbstractServiceImpl<AssemblySet> imp
                     }
                 }
             }else if (assemblySet.getId().isEmpty() && !assemblySet.getMachineId().isEmpty()){
+                    assemblySet.setId(UUID.randomUUID().toString());
                 int i = assemblySetMapper.insertSelective(assemblySet);
                 if (i > 0) {
                     equipment.setId(assemblySet.getMachineId());
